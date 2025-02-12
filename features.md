@@ -1,0 +1,9 @@
+- Define the tournament json
+- Write a json schema
+- Identify a eventlink url and change the extension icon
+- Add a scrape button in any eventlink tournament page
+- Navigate through the tournament
+- Navigate through the tournament with visual feedback
+- Navigate and scrape through the tournament with visual feedback
+- Build the output
+- profit !
