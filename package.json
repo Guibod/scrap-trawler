@@ -10,6 +10,7 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@plasmohq/messaging": "^0.7.1",
     "plasmo": "0.90.2",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -24,8 +25,7 @@
     "typescript": "5.3.3"
   },
   "manifest": {
-    "host_permissions": [
-      "https://*/*"
-    ]
+    "permissions": ["storage", "activeTab", "scripting"],
+    "host_permissions": ["https://eventlink.wizards.com/*"]
   }
 }
