@@ -1,5 +1,12 @@
-import type { PlasmoCSConfig } from "plasmo";
-import React, { useEffect, useState } from "react";
+import type { PlasmoCSConfig } from "plasmo"
+import React, { useEffect, useState } from "react"
+
+import { MessageTypes } from "~scripts/messages"
+import type { ScrapePageMessage, StartScrapMessage } from "~scripts/types/message-types"
+
+
+
+
 
 export const config: PlasmoCSConfig = {
   matches: ["https://eventlink.wizards.com/*"],
@@ -17,7 +24,7 @@ const ScrapeButton = () => {
     console.log("Sending scrape request to background script");
     setScrapeStatus("Scraping...");
 
-    chrome.runtime.sendMessage({ action: "START_SCRAPE" }, (response) => {
+    chrome.runtime.sendMessage({ action: MessageTypes.SCRAP_START, url: window.location.href} as StartScrapMessage, (response) => {
       if (chrome.runtime.lastError) {
         console.error("Error sending message:", chrome.runtime.lastError);
       } else {
