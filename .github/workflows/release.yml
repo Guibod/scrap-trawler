@@ -1,21 +1,19 @@
-name: Release Pipeline
+name: 🚀 Release
 
 on:
   push:
     branches:
       - main
 
-permissions:
-  contents: write # Required for pushing version updates & tags
-
 jobs:
   release:
-    name: Create Release
+    name: Release & Versioning
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Important for versioning and tagging
 
       # ✅ Set SHELL explicitly to avoid pnpm install errors
       - name: Set Shell Environment Variable
@@ -48,11 +46,17 @@ jobs:
       - name: Run Tests (Vitest)
         run: pnpm test
 
-      # ✅ Generate Release Version (Using Conventional Commits)
-      - name: Create Release with Changesets
-        uses: changesets/action@v1
-        with:
-          version: pnpm changeset version
-          publish: pnpm changeset publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Cog (Cocogitto)
+        run: curl -L https://github.com/oknozor/cocogitto/releases/latest/download/cocogitto-x86_64-unknown-linux-gnu.tar.gz | tar xz && sudo mv cog /usr/local/bin/
+
+      - name: Bump Version & Generate Changelog
+        run: cog bump --auto --changelog
+
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md package.json
+          git commit -m "chore(release): 🔖 bump version"
+          git tag $(cog version)
+          git push --follow-tags
