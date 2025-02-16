@@ -11,19 +11,26 @@ export const config: PlasmoCSConfig = {
 
 const wotcClientHeader = getXWotcClientHeader()
 
-chrome.runtime.onMessage.addListener(async (message: any, sender: chrome.runtime.MessageSender, sendResponse) => {
-  console.log("scraper content received a message", message);
-
+chrome.runtime.onMessage.addListener((message: any, sender, sendResponse) => {
   if (isAppVersionRequest(message)) {
     sendResponse(wotcClientHeader);
+    return true;
   }
 
   if (isWorldExtractEventMessage(message)) {
-    const extractor = new EventExtractor(message.accessToken, wotcClientHeader, message.eventId);
+    (async () => {
+      try {
+        const extractor = new EventExtractor(message.accessToken, wotcClientHeader, message.eventId, message.organizationId);
+        const result = await extractor.extract();
+        console.log("extract results: ", result);
+        sendResponse(result);
+      } catch (e) {
+        sendResponse(new ErrorResponse(message.action, sender, e));
+      }
+    })();
 
-    sendResponse(
-      await extractor.extract()
-        .catch((e) => new ErrorResponse(message.action, sender, e))
-    )
+    return true;
   }
+
+  return false;
 });
