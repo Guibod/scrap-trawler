@@ -1,42 +1,58 @@
-name: Auto Merge & Release
+name: Release Pipeline
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    branches:
+      - main
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: write # Required for pushing version updates & tags
 
 jobs:
-  auto-merge-and-release:
-    if: github.event.pull_request.merged == true
+  release:
+    name: Create Release
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
+      # ✅ Set SHELL explicitly to avoid pnpm install errors
+      - name: Set Shell Environment Variable
+        run: echo "SHELL=/usr/bin/bash" >> $GITHUB_ENV
+
+      # ✅ Install PNPM
+      - name: Install PNPM
+        run: curl -fsSL https://get.pnpm.io/install.sh | sh -s -- --global
+
+      # ✅ Ensure PNPM is in the PATH
+      - name: Set Up PNPM Path
+        run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
+
+      # ✅ Set Up Node.js
       - name: Set Up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "pnpm"
+
+      # ✅ Verify PNPM installation
+      - name: Check PNPM Version
+        run: pnpm --version
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Generate Changelog & Tag Release
-        uses: TriPSs/conventional-changelog-action@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          version-file: "package.json"
+      - name: Run Linter (Biome)
+        run: pnpm lint
 
-      - name: Auto-Merge PR
-        uses: pascalgn/automerge-action@v0.15.6
+      - name: Run Tests (Vitest)
+        run: pnpm test
+
+      # ✅ Generate Release Version (Using Conventional Commits)
+      - name: Create Release with Changesets
+        uses: changesets/action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash
+          version: pnpm changeset version
+          publish: pnpm changeset publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
