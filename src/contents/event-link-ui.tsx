@@ -4,12 +4,9 @@ import React, { useEffect, useState } from "react"
 import {
   type AppExtractEventMessage,
   MessageTypes,
-  type WorldExtractEventMessage
 } from "~scripts/messages/message-types"
-import { getEventId } from "~scripts/eventlink/content.accessor"
 import type { WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
 import type { ErrorResponse } from "~scripts/messages/error.response"
-
 
 export const config: PlasmoCSConfig = {
   matches: ["https://eventlink.wizards.com/*"],

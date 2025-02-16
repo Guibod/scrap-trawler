@@ -1,14 +1,11 @@
-import { getEventId, getOrganizationId } from "~scripts/eventlink/content.accessor"
-import { EventExtractor, type WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
+import { ContentAccessor } from "~scripts/eventlink/content.accessor"
+import { type WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
 import {
   isAppExtractEventMessage, isAuthTokenRequest, MessageTypes,
   type WorldExtractEventMessage
 } from "~scripts/messages/message-types"
 import type { ErrorResponse } from "~scripts/messages/error.response"
 import { getAccessToken } from "~scripts/eventlink/background.accessor"
-
-
-
 
 
 console.log("Scrap Trawler background script is running.");
@@ -25,8 +22,8 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
           activeTab.id,
           {
             action: MessageTypes.WORLD_EXTRACT_EVENT_REQUEST,
-            eventId: getEventId(message.url),
-            organizationId: getOrganizationId(message.url),
+            eventId: ContentAccessor.getEventId(message.url),
+            organizationId: ContentAccessor.getOrganizationId(message.url),
             accessToken
           } as WorldExtractEventMessage,
           (response: WotcExtractedEvent | ErrorResponse) => {
