@@ -1,20 +1,18 @@
 import { getEventId, getOrganizationId } from "~scripts/eventlink/content.accessor"
-import { EventExtractor, type ExtractedEvent } from "~scripts/eventlink/event-extractor"
+import { EventExtractor, type WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
 import {
   isAppExtractEventMessage, isAuthTokenRequest,
   type WorldExtractEventMessage
 } from "~scripts/messages/message-types"
 import { MessageTypes } from "~scripts/messages/messages"
 import type { ErrorResponse } from "~scripts/messages/error.response"
-import { getAccessToken, getAuthCookie } from "~scripts/eventlink/background.accessor"
+import { getAccessToken } from "~scripts/eventlink/background.accessor"
 
 
 
 
 
 console.log("Scrap Trawler background script is running.");
-
-const scrapers: Map<number, EventExtractor> = new Map();
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   console.log("Received message in background:", message);
@@ -32,7 +30,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             organizationId: getOrganizationId(message.url),
             accessToken
           } as WorldExtractEventMessage,
-          (response: ExtractedEvent | ErrorResponse) => {
+          (response: WotcExtractedEvent | ErrorResponse) => {
             console.log("Complete extraction results: ", response);
             sendResponse(response);
           }
