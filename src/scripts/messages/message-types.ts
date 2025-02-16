@@ -20,6 +20,7 @@ export interface BaseMessage {
 export interface WorldExtractEventMessage extends BaseMessage {
   action: MessageTypes.WORLD_EXTRACT_EVENT_REQUEST,
   eventId: number,
+  organizationId: number,
   accessToken: string
 }
 

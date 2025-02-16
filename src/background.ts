@@ -1,4 +1,4 @@
-import { getEventId } from "~scripts/eventlink/content.accessor"
+import { getEventId, getOrganizationId } from "~scripts/eventlink/content.accessor"
 import { EventExtractor, type ExtractedEvent } from "~scripts/eventlink/event-extractor"
 import {
   isAppExtractEventMessage, isAuthTokenRequest,
@@ -29,9 +29,11 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
           {
             action: MessageTypes.WORLD_EXTRACT_EVENT_REQUEST,
             eventId: getEventId(message.url),
+            organizationId: getOrganizationId(message.url),
             accessToken
           } as WorldExtractEventMessage,
           (response: ExtractedEvent | ErrorResponse) => {
+            console.log("Complete extraction results: ", response);
             sendResponse(response);
           }
         );
