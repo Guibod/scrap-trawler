@@ -32,7 +32,8 @@
     "lint": "biome check",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "sync-version": "tsx src/scripts/sync-version.ts"
   },
   "dependencies": {
     "@plasmohq/messaging": "^0.7.1",
@@ -54,6 +55,7 @@
     "jsdom": "^26.0.0",
     "lint-staged": "^15.4.3",
     "prettier": "3.2.4",
+    "tsx": "^4.19.2",
     "typescript": "5.3.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.5"
