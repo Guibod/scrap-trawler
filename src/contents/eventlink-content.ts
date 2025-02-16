@@ -3,7 +3,7 @@ import { EventExtractor } from "~scripts/eventlink/event-extractor";
 import { ErrorResponse } from "~scripts/messages/error.response";
 import { isAppVersionRequest, isAuthTokenRequest, isWorldExtractEventMessage } from "~scripts/messages/message-types";
 import type { PlasmoCSConfig } from "plasmo"
-import { EventMapper, EventStorage } from "~scripts/storage/store"
+import { EventMapper, EventStorage } from "~scripts/storage/event-storage"
 
 export const config: PlasmoCSConfig = {
   matches: ["https://eventlink.wizards.com/*"],
