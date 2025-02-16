@@ -5,6 +5,7 @@
   "description": "A browser extension for extracting event data from EventLink tournaments.",
   "author": "Guillaume Boddaert",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/Guibod/scrap-trawler.git"
