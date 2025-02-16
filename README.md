@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Build Status](https://github.com/Guibod/Scrap-Trawler/actions/workflows/build.yml/badge.svg)](https://github.com/Guibod/Scrap-Trawler/actions)
 [![Code Quality](https://img.shields.io/codefactor/grade/github/Guibod/Scrap-Trawler/main)](https://www.codefactor.io/repository/github/Guibod/Scrap-Trawler)
-[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/YOUR_PROJECT_ID/badge)](https://bestpractices.coreinfrastructure.org/projects/YOUR_PROJECT_ID)
+[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/10030/badge)](https://bestpractices.coreinfrastructure.org/projects/10030)
 
 ## 📖 About Scrap Trawler
 Scrap Trawler is an **open-source browser extension** designed for **tournament organizers** using [EventLink](https://eventlink.wizards.com/). It enables users to **extract event data**, including:
