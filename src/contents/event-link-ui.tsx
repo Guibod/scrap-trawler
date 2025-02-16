@@ -1,8 +1,11 @@
 import type { PlasmoCSConfig } from "plasmo"
 import React, { useEffect, useState } from "react"
 
-import { MessageTypes } from "~scripts/messages/messages"
-import type { AppExtractEventMessage, WorldExtractEventMessage } from "~scripts/messages/message-types"
+import {
+  type AppExtractEventMessage,
+  MessageTypes,
+  type WorldExtractEventMessage
+} from "~scripts/messages/message-types"
 import { getEventId } from "~scripts/eventlink/content.accessor"
 import type { WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
 import type { ErrorResponse } from "~scripts/messages/error.response"
