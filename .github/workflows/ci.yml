@@ -17,21 +17,25 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # ✅ Install PNPM first, before Node.js
+      # ✅ Set SHELL explicitly to avoid pnpm install errors
+      - name: Set Shell Environment Variable
+        run: echo "SHELL=/usr/bin/bash" >> $GITHUB_ENV
+
+      # ✅ Install PNPM
       - name: Install PNPM
         run: curl -fsSL https://get.pnpm.io/install.sh | sh -s -- --global
 
-      # ✅ Ensure PNPM is available in the PATH
+      # ✅ Ensure PNPM is in the PATH
       - name: Set Up PNPM Path
         run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
 
-      # ✅ Now Set Up Node.js (without pnpm caching)
+      # ✅ Set Up Node.js (Now PNPM is available)
       - name: Set Up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
 
-      # ✅ Verify PNPM installation (Debugging)
+      # ✅ Verify PNPM installation
       - name: Check PNPM Version
         run: pnpm --version
 
