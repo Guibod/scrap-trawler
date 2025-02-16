@@ -1,11 +1,12 @@
-[changelog]
-path = "CHANGELOG.md"
-
-[bump]
 pre_bump_hooks = [
     "pnpm lint",
     "pnpm test"
 ]
 
-[git_hooks]
-commit_msg = ["commit-msg"]
+post_bump_hooks = [
+    "pnpm run sync-version"
+]
+
+[changelog]
+path = "CHANGELOG.md"
+

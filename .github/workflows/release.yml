@@ -16,27 +16,19 @@ jobs:
         with:
           fetch-depth: 0 # Important for versioning and tagging
 
-      # ✅ Set SHELL explicitly to avoid pnpm install errors
-      - name: Set Shell Environment Variable
-        run: echo "SHELL=/usr/bin/bash" >> $GITHUB_ENV
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      # ✅ Install PNPM
-      - name: Install PNPM
-        run: curl -fsSL https://get.pnpm.io/install.sh | sh -s -- --global
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: true
 
-      # ✅ Ensure PNPM is in the PATH
-      - name: Set Up PNPM Path
-        run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
-
-      # ✅ Set Up Node.js
-      - name: Set Up Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
-
-      # ✅ Verify PNPM installation
-      - name: Check PNPM Version
-        run: pnpm --version
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -47,8 +39,13 @@ jobs:
       - name: Run Tests (Vitest)
         run: pnpm test
 
-      - name: Install Cog (Cocogitto)
-        run: curl -L https://github.com/oknozor/cocogitto/releases/latest/download/cocogitto-x86_64-unknown-linux-gnu.tar.gz | tar xz && sudo mv cog /usr/local/bin/
+      - name: Semver release
+        uses: cocogitto/cocogitto-action@v3
+        id: release
+        with:
+          release: true
+          git-user: 'Cog Bot'
+          git-user-email: 'github-actions[bot]@users.noreply.github.com'
 
       - name: Bump Version & Generate Changelog
         run: cog bump --auto --changelog
