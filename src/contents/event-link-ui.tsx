@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import { MessageTypes } from "~scripts/messages/messages"
 import type { AppExtractEventMessage, WorldExtractEventMessage } from "~scripts/messages/message-types"
 import { getEventId } from "~scripts/eventlink/content.accessor"
-import type { ExtractedEvent } from "~scripts/eventlink/event-extractor"
+import type { WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
 import type { ErrorResponse } from "~scripts/messages/error.response"
 
 
@@ -25,7 +25,7 @@ const ScrapeButton = () => {
         action: MessageTypes.APP_EXTRACT_EVENT_REQUEST,
         url: window.location.href
       } as AppExtractEventMessage,
-      (response: ExtractedEvent | ErrorResponse) => {
+      (response: WotcExtractedEvent | ErrorResponse) => {
         console.log(response);
       }
     );

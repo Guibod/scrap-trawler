@@ -1,7 +1,7 @@
 import { EventLinkGraphQLClient } from "~scripts/eventlink/graphql.client";
 import type { EventDetails, GameState, Organization } from "~scripts/eventlink/graphql.dto.types"
 
-export interface ExtractedEvent {
+export interface WotcExtractedEvent {
   event: EventDetails
   organization: Organization
   rounds: {
@@ -24,7 +24,7 @@ export class EventExtractor {
     this.client = new EventLinkGraphQLClient(accessToken, wotcClientHeader);
   }
 
-  async extract(): Promise<ExtractedEvent> {
+  async extract(): Promise<WotcExtractedEvent> {
     const [event, organization, round1] = await Promise.all([
       this.client.getEventDetails(this.eventId),
       this.client.getOrganization(this.orgId),
