@@ -21,10 +21,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "pnpm"
 
-      - name: Install PNPM
-        run: npm install -g pnpm
+      - name: Set Up PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9 # Ensures latest stable PNPM is installed
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
