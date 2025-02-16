@@ -3,7 +3,7 @@
 ![Scrap Trawler Logo](assets/icon.png)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Build Status](https://github.com/Guibod/scrap-trawler/actions/workflows/build.yml/badge.svg)](https://github.com/Guibod/scrap-trawler/actions)
+[![Build Status](https://github.com/Guibod/scrap-trawler/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Guibod/scrap-trawler/actions)
 [![Code Quality](https://img.shields.io/codefactor/grade/github/Guibod/Scrap-Trawler/main)](https://www.codefactor.io/repository/github/Guibod/Scrap-Trawler)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/10030/badge)](https://bestpractices.coreinfrastructure.org/projects/10030)
 
