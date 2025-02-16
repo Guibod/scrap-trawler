@@ -1,7 +1,7 @@
-import { getXWotcClientHeader } from "~scripts/eventlink/content.accessor";
+import { ContentAccessor } from "~scripts/eventlink/content.accessor";
 import { EventExtractor } from "~scripts/eventlink/event-extractor";
 import { ErrorResponse } from "~scripts/messages/error.response";
-import { isAppVersionRequest, isAuthTokenRequest, isWorldExtractEventMessage } from "~scripts/messages/message-types";
+import { isAppVersionRequest, isWorldExtractEventMessage } from "~scripts/messages/message-types";
 import type { PlasmoCSConfig } from "plasmo"
 import { EventMapper, EventStorage } from "~scripts/storage/event-storage"
 
@@ -10,7 +10,8 @@ export const config: PlasmoCSConfig = {
   run_at: "document_idle"
 };
 
-const wotcClientHeader = getXWotcClientHeader()
+const contentAccessor = new ContentAccessor();
+const wotcClientHeader = await contentAccessor.getXWotcClientHeader()
 
 chrome.runtime.onMessage.addListener((message: any, sender, sendResponse) => {
   if (isAppVersionRequest(message)) {
