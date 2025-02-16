@@ -5,16 +5,16 @@ import {
   type WorldExtractEventMessage
 } from "~scripts/messages/message-types"
 import type { ErrorResponse } from "~scripts/messages/error.response"
-import { getAccessToken } from "~scripts/eventlink/background.accessor"
+import { BackgroundAccessor } from "~scripts/eventlink/background.accessor"
 
 
-console.log("Scrap Trawler background script is running.");
+const backgroundAccessor = new BackgroundAccessor();
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   console.log("Received message in background:", message);
 
   if (isAppExtractEventMessage(message)) {
-    const accessToken = await getAccessToken();
+    const accessToken = await backgroundAccessor.getAccessToken();
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0];
       if (activeTab) {
