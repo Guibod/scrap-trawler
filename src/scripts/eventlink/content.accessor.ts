@@ -11,7 +11,7 @@ export function getEventId(url: string): number {
   }
   return parseInt(match[1], 10);
 }
-export function getStoreId(url: string): number {
+export function getOrganizationId(url: string): number {
   const match = url.match(/\/stores\/(\d+)/);
   if (!match) {
     throw new Error("Invalid event URL");
