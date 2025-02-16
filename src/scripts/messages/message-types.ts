@@ -1,7 +1,16 @@
-import { MessageTypes } from "~scripts/messages/messages"
+export enum MessageTypes {
+  APP_EXTRACT_EVENT_REQUEST = "APP_EXTRACT_EVENT_REQUEST",
+  WORLD_EXTRACT_EVENT_REQUEST = "WORLD_EXTRACT_EVENT_REQUEST",
+  AUTH_TOKEN_REQUEST = "REQUEST_AUTH_TOKEN",
+  APP_VERSION_REQUEST = "REQUEST_APP_VERSION"
+}
 
-export function isWorldExtractEventMessage(message: any): message is WorldExtractEventMessage {
-  return (message as BaseMessage).action === MessageTypes.WORLD_EXTRACT_EVENT_REQUEST;
+export function isWorldExtractEventMessage(
+  message: any
+): message is WorldExtractEventMessage {
+  return (
+    (message as BaseMessage).action === MessageTypes.WORLD_EXTRACT_EVENT_REQUEST
+  )
 }
 export function isAppExtractEventMessage(message: any): message is AppExtractEventMessage {
   return (message as BaseMessage).action === MessageTypes.APP_EXTRACT_EVENT_REQUEST;
