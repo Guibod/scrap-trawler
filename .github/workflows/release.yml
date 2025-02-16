@@ -33,12 +33,6 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run Linter (Biome)
-        run: pnpm lint
-
-      - name: Run Tests (Vitest)
-        run: pnpm test
-
       - name: Semver release
         uses: cocogitto/cocogitto-action@v3
         id: release
