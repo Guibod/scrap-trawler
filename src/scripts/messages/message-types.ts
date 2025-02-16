@@ -10,7 +10,7 @@ export function isAuthTokenRequest(message: any): message is WorldExtractEventMe
   return (message as BaseMessage).action === MessageTypes.AUTH_TOKEN_REQUEST;
 }
 export function isAppVersionRequest(message: any): message is WorldExtractEventMessage {
-  return (message as BaseMessage).action === MessageTypes.AUTH_TOKEN_REQUEST;
+  return (message as BaseMessage).action === MessageTypes.APP_VERSION_REQUEST;
 }
 
 export interface BaseMessage {
