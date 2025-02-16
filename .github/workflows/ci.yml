@@ -21,6 +21,10 @@ jobs:
 
       - name: Conventional commit check
         uses: cocogitto/cocogitto-action@v3
+        git-user: 'Cog Bot'
+        git-user-email: 'github-actions[bot]@users.noreply.github.com'
+        with:
+          check-latest-tag-only: true
 
   lint-and-test:
     name: Lint & Test
