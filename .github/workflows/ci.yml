@@ -17,15 +17,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # ✅ Install PNPM first, before Node.js
+      - name: Install PNPM
+        run: curl -fsSL https://get.pnpm.io/install.sh | sh -s -- --global
+
+      # ✅ Ensure PNPM is available in the PATH
+      - name: Set Up PNPM Path
+        run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
+
+      # ✅ Now Set Up Node.js (without pnpm caching)
       - name: Set Up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
 
-      - name: Set Up PNPM
-        uses: pnpm/action-setup@v2
-        with:
-          version: 9 # Ensures latest stable PNPM is installed
+      # ✅ Verify PNPM installation (Debugging)
+      - name: Check PNPM Version
+        run: pnpm --version
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
