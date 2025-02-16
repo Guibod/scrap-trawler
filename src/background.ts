@@ -1,10 +1,9 @@
 import { getEventId, getOrganizationId } from "~scripts/eventlink/content.accessor"
 import { EventExtractor, type WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
 import {
-  isAppExtractEventMessage, isAuthTokenRequest,
+  isAppExtractEventMessage, isAuthTokenRequest, MessageTypes,
   type WorldExtractEventMessage
 } from "~scripts/messages/message-types"
-import { MessageTypes } from "~scripts/messages/messages"
 import type { ErrorResponse } from "~scripts/messages/error.response"
 import { getAccessToken } from "~scripts/eventlink/background.accessor"
 

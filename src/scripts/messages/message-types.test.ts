@@ -6,9 +6,8 @@ import {
   type WorldExtractEventMessage,
   type AppExtractEventMessage,
   type RequestAuthTokenMessage,
-  type RequestAppVersionMessage
-} from "~scripts/messages/message-types";
-import { MessageTypes } from "~scripts/messages/messages";
+  type RequestAppVersionMessage, MessageTypes
+} from "~scripts/messages/message-types"
 
 describe("Message Type Guards", () => {
   test("isWorldExtractEventMessage should return true for valid message", () => {
