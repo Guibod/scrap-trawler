@@ -12,6 +12,9 @@ jobs:
       pull-requests: write
       contents: write
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4  # Ensures a Git repository is available
+
       - name: Auto-Approve Dependabot PR
         if: github.actor == 'dependabot[bot]'
         run: gh pr review --approve "$GITHUB_REF"
