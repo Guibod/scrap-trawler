@@ -11,6 +11,9 @@ importers:
       '@plasmohq/messaging':
         specifier: ^0.7.1
         version: 0.7.1(react@18.2.0)
+      bowser:
+        specifier: ^2.11.0
+        version: 2.11.0
       graphql-request:
         specifier: ^6.1.0
         version: 6.1.0(graphql@15.10.1)
@@ -2377,6 +2380,9 @@ packages:
 
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
+
+  bowser@2.11.0:
+    resolution: {integrity: sha512-AlcaJBi/pqqJBIQ8U9Mcpc9i8Aqxn88Skv5d+xBX006BY5u8N3mGLHa5Lgppa7L/HfwgwLgZ6NYs+Ag6uUmJRA==}
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -7265,6 +7271,8 @@ snapshots:
   bluebird@3.7.2: {}
 
   boolbase@1.0.0: {}
+
+  bowser@2.11.0: {}
 
   brace-expansion@1.1.11:
     dependencies:
