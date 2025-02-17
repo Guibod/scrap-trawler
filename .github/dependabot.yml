@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: "npm" # You are using pnpm, but Dependabot works with npm for package.json
+    directory: "/" # Root directory where package.json is located
+    schedule:
+      interval: "weekly" # Runs weekly, change to "daily" or "monthly" if needed
+    open-pull-requests-limit: 5 # Maximum number of open PRs
+    versioning-strategy: increase # Uses semantic versioning to update dependencies
+    labels:
+      - "dependencies"
+    reviewers:
+      - "Guibod" # Add your GitHub username to review PRs
+    assignees:
+      - "Guibod"
+    commit-message:
+      prefix: "chore(deps)" # Follows Conventional Commit for commits
