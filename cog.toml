@@ -4,7 +4,7 @@ pre_bump_hooks = [
 ]
 
 post_bump_hooks = [
-    "pnpm sync-version"
+    "pnpm sync-version && git add package.json && git commit -m 'chore: sync package.json version'"
 ]
 
 [changelog]
