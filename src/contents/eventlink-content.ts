@@ -1,9 +1,9 @@
 import { ContentAccessor } from "~scripts/eventlink/content.accessor";
 import { EventExtractor } from "~scripts/eventlink/event-extractor";
-import { ErrorResponse } from "~scripts/messages/error.response";
 import { type BaseMessage, isAppVersionRequest, isWorldExtractEventMessage } from "~scripts/messages/message-types"
 import type { PlasmoCSConfig } from "plasmo"
 import { EventMapper, EventStorage } from "~scripts/storage/event-storage"
+import { ScrapTrawlerError } from "~scripts/exception"
 
 export const config: PlasmoCSConfig = {
   matches: ["https://eventlink.wizards.com/*"],
@@ -29,7 +29,10 @@ chrome.runtime.onMessage.addListener((message: BaseMessage, sender, sendResponse
 
         sendResponse(result);
       } catch (e) {
-        sendResponse(new ErrorResponse(message.action, sender, e));
+        if (e instanceof ScrapTrawlerError) {
+          sendResponse(e.toErrorResponse());
+          console.error(e);
+        }
       }
     })();
 
