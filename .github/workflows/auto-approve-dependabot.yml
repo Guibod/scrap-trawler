@@ -1,0 +1,19 @@
+name: Auto-Approve Dependabot PRs
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - name: Auto-Approve Dependabot PR
+        if: github.actor == 'dependabot[bot]'
+        run: gh pr review --approve "$GITHUB_REF"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
