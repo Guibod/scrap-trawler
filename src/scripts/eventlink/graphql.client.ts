@@ -5,7 +5,10 @@ import type {
   OrganizationResponse
 } from "~scripts/eventlink/graphql.dto.types"
 import { gql, GraphQLClient } from 'graphql-request'
+import { GraphQlError, InvalidGraphQlResponseError } from "~scripts/eventlink/exceptions"
 const GRAPHQL_ENDPOINT = "https://api.tabletop.wizards.com/silverbeak-griffin-service/graphql";
+
+type Variables = Record<string, unknown>
 
 export class EventLinkGraphQLClient {
   private xWotcClientHeader: string;
@@ -115,10 +118,11 @@ export class EventLinkGraphQLClient {
       }
     `;
 
-    return this.client.request<OrganizationResponse, {id: number}>(
+    return this.request<OrganizationResponse, Organization, {id: number}>(
       query,
-      { id }
-    ).then(response => response.organization);
+      { id },
+      (response => response.organization)
+    );
   }
 
   async getGameStateAtRound(id: number, round: number): Promise<GameState> {
@@ -262,10 +266,11 @@ export class EventLinkGraphQLClient {
       }
     `;
 
-    return this.client.request<GameStateResponse, {eventId: number, round: number}>(
+    return this.request<GameStateResponse, GameState, {eventId: number, round: number}>(
       query,
-      { eventId: id, round }
-    ).then(response => response.gameStateV2AtRound);
+      { eventId: id, round },
+      response => response.gameStateV2AtRound
+    );
   }
   async getEventDetails(id: number, locale: string = "en"): Promise<EventDetails> {
     const query = gql`
@@ -438,9 +443,35 @@ export class EventLinkGraphQLClient {
       }
     `;
 
-    return this.client.request<EventResponse, {id: number, locale: string}>(
+    return this.request<EventResponse, EventDetails, {id: number, locale: string}>(
       query,
-      { id, locale }
-    ).then(response => response.event);
+      { id, locale },
+      response => response.event
+    );
   }
+
+  protected async request<T,R,V extends Variables = Variables>(
+    query: string,
+    variables: V,
+    callback?: (response: T) => R
+  ): Promise<R> {
+    let result: T;
+    try {
+      result= await this.client.request<T, Variables>(query, variables);
+    } catch (error) {
+      console.log(`[GraphQL Error] Query failed:`, error);
+      throw new GraphQlError("GraphQL request failed.", error instanceof Error ? error : undefined);
+    }
+
+    if (callback) {
+      try {
+        return callback(result)
+      } catch (e) {
+        throw new InvalidGraphQlResponseError(e instanceof Error ? e : undefined);
+      }
+    }
+
+    return result as unknown as R;
+  }
+
 }
