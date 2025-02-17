@@ -6,20 +6,20 @@ export enum MessageTypes {
 }
 
 export function isWorldExtractEventMessage(
-  message: any
+  message: BaseMessage
 ): message is WorldExtractEventMessage {
   return (
-    (message as BaseMessage).action === MessageTypes.WORLD_EXTRACT_EVENT_REQUEST
+    message.action === MessageTypes.WORLD_EXTRACT_EVENT_REQUEST
   )
 }
-export function isAppExtractEventMessage(message: any): message is AppExtractEventMessage {
-  return (message as BaseMessage).action === MessageTypes.APP_EXTRACT_EVENT_REQUEST;
+export function isAppExtractEventMessage(message: BaseMessage): message is AppExtractEventMessage {
+  return message.action === MessageTypes.APP_EXTRACT_EVENT_REQUEST;
 }
-export function isAuthTokenRequest(message: any): message is WorldExtractEventMessage {
-  return (message as BaseMessage).action === MessageTypes.AUTH_TOKEN_REQUEST;
+export function isAuthTokenRequest(message: BaseMessage): message is WorldExtractEventMessage {
+  return message.action === MessageTypes.AUTH_TOKEN_REQUEST;
 }
-export function isAppVersionRequest(message: any): message is WorldExtractEventMessage {
-  return (message as BaseMessage).action === MessageTypes.APP_VERSION_REQUEST;
+export function isAppVersionRequest(message: BaseMessage): message is WorldExtractEventMessage {
+  return message.action === MessageTypes.APP_VERSION_REQUEST;
 }
 
 export interface BaseMessage {
