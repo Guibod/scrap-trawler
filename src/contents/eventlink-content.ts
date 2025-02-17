@@ -1,7 +1,7 @@
 import { ContentAccessor } from "~scripts/eventlink/content.accessor";
 import { EventExtractor } from "~scripts/eventlink/event-extractor";
 import { ErrorResponse } from "~scripts/messages/error.response";
-import { isAppVersionRequest, isWorldExtractEventMessage } from "~scripts/messages/message-types";
+import { type BaseMessage, isAppVersionRequest, isWorldExtractEventMessage } from "~scripts/messages/message-types"
 import type { PlasmoCSConfig } from "plasmo"
 import { EventMapper, EventStorage } from "~scripts/storage/event-storage"
 
@@ -13,7 +13,7 @@ export const config: PlasmoCSConfig = {
 const contentAccessor = new ContentAccessor();
 const wotcClientHeader = await contentAccessor.getXWotcClientHeader()
 
-chrome.runtime.onMessage.addListener((message: any, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message: BaseMessage, sender, sendResponse) => {
   if (isAppVersionRequest(message)) {
     sendResponse(wotcClientHeader);
     return true;

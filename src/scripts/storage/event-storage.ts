@@ -4,7 +4,7 @@ import { type WotcExtractedEvent } from "~scripts/eventlink/event-extractor";
  * Data structure for storing extracted events in local storage.
  */
 export interface EventDbo {
-  eventId: string;
+  id: string;
   name: string;
   date: Date;
   organizer: string;
@@ -18,6 +18,7 @@ export interface EventSummary {
   id: string;
   name: string;
   date: Date;
+  organizer: string;
 }
 
 export class EventStorage {
@@ -27,18 +28,18 @@ export class EventStorage {
    */
   static async save(event: EventDbo): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      chrome.storage.local.get(event.eventId, (existingData) => {
+      chrome.storage.local.get(event.id, (existingData) => {
         const updatedData = {
-          ...existingData[event.eventId], // Preserve existing data if available
+          ...existingData[event.id], // Preserve existing data if available
           rawWotcData: event.rawWotcData, // Store the new extracted data
         };
 
-        chrome.storage.local.set({ [event.eventId]: updatedData }, () => {
+        chrome.storage.local.set({ [event.id]: updatedData }, () => {
           if (chrome.runtime.lastError) {
             console.error("Failed to store event data:", chrome.runtime.lastError);
             reject(chrome.runtime.lastError);
           } else {
-            console.log(`Event ${event.eventId} successfully saved.`);
+            console.log(`Event ${event.id} successfully saved.`);
             resolve();
           }
         });
@@ -65,8 +66,8 @@ export class EventStorage {
       chrome.storage.local.get(null, (data) => {
         const events: EventSummary[] = Object.values(data).sort(
           (a, b) => b.date.getTime() - a.date.getTime()
-        ).map((event: any) => ({
-          id: event.eventId,
+        ).map((event: EventDbo) => ({
+          id: event.id,
           name: event.name,
           organizer: event.organizer,
           date: event.date
@@ -86,7 +87,7 @@ export class EventMapper {
       date: new Date(event.event.actualStartTime ?? event.event.scheduledStartTime),
       organizer: event.organization.name,
       name: event.event.title,
-      eventId: event.event.id.toString(),
+      id: event.event.id.toString(),
       rawWotcData: event
     };
   }
