@@ -1,3 +1,5 @@
+import Bowser, { parse } from "bowser"
+
 export class ContentAccessor {
   private randomVersionGenerator: () => string;
 
@@ -53,16 +55,10 @@ export class ContentAccessor {
       }
     }
 
-    const userAgent = navigator.userAgent;
-    const browserInfo = (() => {
-      const ua = userAgent.toLowerCase();
-      if (ua.includes("chrome")) return { name: "chrome", version: (ua.match(/chrome\/([\d.]+)/) || [])[1] };
-      if (ua.includes("firefox")) return { name: "firefox", version: (ua.match(/firefox\/([\d.]+)/) || [])[1] };
-      if (ua.includes("safari") && !ua.includes("chrome")) return { name: "Safari", version: (ua.match(/version\/([\d.]+)/) || [])[1] };
-      if (ua.includes("edg")) return { name: "edge", version: (ua.match(/edg\/([\d.]+)/) || [])[1] };
-      return { name: "Unknown", version: "Unknown" };
-    })();
-
-    return `client:eventlink version:${sgwVersion} platform:${navigator.platform}/${browserInfo.name}/${browserInfo.version};`
+    const parsed = Bowser.parse(navigator.userAgent);
+    const platform = parsed.os.name || "unknown";
+    const browser = (parsed.browser.name || "unknown").toLowerCase();
+    const version = parsed.browser.version || "unknown";
+    return `client:eventlink version:${sgwVersion} platform:${platform}/${browser}/${version};`
   }
 }

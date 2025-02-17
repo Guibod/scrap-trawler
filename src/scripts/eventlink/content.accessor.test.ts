@@ -90,7 +90,7 @@ describe("ContentAccessor", () => {
       });
 
       const header = await contentAccessor.getXWotcClientHeader();
-      expect(header).toBe("client:eventlink version:abcdef12 platform:MacIntel/chrome/112.0.0.0;");
+      expect(header).toBe("client:eventlink version:abcdef12 platform:macOS/chrome/112.0.0.0;");
     });
 
     it("should extract browser and OS details for Firefox on Windows", async () => {
@@ -100,7 +100,7 @@ describe("ContentAccessor", () => {
       });
 
       const header = await contentAccessor.getXWotcClientHeader();
-      expect(header).toBe("client:eventlink version:abcdef12 platform:Win32/firefox/109.0;");
+      expect(header).toBe("client:eventlink version:abcdef12 platform:Windows/firefox/109.0;");
     });
 
     it("should extract browser and OS details for Safari on macOS", async () => {
@@ -110,7 +110,7 @@ describe("ContentAccessor", () => {
       });
 
       const header = await contentAccessor.getXWotcClientHeader();
-      expect(header).toBe("client:eventlink version:abcdef12 platform:MacIntel/Safari/14.0.3;");
+      expect(header).toBe("client:eventlink version:abcdef12 platform:macOS/safari/14.0.3;");
     });
 
     it("should handle unknown browser and OS", async () => {
@@ -120,7 +120,7 @@ describe("ContentAccessor", () => {
       });
 
       const header = await contentAccessor.getXWotcClientHeader();
-      expect(header).toBe("client:eventlink version:abcdef12 platform:UnknownOS/Unknown/Unknown;");
+      expect(header).toBe("client:eventlink version:abcdef12 platform:unknown/unknown/unknown;");
     });
 
     it("should return a different version string if script fetch fails", async () => {
@@ -133,7 +133,7 @@ describe("ContentAccessor", () => {
       vi.spyOn(global, "fetch").mockRejectedValue(new Error("Network Error"));
 
       const header = await contentAccessor.getXWotcClientHeader();
-      expect(header).toBe("client:eventlink version:abcdef12 platform:Win32/firefox/109.0;");
+      expect(header).toBe("client:eventlink version:abcdef12 platform:Windows/firefox/109.0;");
     });
   });
 });
