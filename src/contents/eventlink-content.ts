@@ -31,7 +31,6 @@ const contentAccessor = new ContentAccessor();
         } catch (e) {
           if (e instanceof ScrapTrawlerError) {
             sendResponse(e.toErrorResponse());
-            console.error(e);
           }
         }
       })();
