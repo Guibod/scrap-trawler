@@ -15,8 +15,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4  # Ensures a Git repository is available
 
+      - name: Extract PR Number
+        id: extract_pr
+        run: echo "::set-output name=pr_number::$(echo $GITHUB_REF | sed 's/refs\/pull\/\([0-9]*\)\/merge/\1/')"
+
       - name: Auto-Approve Dependabot PR
         if: github.actor == 'dependabot[bot]'
-        run: gh pr review --approve "$GITHUB_REF"
+        run: gh pr review --approve ${{ steps.extract_pr.outputs.pr_number }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
