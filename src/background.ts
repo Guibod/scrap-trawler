@@ -1,7 +1,7 @@
 import { ContentAccessor } from "~scripts/eventlink/content.accessor"
 import { type WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
 import {
-  isAppExtractEventMessage, isAuthTokenRequest, MessageTypes, isLogMessage, type WorldExtractEventMessage
+  isAppExtractEventMessage, isAuthTokenRequest, MessageTypes, isLogMessage, isToggleSidePanelMessage, type WorldExtractEventMessage
 } from "~scripts/messages/message-types"
 import { type ErrorResponse, isErrorResponse } from "~scripts/messages/error.response"
 import { BackgroundAccessor } from "~scripts/eventlink/background.accessor"
@@ -17,12 +17,25 @@ logger.start("Background service started");
 (async () => {
   logger.info("State of the events", await eventDao.summary())
 
+  chrome.sidePanel
+    .setPanelBehavior({ openPanelOnActionClick: true })
+    .catch((error) => console.error(error));
+
   chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     logger.debug("Received message in background:", message)
 
     if (isLogMessage(message)) {
       logger[message.level](`${message.context}: ${message.message}`, message.data)
       return new Promise(() => true)
+    }
+
+    if (isToggleSidePanelMessage(message)) {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0];
+        if (activeTab) {
+          chrome.sidePanel.open({ tabId: activeTab.id });
+        }
+      })
     }
 
     if (isAppExtractEventMessage(message)) {

@@ -2,6 +2,7 @@ export enum MessageTypes {
   APP_EXTRACT_EVENT_REQUEST = "APP_EXTRACT_EVENT_REQUEST",
   WORLD_EXTRACT_EVENT_REQUEST = "WORLD_EXTRACT_EVENT_REQUEST",
   AUTH_TOKEN_REQUEST = "REQUEST_AUTH_TOKEN",
+  TOGGLE_SIDEPANEL = "TOGGLE_SIDEPANEL",
   APP_VERSION_REQUEST = "REQUEST_APP_VERSION",
   LOG = "LOG",
 }
@@ -24,6 +25,9 @@ export function isAppVersionRequest(message: BaseMessage): message is WorldExtra
 }
 export function isLogMessage(message: BaseMessage): message is LogMessage {
   return (message as BaseMessage).action === MessageTypes.LOG;
+}
+export function isToggleSidePanelMessage(message: any): message is ToggleSidePanelMessage {
+  return (message as BaseMessage).action === MessageTypes.TOGGLE_SIDEPANEL;
 }
 
 export interface BaseMessage {
@@ -56,4 +60,9 @@ export interface LogMessage extends BaseMessage {
   message: string,
   context: string,
   data?: object
+}
+
+export interface ToggleSidePanelMessage extends BaseMessage {
+  action: MessageTypes.TOGGLE_SIDEPANEL,
+  open?: boolean,
 }
