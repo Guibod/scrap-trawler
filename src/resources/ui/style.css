@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#plasmo-shadow-container {
+    all: initial;
+    box-sizing: border-box;
+}
