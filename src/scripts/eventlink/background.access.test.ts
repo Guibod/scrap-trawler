@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { type Mock, describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { BackgroundAccessor } from "~/scripts/eventlink/background.accessor";
 
 describe("BackgroundAccessor", () => {
-  let mockCookieGetter: vi.Mock;
+  let mockCookieGetter: Mock;
 
   beforeEach(() => {
     mockCookieGetter = vi.fn();
@@ -73,7 +73,7 @@ describe("BackgroundAccessor", () => {
       const mockInvalidPayload = JSON.stringify({ wrong_key: "no_access_token" });
       const encodedInvalidToken = btoa(mockInvalidPayload);
 
-      mockCookieGetter.mockImplementation({ value: encodedInvalidToken });
+      mockCookieGetter.mockResolvedValue({ value: encodedInvalidToken });
 
       const accessor = new BackgroundAccessor(mockCookieGetter);
       const result = await accessor.getAccessToken();

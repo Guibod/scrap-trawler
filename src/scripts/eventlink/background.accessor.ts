@@ -1,8 +1,8 @@
 export class BackgroundAccessor {
-  private cookieGetter: (details: chrome.cookies.Details, callback: (cookie: chrome.cookies.Cookie | null) => void) => void;
+  private cookieGetter: (details: chrome.cookies.CookieDetails, callback: (cookie: chrome.cookies.Cookie | null) => void) => void;
 
   constructor(
-    cookieGetter?: (details: chrome.cookies.Details, callback: (cookie: chrome.cookies.Cookie | null) => void) => void
+    cookieGetter?: (details: chrome.cookies.CookieDetails, callback: (cookie: chrome.cookies.Cookie | null) => void) => void
   ) {
     this.cookieGetter = cookieGetter || chrome.cookies.get;
   }
