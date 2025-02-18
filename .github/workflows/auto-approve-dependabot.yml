@@ -23,4 +23,4 @@ jobs:
         if: github.actor == 'dependabot[bot]'
         run: gh pr review --approve ${{ steps.extract_pr.outputs.pr_number }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
