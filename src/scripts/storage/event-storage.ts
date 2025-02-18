@@ -1,4 +1,5 @@
 import { type WotcExtractedEvent } from "~scripts/eventlink/event-extractor";
+import { getLogger } from "~scripts/logging/logger"
 
 /**
  * Data structure for storing extracted events in local storage.
@@ -22,11 +23,13 @@ export interface EventSummary {
 }
 
 export class EventStorage {
+  private logger = getLogger(this.constructor.name);
+
   /**
    * Saves an extracted event into local storage.
    * Updates the stored data if the event already exists.
    */
-  static async save(event: EventDbo): Promise<void> {
+  async save(event: EventDbo): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       chrome.storage.local.get(event.id, (existingData) => {
         const updatedData = {
@@ -36,10 +39,10 @@ export class EventStorage {
 
         chrome.storage.local.set({ [event.id]: updatedData }, () => {
           if (chrome.runtime.lastError) {
-            console.error("Failed to store event data:", chrome.runtime.lastError);
+            this.logger.error("Failed to store event data:", chrome.runtime.lastError);
             reject(chrome.runtime.lastError);
           } else {
-            console.log(`Event ${event.id} successfully saved.`);
+            this.logger.error(`Event ${event.id} successfully saved.`);
             resolve();
           }
         });

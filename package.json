@@ -38,6 +38,7 @@
   "dependencies": {
     "@plasmohq/messaging": "^0.7.1",
     "bowser": "^2.11.0",
+    "consola": "^3.4.0",
     "graphql-request": "^6.1.0",
     "plasmo": "0.90.3",
     "react": "18.2.0",
@@ -57,7 +58,8 @@
     "tsx": "^4.19.2",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.5"
+    "vitest": "^3.0.5",
+    "vitest-mock-extended": "^2.0.2"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,json,md}": "biome format --write"
