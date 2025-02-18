@@ -1,5 +1,5 @@
 import type { PlasmoCSConfig } from "plasmo"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Button } from "@heroui/button";
 import {HeroUIProvider} from "@heroui/system";
 
@@ -10,6 +10,14 @@ import {
 import type { WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
 import type { ErrorResponse } from "~scripts/messages/error.response"
 import { getLogger } from "~scripts/logging/logger"
+// import cssText from "data-text:~style.css"
+// import "framer-motion"
+//
+// export const getStyle = () => {
+//   const style = document.createElement("style")
+//   style.textContent = cssText
+//   return style
+// }
 
 export const config: PlasmoCSConfig = {
   matches: ["https://eventlink.wizards.com/*"],
@@ -54,7 +62,7 @@ const ScrapeButton = () => {
 
         <Button
           color="secondary"
-          onPress={handleToggle()}
+          onPress={handleToggle}
         >
           TOGGLE SIDEBAR
         </Button>
