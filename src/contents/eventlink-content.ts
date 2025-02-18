@@ -4,6 +4,10 @@ import { type BaseMessage, isAppVersionRequest, isWorldExtractEventMessage } fro
 import type { PlasmoCSConfig } from "plasmo"
 import { EventMapper, EventStorage } from "~scripts/storage/event-storage"
 import { ScrapTrawlerError } from "~scripts/exception"
+import { getLogger } from "~scripts/logging/logger"
+
+const logger = getLogger("eventlink-content");
+logger.start("Content script started");
 
 export const config: PlasmoCSConfig = {
   matches: ["https://eventlink.wizards.com/*"],
@@ -11,6 +15,7 @@ export const config: PlasmoCSConfig = {
 };
 
 const contentAccessor = new ContentAccessor();
+const storage = new EventStorage();
 const wotcClientHeader = await contentAccessor.getXWotcClientHeader()
 
 chrome.runtime.onMessage.addListener((message: BaseMessage, sender, sendResponse) => {
@@ -25,7 +30,7 @@ chrome.runtime.onMessage.addListener((message: BaseMessage, sender, sendResponse
         const extractor = new EventExtractor(message.accessToken, wotcClientHeader, message.eventId, message.organizationId);
         const result = await extractor.extract();
 
-        await EventStorage.save(EventMapper.toDbo(result))
+        await storage.save(EventMapper.toDbo(result))
 
         sendResponse(result);
       } catch (e) {
@@ -41,3 +46,5 @@ chrome.runtime.onMessage.addListener((message: BaseMessage, sender, sendResponse
 
   return false;
 });
+
+logger.info("Content script initialized with X-WOTC-Client header:", wotcClientHeader);

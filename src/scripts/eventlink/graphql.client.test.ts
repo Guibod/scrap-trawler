@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
+import { describe, test, expect, beforeEach, afterEach, vi, type Mocked } from "vitest";
 import { GraphQLClient } from "graphql-request";
 import { EventLinkGraphQLClient } from "./graphql.client";
 import { GraphQlError, InvalidGraphQlResponseError } from "~scripts/eventlink/exceptions"
@@ -13,7 +13,7 @@ vi.mock("graphql-request", () => ({
 
 describe("EventLinkGraphQLClient", () => {
   let client: EventLinkGraphQLClient;
-  let mockGraphQLClient: vi.Mocked<GraphQLClient>;
+  let mockGraphQLClient: Mocked<GraphQLClient>;
 
   beforeEach(() => {
     client = new EventLinkGraphQLClient("fake-token", "test-client");

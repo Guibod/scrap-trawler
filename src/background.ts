@@ -1,17 +1,24 @@
 import { ContentAccessor } from "~scripts/eventlink/content.accessor"
 import { type WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
 import {
-  isAppExtractEventMessage, isAuthTokenRequest, MessageTypes,
-  type WorldExtractEventMessage
+  isAppExtractEventMessage, isAuthTokenRequest, MessageTypes, isLogMessage, type WorldExtractEventMessage
 } from "~scripts/messages/message-types"
 import type { ErrorResponse } from "~scripts/messages/error.response"
 import { BackgroundAccessor } from "~scripts/eventlink/background.accessor"
-
+import { getLogger } from "~scripts/logging/logger"
 
 const backgroundAccessor = new BackgroundAccessor();
 
+const logger = getLogger("background-service");
+logger.start("Background service started");
+
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
-  console.log("Received message in background:", message);
+  logger.debug("Received message in background:", message);
+
+  if (isLogMessage(message)) {
+    logger[message.level](`${message.context}: ${message.message}`, message.data);
+    return new Promise(() => true);
+  }
 
   if (isAppExtractEventMessage(message)) {
     const accessToken = await backgroundAccessor.getAccessToken();
@@ -27,7 +34,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             accessToken
           } as WorldExtractEventMessage,
           (response: WotcExtractedEvent | ErrorResponse) => {
-            console.log("Complete extraction results: ", response);
+            logger.debug("Complete extraction results: ", response);
             sendResponse(response);
           }
         );
@@ -49,6 +56,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   }
 
 
-  console.log("Unknown message type:", message);
+  logger.debug("Unknown message type:", message);
   return true; // Keep service worker alive
 });

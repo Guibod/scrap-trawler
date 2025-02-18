@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react"
 
 import {
   type AppExtractEventMessage,
-  MessageTypes,
+  MessageTypes
 } from "~scripts/messages/message-types"
 import type { WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
 import type { ErrorResponse } from "~scripts/messages/error.response"
+import { getLogger } from "~scripts/logging/logger"
 
 export const config: PlasmoCSConfig = {
   matches: ["https://eventlink.wizards.com/*"],
@@ -16,9 +17,12 @@ export const config: PlasmoCSConfig = {
 export const getInlineAnchor = () =>
   document.querySelector("div.event-page-header__primary");
 
+const logger = getLogger('eventlink-ui');
+logger.start('Event link UI started');
+
 const ScrapeButton = () => {
   const handleScrape = async () => {
-    console.log("Sending scrape request to background script");
+    logger.info("Sending scrape request to background script");
 
     chrome.runtime.sendMessage(
       {
@@ -26,7 +30,7 @@ const ScrapeButton = () => {
         url: window.location.href
       } as AppExtractEventMessage,
       (response: WotcExtractedEvent | ErrorResponse) => {
-        console.log(response);
+        logger.info(response);
       }
     );
   };
@@ -34,7 +38,7 @@ const ScrapeButton = () => {
   // useEffect(() => {
   //   const messageListener = (message: any) => {
   //     if (message.action === "SCRAPE_COMPLETE") {
-  //       console.log("Scraping complete. Event data received:", message.data);
+  //       logger.info("Scraping complete. Event data received:", message.data);
   //       setScrapeStatus("Scrape Complete");
   //       setScrapedData(message.data);
   //     }

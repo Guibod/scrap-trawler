@@ -6,6 +6,7 @@ import type {
 } from "~scripts/eventlink/graphql.dto.types"
 import { gql, GraphQLClient } from 'graphql-request'
 import { GraphQlError, InvalidGraphQlResponseError } from "~scripts/eventlink/exceptions"
+import { getLogger, LoggerProxy } from "~scripts/logging/logger"
 const GRAPHQL_ENDPOINT = "https://api.tabletop.wizards.com/silverbeak-griffin-service/graphql";
 
 type Variables = Record<string, unknown>
@@ -13,9 +14,12 @@ type Variables = Record<string, unknown>
 export class EventLinkGraphQLClient {
   private xWotcClientHeader: string;
   private client: GraphQLClient
+  private logger: LoggerProxy
 
   constructor(accessToken: string, xWotcClientHeader: string) {
     this.xWotcClientHeader = xWotcClientHeader;
+    this.logger = getLogger("eventlink-graphql-client");
+    console.log(this.logger.loggerImplementation);
     this.client = new GraphQLClient(GRAPHQL_ENDPOINT, {
       method: "POST",
       headers: {
@@ -459,7 +463,7 @@ export class EventLinkGraphQLClient {
     try {
       result= await this.client.request<T, Variables>(query, variables);
     } catch (error) {
-      console.log(`[GraphQL Error] Query failed:`, error);
+      this.logger.error(error);
       throw new GraphQlError("GraphQL request failed.", error instanceof Error ? error : undefined);
     }
 
