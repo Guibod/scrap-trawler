@@ -2,7 +2,8 @@ export enum MessageTypes {
   APP_EXTRACT_EVENT_REQUEST = "APP_EXTRACT_EVENT_REQUEST",
   WORLD_EXTRACT_EVENT_REQUEST = "WORLD_EXTRACT_EVENT_REQUEST",
   AUTH_TOKEN_REQUEST = "REQUEST_AUTH_TOKEN",
-  APP_VERSION_REQUEST = "REQUEST_APP_VERSION"
+  APP_VERSION_REQUEST = "REQUEST_APP_VERSION",
+  LOG = "LOG",
 }
 
 export function isWorldExtractEventMessage(
@@ -20,6 +21,9 @@ export function isAuthTokenRequest(message: BaseMessage): message is WorldExtrac
 }
 export function isAppVersionRequest(message: BaseMessage): message is WorldExtractEventMessage {
   return message.action === MessageTypes.APP_VERSION_REQUEST;
+}
+export function isLogMessage(message: BaseMessage): message is LogMessage {
+  return (message as BaseMessage).action === MessageTypes.LOG;
 }
 
 export interface BaseMessage {
@@ -44,4 +48,12 @@ export interface RequestAuthTokenMessage extends BaseMessage {
 
 export interface RequestAppVersionMessage extends BaseMessage {
   action: MessageTypes.APP_VERSION_REQUEST,
+}
+
+export interface LogMessage extends BaseMessage {
+  action: MessageTypes.LOG,
+  level: "debug" | "info" | "warn" | "error",
+  message: string,
+  context: string,
+  data?: object
 }
