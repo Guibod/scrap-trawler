@@ -4,7 +4,8 @@ pre_bump_hooks = [
 ]
 
 post_bump_hooks = [
-    "pnpm sync-version && git add package.json && git commit -m 'chore: sync package.json version'"
+    "pnpm sync-version && git add package.json CHANGELOG.md && git commit -m 'chore: sync package.json version'",
+    "git push && git push --tags"
 ]
 
 [changelog]
