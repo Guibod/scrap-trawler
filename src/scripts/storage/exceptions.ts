@@ -1,19 +1,20 @@
 import { ScrapTrawlerError } from "~scripts/exception"
+import type { EntityTable } from "dexie"
 
 export class StorageError extends ScrapTrawlerError {
-  constructor(message: string) {
-    super(`Storage Error: ${message}`);
+  constructor(message: string, sourceError?: Error) {
+    super(`Storage Error: ${message}`, sourceError);
   }
 }
 
-export class DataCorruptionError extends StorageError {
-  constructor() {
-    super('Stored data appears to be corrupted.');
+export class NotFoundStorageError extends StorageError {
+  constructor(entity: EntityTable<any, any>, identifier: any) {
+    super(`Unable to resolve ${entity.name} with ${identifier} in storage.`);
   }
 }
 
-export class StorageQuotaExceededError extends StorageError {
-  constructor() {
-    super('Storage quota exceeded.');
+export class WriteStorageError extends StorageError {
+  constructor(entity: object, sourceError?: Error) {
+    super(`Unable to write ${entity}.`, sourceError);
   }
 }
