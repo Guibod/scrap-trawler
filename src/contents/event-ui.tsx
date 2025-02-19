@@ -1,24 +1,22 @@
-import type { PlasmoCSConfig } from "plasmo"
+import type { PlasmoCSConfig, PlasmoGetInlineAnchorList } from "plasmo"
 import React, { useEffect, useState } from "react"
 
 import {
   type AppExtractEventMessage,
   MessageTypes
 } from "~scripts/messages/message-types"
-import type { WotcExtractedEvent } from "~scripts/eventlink/event-extractor"
-import type { ErrorResponse } from "~scripts/messages/error.response"
 import { getLogger } from "~scripts/logging/logger"
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://eventlink.wizards.com/*"],
+  matches: ["https://eventlink.wizards.com/stores/*/events/*"],
   run_at: "document_idle"
 };
 
 export const getInlineAnchor = () =>
-  document.querySelector("div.event-page-header__primary");
+  document.querySelector("div.event-page-header__primary, div.event-view__too-old");
 
-const logger = getLogger('eventlink-ui');
-logger.start('Event link UI started');
+const logger = getLogger('event-ui');
+logger.start('Event UI started');
 
 const ScrapeButton = () => {
   const handleScrape = async () => {
@@ -29,26 +27,8 @@ const ScrapeButton = () => {
         action: MessageTypes.APP_EXTRACT_EVENT_REQUEST,
         url: window.location.href
       } as AppExtractEventMessage,
-      (response: WotcExtractedEvent | ErrorResponse) => {
-        logger.info(response);
-      }
     );
   };
-
-  // useEffect(() => {
-  //   const messageListener = (message: any) => {
-  //     if (message.action === "SCRAPE_COMPLETE") {
-  //       logger.info("Scraping complete. Event data received:", message.data);
-  //       setScrapeStatus("Scrape Complete");
-  //       setScrapedData(message.data);
-  //     }
-  //   };
-  //
-  //   chrome.runtime.onMessage.addListener(messageListener);
-  //   return () => {
-  //     chrome.runtime.onMessage.removeListener(messageListener);
-  //   };
-  // }, []);
 
   return (
     <div>
