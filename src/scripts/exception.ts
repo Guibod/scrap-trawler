@@ -17,3 +17,8 @@ export class ScrapTrawlerError extends Error {
   }
 }
 
+export class NotYetImplemented extends ScrapTrawlerError {
+  constructor(message: string) {
+    super('Not Yet Implemented: ' + message);
+  }
+}

@@ -4,6 +4,7 @@ import Database from "~scripts/storage/database"
 import type EventEntity from "~scripts/storage/entities/event.entity"
 import type { EntityTable } from "dexie"
 import { NotFoundStorageError, WriteStorageError } from "~scripts/storage/exceptions"
+import { NotYetImplemented } from "~scripts/exception"
 
 /**
  * Minimal format for listing events.
@@ -65,24 +66,20 @@ export class EventDao {
   /**
    * Retrieves an extracted event from local storage.
    */
-  async get(eventId: number): Promise<EventEntity> {
-    return this.table.where({id: eventId}).first().then((event) => {
+  async get(id: string): Promise<EventEntity> {
+    return this.table.where({id: id}).first().then((event) => {
       if (typeof event === 'undefined') {
-        throw new NotFoundStorageError(this.table, eventId);
+        throw new NotFoundStorageError(this.table, id);
       }
       return event;
     });
   }
 
-  /**
-   * Lists all stored events in a minimal format (id & name).
-   */
-  async summary(): Promise<EventSummary[]> {
-    return (await this.table.orderBy('date').toArray()).map((event) => ({
-          id: event.id,
-          name: event.name,
-          organizer: event.organizer,
-          date: event.date
-        }));
+  async getAll(): Promise<EventEntity[]> {
+    return this.table.orderBy('date').toArray();
+  }
+
+  async delete(id: string) {
+    throw new NotYetImplemented("EventDao.delete");
   }
 }
