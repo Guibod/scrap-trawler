@@ -1,4 +1,4 @@
-import Bowser, { parse } from "bowser"
+import Bowser from "bowser"
 
 export class ContentAccessor {
   private randomVersionGenerator: () => string;
