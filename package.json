@@ -39,6 +39,7 @@
     "@plasmohq/messaging": "^0.7.1",
     "bowser": "^2.11.0",
     "consola": "^3.4.0",
+    "dexie": "^4.0.11",
     "graphql-request": "^6.1.0",
     "plasmo": "0.90.3",
     "react": "18.2.0",
