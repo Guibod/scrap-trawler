@@ -6,17 +6,15 @@ import {
 import { type ErrorResponse, isErrorResponse } from "~scripts/messages/error.response"
 import { BackgroundAccessor } from "~scripts/eventlink/background.accessor"
 import { getLogger } from "~scripts/logging/logger"
-import { EventDao } from "~scripts/storage/event.dao"
-
+import EventService from "~scripts/domain/services/event.service"
 const backgroundAccessor = new BackgroundAccessor()
 
-const eventDao = new EventDao()
 const logger = getLogger("background-service")
+
+const eventService = new EventService();
 logger.start("Background service started");
 
 (async () => {
-  logger.info("State of the events", await eventDao.summary())
-
   chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     logger.debug("Received message in background:", message)
 
@@ -42,7 +40,7 @@ logger.start("Background service started");
               if (!isErrorResponse(response)) {
                 logger.debug("Complete extraction results: ", response)
 
-                await eventDao.save({
+                await eventService.saveEvent({
                   id: response.event.id,
                   date: new Date(response.event.actualStartTime ?? response.event.scheduledStartTime),
                   name: response.event.title,
