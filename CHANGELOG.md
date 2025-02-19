@@ -2,6 +2,79 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.2.0 - 2025-02-19
+#### Bug Fixes
+- README.md build status should be ok - (d00cf43) - Guillaume Boddaert
+- added cog commit compliance as a CI job - (bb287aa) - Guillaume Boddaert
+- attempted to fix release script - (cb46b69) - Guillaume Boddaert
+- attempted to install PNPM correctly (again 2) - (b0d9b49) - Guillaume Boddaert
+- attempted to install PNPM correctly (again)( - (667330d) - Guillaume Boddaert
+- attempted to install PNPM correctly - (ebf78fb) - Guillaume Boddaert
+- added missing pnpm dependency to the CI build - (40e74b1) - Guillaume Boddaert
+#### Continuous Integration
+- attempt to fix release script - (92506fa) - Guillaume Boddaert
+- added a eslintrc file to relax coderefactor - (47061cc) - Guillaume Boddaert
+- attempted to fix release action so that the version are pushed - (b3711cf) - Guillaume Boddaert
+- attempted debug on GH_PAT secret - (40a9e9f) - Guillaume Boddaert
+- fix dependabot autovalidation (with gh pat) - (6102205) - Guillaume Boddaert
+- fix dependabot autovalidation - (9b214ef) - Guillaume Boddaert
+- fix package.json is updated upon cog bump - (a0a5a77) - Guillaume Boddaert
+- fix dependabot autovalidation - (c04f99a) - Guillaume Boddaert
+- dependabot is automatically approved - (9f822b7) - Guillaume Boddaert
+- added support for dependabot - (18bdaa5) - Guillaume Boddaert
+- restored the ci workflow - (8703e78) - Guillaume Boddaert
+- conventional commit check won’t bother checking before last tag - (f589497) - Guillaume Boddaert
+- release job relies on cog to run tests - (e5dbaa7) - Guillaume Boddaert
+- added cocogitto to release script - (7b656b5) - Guillaume Boddaert
+- allow release.yml to be run manually - (ed0a2e1) - Guillaume Boddaert
+- moving from changeset to cocogito - (6607475) - Guillaume Boddaert
+#### Documentation
+- fix the project refactorio badge - (a28a08e) - Guillaume Boddaert
+- fix the project action status badge - (0ff007b) - Guillaume Boddaert
+- added OpenSSF Best Practices id to the README.md - (bcda813) - Guillaume Boddaert
+- added LICENSE file - (9b55610) - Guillaume Boddaert
+- added a nice README.md - (61c1a77) - Guillaume Boddaert
+- added more notes - (0a95d74) - Guillaume Boddaert
+#### Features
+- added indexDB storage for events - (f4f0773) - Guillaume Boddaert
+- added logger - (7b16b22) - Guillaume Boddaert
+- added storage support - (96f3910) - Guillaume Boddaert
+- added a bad chatgpt logo - (1aa2e48) - Guillaume Boddaert
+- complete tournament extraction that properly reaches all layers - (0d9ecd0) - Guillaume Boddaert
+- request graphql proof of concept - (8dd8e6d) - Guillaume Boddaert
+- initial commit - (2211be5) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(deps)** bump typescript from 5.3.3 to 5.7.3 - (ee40baa) - dependabot[bot]
+- **(deps)** bump plasmo from 0.90.2 to 0.90.3 - (3ee63cf) - dependabot[bot]
+- **(deps)** bump @types/chrome from 0.0.258 to 0.0.304 - (e2a84af) - dependabot[bot]
+- **(deps)** bump @types/node from 20.11.5 to 22.13.4 - (85c7785) - dependabot[bot]
+- **(version)** 0.1.1 - (0a6e3e9) - Guillaume Boddaert
+- removed useless releaserc file since we use cog - (5d50369) - Guillaume Boddaert
+- removed dependency to lodash - (2f14cf1) - Guillaume Boddaert
+- use bowser for browser discovery instead of our own implementation - (58ed4ea) - Guillaume Boddaert
+- added proper exception check in graphql client - (0107b38) - Guillaume Boddaert
+- a sample set of hierarchized exceptions - (6febf43) - Guillaume Boddaert
+- fixed some typing issues as reported by coderefactor - (59d5b50) - Guillaume Boddaert
+- removed dependency to prettier, since we are biome based anyway - (3ad0c68) - Guillaume Boddaert
+- added changeset as a dev dependency - (da86efb) - Guillaume Boddaert
+- initialize changesets - (9ae9ed9) - Guillaume Boddaert
+- package.json typed to module - (84b8e6e) - Guillaume Boddaert
+- package.json amended to fit the project - (5b3f22b) - Guillaume Boddaert
+- CI scripts - (b40ea45) - Guillaume Boddaert
+- added husky and biome for linting at commit - (6ac47b0) - Guillaume Boddaert
+- vitest instead of jest for test runner - (dab4b55) - Guillaume Boddaert
+- merged messages related definition files - (f537cf3) - Guillaume Boddaert
+- wip soon to be replaced by graphql variant - (b65542a) - Guillaume Boddaert
+- working on stuff, all gpt - (749784c) - Guillaume Boddaert
+- added pnpm lockfile to cvs - (aa396c1) - Guillaume Boddaert
+- gitignored .idea directory - (9dc03d0) - Guillaume Boddaert
+#### Tests
+- added more test, on background.accessor.ts - (4487936) - Guillaume Boddaert
+- added more test, on content.accessor.ts - (a88305c) - Guillaume Boddaert
+- added a sample test - (cf45dd6) - Guillaume Boddaert
+
+- - -
+
 ## 0.1.1 - 2025-02-16
 #### Bug Fixes
 - added cog commit compliance as a CI job - (78018e9) - Guillaume Boddaert
