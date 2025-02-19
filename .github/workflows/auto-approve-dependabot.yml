@@ -12,11 +12,6 @@ jobs:
       pull-requests: write
       contents: write
     steps:
-      - name: Debug Secrets
-        run: echo "GH_PAT=${{ secrets.GH_PAT != '' && 'SET' || 'EMPTY' }}"
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-
       - name: Checkout Repository
         uses: actions/checkout@v4  # Ensures a Git repository is available
 
