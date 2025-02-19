@@ -1,5 +1,5 @@
-import type { PlasmoCSConfig, PlasmoGetInlineAnchorList } from "plasmo"
-import React, { useEffect, useState } from "react"
+import type { PlasmoCSConfig } from "plasmo"
+import React from "react"
 
 import {
   type AppExtractEventMessage,
