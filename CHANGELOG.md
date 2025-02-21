@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.3.0 - 2025-02-21
+#### Bug Fixes
+- eventlink-content used async method at root, moved inside an IFE - (cd355b3) - Guillaume Boddaert
+#### Features
+- added sidebar ( event status ico) added scrape button on agenda view - (3222448) - Guillaume Boddaert
+#### Miscellaneous Chores
+- applied a proper onion design for the project - (9c05978) - Guillaume Boddaert
+- fixed typescript issues - (29f5e5d) - Guillaume Boddaert
+- sync package.json version - (df7d118) - Guillaume Boddaert
+
+- - -
+
 ## 0.2.0 - 2025-02-19
 #### Bug Fixes
 - README.md build status should be ok - (d00cf43) - Guillaume Boddaert
