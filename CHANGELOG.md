@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.4.0 - 2025-02-24
+#### Features
+- event list download button saves dao as a json file - (a0f89b4) - Guillaume Boddaert
+#### Miscellaneous Chores
+- sync package.json version - (48bdc25) - Cog Bot
+
+- - -
+
 ## 0.3.0 - 2025-02-21
 #### Bug Fixes
 - eventlink-content used async method at root, moved inside an IFE - (cd355b3) - Guillaume Boddaert
