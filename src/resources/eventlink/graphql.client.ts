@@ -19,7 +19,7 @@ export class EventLinkGraphQLClient {
   constructor(accessToken: string, xWotcClientHeader: string) {
     this.xWotcClientHeader = xWotcClientHeader;
     this.logger = getLogger("eventlink-graphql-client");
-    console.log(this.logger.loggerImplementation);
+
     this.client = new GraphQLClient(GRAPHQL_ENDPOINT, {
       method: "POST",
       headers: {

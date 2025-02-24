@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { HeroUIProvider, Pagination, TableColumn } from "@heroui/react"
-import { Table, TableBody, TableCell, TableRow, TableHeader } from "@heroui/table";
-import { Button } from "@heroui/button";
-import { ArrowPathIcon, StarIcon } from "@heroicons/react/24/solid";
-import { DocumentArrowDownIcon, TrashIcon } from "@heroicons/react/24/outline";
-import EventService from "~resources/domain/services/event.service";
-import { GlobalStatusIcon } from "~resources/ui/components/status.icons";
-import { MessageTypes } from "~resources/messages/message-types";
-import "~resources/ui/style.css";
+import React, { useEffect, useState } from "react"
+import { HeroUIProvider } from "@heroui/react"
+import { Button } from "@heroui/button"
+import { ArrowPathIcon, StarIcon } from "@heroicons/react/24/solid"
+import EventService from "~resources/domain/services/event.service"
+import "~resources/ui/style.css"
 import TableEvents from "~resources/ui/components/table.events"
+import { sendToBackground } from "@plasmohq/messaging"
+import { openBlank } from "~resources/ui/actions/blank.open"
 
 const service = new EventService();
 const EventSidebar = () => {
@@ -16,9 +14,6 @@ const EventSidebar = () => {
 
   const fetchEvents = async () => {
     setEvents(await service.listEvents());
-  };
-  const openBlank = async () => {
-    chrome.runtime.sendMessage({ action: MessageTypes.OPEN_BLANK });
   };
 
   useEffect(() => {

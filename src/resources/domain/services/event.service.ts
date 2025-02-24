@@ -4,29 +4,36 @@ import EventMapper from "~resources/domain/mappers/event.mapper"
 import type { EventSummarizedDbo } from "~resources/domain/dbos/event.summarized.dbo"
 import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
 import type EventEntity from "~resources/storage/entities/event.entity"
+import { getLogger } from "~resources/logging/logger"
+
+const logger = getLogger("event-service")
 
 export default class EventService {
   private dao = new EventDao();
 
   async getEvent(id: string): Promise<EventModel | null> {
     return this.dao.get(id)
-      .then((entity: EventEntity) => EventMapper.toDbo(entity))
       .catch(() => null)
+      .then((entity: EventEntity) => EventMapper.toDbo(entity))
   }
 
   async getSummary(id: string): Promise<EventSummarizedDbo | null> {
     return this.dao.get(id)
-      .then((entity: EventEntity) => EventMapper.toLightDbo(entity))
       .catch(() => null)
+      .then((entity: EventEntity) => EventMapper.toLightDbo(entity))
   }
 
-  async saveEvent(event: EventWriteDbo): Promise<void> {
+  async saveEvent(event: EventWriteDbo): Promise<EventModel> {
     const entity = EventMapper.toEntity(event);
-    await this.dao.save(entity);
+    return this.dao.save(entity)
+      .then(() => {
+        logger.info(`Saved event ${entity.id}`, entity)
+        return EventMapper.toDbo(entity)
+      });
   }
 
   async deleteEvent(id: string): Promise<void> {
-    await this.dao.delete(id);
+    await this.dao.delete(id).then(() => logger.info(`Deleted event ${id}`));
   }
 
   async listEvents(): Promise<EventSummarizedDbo[]> {
