@@ -1,10 +1,11 @@
-import React, { type FC, useMemo } from "react"
+import React, { type FC } from "react"
 import ButtonScrape from "~resources/ui/components/button.scrape"
 import type { PlasmoCSUIProps } from "plasmo"
-import { ContentAccessor } from "~resources/eventlink/content.accessor"
+import Context from "~resources/eventlink/context"
 
 const EventCalendarAction: FC<PlasmoCSUIProps> = ({ anchor }) => {
-  const organizationId = useMemo(() => ContentAccessor.getOrganizationId(window.location.href), [])
+  const organizationId = Context.getOrganizationId(window.location.href)
+
   let eventId: string;
   try {
     const element = anchor.element.querySelector(".capacity-details")

@@ -1,12 +1,11 @@
-import React, { type CSSProperties, useEffect, useState } from "react"
-import { scrapeEvent } from "~resources/ui/actions/scrape.event";
+import React, { useEffect, useState } from "react"
+import { eventScrape } from "~resources/ui/actions/event.scrape";
 import { Button } from "@heroui/button";
 import { ArchiveBoxArrowDownIcon } from "@heroicons/react/16/solid";
 import { ScrapeStatus } from "~resources/domain/enums/status.dbo";
 import statusColors from "~resources/ui/colors/status";
-import { ContentAccessor } from "~resources/eventlink/content.accessor";
-import { getEvent } from "~resources/ui/actions/get.event";
 import type { UseButtonProps } from "@heroui/button/dist/use-button"
+import { sendToBackground } from "@plasmohq/messaging"
 
 type ScrapButtonProps = {
   eventId?: string;
@@ -18,30 +17,29 @@ const ButtonScrape: React.FC<ScrapButtonProps> = ({eventId, organizationId, ...p
   const [isScraping, setIsScraping] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
-  if (!eventId) {
-    eventId = ContentAccessor.getEventId(window.location.href);
-    organizationId = ContentAccessor.getOrganizationId(window.location.href);
-  }
-
   useEffect(() => {
-    const loadScrapeStatus = async () => {
+    if (eventId) {
+      loadScrapeStatus();
+    }
+    return () => { }
+
+    async function loadScrapeStatus () {
       setIsFetching(true);
       try {
-        const event = await getEvent(eventId);
+        const event = await sendToBackground({ name: 'back/event-get', body: { eventId }});
         setScrapeStatus(event.status.scrape);
       } catch (error) {
         console.error("Failed to fetch event status:", error);
       }
       setIsFetching(false);
-    };
-    loadScrapeStatus();
+    }
   }, [eventId]);
 
   const handleScrape = async () => {
     setIsScraping(true);
     try {
-      const event = await scrapeEvent(eventId, organizationId);
-      setScrapeStatus(event.event.status === "ENDED" ? ScrapeStatus.COMPLETED : ScrapeStatus.IN_PROGRESS);
+      const event = await eventScrape(eventId, organizationId);
+      setScrapeStatus(event.status.scrape);
     } catch (error) {
       console.error("Scraping failed:", error);
     }
@@ -65,6 +63,8 @@ const ButtonScrape: React.FC<ScrapButtonProps> = ({eventId, organizationId, ...p
   if (!props.isIconOnly) {
     className += "px-4 py-2 flex items-center justify-center";
   }
+
+  if (!eventId) return;
 
   return (
     <Button

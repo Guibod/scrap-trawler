@@ -3,6 +3,9 @@ import EventEntity from "../../storage/entities/event.entity"
 import type { EventSummarizedDbo } from "~resources/domain/dbos/event.summarized.dbo"
 import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~resources/domain/enums/status.dbo"
 import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
+import { getLogger } from "~resources/logging/logger"
+
+const logger = getLogger("event-mapper")
 
 export default class EventMapper {
   static toDbo(entity: EventEntity): EventModel {
@@ -30,9 +33,9 @@ export default class EventMapper {
     const entity = new EventEntity();
     entity.id = dbo.id;
     entity.name = dbo.name;
-    entity.date = dbo.date;
+    entity.date = new Date(dbo.date);
     entity.organizer = dbo.organizer;
-    entity.raw_data = dbo.raw_data ?? {}; // Ensure raw_data is always initialized
+    entity.raw_data = dbo.raw_data ?? {};
     entity.last_updated = new Date();
     return entity;
   }
@@ -43,13 +46,17 @@ export default class EventMapper {
     let pair = PairStatus.NOT_STARTED;
     let fetch = FetchStatus.NOT_STARTED;
 
-    if (entity.raw_data.wotc.event.status === "ENDED") {
-      scrape = ScrapeStatus.COMPLETED;
-      global = GlobalStatus.PARTIAL;
-    }
+    try {
+      if (entity.raw_data.wotc.event.status === "ENDED") {
+        scrape = ScrapeStatus.COMPLETED;
+        global = GlobalStatus.PARTIAL;
+      }
 
-    if (scrape === ScrapeStatus.COMPLETED) {
-      global = GlobalStatus.COMPLETED;
+      if (scrape === ScrapeStatus.COMPLETED) {
+        global = GlobalStatus.COMPLETED;
+      }
+    } catch (error) {
+      logger.error("Failed to infer status:", error);
     }
 
     return {

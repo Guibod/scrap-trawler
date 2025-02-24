@@ -1,6 +1,6 @@
 import { type LoggerInterface } from "./interface";
-import { MessageTypes } from "~resources/messages/message-types"
 import { type ConsolaInstance, createConsola } from "consola"
+import { sendToBackground } from "@plasmohq/messaging"
 
 export class ContentScriptLogger implements LoggerInterface {
   name: string;
@@ -14,47 +14,81 @@ export class ContentScriptLogger implements LoggerInterface {
     })
   }
 
-  private sendToBackground(level: string, message: string, data?: object): void {
-    if (typeof chrome === "undefined" || !chrome.runtime?.sendMessage) {
-      return; // Prevents `ReferenceError`
-    }
-
-    chrome.runtime.sendMessage({
-      action: MessageTypes.LOG,
-      level,
-      context: this.name,
-      message,
-      data,
-    });
-  }
-
   start(message: string, data?: object): void {
     this.logger.start(message, data)
-    this.sendToBackground("start", message, data);
+    sendToBackground({
+      name: "back/log",
+      body: {
+        level: "start",
+        message: message,
+        context: this.name,
+        data: data
+      }
+    });
   }
 
   debug(message: string, data?: object): void {
     this.logger.debug(message, data)
-    this.sendToBackground("debug", message, data);
+    sendToBackground({
+      name: "back/log",
+      body: {
+        level: "start",
+        message: message,
+        context: this.name,
+        data: data
+      }
+    });
   }
 
   info(message: string, data?: object): void {
     this.logger.info(message, data)
-    this.sendToBackground("info", message, data);
+    sendToBackground({
+      name: "back/log",
+      body: {
+        level: "info",
+        message: message,
+        context: this.name,
+        data: data
+      }
+    });
   }
 
   warn(message: string, data?: object): void {
     this.logger.warn(message, data)
-    this.sendToBackground("warn", message, data);
+    sendToBackground({
+      name: "back/log",
+      body: {
+        level: "warn",
+        message: message,
+        context: this.name,
+        data: data
+      }
+    });
   }
 
   error(message: string, data?: object): void {
     this.logger.error(message, data)
-    this.sendToBackground("error", message, data);
+    sendToBackground({
+      name: "back/log",
+      body: {
+        level: "error",
+        message: message,
+        context: this.name,
+        data: data
+      }
+    });
   }
 
   exception(error: Error): void {
     this.logger.error(error)
-    this.sendToBackground("error", error.message, { stack: error.stack });
+    sendToBackground({
+      name: "back/log",
+      body: {
+        level: "error",
+        message: error.message,
+        context: this.name,
+        data: error.stack
+      }
+    });
   }
 }

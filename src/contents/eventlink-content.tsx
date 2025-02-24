@@ -1,6 +1,3 @@
-import { ContentAccessor } from "~resources/eventlink/content.accessor";
-import { EventExtractor } from "~resources/eventlink/event-extractor";
-import { type BaseMessage, isAppVersionRequest, isWorldExtractEventMessage } from "~resources/messages/message-types"
 import {
   type PlasmoCreateShadowRoot,
   type PlasmoCSConfig,
@@ -8,7 +5,6 @@ import {
   type PlasmoGetStyle,
   type PlasmoRender
 } from "plasmo"
-import { ScrapTrawlerError } from "~resources/exception"
 import { getLogger } from "~resources/logging/logger"
 import { HeroUIProvider } from "@heroui/react"
 import EventCalendarAction from "~resources/ui/containers/event-calendar-action"
@@ -16,8 +12,10 @@ import EventTitleActions from "~resources/ui/containers/event-title-actions"
 import { createRoot } from "react-dom/client"
 import cssText from "data-text:~resources/ui/style.css"
 import { OverlayRelativeToShadowHostCSUIContainer } from "~resources/ui/components/plasmo.custom"
-
+import { listen } from "@plasmohq/messaging/message"
+import Context from "~resources/eventlink/context"
 const logger = getLogger("eventlink-content");
+
 logger.start("Content script started");
 
 export const config: PlasmoCSConfig = {
@@ -25,36 +23,15 @@ export const config: PlasmoCSConfig = {
   run_at: "document_idle"
 };
 
-const contentAccessor = new ContentAccessor();
-(async () => {
-  const wotcClientHeader = await contentAccessor.getXWotcClientHeader();
-
-  chrome.runtime.onMessage.addListener((message: BaseMessage, sender, sendResponse) => {
-    if (isAppVersionRequest(message)) {
-      sendResponse(wotcClientHeader);
-      return true;
+listen(
+  async (req, res) => {
+    if (req.name == "contents/app-settings") {
+      res.send(Context.getAppSettingsUrl(document));
     }
 
-    if (isWorldExtractEventMessage(message)) {
-      (async () => {
-        try {
-          const extractor = new EventExtractor(message.accessToken, wotcClientHeader, message.eventId, message.organizationId);
-          sendResponse(await extractor.extract());
-        } catch (e) {
-          if (e instanceof ScrapTrawlerError) {
-            sendResponse(e.toErrorResponse());
-          }
-        }
-      })();
-
-      return true;
-    }
-
-    return false;
-  });
-
-  logger.info("Content script initialized with X-WOTC-Client header:", { wotcClientHeader });
-})();
+    throw Error("Unknown message: " + req.name);
+  }
+)
 
 export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () => {
   const anchors = [];
