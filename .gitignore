@@ -35,3 +35,4 @@ dist/
 .idea
 
 ._*/*
+._key.json
