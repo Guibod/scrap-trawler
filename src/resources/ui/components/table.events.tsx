@@ -5,6 +5,7 @@ import { GlobalStatusIcon } from "~resources/ui/components/status.icons"
 import { Button } from "@heroui/button"
 import { DocumentArrowDownIcon, TrashIcon } from "@heroicons/react/24/outline"
 import type { EventSummarizedDbo } from "~resources/domain/dbos/event.summarized.dbo"
+import { downloadEventJson } from "~resources/ui/actions/download.event"
 
 type TableEventsProps = {
   events: Array<EventSummarizedDbo>;
@@ -26,10 +27,6 @@ export default function TableEvents({ events, title = "Stored Events Table", row
 
   const viewEvent = (event) => {
     console.log("Viewing event:", event);
-  };
-
-  const downloadEvent = (event) => {
-    console.log("Downloading event:", event);
   };
 
   const deleteEvent = (event) => {
@@ -75,7 +72,7 @@ export default function TableEvents({ events, title = "Stored Events Table", row
               </div>
             </TableCell>
             <TableCell className="px-1">
-              <Button variant="ghost" isIconOnly size="sm" onPress={() => downloadEvent(item)}
+              <Button variant="ghost" isIconOnly size="sm" onPress={() => downloadEventJson(item.id)}
                       aria-label={`Download ${item.name}`}>
                 <DocumentArrowDownIcon className="w-4 h-4" />
               </Button>
