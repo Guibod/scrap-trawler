@@ -80,6 +80,6 @@ export class EventDao {
   }
 
   async delete(id: string) {
-    throw new NotYetImplemented("EventDao.delete");
+    return this.table.delete(id)
   }
 }

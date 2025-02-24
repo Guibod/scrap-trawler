@@ -1,7 +1,7 @@
 export interface EventWriteDbo {
   id?: string;
   name: string;
-  date: Date;
+  date: Date | string;
   organizer: string;
   raw_data?: {
     [key: string]: any

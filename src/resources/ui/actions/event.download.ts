@@ -1,6 +1,6 @@
 import { EventDao } from "~resources/storage/event.dao"
 
-export const downloadEventJson = async (eventId: string) => {
+export const eventDownloadJson = async (eventId: string) => {
   try {
     const dao = new EventDao();
     // Retrieve the event entity from EventDao
