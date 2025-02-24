@@ -62,7 +62,7 @@
     "@changesets/cli": "^2.27.12",
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
     "@types/chrome": "0.0.304",
-    "@types/node": "22.13.4",
+    "@types/node": "22.13.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
     "@typescript-eslint/eslint-plugin": "^8.24.1",
