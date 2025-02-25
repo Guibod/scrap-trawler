@@ -1,6 +1,6 @@
 # Scrap Trawler
 
-![Scrap Trawler Logo](assets/icon.png)
+![Scrap Trawler Logo](assets/logo.png)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Build Status](https://github.com/Guibod/scrap-trawler/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Guibod/scrap-trawler/actions)
