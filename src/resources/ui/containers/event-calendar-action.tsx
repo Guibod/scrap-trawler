@@ -1,5 +1,5 @@
 import React, { type FC } from "react"
-import ButtonScrape from "~resources/ui/components/button.scrape"
+import { ButtonScrapeEventLink } from "~resources/ui/components/button.scrape"
 import type { PlasmoCSUIProps } from "plasmo"
 import Context from "~resources/eventlink/context"
 
@@ -21,7 +21,7 @@ const EventCalendarAction: FC<PlasmoCSUIProps> = ({ anchor }) => {
   }
 
   return (
-    <ButtonScrape
+    <ButtonScrapeEventLink
       eventId={eventId}
       organizationId={organizationId}
       className={"absolute mt-2 mr-2"}

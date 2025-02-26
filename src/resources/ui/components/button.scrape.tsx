@@ -1,47 +1,49 @@
 import React, { useEffect, useState } from "react"
 import { eventScrape } from "~resources/ui/actions/event.scrape";
 import { Button } from "@heroui/button";
-import { ArchiveBoxArrowDownIcon } from "@heroicons/react/16/solid";
+import { ArchiveBoxArrowDownIcon} from "@heroicons/react/16/solid";
 import { ScrapeStatus } from "~resources/domain/enums/status.dbo";
 import statusColors from "~resources/ui/colors/status";
 import type { UseButtonProps } from "@heroui/button/dist/use-button"
 import { sendToBackground } from "@plasmohq/messaging"
+import { addToast } from "@heroui/react"
+import { useEvent } from "~resources/ui/providers/event"
+import type { EventModel } from "~resources/domain/models/event.model"
+import type { EventOrganizerDbo } from "~resources/domain/dbos/event.organizer.dbo"
 
 type ScrapButtonProps = {
-  eventId?: string;
-  organizationId?: string;
+  event?: Pick<EventModel, "id" | "lastUpdated"> & { status: { scrape: ScrapeStatus}, organizer: Pick<EventOrganizerDbo, "id"> },
+  notifiable?: boolean;
+  useOnClick?: boolean;
 } & UseButtonProps;
 
-const ButtonScrape: React.FC<ScrapButtonProps> = ({eventId, organizationId, ...props}: ScrapButtonProps) => {
+const ButtonScrape: React.FC<ScrapButtonProps> = ({event, notifiable = false, useOnClick=false, ...props}: ScrapButtonProps) => {
+  const { event: eventFromContext } = useEvent();
+  const currentEvent = event ?? eventFromContext;
+
   const [scrapeStatus, setScrapeStatus] = useState<ScrapeStatus>(ScrapeStatus.NOT_STARTED);
   const [isScraping, setIsScraping] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
+  const [hasFailed, setHasFailed] = useState<string | null>(null);
 
   useEffect(() => {
-    if (eventId) {
-      loadScrapeStatus();
-    }
-    return () => { }
-
-    async function loadScrapeStatus () {
-      setIsFetching(true);
-      try {
-        const event = await sendToBackground({ name: 'back/event-get', body: { eventId }});
-        setScrapeStatus(event.status.scrape);
-      } catch (error) {
-        console.error("Failed to fetch event status:", error);
-      }
-      setIsFetching(false);
-    }
-  }, [eventId]);
+    setScrapeStatus(currentEvent.status.scrape);
+  }, [currentEvent]);
 
   const handleScrape = async () => {
     setIsScraping(true);
     try {
-      const event = await eventScrape(eventId, organizationId);
-      setScrapeStatus(event.status.scrape);
+      const scrapedEvent = await eventScrape(event.id, event.organizer.id, !!event.lastUpdated);
+      setScrapeStatus(scrapedEvent.status.scrape);
     } catch (error) {
-      console.error("Scraping failed:", error);
+      if (notifiable) {
+        addToast({
+          title: "Failed to scrape event",
+          description: error.message,
+          hideIcon: true,
+          color: "danger"
+        });
+      }
+      setHasFailed(error.message)
     }
     setIsScraping(false);
   };
@@ -58,19 +60,19 @@ const ButtonScrape: React.FC<ScrapButtonProps> = ({eventId, organizationId, ...p
     return "Scrape data from this event, it will be then available for pairing!";
   };
 
-  let className = `font-mtg bg-blue-600 text-white rounded-md gap-2 hover:bg-blue-700 disabled:bg-gray-400 transition ${props.className}`
-
+  let className = ` ${props.className}`
   if (!props.isIconOnly) {
     className += "px-4 py-2 flex items-center justify-center";
   }
 
-  if (!eventId) return;
+  if (!currentEvent) return
+  if (hasFailed) return
 
   return (
     <Button
       {...props}
-      onClick={handleScrape}
-      disabled={isScraping || isFetching}
+      {...(useOnClick ? { onClick: handleScrape } : { onPress: handleScrape })}
+      disabled={isScraping}
       size="md"
       className={className}
       color="primary"
@@ -82,5 +84,64 @@ const ButtonScrape: React.FC<ScrapButtonProps> = ({eventId, organizationId, ...p
     </Button>
   );
 };
+
+type ButtonScrapeEventLinkProps = {
+  eventId: string;
+  organizationId: string;
+} & UseButtonProps;
+
+/**
+ * Variant dedicated to EventLink UI
+ *
+ * Since it relies on sendToBackground, it is aimed at content-scripts usage only
+ * It also enforce styling to overcome styling issues in EventLink UI
+ */
+export const ButtonScrapeEventLink = ({ eventId, organizationId, ...props }: ButtonScrapeEventLinkProps) => {
+  const [isFetching, setIsFetching] = useState(false);
+  const [event, setEvent] = useState({
+    // A faked event to avoid null checks
+    id: eventId,
+    organizer: {
+      id: organizationId
+    },
+    status: {
+      scrape: ScrapeStatus.NOT_STARTED
+    },
+    lastUpdated: null
+  })
+
+  useEffect(() => {
+    if (eventId) {
+      loadScrapeStatus();
+    }
+    return () => { }
+
+    async function loadScrapeStatus () {
+      setIsFetching(true);
+      try {
+        const recoveredEvent = await sendToBackground({ name: 'back/event-get', body: { eventId }});
+        if (recoveredEvent) {
+          setEvent(recoveredEvent);
+        }
+      } catch (error) {
+        console.error("Failed to fetch event status:", error);
+      }
+      setIsFetching(false);
+    }
+  }, [eventId]);
+
+  if (isFetching || !event) {
+    return
+  }
+
+  return (
+    <ButtonScrape
+      event={event}
+      notifiable={false}
+      useOnClick={true}
+      className="bg-blue-600 text-white rounded-md gap-2 hover:bg-blue-700 disabled:bg-gray-400 transition" {...props}
+    />
+  );
+}
 
 export default ButtonScrape;
