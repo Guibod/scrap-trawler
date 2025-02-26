@@ -23,3 +23,15 @@ export class ScrapingError extends ScrapTrawlerError {
     super(`Scraping Error: ${message}`, sourceError);
   }
 }
+
+export class TooOldToScrapeError extends ScrapingError {
+  constructor(eventId) {
+    super(`The event ${eventId} was almost fully cleaned up. It is too old to scrape.`);
+  }
+}
+
+export class DataLossScrapeError extends ScrapingError {
+  constructor(eventId) {
+    super(`The event ${eventId} is already stored and would lose data if scraped.`);
+  }
+}
