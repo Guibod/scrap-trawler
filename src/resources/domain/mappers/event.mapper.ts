@@ -1,9 +1,9 @@
 import { type EventModel } from "~resources/domain/models/event.model"
 import EventEntity from "../../storage/entities/event.entity"
 import type { EventSummarizedDbo } from "~resources/domain/dbos/event.summarized.dbo"
-import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~resources/domain/enums/status.dbo"
 import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
 import { getLogger } from "~resources/logging/logger"
+import EventHydrator from "~resources/domain/mappers/event.hydrator"
 
 const logger = getLogger("event-mapper")
 
@@ -11,59 +11,50 @@ export default class EventMapper {
   static toDbo(entity: EventEntity): EventModel {
     return {
       id: entity.id,
-      name: entity.name,
+      title: entity.title,
       date: entity.date,
-      organizer: entity.organizer,
+      organizer: {
+        id: entity.organizer.id,
+        name: entity.organizer.name,
+        phoneNumber: entity.organizer.phoneNumber,
+        emailAddress: entity.organizer.emailAddress,
+        location: entity.organizer.location,
+        isPremium: entity.organizer.isPremium
+      },
+      players: entity.players,
+      teams: EventHydrator.inferTeams(entity),
+      rounds: entity.rounds,
+      lastRound: EventHydrator.inferLastRound(entity),
       raw_data: entity.raw_data,
-      status: EventMapper.inferStatus(entity),
+      status: EventHydrator.inferStatus(entity),
+      lastUpdated: entity.lastUpdated || null,
+      scrapeStatus: entity.scrapeStatus
     };
   }
 
   static toLightDbo(entity: EventEntity): EventSummarizedDbo {
     return {
       id: entity.id,
-      name: entity.name,
+      title: entity.title,
       date: entity.date,
-      organizer: entity.organizer,
-      status: EventMapper.inferStatus(entity),
+      organizer: entity.organizer.name,
+      status: EventHydrator.inferStatus(entity),
+      lastUpdated: entity.lastUpdated || null,
+      scrapeStatus: entity.scrapeStatus
     };
   }
 
-  static toEntity(dbo: EventModel | EventWriteDbo): EventEntity {
+  static toEntity(dbo: EventWriteDbo): EventEntity {
     const entity = new EventEntity();
-    entity.id = dbo.id;
-    entity.name = dbo.name;
-    entity.date = new Date(dbo.date);
-    entity.organizer = dbo.organizer;
-    entity.raw_data = dbo.raw_data ?? {};
-    entity.last_updated = new Date();
-    return entity;
+
+    Object.assign(entity, {
+      ...dbo,
+      date: new Date(dbo.date),
+      raw_data: dbo.raw_data ?? {},
+      lastUpdated: new Date()
+    });
+
+    return entity
   }
 
-  private static inferStatus(entity: EventEntity): EventModel["status"] {
-    let global = GlobalStatus.NOT_STARTED;
-    let scrape = ScrapeStatus.IN_PROGRESS;
-    let pair = PairStatus.NOT_STARTED;
-    let fetch = FetchStatus.NOT_STARTED;
-
-    try {
-      if (entity.raw_data.wotc.event.status === "ENDED") {
-        scrape = ScrapeStatus.COMPLETED;
-        global = GlobalStatus.PARTIAL;
-      }
-
-      if (scrape === ScrapeStatus.COMPLETED) {
-        global = GlobalStatus.COMPLETED;
-      }
-    } catch (error) {
-      logger.error("Failed to infer status:", error);
-    }
-
-    return {
-      global,
-      scrape,
-      pair,
-      fetch,
-    };
-  }
 }

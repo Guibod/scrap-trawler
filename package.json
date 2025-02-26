@@ -36,6 +36,7 @@
     "sync-version": "tsx src/resources/sync-version.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.5.1",
     "@heroicons/react": "^2.2.0",
     "@heroui/button": "^2.2.10",
     "@heroui/card": "^2.2.10",
@@ -62,6 +63,7 @@
     "@changesets/cli": "^2.27.12",
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
     "@types/chrome": "0.0.304",
+    "@types/geojson": "^7946.0.16",
     "@types/node": "22.13.4",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",

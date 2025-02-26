@@ -1,5 +1,3 @@
-import type { ErrorResponse } from "~resources/messages/error.response"
-
 export class ScrapTrawlerError extends Error {
   public sourceError?: Error;
 
@@ -7,13 +5,6 @@ export class ScrapTrawlerError extends Error {
     super(message);
     this.name = this.constructor.name;
     this.sourceError = sourceError;
-  }
-
-  toErrorResponse(): ErrorResponse {
-    return {
-      error: this.message,
-      type: this.name,
-    };
   }
 }
 
