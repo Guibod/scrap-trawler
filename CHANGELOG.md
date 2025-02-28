@@ -2,6 +2,29 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.5.0 - 2025-02-28
+#### Continuous Integration
+- attempt to make auto-approve work - (69fde62) - Guillaume Boddaert
+- mark the project as BETA - (7e6ac75) - Guillaume Boddaert
+- fix submit workflow (build on macos because issue on ubuntu-latest) - (cd519a4) - Guillaume Boddaert
+- fix submit workflow (proper node version) - (1165f7c) - Guillaume Boddaert
+- fix submit workflow - (1d13da9) - Guillaume Boddaert
+- applied auto approve dependabot - (abe8435) - Guillaume Boddaert
+#### Documentation
+- added PRIVACY.md file - (6edb55e) - Guillaume Boddaert
+#### Features
+- event consultation and setup page - (2867fa5) - Guillaume Boddaert
+#### Miscellaneous Chores
+- gitignored stuff - (012de43) - Guillaume Boddaert
+- gitignored stuff - (df2d425) - Guillaume Boddaert
+- use of plasmohq/messaging - (960b0a8) - Guillaume Boddaert
+- .gitignored ._* directories - (ae11ed0) - Guillaume Boddaert
+- sync package.json version - (acc8009) - Cog Bot
+#### Style
+- changed project icons - (9340bde) - Guillaume Boddaert
+
+- - -
+
 ## 0.4.0 - 2025-02-24
 #### Features
 - event list download button saves dao as a json file - (a0f89b4) - Guillaume Boddaert
