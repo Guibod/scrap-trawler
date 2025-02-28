@@ -4,6 +4,9 @@ on: pull_request
 permissions:
   pull-requests: write
 
+env:
+  GH_TOKEN: ${{secrets.GH_PAT}}
+
 jobs:
   dependabot:
     runs-on: ubuntu-latest
@@ -18,4 +21,3 @@ jobs:
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
-          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
