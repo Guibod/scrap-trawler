@@ -2,6 +2,24 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.6.0 - 2025-03-01
+#### Continuous Integration
+- attempt to make auto-approve work (9) - (56ee17c) - Guillaume Boddaert
+- attempt to make auto-approve work (8) - (615e736) - Guillaume Boddaert
+- attempt to make auto-approve work (7) - (bf2eb40) - Guillaume Boddaert
+- attempt to make auto-approve work (6) - (01d3010) - Guillaume Boddaert
+- attempt to make auto-approve work (5) - (f780f6a) - Guillaume Boddaert
+- attempt to make auto-approve work (4) - (f1ee666) - Guillaume Boddaert
+- attempt to make auto-approve work (ter) - (ad75c62) - Guillaume Boddaert
+- attempt to make auto-approve work (bis) - (652c103) - Guillaume Boddaert
+#### Features
+- players can now be edited - (6fe340d) - Guillaume Boddaert
+#### Miscellaneous Chores
+- entities use flat arrays, dbo use indexed objects - (3b86bc0) - Guillaume Boddaert
+- sync package.json version - (5d413c9) - Cog Bot
+
+- - -
+
 ## 0.5.0 - 2025-02-28
 #### Continuous Integration
 - attempt to make auto-approve work - (69fde62) - Guillaume Boddaert
