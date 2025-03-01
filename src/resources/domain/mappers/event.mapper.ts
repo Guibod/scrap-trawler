@@ -5,11 +5,12 @@ import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
 import { getLogger } from "~resources/logging/logger"
 import EventHydrator from "~resources/domain/mappers/event.hydrator"
 import type { RoundDbo } from "~resources/domain/dbos/round.dbo"
+import { mapSpreadsheetData } from "~resources/domain/mappers/spreadsheet.mapper"
 
 const logger = getLogger("event-mapper")
 
 export default class EventMapper {
-  static toDbo(entity: EventEntity): EventModel {
+  static async toDbo(entity: EventEntity): Promise<EventModel> {
     return {
       id: entity.id,
       title: entity.title,
@@ -37,7 +38,11 @@ export default class EventMapper {
       raw_data: entity.raw_data,
       status: EventHydrator.inferStatus(entity),
       lastUpdated: entity.lastUpdated || null,
-      scrapeStatus: entity.scrapeStatus
+      scrapeStatus: entity.scrapeStatus,
+      spreadsheet: entity.spreadsheet ? {
+        meta: entity.spreadsheet,
+        data: await mapSpreadsheetData(entity.raw_data.spreadsheet, entity.spreadsheet) // Store raw spreadsheet data in `data`
+      } : null
     };
   }
 
@@ -69,6 +74,7 @@ export default class EventMapper {
         drops: Object.values(round.drops),
         standings: Object.values(round.standings),
       })),
+      spreadsheet: dbo.spreadsheet?.meta ?? null,
       date: new Date(dbo.date),
       raw_data: dbo.raw_data ?? {},
       lastUpdated: new Date()

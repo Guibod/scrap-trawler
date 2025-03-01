@@ -60,6 +60,7 @@ export default class EventHydrator {
       teams: [], // TODO: support real teams
       players: EventHydrator.inferPlayers(entity),
       rounds: EventHydrator.inferRounds(entity),
+      spreadsheet: entity.spreadsheet,
       date: new Date(rawData.event.actualStartTime ?? rawData.event.scheduledStartTime),
       title: rawData.event.title,
       raw_data: { // raw data is to be preserved
