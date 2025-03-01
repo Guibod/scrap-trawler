@@ -4,6 +4,7 @@ import type { EventSummarizedDbo } from "~resources/domain/dbos/event.summarized
 import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
 import { getLogger } from "~resources/logging/logger"
 import EventHydrator from "~resources/domain/mappers/event.hydrator"
+import type { RoundDbo } from "~resources/domain/dbos/round.dbo"
 
 const logger = getLogger("event-mapper")
 
@@ -21,9 +22,17 @@ export default class EventMapper {
         location: entity.organizer.location,
         isPremium: entity.organizer.isPremium
       },
-      players: entity.players,
-      teams: EventHydrator.inferTeams(entity),
-      rounds: entity.rounds,
+      players: Object.fromEntries(entity.players.map(player => [player.id, player])),
+      teams: Object.fromEntries(entity.teams.map((team) => [team.id, team])),
+      rounds: Object.fromEntries(entity.rounds.map(round => [round.roundNumber, {
+        ...round,
+        matches: Object.fromEntries((round.matches || []).map(match => [match.id, {
+          ...match,
+          results: Object.fromEntries((match.results || []).map(result => [result.id, result]))
+        }])),
+        drops: Object.fromEntries((round.drops || []).map(drop => [drop.id, drop])),
+        standings: Object.fromEntries((round.standings || []).map(standing => [standing.id, standing])),
+      } as RoundDbo])),
       lastRound: EventHydrator.inferLastRound(entity),
       raw_data: entity.raw_data,
       status: EventHydrator.inferStatus(entity),
@@ -49,6 +58,9 @@ export default class EventMapper {
 
     Object.assign(entity, {
       ...dbo,
+      players: Object.values(dbo.players),
+      teams: Object.values(dbo.teams),
+      rounds: Object.values(dbo.rounds),
       date: new Date(dbo.date),
       raw_data: dbo.raw_data ?? {},
       lastUpdated: new Date()
