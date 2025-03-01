@@ -60,7 +60,15 @@ export default class EventMapper {
       ...dbo,
       players: Object.values(dbo.players),
       teams: Object.values(dbo.teams),
-      rounds: Object.values(dbo.rounds),
+      rounds: Object.values(dbo.rounds).map(round => ({
+        ...round,
+        matches: Object.values(round.matches).map(match => ({
+          ...match,
+          results: Object.values(match.results)
+        })),
+        drops: Object.values(round.drops),
+        standings: Object.values(round.standings),
+      })),
       date: new Date(dbo.date),
       raw_data: dbo.raw_data ?? {},
       lastUpdated: new Date()

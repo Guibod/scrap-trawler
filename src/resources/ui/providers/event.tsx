@@ -1,16 +1,20 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from "react";
 import type { EventModel } from "~resources/domain/models/event.model";
 import { Spinner } from "@heroui/react"
-import { HeroUIProvider } from "@heroui/system"
 import lostImage from "data-base64:~/../assets/lost.png"
 import { PairStatus } from "~resources/domain/enums/status.dbo"
 import { eventService } from "~background/singletons"
 import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
+import { getLogger } from "~resources/logging/logger"
+import type { OverrideDbo } from "~resources/domain/dbos/player.dbo"
+
+const logger = getLogger("event-provider")
 
 // Define context type
-interface EventContextType {
+class EventContextType {
   event: EventModel | null;
-  showSetupByDefault: boolean
+  showSetupByDefault: boolean;
+  updatePlayerOverride: (playerId: string, overrideData: Partial<OverrideDbo>) => void;
 }
 
 const EventContext = createContext<EventContextType | undefined>(undefined);
@@ -50,7 +54,39 @@ export function EventProvider({ eventId, children }: { eventId?: string; childre
   }, [currentEventId]);
 
   const showSetupByDefault = event?.scrapeStatus !== EventScrapeStateDbo.PURGED && event?.status?.pair === PairStatus.NOT_STARTED;
-  const value = useMemo(() => ({ event, showSetupByDefault }), [event]);
+  const value = useMemo(() => ({
+    event,
+    showSetupByDefault,
+    updatePlayerOverride: async (playerId: string, overrideData: OverrideDbo) => {
+      if (!event) return; // Ensure event exists before modifying
+
+      const player = event.players[playerId];
+      if (!player) return; // Prevent errors if player doesn't exist
+
+      // Merge new override data with existing data
+      const updatedOverride = Object.values({ ...player.overrides, ...overrideData }).some(Boolean)
+        ? { ...player.overrides, ...overrideData }
+        : null;
+
+      const updatedEvent = {
+        ...event,
+        players: {
+          ...event.players,
+          [playerId]: {
+            ...player,
+            overrides: updatedOverride,
+          },
+        },
+      };
+
+      try {
+        await eventService.saveEvent(updatedEvent); // Persist first
+        setEvent(updatedEvent); // Update local state only on success
+      } catch (error) {
+        console.error("Failed to save event overrides:", error);
+      }
+    }
+  }), [event]);
 
   if (isFetching) {
     return (
