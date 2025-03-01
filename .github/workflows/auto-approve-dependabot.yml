@@ -14,14 +14,12 @@ jobs:
         uses: dependabot/fetch-metadata@d7267f607e9d3fb96fc2fbe83e0af444713e90b7
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: Login
-        run: gh auth login --with-token <<<"${{ secrets.GH_PAT }}"
       - name: Display auth status
         run: gh auth status
         env:
-          GH_TOKEN: ${{secrets.GH_PAT}}
+          GITHUB_TOKEN: ${{secrets.GH_PAT}}
       - name: Approve a PR
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
-          GH_TOKEN: ${{secrets.GH_PAT}}
+          GITHUB_TOKEN: ${{secrets.GH_PAT}}
