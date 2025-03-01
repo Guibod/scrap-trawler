@@ -6,9 +6,8 @@ import type { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.s
 import type { PairingStrategyDbo } from "~resources/domain/enums/pairing.strategy.dbo"
 import type { StandingDbo } from "~resources/domain/dbos/standing.dbo"
 import type { DropDbo } from "~resources/domain/dbos/drop.dbo"
-import type { ResultDbo } from "~resources/domain/dbos/result.dbo"
 
-export const EVENT_ENTITY_VERSION = 14
+export const EVENT_ENTITY_VERSION = 19
 
 
 export interface ResultEntity {

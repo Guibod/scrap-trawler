@@ -4,6 +4,7 @@ import "../resources/ui/style.css"
 import { EventProvider } from "~resources/ui/providers/event"
 import EventContainer from "~resources/ui/components/event/container"
 import { ToastProvider } from "@heroui/react"
+import { Modal } from "@heroui/modal"
 
 const EventPage = () => {
   return (

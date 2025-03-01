@@ -1,14 +1,16 @@
 import { getLogger } from "~resources/logging/logger"
 import { type EventModel } from "~resources/domain/models/event.model"
-import EventEntity, { EVENT_ENTITY_VERSION } from "~resources/storage/entities/event.entity"
+import EventEntity, {
+  EVENT_ENTITY_VERSION,
+  type RoundEntity
+} from "~resources/storage/entities/event.entity"
 import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~resources/domain/enums/status.dbo"
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
 import type { WotcExtractedEvent } from "~resources/eventlink/event-extractor"
 import { ScrapTrawlerError } from "~resources/exception"
 import { faker } from "@faker-js/faker"
 import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
-import type { RoundEntity } from "~resources/storage/entities/round.entity"
 import type { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
+import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
 
 const logger = getLogger("event-hydrator")
 export class HydrationError extends ScrapTrawlerError {}
@@ -90,6 +92,9 @@ export default class EventHydrator {
 
     return entity.raw_data.wotc.event.registeredPlayers.map((player, teamRank)=> {
       const teamId = teamRank + 1; // inferred from registered players index
+      const currentPlayerDbo = entity.players.find((p) => p.id === player.personaId)
+      const currentOverrideDbo = currentPlayerDbo?.overrides || null
+
       const playerDbo: PlayerDbo = {
         id: player.personaId,
         archetype: null,
@@ -100,7 +105,8 @@ export default class EventHydrator {
         lastName: redactedIsNull(player.lastName),
         displayName: redactedIsNull(player.displayName),
         tableNumber: player.preferredTableNumber,
-        status: player.status as PlayerStatusDbo
+        status: player.status as PlayerStatusDbo,
+        overrides: currentOverrideDbo
       }
       if (playerDbo.isAnonymized) {
         playerDbo.firstName = faker.person.firstName()
