@@ -7,19 +7,13 @@ import PlayerName from "~resources/ui/components/player/name"
 import PlayerModalEdit from "~resources/ui/components/player/edit.modal"
 import { useDisclosure } from "@heroui/react"
 import { Modal } from "@heroui/modal"
+import { hashStringSHA1 } from "~resources/utils/crypto"
 
 interface PlayerProps {
   playerId: string
 }
 
-async function hashStringSHA1(input: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(input);
-  const hashBuffer = await crypto.subtle.digest("SHA-1", data);
-  return Array.from(new Uint8Array(hashBuffer))
-    .map(byte => byte.toString(16).padStart(2, "0"))
-    .join("");
-}
+
 
 const Player = ({ playerId }: PlayerProps) => {
   const { event } = useEvent()
