@@ -6,8 +6,9 @@ import type { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.s
 import type { PairingStrategyDbo } from "~resources/domain/enums/pairing.strategy.dbo"
 import type { StandingDbo } from "~resources/domain/dbos/standing.dbo"
 import type { DropDbo } from "~resources/domain/dbos/drop.dbo"
+import type { RawSpreadsheetRow, SpreadsheetMetadata } from "~resources/domain/dbos/spreadsheet.dbo"
 
-export const EVENT_ENTITY_VERSION = 19
+export const EVENT_ENTITY_VERSION = 20
 
 
 export interface ResultEntity {
@@ -46,8 +47,10 @@ export default class EventEntity {
   players!: PlayerDbo[]
   teams!: TeamDbo[]
   rounds!: RoundEntity[]
+  spreadsheet!: SpreadsheetMetadata | null
   raw_data: {
     wotc: WotcExtractedEvent
+    spreadsheet?: RawSpreadsheetRow[]
     [key: string]: any
   }
   version: number

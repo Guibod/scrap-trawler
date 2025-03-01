@@ -15,6 +15,7 @@ class EventContextType {
   event: EventModel | null;
   showSetupByDefault: boolean;
   updatePlayerOverride: (playerId: string, overrideData: Partial<OverrideDbo>) => void;
+  updateEvent: (event: Partial<EventModel>) => void;
 }
 
 const EventContext = createContext<EventContextType | undefined>(undefined);
@@ -57,6 +58,16 @@ export function EventProvider({ eventId, children }: { eventId?: string; childre
   const value = useMemo(() => ({
     event,
     showSetupByDefault,
+    updateEvent: async (updatedEvent: Partial<EventModel>) => {
+      if (!event) return; // Ensure event exists before modifying
+
+      try {
+        await eventService.saveEvent({ ...event, ...updatedEvent })
+          .then(model => setEvent(model));
+      } catch (error) {
+        console.error("Failed to save event overrides:", error);
+      }
+    },
     updatePlayerOverride: async (playerId: string, overrideData: OverrideDbo) => {
       if (!event) return; // Ensure event exists before modifying
 
@@ -80,8 +91,8 @@ export function EventProvider({ eventId, children }: { eventId?: string; childre
       };
 
       try {
-        await eventService.saveEvent(updatedEvent); // Persist first
-        setEvent(updatedEvent); // Update local state only on success
+        await eventService.saveEvent(updatedEvent)
+          .then(model => setEvent(model));
       } catch (error) {
         console.error("Failed to save event overrides:", error);
       }
