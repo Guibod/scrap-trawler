@@ -1,4 +1,4 @@
 export interface DropDbo {
-  teamId: string,
+  id: string,
   roundNumber: number
 }

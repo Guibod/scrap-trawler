@@ -19,7 +19,7 @@ async function hashStringSHA1(input: string): Promise<string> {
 const Player = ({playerId}: PlayerProps) => {
   const { event } = useEvent()
   const [avatarHash, setAvatarHash] = useState(null)
-  const player = event.players[playerId]
+  const [player, setPlayer] = useState(event.players[playerId])
 
   useEffect(() => {
     createAvatarHash()
