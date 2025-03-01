@@ -3,23 +3,15 @@ import { type EventModel } from "~resources/domain/models/event.model"
 import EventEntity, { EVENT_ENTITY_VERSION } from "~resources/storage/entities/event.entity"
 import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~resources/domain/enums/status.dbo"
 import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
-import type { RoundDbo } from "~resources/domain/dbos/round.dbo"
 import type { WotcExtractedEvent } from "~resources/eventlink/event-extractor"
-import type { Drop } from "~resources/eventlink/graphql.dto.types"
-import type { DropDbo } from "~resources/domain/dbos/drop.dbo"
-import type { MatchDbo } from "~resources/domain/dbos/match.dbo"
-import type { ResultDbo } from "~resources/domain/dbos/result.dbo"
 import { ScrapTrawlerError } from "~resources/exception"
-import type { TeamDbo } from "~resources/domain/dbos/team.dbo"
-import type { StandingDbo } from "~resources/domain/dbos/standing.dbo"
-import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
 import { faker } from "@faker-js/faker"
 import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
+import type { RoundEntity } from "~resources/storage/entities/round.entity"
+import type { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
 
 const logger = getLogger("event-hydrator")
 export class HydrationError extends ScrapTrawlerError {}
-
-type HydratableEvent = EventEntity | EventWriteDbo | EventModel
 
 /**
  * Recompose a Model from raw data
@@ -27,7 +19,7 @@ type HydratableEvent = EventEntity | EventWriteDbo | EventModel
  * It’s a fallback for unrecoverable data in the database.
  */
 export default class EventHydrator {
-  public static hydrate(entity: HydratableEvent): EventEntity {
+  public static hydrate(entity: EventEntity): EventEntity {
     try {
       return EventHydrator._hydrate(entity);
     } catch (error) {
@@ -36,7 +28,7 @@ export default class EventHydrator {
     }
   }
 
-  protected static _hydrate(entity: HydratableEvent): EventEntity {
+  protected static _hydrate(entity: EventEntity): EventEntity {
     // TODO: do not overwrite existing edited data
 
     const rawData = entity.raw_data.wotc as WotcExtractedEvent
@@ -63,7 +55,7 @@ export default class EventHydrator {
         },
         isPremium: rawData.organization.isPremium
       },
-      teams: {},
+      teams: [], // TODO: support real teams
       players: EventHydrator.inferPlayers(entity),
       rounds: EventHydrator.inferRounds(entity),
       date: new Date(rawData.event.actualStartTime ?? rawData.event.scheduledStartTime),
@@ -81,13 +73,14 @@ export default class EventHydrator {
     }
   }
 
-  public static inferPlayers(entity: HydratableEvent): Record<PlayerDbo["id"], PlayerDbo> {
+  public static inferPlayers(entity: EventEntity): PlayerDbo[] {
     const isAnonymized = (value: string): boolean => {
       if (value === null || value.startsWith("[") && value.endsWith("]")) {
         return true
       }
       return false;
     }
+
     const redactedIsNull = (value: string): string | null => {
       if (isAnonymized(value)) {
         return null
@@ -95,38 +88,34 @@ export default class EventHydrator {
       return value.trim()
     }
 
-    const rawData = entity.raw_data.wotc as WotcExtractedEvent
-    const map = {}
-    rawData.event.registeredPlayers.forEach((player, teamRank)=> {
+    return entity.raw_data.wotc.event.registeredPlayers.map((player, teamRank)=> {
       const teamId = teamRank + 1; // inferred from registered players index
-      const playerDbo = {
+      const playerDbo: PlayerDbo = {
         id: player.personaId,
         archetype: null,
         isAnonymized: isAnonymized(player.firstName),
-        teamId,
+        teamId: `${teamId}`,
         tournamentId: player.id,
         firstName: redactedIsNull(player.firstName),
         lastName: redactedIsNull(player.lastName),
         displayName: redactedIsNull(player.displayName),
         tableNumber: player.preferredTableNumber,
-        status: player.status
+        status: player.status as PlayerStatusDbo
       }
       if (playerDbo.isAnonymized) {
         playerDbo.firstName = faker.person.firstName()
         playerDbo.lastName = faker.person.lastName()
         playerDbo.displayName = faker.internet.displayName(playerDbo)
       }
-      map[player.personaId] = playerDbo
+      return playerDbo
 
       // TODO: lookup in other tournaments for matching player personaId
       // TODO: support 2HG and other team formats
     })
-
-    return map
   }
 
-  public static inferRounds(entity: HydratableEvent): Record<number, RoundDbo> {
-    const map: Record<number, RoundDbo> = {}
+  public static inferRounds(entity: EventEntity): RoundEntity[] {
+    const map: RoundEntity[] = []
     const rawData = entity.raw_data.wotc as WotcExtractedEvent
 
     Object.entries(rawData.rounds).forEach(([round, gameState]) => {
@@ -142,52 +131,38 @@ export default class EventHydrator {
         isPlayoff: gameState.rounds[0].isPlayoff,
         isCertified: gameState.rounds[0].isCertified,
         pairingStrategy: gameState.rounds[0].pairingStrategy,
-        drops: gameState.drops?.reduce((acc: Record<string, DropDbo>, drop: Drop) => {
-          acc[drop.teamId] = {
-            roundNumber: drop.roundNumber,
-            teamId: drop.teamId
-          }
-          return acc
-        }, {} as Record<string, DropDbo>),
-        standings: gameState.rounds[0].standings?.reduce((acc: Record<string, StandingDbo>, standing) => {
-          acc[standing.rank] = {
-            id: standing.teamId,
-            rank: standing.rank,
-            matchPoints: standing.matchPoints,
-            wins: standing.wins,
-            draws: standing.draws,
-            losses: standing.losses,
-            gameWinPercent: standing.gameWinPercent,
-            opponentGameWinPercent: standing.opponentGameWinPercent,
-            opponentMatchWinPercent: standing.opponentMatchWinPercent,
-          }
-          return acc
-        }, {} as Record<string, StandingDbo>),
-        matches: gameState.rounds[0].matches?.reduce((acc: Record<string, MatchDbo>, match) => {
-          acc[match.matchId] = {
-            id: match.matchId,
-            isBye: match.isBye,
-            teamIds: match.teamIds,
-            tableNumber: match.tableNumber,
-            results: match.results.reduce((acc: Record<string, ResultDbo>, result) => {
-              acc[result.teamId] = {
-                isBye: result.isBye,
-                wins: result.wins,
-                losses: result.losses,
-                draws: result.draws
-              }
-              return acc
-            }, {} as Record<string, ResultDbo>)
-          }
-          return acc
-        }, {} as Record<string, MatchDbo>)
+        drops: gameState.drops || [],
+        standings: gameState.rounds[0].standings.map((standing) => ({
+          id: standing.teamId,
+          rank: standing.rank,
+          matchPoints: standing.matchPoints,
+          wins: standing.wins,
+          draws: standing.draws,
+          losses: standing.losses,
+          gameWinPercent: standing.gameWinPercent,
+          opponentGameWinPercent: standing.opponentGameWinPercent,
+          opponentMatchWinPercent: standing.opponentMatchWinPercent,
+        })),
+        matches: gameState.rounds[0].matches.map((match) => ({
+          id: match.matchId,
+          isBye: match.isBye,
+          teamIds: match.teamIds,
+          tableNumber: match.tableNumber,
+          results: match.results.map((result) => ({
+            id: result.teamId,
+            isBye: result.isBye,
+            wins: result.wins,
+            losses: result.losses,
+            draws: result.draws
+          }))
+        }))
       }
     })
 
-    return map
+    return Object.values(map)
   }
 
-  public static inferStatus(entity: HydratableEvent): EventModel["status"] {
+  public static inferStatus(entity: EventEntity): EventModel["status"] {
     const rawData = entity.raw_data.wotc as WotcExtractedEvent
 
     let global = GlobalStatus.NOT_STARTED;
@@ -216,34 +191,27 @@ export default class EventHydrator {
     };
   }
 
-  static inferLastRound(entity: HydratableEvent) {
+  static inferLastRound(entity: EventEntity) {
     if (Object.values(entity.rounds).length === 0) {
       return 0;
     }
     return Math.max(...Object.values(entity.rounds).map(round => round.roundNumber))
   }
 
-  static inferTeams(entity: HydratableEvent) {
-    const map : Record<string, TeamDbo> = {}
-
+  static inferTeams(entity: EventEntity) {
     // TODO: support real teams
-    Object.values(entity.players).forEach(player => {
-      if (!map[player.teamId]) {
-        map[player.teamId] = {
-          status: undefined,
-          tableNumber: null,
-          displayName: player.displayName,
-          id: player.teamId,
-          players: []
-        }
-      }
-      map[player.teamId].players.push(player.id)
-    })
-
-    return map
+    return entity.players.map((player) => ({
+      status: undefined,
+      tableNumber: null,
+      displayName: player.displayName,
+      id: player.teamId,
+      players: [
+        player.id
+      ]
+    }))
   }
 
-  private static inferScrapeStatus(entity: HydratableEvent): EventScrapeStateDbo {
+  private static inferScrapeStatus(entity: EventEntity): EventScrapeStateDbo {
     if (!entity.raw_data.wotc.rounds) {
       return EventScrapeStateDbo.PURGED
     }
@@ -257,7 +225,6 @@ export default class EventHydrator {
       return EventScrapeStateDbo.PURGED
     }
 
-    console.log(entity.raw_data.wotc.event.registeredPlayers)
     if (entity.raw_data.wotc.event.registeredPlayers[0].displayName === "[REDACTED]") {
       return EventScrapeStateDbo.ANONYMIZED
     }

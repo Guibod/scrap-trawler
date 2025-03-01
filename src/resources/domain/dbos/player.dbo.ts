@@ -3,6 +3,7 @@ import type { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
 export interface PlayerDbo {
   id: string  // wotc unique identifier
   isAnonymized: boolean
+  isPatched: boolean
   archetype: string | null
   tournamentId: string  // internal id for the tournament
   teamId: string
