@@ -6,6 +6,8 @@ export enum COLUMN_TYPE {
   FIRST_NAME = "firstName",
   LAST_NAME = "lastName",
   DECKLIST_URL = "decklistUrl",
+  DECKLIST_TXT = "decklistTxt",
+  FILTER = "filter",
 }
 
 export enum DUPLICATE_HANDLING_STRATEGY {
