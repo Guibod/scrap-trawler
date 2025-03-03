@@ -6,15 +6,23 @@ import { Alert } from "@heroui/alert";
 import { PairStatus } from "~resources/domain/enums/status.dbo";
 import { useEvent } from "~resources/ui/providers/event";
 import {
-  COLUMN_TYPE,
   DUPLICATE_HANDLING_STRATEGY,
 } from "~resources/domain/enums/spreadsheet.dbo";
-import Spreadsheet from "~resources/ui/components/spreadsheet/spreadsheet";
+import SpreadsheetRaw from "~resources/ui/components/spreadsheet/spreadsheet.raw";
 import { SpreadsheetParserFactory } from "~resources/domain/parsers/spreadsheet.parser.factory";
 import type {
   RawSpreadsheetRow, SpreadsheetColumnMetaData,
   SpreadsheetMetadata
 } from "~resources/domain/dbos/spreadsheet.dbo"
+
+// TODO: add an accordion that automatically expands depending on the progress
+// TODO: add a validation not to allow multiple unique column types
+// TODO: which implies to have a proper enum of unique column types
+// TODO: add a form to use the filters to exclude / include values
+// TODO: add a form to select the duplicate strategy
+// TODO: grey out filtered out rows in the table
+// TODO: grey out duplicated items in the table as decided by the strategy
+// TODO: display a sample of the data from the spreadsheet in the end
 
 const EventSetup = () => {
   const { event, updateEvent } = useEvent();
@@ -60,7 +68,7 @@ const EventSetup = () => {
     reader.onload = async (evt) => {
       if (!evt.target?.result) return;
 
-      const parser = SpreadsheetParserFactory.create(metadata);
+      const parser = SpreadsheetParserFactory.create(metadata, event.players);
       const { columns, rows } = await parser.parse(evt.target.result);
 
       setSpreadsheetMeta((prev) => ({ ...prev, columns }));
@@ -115,7 +123,7 @@ const EventSetup = () => {
           </div>
 
           {spreadsheetData && (
-            <Spreadsheet
+            <SpreadsheetRaw
               meta={spreadsheetMeta}
               data={spreadsheetData}
               onColumnMappingChange={handleColumnMapping}

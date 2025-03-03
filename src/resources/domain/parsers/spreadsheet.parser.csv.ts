@@ -11,7 +11,7 @@ export class CSVParser extends SpreadsheetParser {
             reject(result.errors);
           } else {
             const [columns, ...rows] = result.data as RawSpreadsheetRow[];
-            resolve({ columns: this.computeColumns(columns), rows });
+            resolve({ columns: this.computeColumns(columns, rows), rows });
           }
         },
         error: (error) => reject(error),
