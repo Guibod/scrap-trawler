@@ -1,4 +1,4 @@
-import { COLUMN_TYPE } from "~resources/domain/enums/spreadsheet.dbo";
+import { COLUMN_TYPE, COLUMN_TYPE_UNIQUE } from "~resources/domain/enums/spreadsheet.dbo"
 import type { RawSpreadsheetRow } from "~resources/domain/dbos/spreadsheet.dbo";
 import { SpreadsheetColumnScorer } from "~resources/domain/parsers/column.scorer"
 
@@ -65,7 +65,7 @@ export class SpreadsheetColumnDetector {
       });
 
     for (const { index, bestType } of sortedColumns) {
-      if (this.canHaveMultiple(bestType.type) || !takenTypes.has(bestType.type)) {
+      if (COLUMN_TYPE_UNIQUE.includes(bestType.type) || !takenTypes.has(bestType.type)) {
         assignedColumns.set(index, bestType.type);
         takenTypes.add(bestType.type);
       } else {
@@ -74,13 +74,6 @@ export class SpreadsheetColumnDetector {
     }
 
     return assignedColumns;
-  }
-
-  /**
-   * Determines whether a column type can have multiple instances.
-   */
-  private canHaveMultiple(type: COLUMN_TYPE): boolean {
-    return type === COLUMN_TYPE.IGNORED_DATA || type === COLUMN_TYPE.PLAYER_DATA || type === COLUMN_TYPE.FILTER;
   }
 
   private getBestType(scores: Map<COLUMN_TYPE, number>): { type: COLUMN_TYPE; score: number } {
