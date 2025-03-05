@@ -1,12 +1,12 @@
 import ButtonScrape from "~resources/ui/components/button.scrape"
 import { Switch } from "@heroui/switch"
 import { Cog6ToothIcon, EyeIcon } from "@heroicons/react/16/solid"
-import EventSetup from "~resources/ui/components/event/setup"
 import EventView from "~resources/ui/components/event/view"
 import React, { useState } from "react"
 import { useEvent } from "~resources/ui/providers/event"
 import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
 import EventEmpty from "~resources/ui/components/event/empty"
+import EventSetup from "~resources/ui/components/event/setup"
 
 const EventContainer = () => {
   const { event, showSetupByDefault} = useEvent()
