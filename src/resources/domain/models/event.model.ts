@@ -6,10 +6,10 @@ import type { WotcExtractedEvent } from "~resources/eventlink/event-extractor"
 import type { TeamDbo } from "~resources/domain/dbos/team.dbo"
 import type { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
 import type {
-  ProcessedSpreadsheetRow,
-  RawSpreadsheetRow,
-  SpreadsheetMetadata
+  SpreadsheetRawRow,
+  SpreadsheetMetadata, SpreadsheetData
 } from "~resources/domain/dbos/spreadsheet.dbo"
+import type { MappingDbo } from "~resources/domain/dbos/mapping.dbo"
 
 export interface EventModel {
   id: string;
@@ -20,13 +20,14 @@ export interface EventModel {
   teams: Record<string, TeamDbo>
   status: EventStatusDbo,
   rounds: Record<number, RoundDbo>
+  mapping: MappingDbo | null,
   spreadsheet: {
     meta: SpreadsheetMetadata
-    data: ProcessedSpreadsheetRow[]
+    data: SpreadsheetData
   } | null
   raw_data: {  // TODO: keep that ?
     wotc: WotcExtractedEvent
-    spreadsheet?: RawSpreadsheetRow[]
+    spreadsheet?: SpreadsheetRawRow[]
     [key: string]: any
   },
   lastRound: number,

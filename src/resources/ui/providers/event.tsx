@@ -54,7 +54,8 @@ export function EventProvider({ eventId, children }: { eventId?: string; childre
     }
   }, [currentEventId]);
 
-  const showSetupByDefault = event?.scrapeStatus !== EventScrapeStateDbo.PURGED && event?.status?.pair === PairStatus.NOT_STARTED;
+  const showSetupByDefault = event?.scrapeStatus !== EventScrapeStateDbo.PURGED
+    && event?.status?.pair !== PairStatus.COMPLETED;
   const value = useMemo(() => ({
     event,
     showSetupByDefault,

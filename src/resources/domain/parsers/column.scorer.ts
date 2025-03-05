@@ -30,8 +30,25 @@ export class SpreadsheetColumnScorer {
   }
 
   static getUrlScore(values: string[]): number {
-    const count = values.filter(val => /^https?:\/\/[\w.-]+\.[a-z]{2,}.*$/.test(val)).length;
-    return count / values.length;
+    // Define a stricter URL pattern to catch common formats
+    const urlPattern = /^(https?:\/\/(?:www\.)?[\w.-]+\.[a-z]{2,}(?:\/\S*)?)$/i;
+
+    // Count how many values match the URL pattern
+    const matchCount = values.filter(val => urlPattern.test(val)).length;
+
+    // Adjust score calculation:
+    // - If more than 80% of values match, return 1 (strongest)
+    // - Otherwise, return the fraction of matches with a minimum 0.2 boost
+    if (matchCount === values.length) return 1;
+    if (matchCount === 0) return 0;
+
+    const rawScore = matchCount / values.length;
+
+    // Apply a weight to ensure URLs outscore archetype columns (0.8)
+    const weightedScore = rawScore * 1.25; // Boost weight over archetype
+
+    // Ensure the final score does not exceed 1.0
+    return Math.min(1, weightedScore);
   }
 
   static getDecklistScore(values: string[]): number {
