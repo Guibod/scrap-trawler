@@ -92,7 +92,7 @@ type StatusProps = {
 const GlobalStatusIcon = ({ status, size = 24 }: StatusProps) => (
   <StatusIcon shape={Circle} color={statusColors[status.global]} label="Global Status"
               description={statusDescriptions.global[status.global]} size={size} tooltip={
-    <div className="px-2 flex flex-col gap-0.5">
+    <div className="px-2 flex flex-col">
       <div className="text-sm font-bold">Event Status</div>
       <div className="text-xs flex flex-col items-start gap-0">
         <div className="flex items-center gap-0.5">

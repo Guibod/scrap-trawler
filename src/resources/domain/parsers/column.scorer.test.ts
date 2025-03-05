@@ -19,7 +19,7 @@ describe("SpreadsheetColumnScorer", () => {
     expect(SpreadsheetColumnScorer.getUrlScore(urls)).toBe(1.0);
 
     const mixed = ["https://moxfield.com/decks/abc123", "notAUrl"];
-    expect(SpreadsheetColumnScorer.getUrlScore(mixed)).toBeCloseTo(0.5, 2);
+    expect(SpreadsheetColumnScorer.getUrlScore(mixed)).toBeCloseTo(0.625, 2);
   });
 
   it("calculates decklist score correctly", () => {

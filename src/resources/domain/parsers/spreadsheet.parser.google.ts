@@ -1,9 +1,9 @@
 import { NotYetImplemented } from "~resources/exception"
 import { SpreadsheetParser } from "~resources/domain/parsers/spreadsheet.parser"
-import type { RawSpreadsheetRow, SpreadsheetColumnMetaData } from "~resources/domain/dbos/spreadsheet.dbo"
+import type { SpreadsheetRawRow, SpreadsheetColumnMetaData } from "~resources/domain/dbos/spreadsheet.dbo"
 
 export class GoogleSheetsParser extends SpreadsheetParser {
-  async parse(data: ArrayBuffer | string): Promise<{ columns: SpreadsheetColumnMetaData[], rows: RawSpreadsheetRow[] }> {
+  async parse(data: ArrayBuffer | string): Promise<{ columns: SpreadsheetColumnMetaData[], rows: SpreadsheetRawRow[] }> {
     // const response = await fetch(this.metadata.source);
     // const text = await response.text();
     // return text.split("\n").map((row) => row.split(","));

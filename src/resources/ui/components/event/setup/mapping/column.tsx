@@ -4,28 +4,40 @@ import { Input } from "@heroui/input";
 import { Select } from "@heroui/select";
 import { SelectItem, useDisclosure } from "@heroui/react"
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/modal";
-import { COLUMN_TYPE } from "~resources/domain/enums/spreadsheet.dbo";
+import { COLUMN_TYPE, COLUMN_TYPE_META } from "~resources/domain/enums/spreadsheet.dbo"
 import { PencilIcon } from "@heroicons/react/24/outline";
 import type { SpreadsheetColumnMetaData } from "~resources/domain/dbos/spreadsheet.dbo";
+import { Chip } from "@heroui/chip"
 
-const SpreadsheetColumn: React.FC<SpreadsheetColumnProps> = ({ column, onUpdate }) => {
+type SpreadsheetColumnProps = {
+  column: SpreadsheetColumnMetaData;
+  onUpdate: (column: SpreadsheetColumnMetaData) => void;
+  showType?: boolean;
+}
+
+const SpreadsheetColumn: React.FC<SpreadsheetColumnProps> = ({ column, onUpdate, showType = false }) => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [newName, setNewName] = useState(column.name);
   const [selectedType, setSelectedType] = useState(column.type);
 
   const handleSave = (onClose: () => void) => {
     onUpdate({ ...column, name: newName, type: selectedType });
-    onClose(); // ✅ Close modal after save
+    onClose();
   };
 
   return (
-    <>
-      <div className="flex items-center justify-between">
-        <span className="truncate">{column.name || column.originalName}</span>
-        <Button variant="ghost" size="sm" onPress={onOpen}>
-          <PencilIcon className="w-4 h-4 text-gray-600" />
-        </Button>
-      </div>
+    <div className="w-full h-full flex items-center justify-between gap-x-4">
+      <span className="flex-1 truncate">{column.name || column.originalName}</span>
+
+      {showType && (
+        <Chip size="sm" className={`text-white ${COLUMN_TYPE_META[column.type].color}`}>
+          {COLUMN_TYPE_META[column.type].label}
+        </Chip>
+      )}
+
+      <Button variant="ghost" size="sm" onPress={onOpen} title="Edit Column" className="ml-auto">
+        <PencilIcon className="w-4 h-4 text-gray-600" />
+      </Button>
 
       <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} aria-labelledby="edit-column-modal">
         <ModalContent>
@@ -42,7 +54,7 @@ const SpreadsheetColumn: React.FC<SpreadsheetColumnProps> = ({ column, onUpdate 
                 />
                 <Select
                   label="Column Type"
-                  items={columnOptions}
+                  items={Object.entries(COLUMN_TYPE_META).map(([key, value]) => ({ key, ...value }))}
                   selectedKeys={[selectedType]}
                   onChange={(e) => setSelectedType(e.target.value as COLUMN_TYPE)}
                 >
@@ -50,30 +62,15 @@ const SpreadsheetColumn: React.FC<SpreadsheetColumnProps> = ({ column, onUpdate 
                 </Select>
               </ModalBody>
               <ModalFooter>
-                <Button variant="ghost" onPress={onClose}>Cancel</Button>
-                <Button onPress={() => handleSave(onClose)}>Save</Button>
+                <Button variant="ghost" onPress={onClose} aria-label="Cancel">Cancel</Button>
+                <Button onPress={() => handleSave(onClose)} aria-label="Save">Save</Button>
               </ModalFooter>
             </>
           )}
         </ModalContent>
       </Modal>
-    </>
+    </div>
   );
 };
-
-interface SpreadsheetColumnProps {
-  column: SpreadsheetColumnMetaData;
-  onUpdate: (column: SpreadsheetColumnMetaData) => void;
-}
-
-const columnOptions = [
-  { key: COLUMN_TYPE.IGNORED_DATA, label: "Ignore" },
-  { key: COLUMN_TYPE.ARCHETYPE, label: "Archetype" },
-  { key: COLUMN_TYPE.DECKLIST_URL, label: "Decklist" },
-  { key: COLUMN_TYPE.UNIQUE_ID, label: "Unique Identifier" },
-  { key: COLUMN_TYPE.FIRST_NAME, label: "First Name" },
-  { key: COLUMN_TYPE.LAST_NAME, label: "Last Name" },
-  { key: COLUMN_TYPE.PLAYER_DATA, label: "Extra player data" },
-];
 
 export default SpreadsheetColumn;

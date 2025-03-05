@@ -1,4 +1,5 @@
 import type { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
+import type { WotcId } from "~resources/domain/dbos/identifiers.dbo"
 
 export interface OverrideDbo {
   displayName: string | null
@@ -8,7 +9,8 @@ export interface OverrideDbo {
 }
 
 export interface PlayerDbo {
-  id: string  // wotc unique identifier
+  id: WotcId
+  avatar: string | null
   isAnonymized: boolean
   archetype: string | null
   tournamentId: string  // internal id for the tournament
@@ -18,5 +20,5 @@ export interface PlayerDbo {
   lastName: string | null
   status: PlayerStatusDbo
   tableNumber: number | null // assigned table number
-  overrides: OverrideDbo | null
+  overrides: OverrideDbo | null // manual overrides
 }

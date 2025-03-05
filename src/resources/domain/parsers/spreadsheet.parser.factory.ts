@@ -9,7 +9,7 @@ import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
 const logger = getLogger("SpreadsheetParserFactory");
 
 export class SpreadsheetParserFactory {
-  static create(metadata: SpreadsheetMetadata, players: Record<string, PlayerDbo>): SpreadsheetParser {
+  static create(metadata: SpreadsheetMetadata, players: Record<string, PlayerDbo>, autodetect: boolean): SpreadsheetParser {
     const extension = metadata.source.split(".").pop()?.toLowerCase();
     logger.debug(`Creating parser for ${metadata.source} with extension ${extension}`);
 
@@ -17,13 +17,13 @@ export class SpreadsheetParserFactory {
 
     if (extension === "csv") {
       logger.debug("Creating CSV parser");
-      return new CSVParser(metadata, firstNames, lastNames);
+      return new CSVParser(metadata, firstNames, lastNames, autodetect);
     } else if (extension === "xls" || extension === "xlsx") {
       logger.debug("Creating Excel parser");
-      return new ExcelParser(metadata, firstNames, lastNames);
+      return new ExcelParser(metadata, firstNames, lastNames, autodetect);
     } else if (metadata.source.startsWith("http")) {
       logger.debug("Creating Google Sheets parser");
-      return new GoogleSheetsParser(metadata, firstNames, lastNames);
+      return new GoogleSheetsParser(metadata, firstNames, lastNames, autodetect);
     } else {
       logger.error(`Unsupported file type or source (${metadata.source})`);
       throw new Error("Unsupported file type or source");

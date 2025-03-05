@@ -4,7 +4,6 @@ import Database from "~resources/storage/database"
 import type EventEntity from "~resources/storage/entities/event.entity"
 import type { EntityTable } from "dexie"
 import { NotFoundStorageError, WriteStorageError } from "~resources/storage/exceptions"
-import { NotYetImplemented } from "~resources/exception"
 
 /**
  * Minimal format for listing events.
