@@ -1,4 +1,4 @@
-import { type COLUMN_TYPE, DUPLICATE_HANDLING_STRATEGY } from "~resources/domain/enums/spreadsheet.dbo"
+import { type COLUMN_TYPE, DUPLICATE_STRATEGY, FILTER_OPERATOR } from "~resources/domain/enums/spreadsheet.dbo"
 
 export interface SpreadsheetColumnMetaData {
   name: string
@@ -7,21 +7,33 @@ export interface SpreadsheetColumnMetaData {
   type: COLUMN_TYPE
 }
 
+export type SpreadsheetFilter = {
+  column: number | null;
+  operator: FILTER_OPERATOR;
+  values: string[];
+};
+
 export interface SpreadsheetMetadata {
   source: string;
   tabName: string | null;
   columns: SpreadsheetColumnMetaData[];
-  filters: { column: string; value: string; condition: "equals" | "not_equals" }[];
-  duplicateStrategy: DUPLICATE_HANDLING_STRATEGY;
+  filters: SpreadsheetFilter[];
+  duplicateStrategy: DUPLICATE_STRATEGY;
+  finalized: boolean
 }
 
-export type ProcessedSpreadsheetRow = {
-  [COLUMN_TYPE.UNIQUE_ID]: string;
-  [COLUMN_TYPE.FIRST_NAME]: string | null;
-  [COLUMN_TYPE.LAST_NAME]: string | null;
-  [COLUMN_TYPE.ARCHETYPE]: string | null;
-  [COLUMN_TYPE.DECKLIST_URL]: string | null;
-  [COLUMN_TYPE.PLAYER_DATA]: Record<string, string | number | null>;
-};
+export type SpreadsheetRawRow = string[];
+export type SpreadsheetRawData = SpreadsheetRawRow[];
 
-export type RawSpreadsheetRow = string[];
+export type SpreadsheetRowId = string;
+
+export type SpreadsheetRow = {
+  id: string, // hashed version of the unique id column
+  player: Record<string, string>,
+  archetype: string,
+  decklistUrl: string,
+  decklistTxt: string,
+  firstName: string,
+  lastName: string,
+}
+export type SpreadsheetData = SpreadsheetRow[];

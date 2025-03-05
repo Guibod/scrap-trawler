@@ -39,6 +39,7 @@ export default class EventMapper {
       status: EventHydrator.inferStatus(entity),
       lastUpdated: entity.lastUpdated || null,
       scrapeStatus: entity.scrapeStatus,
+      mapping: entity.mapping,
       spreadsheet: entity.spreadsheet ? {
         meta: entity.spreadsheet,
         data: await mapSpreadsheetData(entity.raw_data.spreadsheet, entity.spreadsheet) // Store raw spreadsheet data in `data`
@@ -75,6 +76,7 @@ export default class EventMapper {
         standings: Object.values(round.standings),
       })),
       spreadsheet: dbo.spreadsheet?.meta ?? null,
+      mapping: dbo.mapping ?? null,
       date: new Date(dbo.date),
       raw_data: dbo.raw_data ?? {},
       lastUpdated: new Date()

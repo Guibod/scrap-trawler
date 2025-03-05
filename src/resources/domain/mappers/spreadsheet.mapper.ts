@@ -1,20 +1,24 @@
 import { hashStringSHA256 } from "~resources/utils/crypto"
-import type { ProcessedSpreadsheetRow, SpreadsheetMetadata } from "~resources/domain/dbos/spreadsheet.dbo"
+import type {
+  SpreadsheetData,
+  SpreadsheetMetadata, SpreadsheetRow
+} from "~resources/domain/dbos/spreadsheet.dbo"
 import { COLUMN_TYPE } from "~resources/domain/enums/spreadsheet.dbo"
 
-export async function mapSpreadsheetData(rawData: string[][], metadata: SpreadsheetMetadata): Promise<ProcessedSpreadsheetRow[]> {
+export async function mapSpreadsheetData(rawData: string[][], metadata: SpreadsheetMetadata): Promise<SpreadsheetData> {
   if (!rawData || rawData.length < 2) return []; // Ensure data exists
 
   const [headerRow, ...dataRows] = rawData;
 
   const processedRows = await Promise.all(dataRows.map(async (row) => {
-    const processedRow: ProcessedSpreadsheetRow = {
-      [COLUMN_TYPE.FIRST_NAME]: null,
-      [COLUMN_TYPE.LAST_NAME]: null,
-      [COLUMN_TYPE.UNIQUE_ID]: null,
-      [COLUMN_TYPE.ARCHETYPE]: null,
-      [COLUMN_TYPE.DECKLIST_URL]: null,
-      [COLUMN_TYPE.PLAYER_DATA]: {},
+    const processedRow: SpreadsheetRow = {
+      id: null,
+      firstName: null,
+      lastName: null,
+      archetype: null,
+      decklistTxt: null,
+      decklistUrl: null,
+      player: {},
     };
 
     Object.keys(metadata.columns).forEach((columnName) => {

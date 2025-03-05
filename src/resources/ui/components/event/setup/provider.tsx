@@ -1,16 +1,35 @@
-import React, { createContext, useContext, useState } from "react";
-import { useEvent } from "~resources/ui/providers/event";
-import { SpreadsheetParserFactory } from "~resources/domain/parsers/spreadsheet.parser.factory";
+import React, { createContext, useContext, useEffect, useState } from "react"
+import { useEvent } from "~resources/ui/providers/event"
+import { SpreadsheetParserFactory } from "~resources/domain/parsers/spreadsheet.parser.factory"
 import type {
-  RawSpreadsheetRow,
   SpreadsheetColumnMetaData,
-  SpreadsheetMetadata
+  SpreadsheetFilter,
+  SpreadsheetMetadata,
+  SpreadsheetRawData,
+  SpreadsheetRowId
 } from "~resources/domain/dbos/spreadsheet.dbo"
-import { COLUMN_TYPE, COLUMN_TYPE_UNIQUE, DUPLICATE_HANDLING_STRATEGY } from "~resources/domain/enums/spreadsheet.dbo"
-import { addToast } from "@heroui/react"
-import { SETUP_STEPS } from "~resources/ui/components/event/setup/config"
+import { COLUMN_TYPE, COLUMN_TYPE_UNIQUE, DUPLICATE_STRATEGY } from "~resources/domain/enums/spreadsheet.dbo"
+import { addToast, Spinner } from "@heroui/react"
+import { SetupStatus } from "~resources/ui/components/event/setup/status"
+import { CheckIcon } from "@heroicons/react/24/solid"
+import type { EventModel } from "~resources/domain/models/event.model"
+import type { WotcId } from "~resources/domain/dbos/identifiers.dbo"
+import type { MappingDbo } from "~resources/domain/dbos/mapping.dbo"
 
-const EventSetupContext = createContext(null);
+class EventSetupContextType {
+  event: EventModel | null;
+  spreadsheetMeta: SpreadsheetMetadata;
+  spreadsheetData: SpreadsheetRawData | null;
+  handleColumnMapping: (column: SpreadsheetColumnMetaData) => void;
+  handleFileUpload: (file: File, autodetect: boolean) => void;
+  handleStrategy: (strategy: DUPLICATE_STRATEGY) => void;
+  handleFilters: (filters: SpreadsheetFilter[]) => void;
+  handlePairings: (updatedPairings: MappingDbo | null) => void;
+  handleFinalization: () => void;
+  status: SetupStatus | null;
+}
+
+const EventSetupContext = createContext<EventSetupContextType>(null);
 
 export const useEventSetup = () => {
   const context = useContext(EventSetupContext);
@@ -23,7 +42,7 @@ export const useEventSetup = () => {
 export const EventSetupProvider = ({ children }) => {
   const { event, updateEvent } = useEvent();
 
-  const [spreadsheetData, setSpreadsheetData] = useState<RawSpreadsheetRow[] | null>(
+  const [spreadsheetData, setSpreadsheetData] = useState<SpreadsheetRawData | null>(
     event.raw_data.spreadsheet || null
   );
   const [spreadsheetMeta, setSpreadsheetMeta] = useState<SpreadsheetMetadata>(
@@ -32,17 +51,37 @@ export const EventSetupProvider = ({ children }) => {
       tabName: null,
       columns: [],
       filters: [],
-      duplicateStrategy: DUPLICATE_HANDLING_STRATEGY.KEEP_FIRST,
+      duplicateStrategy: DUPLICATE_STRATEGY.NONE,
+      finalized: false
     }
   );
+  const [spreadsheetMapping, setSpreadsheetMapping] = useState<MappingDbo>(event.mapping || {});
+  const [status, setStatus] = useState<SetupStatus | null>(null)
 
-  // Compute first incomplete step
-  const currentStepIndex = SETUP_STEPS.findIndex(({ isComplete }) => !isComplete(spreadsheetMeta, spreadsheetData));
-  const currentStep = currentStepIndex !== -1 ? SETUP_STEPS[currentStepIndex] : SETUP_STEPS[0];
+  useEffect(() => {
+    updateStatus()
 
-  // Compute progress percentage
-  const progressPercentage = ((currentStepIndex + 1) / SETUP_STEPS.length) * 100;
+    async function updateStatus() {
+      setStatus(await SetupStatus.create(spreadsheetMeta, spreadsheetData, spreadsheetMapping))
+    }
+  }, [spreadsheetMeta, spreadsheetData, spreadsheetMapping])
 
+
+  const handleStrategy = (strategy: DUPLICATE_STRATEGY) => {
+    setSpreadsheetMeta((prev) => {
+      const updatedMeta = { ...prev, duplicateStrategy: strategy };
+      updateEvent({ spreadsheet: { ...event.spreadsheet, meta: updatedMeta } });
+      return updatedMeta;
+    });
+  }
+
+  const handleFilters = (filters: SpreadsheetFilter[]) => {
+    setSpreadsheetMeta((prev) => {
+      const updatedMeta = { ...prev, filters };
+      updateEvent({ spreadsheet: { ...event.spreadsheet, meta: updatedMeta } });
+      return updatedMeta;
+    });
+  }
 
   const handleColumnMapping = (column: SpreadsheetColumnMetaData) => {
     setSpreadsheetMeta((prev) => {
@@ -76,37 +115,117 @@ export const EventSetupProvider = ({ children }) => {
     });
   };
 
-  const handleFileUpload = (file) => {
-    if (!file) return;
-    setSpreadsheetMeta((prev) => ({ ...prev, source: file.name }));
-    processFile(file);
+  const handlePairings = (updatedMapping: MappingDbo | null) => {
+    setSpreadsheetMapping(updatedMapping)
+
+    updateEvent({
+      mapping: updatedMapping ?? {}, // Reset pairings if null
+    });
   };
 
-  const processFile = (file) => {
+  const handleFinalization = () => {
+    if (status.pairs === null || Object.keys(status.pairs).length === 0 || status.meta.columns.length === 0) {
+      addToast({
+        title: "Finalization Error",
+        description: "Please ensure all columns are mapped and no pairings are present.",
+        color: "danger",
+        timeout: 3000,
+      });
+      return;
+    }
+
+    updateEvent({
+      spreadsheet: { ...event.spreadsheet, meta: { ...spreadsheetMeta, finalized: true } },
+    })
+
+    addToast({
+      title: "Finalization Success",
+      description: "The event setup has been completed.",
+      color: "success",
+      timeout: 300
+    })
+  }
+
+  const handleFileUpload = (file: File, autodetect: boolean) => {
+    if (!file) return;
+
     const reader = new FileReader();
+
     reader.onload = async (evt) => {
       if (!evt.target?.result) return;
-      const parser = SpreadsheetParserFactory.create(spreadsheetMeta, event.players);
-      const { columns, rows } = await parser.parse(evt.target.result);
-      setSpreadsheetMeta((prev) => ({ ...prev, columns }));
-      setSpreadsheetData(rows);
-      updateEvent({
-        spreadsheet: { ...event.spreadsheet, meta: { ...spreadsheetMeta, columns } },
-        raw_data: { ...event.raw_data, spreadsheet: rows },
+
+      setSpreadsheetMeta((prev) => {
+        const updatedMeta = { ...prev, source: file.name };
+        console.log(updatedMeta); // Ensure it logs the updated meta before parsing
+        return updatedMeta;
       });
+
+      try {
+        const updatedMeta = {
+          ...spreadsheetMeta, // This might still be outdated if used directly
+          source: file.name,
+        };
+
+        console.log("Using updated spreadsheetMeta:", updatedMeta);
+
+        const parser = SpreadsheetParserFactory.create(updatedMeta, event.players, autodetect);
+        const { columns, rows } = await parser.parse(evt.target.result);
+
+        setSpreadsheetMeta((prev) => ({ ...prev, columns }));
+        setSpreadsheetData(rows);
+
+        updateEvent({
+          spreadsheet: { ...event.spreadsheet, meta: { ...updatedMeta, columns } },
+          raw_data: { ...event.raw_data, spreadsheet: rows },
+        });
+
+        addToast({
+          title: "File Uploaded",
+          icon: <CheckIcon className="fill-green-400 border-green-800" />,
+          description: `The file ${file.name} was successfully uploaded.`,
+          severity: "success",
+          timeout: 3000,
+        });
+
+      } catch (error) {
+        console.error("Error processing file:", error);
+        addToast({
+          title: "File Upload Error",
+          description: `An error occurred while processing the file ${file.name}.`,
+          severity: "danger",
+          timeout: 3000,
+        });
+      }
     };
-    file.name.endsWith(".csv") ? reader.readAsText(file) : reader.readAsArrayBuffer(file);
+
+    if (file.name.endsWith(".csv")) {
+      reader.readAsText(file);
+    } else {
+      reader.readAsArrayBuffer(file);
+    }
   };
+
+  if (!status) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
+        <Spinner size="lg" color="primary" label="Please wait while recovering the data"  />
+      </div>
+    )
+  }
 
   return (
     <EventSetupContext.Provider
       value={{
+        event,
         spreadsheetMeta,
         spreadsheetData,
         handleColumnMapping,
         handleFileUpload,
-        currentStep,
-        progressPercentage,
+        handleStrategy,
+        handleFilters,
+        handlePairings,
+        handleFinalization,
+        status
       }}
     >
       {children}

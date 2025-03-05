@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { COLUMN_TYPE } from "~resources/domain/enums/spreadsheet.dbo";
-import type { RawSpreadsheetRow } from "~resources/domain/dbos/spreadsheet.dbo";
+import type { SpreadsheetRawRow } from "~resources/domain/dbos/spreadsheet.dbo";
 import { faker } from "@faker-js/faker";
 import { SpreadsheetColumnDetector } from "~resources/domain/parsers/column.detector" // **Using Faker.js for realistic data!**
 
@@ -22,7 +22,7 @@ beforeEach(() => {
 describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
   describe("🔹 `detectColumns` (Full Table Detection)", () => {
     it("assigns high-priority columns first", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         faker.internet.url(), // Decklist URL
         faker.helpers.arrayElement(knownFirstNames), // First Name
         faker.helpers.arrayElement(knownLastNames), // Last Name
@@ -39,7 +39,7 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("ensures multiple UNIQUE_ID columns can exist", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         faker.internet.email(),
         faker.internet.email()
       ]);
@@ -50,7 +50,7 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("ensures only one DECKLIST_URL column is detected", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         faker.internet.url(),
         faker.internet.url()
       ]);
@@ -61,7 +61,7 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("detects a single DECKLIST_TXT column", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         "1 Lightning Bolt\n1 Forest\n1 Island",
         "1 Arid Mesa\n2 Mountain\n1 Snapcaster Mage"
       ]);
@@ -72,7 +72,7 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("detects first and last names separately", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         faker.helpers.arrayElement(knownFirstNames),
         faker.helpers.arrayElement(knownLastNames),
       ]);
@@ -83,7 +83,7 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("detects numeric user data correctly", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         faker.string.numeric(6),
         faker.helpers.arrayElement(knownFirstNames),
         faker.internet.email()
@@ -93,7 +93,7 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("detects filter columns correctly", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         faker.helpers.arrayElement(["Standard", "Modern", "Legacy"])
       ]);
 
@@ -101,7 +101,7 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("detects empty columns as IGNORED_DATA", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         faker.helpers.arrayElement(["", " ", null as any, undefined as any])
       ]);
 
@@ -109,7 +109,7 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("resolves conflicts by ensuring unique types first", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         faker.internet.url(),
         faker.helpers.arrayElement(knownFirstNames),
         faker.helpers.arrayElement(knownLastNames),
@@ -126,7 +126,7 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("detects decklists containing only basic lands", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         "Plains\nIsland\nSwamp",
         "Mountain\nForest\nWastes"
       ]);
@@ -135,7 +135,7 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("detects a column of usernames as PLAYER_DATA", () => {
-      const data: RawSpreadsheetRow[] = Array.from({ length: 16 }, () => [
+      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
         `@${faker.internet.username()}`,
         faker.helpers.arrayElement(["esper control", "mono-red", "izzet prowess"])
       ]);

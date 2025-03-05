@@ -8,25 +8,29 @@ import PlayerModalEdit from "~resources/ui/components/player/edit.modal"
 import { useDisclosure } from "@heroui/react"
 import { Modal } from "@heroui/modal"
 import { hashStringSHA1 } from "~resources/utils/crypto"
+import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
 
-interface PlayerProps {
-  playerId: string
+export interface PlayerProps {
+  playerId?: string
+  player?: PlayerDbo
+  editable?: boolean
+  children?: React.ReactNode
 }
 
-
-
-const Player = ({ playerId }: PlayerProps) => {
+const Player = ({ playerId, player, editable, children }: PlayerProps) => {
   const { event } = useEvent()
-  const [avatarHash, setAvatarHash] = useState<string | null>(null)
-  const [player, setPlayer] = useState(event.players[playerId])
+  const [avatar, setAvatar] = useState<string | null>(null)
+  const [currentPlayer, setCurrentPlayer] = useState(player ?? event.players[playerId])
   const [isHovered, setIsHovered] = useState(false) // Hover state
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   useEffect(() => {
-    createAvatarHash()
+    if (!avatar) {
+      createAvatarHash()
+    }
     async function createAvatarHash() {
-      const hash = await hashStringSHA1(player.id)
-      setAvatarHash(hash)
+      const hash = await hashStringSHA1(currentPlayer.id)
+      setAvatar(`https://www.gravatar.com/avatar/${hash}?d=identicon`)
     }
   }, [])
 
@@ -41,18 +45,20 @@ const Player = ({ playerId }: PlayerProps) => {
         {/* User Component */}
         <User
           avatarProps={{
-            src: `https://www.gravatar.com/avatar/${avatarHash}?d=identicon`,
+            src: avatar,
           }}
-          name={<PlayerName player={player} />}
+          name={<PlayerName player={currentPlayer} />}
           description={
             <div className="flex items-center space-x-5">
-              {player.overrides?.archetype || player.archetype || player.overrides?.displayName || player.displayName}
+              {currentPlayer.overrides?.archetype || currentPlayer.archetype || currentPlayer.overrides?.displayName || currentPlayer.displayName}
             </div>
           }
         />
 
+        {children && <div className="ml-auto">{children}</div>}
+
         {/* Edit Button (Only visible on hover) */}
-        {isHovered && (
+        {editable && isHovered && (
           <Button
             color="primary"
             size="sm"
@@ -66,7 +72,7 @@ const Player = ({ playerId }: PlayerProps) => {
       </div>
 
       <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
-        <PlayerModalEdit    playerId={playerId}  />
+        <PlayerModalEdit playerId={playerId}  />
       </Modal>
     </>
   );

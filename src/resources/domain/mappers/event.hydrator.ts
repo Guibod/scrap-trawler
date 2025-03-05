@@ -1,9 +1,6 @@
 import { getLogger } from "~resources/logging/logger"
 import { type EventModel } from "~resources/domain/models/event.model"
-import EventEntity, {
-  EVENT_ENTITY_VERSION,
-  type RoundEntity
-} from "~resources/storage/entities/event.entity"
+import EventEntity, { EVENT_ENTITY_VERSION, type RoundEntity } from "~resources/storage/entities/event.entity"
 import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~resources/domain/enums/status.dbo"
 import type { WotcExtractedEvent } from "~resources/eventlink/event-extractor"
 import { ScrapTrawlerError } from "~resources/exception"
@@ -60,7 +57,8 @@ export default class EventHydrator {
       teams: [], // TODO: support real teams
       players: EventHydrator.inferPlayers(entity),
       rounds: EventHydrator.inferRounds(entity),
-      spreadsheet: entity.spreadsheet,
+      mapping: entity.mapping ?? null,
+      spreadsheet: entity.spreadsheet ?? null,
       date: new Date(rawData.event.actualStartTime ?? rawData.event.scheduledStartTime),
       title: rawData.event.title,
       raw_data: { // raw data is to be preserved
@@ -101,6 +99,7 @@ export default class EventHydrator {
 
       const playerDbo: PlayerDbo = {
         id: player.personaId,
+        avatar: null,
         archetype: null,
         isAnonymized: isAnonymized(player.firstName),
         teamId: `${teamId}`,
@@ -173,7 +172,8 @@ export default class EventHydrator {
   }
 
   public static inferStatus(entity: EventEntity): EventModel["status"] {
-    const rawData = entity.raw_data.wotc as WotcExtractedEvent
+    const wotcData = entity.raw_data.wotc
+    const spreadsheetData = entity.raw_data.spreadsheet
 
     let global = GlobalStatus.NOT_STARTED;
     let scrape = ScrapeStatus.IN_PROGRESS;
@@ -181,14 +181,23 @@ export default class EventHydrator {
     let fetch = FetchStatus.NOT_STARTED;
 
     try {
-      if (rawData.event.status === "ENDED") {
+      if (wotcData.event.status === "ENDED") {
         scrape = ScrapeStatus.COMPLETED;
         global = GlobalStatus.PARTIAL;
       }
 
-      if (scrape === ScrapeStatus.COMPLETED) {
+      if (spreadsheetData) {
+        pair = PairStatus.PARTIAL
+
+        if (entity.mapping && entity.spreadsheet.columns.length && entity.spreadsheet.finalized) {
+          pair = PairStatus.COMPLETED
+        }
+      }
+
+      if (scrape === ScrapeStatus.COMPLETED && pair === PairStatus.COMPLETED) {
         global = GlobalStatus.COMPLETED;
       }
+
     } catch (error) {
       logger.error("Failed to infer status:", error);
     }

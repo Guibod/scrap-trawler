@@ -1,5 +1,5 @@
 import { COLUMN_TYPE, COLUMN_TYPE_UNIQUE } from "~resources/domain/enums/spreadsheet.dbo"
-import type { RawSpreadsheetRow } from "~resources/domain/dbos/spreadsheet.dbo";
+import type { SpreadsheetRawRow } from "~resources/domain/dbos/spreadsheet.dbo";
 import { SpreadsheetColumnScorer } from "~resources/domain/parsers/column.scorer"
 
 export class SpreadsheetColumnDetector {
@@ -11,7 +11,7 @@ export class SpreadsheetColumnDetector {
     this.knownLastNames = new Set([...knownLastNames].map(name => name.toLowerCase()));
   }
 
-  detectColumns(rows: RawSpreadsheetRow[]): Map<number, COLUMN_TYPE> {
+  detectColumns(rows: SpreadsheetRawRow[]): Map<number, COLUMN_TYPE> {
     const columnScores: Map<number, Map<COLUMN_TYPE, number>> = new Map();
 
     // Transpose rows into columns
@@ -49,11 +49,13 @@ export class SpreadsheetColumnDetector {
       COLUMN_TYPE.LAST_NAME,    // **Only one**
       COLUMN_TYPE.DECKLIST_URL, // **Only one**
       COLUMN_TYPE.DECKLIST_TXT, // **Only one**
+      COLUMN_TYPE.ARCHETYPE,    // **Only one**
       COLUMN_TYPE.PLAYER_DATA,  // **Multiple allowed**
       COLUMN_TYPE.FILTER,       // **Multiple allowed**
     ];
 
     // **Sort columns by highest confidence score**
+    // **Sort by highest confidence score and priority order**
     const sortedColumns = [...columnScores.entries()]
       .map(([index, scores]) => ({ index, bestType: this.getBestType(scores) }))
       .sort((a, b) => {
@@ -65,11 +67,15 @@ export class SpreadsheetColumnDetector {
       });
 
     for (const { index, bestType } of sortedColumns) {
-      if (COLUMN_TYPE_UNIQUE.includes(bestType.type) || !takenTypes.has(bestType.type)) {
-        assignedColumns.set(index, bestType.type);
-        takenTypes.add(bestType.type);
+      if (COLUMN_TYPE_UNIQUE.includes(bestType.type)) {
+        if (takenTypes.has(bestType.type)) {
+          assignedColumns.set(index, COLUMN_TYPE.IGNORED_DATA); // **Prevent duplicate unique columns**
+        } else {
+          assignedColumns.set(index, bestType.type);
+          takenTypes.add(bestType.type);
+        }
       } else {
-        assignedColumns.set(index, COLUMN_TYPE.IGNORED_DATA); // Default to ignored if already assigned
+        assignedColumns.set(index, bestType.type);
       }
     }
 
