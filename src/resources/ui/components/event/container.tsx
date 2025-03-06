@@ -26,9 +26,6 @@ const EventContainer = () => {
         <h1 className="text-4xl font-bold font-mtg">{event.title} <span
           className="text-xl">{event.date.toLocaleDateString()}</span>
         </h1>
-        <div>
-          <ButtonScrape />
-        </div>
 
         <div className="flex items-center">
           <Switch id="mode-switch" isSelected={isSetupMode}
