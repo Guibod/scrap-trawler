@@ -93,7 +93,10 @@ export default class EventHydrator {
 
     return entity.raw_data.wotc.event.registeredPlayers.map((player, teamRank)=> {
       const teamId = teamRank + 1; // inferred from registered players index
-      const currentPlayerDbo = entity.players.find((p) => p.id === player.personaId)
+      let currentPlayerDbo = undefined
+      if (!entity.players) {
+        currentPlayerDbo = entity.players.find((p) => p.id === player.personaId)
+      }
       const currentOverrideDbo = currentPlayerDbo?.overrides || null
 
       const playerDbo: PlayerDbo = {
