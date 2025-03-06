@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.6.1 - 2025-03-06
+#### Bug Fixes
+- reverted changes on scrape button - (7db7a01) - Guillaume Boddaert
+#### Miscellaneous Chores
+- sync package.json version - (f17bc77) - Cog Bot
+
+- - -
+
 ## 0.6.0 - 2025-03-01
 #### Continuous Integration
 - attempt to make auto-approve work (9) - (56ee17c) - Guillaume Boddaert
