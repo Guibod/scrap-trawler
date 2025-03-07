@@ -135,11 +135,24 @@ describe("SpreadsheetColumnDetector (Row-Major Format)", () => {
     });
 
     it("detects a column of usernames as PLAYER_DATA", () => {
-      const data: SpreadsheetRawRow[] = Array.from({ length: 16 }, () => [
-        `@${faker.internet.username()}`,
-        faker.helpers.arrayElement(["esper control", "mono-red", "izzet prowess"])
-      ]);
-
+      const data: SpreadsheetRawRow[] = [
+        [ '@Bert.Schinner', 'izzet prowess' ],
+        [ '@Margaret_Kutch', 'esper control' ],
+        [ '@Brent11', 'mono-red' ],
+        [ '@Dayton_Goldner67', 'izzet prowess' ],
+        [ '@Leola.Schuppe', 'mono-red' ],
+        [ '@Earlene.Gleason67', 'mono-red' ],
+        [ '@Brenden95', 'izzet prowess' ],
+        [ '@Molly_Wiegand92', 'mono-red' ],
+        [ '@Brennon48', 'mono-red' ],
+        [ '@Ethan_Bode54', 'esper control' ],
+        [ '@Jensen.Flatley25', 'izzet prowess' ],
+        [ '@Coralie.Mohr99', 'izzet prowess' ],
+        [ '@Lesley_Stroman42', 'esper control' ],
+        [ '@Abigayle.Reichert', 'mono-red' ],
+        [ '@Verlie_OKeefe', 'mono-red' ],
+        [ '@Erika.Nicolas', 'esper control' ]
+      ]
       expect(detector.detectColumns(data).get(0)).toBe(COLUMN_TYPE.PLAYER_DATA);
     });
   });
