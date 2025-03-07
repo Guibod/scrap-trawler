@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.7.1 - 2025-03-07
+#### Bug Fixes
+- per google request remove the used scripting and storage permissions from the project - (338933d) - Guillaume Boddaert
+#### Continuous Integration
+- attempt to make auto-approve work, with the help of mr gpt (2) - (131f220) - Guillaume Boddaert
+#### Documentation
+- Add GitHub issue templates for bug reports, feature requests, and tasks - (1a51c7f) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(deps)** bump @types/node from 22.13.4 to 22.13.9 - (4be0990) - dependabot[bot]
+- **(deps)** bump nanoid from 3.3.8 to 3.3.9 in the npm_and_yarn group - (73ebfe8) - dependabot[bot]
+- sync package.json version - (d6b2a67) - Cog Bot
+
+- - -
+
 ## 0.7.0 - 2025-03-07
 #### Bug Fixes
 - fixed hydration of older records without players - (6c58795) - Guillaume Boddaert
