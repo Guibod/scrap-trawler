@@ -12,13 +12,14 @@ export default defineConfig({
     coverage: {
       provider: 'v8', // Use 'v8' for native V8 coverage
       reporter: ['text', 'lcov', 'json-summary'], // Useful coverage reports
-      exclude: ['**/node_modules/**', '**/dist/**', '**/test/**', '**/mocks/**'],
+      exclude: ['**/node_modules/**', '**/dist/**', '**/test/**', '**/mocks/**', '**/build/**'],
+      include: ['**/src/**'],
       all: true, // Enforce coverage for untested files
       thresholds: {
-        statements: 24,
+        statements: 44,
         branches: 79,
-        functions: 48,
-        lines: 24
+        functions: 60,
+        lines: 40
       }
     },
   }
