@@ -102,10 +102,8 @@
     "name": "Scrap Trawler BETA",
     "description": "Extract event data from EventLink tournaments. THIS EXTENSION IS FOR BETA TESTING",
     "permissions": [
-      "storage",
       "cookies",
-      "activeTab",
-      "scripting"
+      "activeTab"
     ],
     "host_permissions": [
       "https://eventlink.wizards.com/*"
