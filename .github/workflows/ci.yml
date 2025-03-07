@@ -53,3 +53,9 @@ jobs:
 
       - name: Run Tests (Vitest)
         run: pnpm test
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
