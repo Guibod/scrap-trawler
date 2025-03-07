@@ -19,6 +19,10 @@ export class LoggerProxy implements LoggerInterface {
   }
 
   static isBackgroundServiceWorker(): boolean {
+    if (typeof process !== "undefined" && process.versions && process.versions.node) {
+      return true; // Running in Node.js, not a browser extension
+    }
+
     return typeof chrome !== "undefined" &&
       chrome.runtime &&
       !!chrome.runtime.id &&
