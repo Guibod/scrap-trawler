@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.7.0 - 2025-03-07
+#### Bug Fixes
+- fixed hydration of older records without players - (6c58795) - Guillaume Boddaert
+#### Continuous Integration
+- attempt to make auto-approve work, with the help of mr gpt - (7da79d5) - Guillaume Boddaert
+#### Features
+- complete support for setup (mapping, pairing, etc) - (4e7e2de) - Guillaume Boddaert
+- spreadsheet column types should be almost correctly infered from data - (5f18988) - Guillaume Boddaert
+- support for spreadsheet display and property overrides - (05b8734) - Guillaume Boddaert
+#### Miscellaneous Chores
+- reordered the setup screen through provider and dedicated components - (1cfd711) - Guillaume Boddaert
+- sync package.json version - (644949c) - Cog Bot
+#### Tests
+- logger is considered background service if in node environment - (3b232e2) - Guillaume Boddaert
+
+- - -
+
 ## 0.6.1 - 2025-03-06
 #### Bug Fixes
 - reverted changes on scrape button - (7db7a01) - Guillaume Boddaert
