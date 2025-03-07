@@ -30,7 +30,7 @@
     "package": "plasmo package",
     "format": "biome format --write",
     "lint": "biome check",
-    "test": "vitest run",
+    "test": "vitest run --coverage",
     "test:watch": "vitest",
     "prepare": "husky",
     "sync-version": "tsx src/resources/sync-version.ts"
@@ -78,6 +78,7 @@
     "@types/react-dom": "18.2.18",
     "@typescript-eslint/eslint-plugin": "^8.24.1",
     "@typescript-eslint/parser": "^8.24.1",
+    "@vitest/coverage-v8": "^3.0.8",
     "autoprefixer": "^10.4.20",
     "biome": "^0.3.3",
     "eslint": "^9.20.1",
