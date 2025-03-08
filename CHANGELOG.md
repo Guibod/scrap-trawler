@@ -2,6 +2,28 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.8.0 - 2025-03-08
+#### Continuous Integration
+- codecov enabled on the project - (45a61f8) - Guillaume Boddaert
+- ci will run coverage and upload reports - (55e3661) - Guillaume Boddaert
+#### Features
+- added layout to the routed pages - (1a190fe) - Guillaume Boddaert
+#### Miscellaneous Chores
+- added settings page - (7714c8c) - Guillaume Boddaert
+- added settings provider - (b03de69) - Guillaume Boddaert
+- enable react-router in main.html instead of event.html - (fc1f7de) - Guillaume Boddaert
+- removed two unused dependencies - (e1196ac) - Guillaume Boddaert
+- added event builder (and derivative sub-builders) - (792ae75) - Guillaume Boddaert
+- sync package.json version - (cc1f463) - Cog Bot
+#### Tests
+- opportunisticly highen the coverage threshold - (bfeb363) - Guillaume Boddaert
+- flaky test fixed in column.detector.test.ts - (c65e3b1) - Guillaume Boddaert
+- tested text.ts - (c10fbdf) - Guillaume Boddaert
+- tested crypto.ts - (a9950b2) - Guillaume Boddaert
+- added coverage threshold to the project - (81a4748) - Guillaume Boddaert
+
+- - -
+
 ## 0.7.1 - 2025-03-07
 #### Bug Fixes
 - per google request remove the used scripting and storage permissions from the project - (338933d) - Guillaume Boddaert
