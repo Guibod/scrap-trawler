@@ -31,8 +31,8 @@ const TestComponent = () => {
   const { settings, updateSettings } = useSettings();
   return (
     <div>
-      <p data-testid="moxfield">{settings.apiKeys.moxfield}</p>
-      <button onClick={() => updateSettings({ apiKeys: { moxfield: "new-key" } })}>
+      <p data-testid="moxfield">{settings?.moxfieldApiKey ?? ''}</p>
+      <button onClick={() => updateSettings({ moxfieldApiKey: "new-key" })}>
         Update Key
       </button>
     </div>
@@ -72,8 +72,7 @@ describe("SettingsProvider", () => {
 
     expect(screen.getByTestId("moxfield")).toHaveTextContent("new-key");
     expect(settingsDaoMock.save).toHaveBeenCalledWith({
-      ...DEFAULT_SETTINGS,
-      apiKeys: { moxfield: "new-key" },
+      moxfieldApiKey: "new-key",
     });
   });
 
