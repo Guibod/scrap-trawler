@@ -7,6 +7,7 @@ import { eventService } from "~background/singletons"
 import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
 import { getLogger } from "~resources/logging/logger"
 import type { OverrideDbo } from "~resources/domain/dbos/player.dbo"
+import { useParams } from "react-router-dom"
 
 const logger = getLogger("event-provider")
 
@@ -28,31 +29,26 @@ export function useEvent() {
   return context;
 }
 
-export function EventProvider({ eventId, children }: { eventId?: string; children: React.ReactNode }) {
-  const [currentEventId, setCurrentEventId] = useState<string | null>(eventId);
+export function EventProvider({ children }: { eventId?: string; children: React.ReactNode }) {
+  const { eventId } = useParams();
   const [event, setEvent] = useState<EventModel | null>(null);
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setCurrentEventId(params.get("eventId"));
-  }, [])
-
-  useEffect(() => {
-    if (currentEventId) {
+    if (eventId) {
       fetchEvent()
     }
 
     async function fetchEvent() {
       setIsFetching(true)
-      eventService.getEvent(currentEventId)
+      eventService.getEvent(eventId)
         .then((event) => {
           setEvent(event)
           setIsFetching(false)
           console.log("EventProvider current event", event)
         })
     }
-  }, [currentEventId]);
+  }, [eventId]);
 
   const showSetupByDefault = event?.scrapeStatus !== EventScrapeStateDbo.PURGED
     && event?.status?.pair !== PairStatus.COMPLETED;
