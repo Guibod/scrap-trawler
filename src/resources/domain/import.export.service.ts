@@ -46,7 +46,9 @@ export class ImportExportService {
   private index: number
   private size: number | null
 
-  constructor(dao: EventDao, progressCallback: (index: number, size: number) => Promise<void>) {
+  constructor(dao: EventDao = null,
+              progressCallback: (index: number, size: number) => Promise<void> = () => Promise.resolve())
+  {
     this.dao = dao || new EventDao();
     this.index = 0
     this.size = null
