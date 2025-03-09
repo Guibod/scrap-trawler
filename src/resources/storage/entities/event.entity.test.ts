@@ -1,11 +1,12 @@
 import { describe, it, expect } from "vitest";
 import { isEventEntity } from "~resources/storage/entities/event.entity"
+import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
 
 // Mock valid and invalid test cases
 const validEvent = {
   id: "event123",
   title: "Test Event",
-  date: new Date(),
+  date: new Date().toISOString(),
   organizer: {},
   players: [],
   teams: [],
@@ -17,7 +18,7 @@ const validEvent = {
     spreadsheet: [{ player: "John Doe", deck: "Burn" }],
   },
   version: 1,
-  scrapeStatus: {},
+  scrapeStatus: EventScrapeStateDbo.PURGED,
   lastUpdated: null,
 };
 
