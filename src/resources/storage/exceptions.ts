@@ -18,3 +18,10 @@ export class WriteStorageError extends StorageError {
     super(`Unable to write ${entity}.`, sourceError);
   }
 }
+
+export class InvalidFormatError extends StorageError {
+  constructor(entity: object = null, sourceError?: Error) {
+    super("Invalid format.", sourceError);
+  }
+}
+

@@ -6,8 +6,8 @@ import type { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.s
 import type { PairingStrategyDbo } from "~resources/domain/enums/pairing.strategy.dbo"
 import type { StandingDbo } from "~resources/domain/dbos/standing.dbo"
 import type { DropDbo } from "~resources/domain/dbos/drop.dbo"
-import type { SpreadsheetRawRow, SpreadsheetMetadata, SpreadsheetRowId } from "~resources/domain/dbos/spreadsheet.dbo"
-import type { WotcId } from "~resources/domain/dbos/identifiers.dbo"
+import type { SpreadsheetRawRow, SpreadsheetMetadata } from "~resources/domain/dbos/spreadsheet.dbo"
+import type { MappingDbo } from "~resources/domain/dbos/mapping.dbo"
 
 export const EVENT_ENTITY_VERSION = 21
 
@@ -43,12 +43,12 @@ export interface RoundEntity{
 export default class EventEntity {
   id!: string;
   title!: string;
-  date!: Date;
+  date!: string;
   organizer!: EventOrganizerDbo
   players!: PlayerDbo[]
   teams!: TeamDbo[]
   rounds!: RoundEntity[]
-  mapping!: Record<WotcId, SpreadsheetRowId> | null
+  mapping!: MappingDbo | null
   spreadsheet!: SpreadsheetMetadata | null
   raw_data: {
     wotc: WotcExtractedEvent
@@ -57,34 +57,37 @@ export default class EventEntity {
   }
   version: number
   scrapeStatus: EventScrapeStateDbo
-  lastUpdated!: Date | null
+  lastUpdated!: string | null
+}
+
+export function isUpToDateEntity(obj: any): boolean {
+  return isEventEntity(obj) && obj.version === EVENT_ENTITY_VERSION
 }
 
 /**
  * Type guard to check if an object is a valid `EventEntity`.
- * Ensures required fields exist with correct types.
+ * Ensures required fields exist with EventEntity types.
  *
  * @param obj - The object to validate.
  * @returns {obj is EventEntity} - `true` if the object matches the type, otherwise `false`.
  */
 export function isEventEntity(obj: any): obj is EventEntity {
-  return (
-    typeof obj === "object" &&
-    obj !== null &&
-    typeof obj.id === "string" &&
-    typeof obj.title === "string" &&
-    obj.date instanceof Date &&
-    typeof obj.organizer === "object" &&
-    Array.isArray(obj.players) &&
-    Array.isArray(obj.teams) &&
-    Array.isArray(obj.rounds) &&
-    (obj.mapping === null || typeof obj.mapping === "object") &&
-    (obj.spreadsheet === null || typeof obj.spreadsheet === "object") &&
-    typeof obj.raw_data === "object" &&
-    "wotc" in obj.raw_data &&
-    typeof obj.raw_data.wotc === "object" &&
-    typeof obj.version === "number" &&
-    typeof obj.scrapeStatus === "object" &&
-    (obj.lastUpdated === null || obj.lastUpdated instanceof Date)
-  );
+  if (typeof obj !== "object" || obj === null) return false;
+  if (typeof obj.id !== "string") return false;
+  if (typeof obj.title !== "string") return false;
+  if (typeof obj.date !== "string" || isNaN(new Date(obj.date).getTime())) return false;
+  if (typeof obj.organizer !== "object") return false;
+  if (!Array.isArray(obj.players)) return false;
+  if (!Array.isArray(obj.teams)) return false;
+  if (!Array.isArray(obj.rounds)) return false;
+  if (obj.mapping !== null && typeof obj.mapping !== "object") return false;
+  if (obj.spreadsheet !== null && typeof obj.spreadsheet !== "object") return false;
+  if (typeof obj.raw_data !== "object") return false;
+  if (!("wotc" in obj.raw_data) || typeof obj.raw_data.wotc !== "object") return false;
+  if (typeof obj.version !== "number") return false;
+  if (typeof obj.scrapeStatus !== "string") return false;
+  if (obj.lastUpdated !== null && (typeof obj.lastUpdated !== "string"  || isNaN(new Date(obj.lastUpdated).getTime()))) return false;
+
+  return true;
 }
+
