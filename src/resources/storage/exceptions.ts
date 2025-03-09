@@ -15,7 +15,7 @@ export class NotFoundStorageError extends StorageError {
 
 export class WriteStorageError extends StorageError {
   constructor(entity: object, sourceError?: Error) {
-    super(`Unable to write ${entity}.`, sourceError);
+    super(`Unable to write ${JSON.stringify(entity)}.`, sourceError);
   }
 }
 

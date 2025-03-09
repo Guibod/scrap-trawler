@@ -21,6 +21,10 @@ export default class EventBuilder {
     this.organizerBuilder = new OrganizerBuilder(this);
   }
 
+  static get anEvent() {
+    return new EventBuilder();
+  }
+
   partial(data: Partial<EventModel>) {
     Object.assign(this.event, data);
     return this;
