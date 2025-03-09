@@ -5,7 +5,11 @@ import { humanTimestamp } from "~resources/utils/text"
 import { ModalBody, ModalContent, ModalHeader } from "@heroui/modal"
 
 
-const ImportExportCard = () => {
+type ImportExportCardProps = {
+  service?: ImportExportService
+}
+
+const ImportExportCard = ({ service } : ImportExportCardProps) => {
   const [progress, setProgress] = useState<{ index: number, size: number } | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [operation, setOperation] = useState<"import" | "export" | null>(null)
@@ -13,7 +17,10 @@ const ImportExportCard = () => {
   const progressCallback = async (index: number, size: number | null) => {
     setProgress({ index, size })
   }
-  const service = new ImportExportService(null, progressCallback)
+
+  if (!service) {
+    service = new ImportExportService(null, progressCallback)
+  }
 
   const handleExport = async () => {
     try {
@@ -35,7 +42,7 @@ const ImportExportCard = () => {
       });
 
       await service.exportEvents(captureStream, null, formats.GZIP);
-      await writer.close(); // ✅ Now we can safely close it
+      await writer.close();
 
       const blob = new Blob(chunks, { type: "application/gzip" });
       const filename = `scrap-trawler.export.${humanTimestamp()}.json.gz`;
