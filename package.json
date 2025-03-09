@@ -42,7 +42,7 @@
     "@faker-js/faker": "^9.5.1",
     "@heroicons/react": "^2.2.0",
     "@heroui/button": "^2.2.10",
-    "@heroui/card": "^2.2.10",
+    "@heroui/card": "^2.2.14",
     "@heroui/react": "^2.7.2",
     "@heroui/system": "^2.4.7",
     "@heroui/table": "^2.2.9",
