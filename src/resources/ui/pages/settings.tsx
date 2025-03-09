@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSettings } from "~resources/ui/providers/settings";
-import { Form, Button, Input, Checkbox, Card, CardHeader, CardBody, addToast } from "@heroui/react";
+import { Form, Button, Input, Checkbox, Card, CardHeader, CardBody, addToast, Divider } from "@heroui/react"
 import type { SettingsModel } from "~resources/domain/models/settings.model"
+import ImportExportCard from "~resources/ui/components/import.export.card"
 
 const SettingsPage = () => {
   const { settings, updateSettings } = useSettings();
@@ -58,6 +59,8 @@ const SettingsPage = () => {
           </CardBody>
         </Form>
       </Card>
+
+      <ImportExportCard />
     </div>
   );
 };
