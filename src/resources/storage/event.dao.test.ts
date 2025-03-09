@@ -108,6 +108,8 @@ describe("EventDao", () => {
 
     expect(await eventDao.get("event-1")).toEqual(events[0]);
     expect(await eventDao.get("event-2")).toEqual(events[1]);
+    expect(await eventDao.count()).toEqual(2);
+    expect(await eventDao.countWith("id", ["event-1", "event-3"])).toEqual(1);
 
   });
 

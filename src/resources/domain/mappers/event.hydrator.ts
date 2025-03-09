@@ -8,6 +8,7 @@ import { faker } from "@faker-js/faker"
 import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
 import type { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
 import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
+import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
 
 const logger = getLogger("event-hydrator")
 export class HydrationError extends ScrapTrawlerError {}
