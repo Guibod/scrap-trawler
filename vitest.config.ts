@@ -16,10 +16,10 @@ export default defineConfig({
       include: ['**/src/**'],
       all: true, // Enforce coverage for untested files
       thresholds: {
-        statements: 45,
+        statements: 52,
         branches: 80,
-        functions: 63,
-        lines: 45
+        functions: 67,
+        lines: 52
       }
     },
   }
