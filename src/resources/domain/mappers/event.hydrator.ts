@@ -60,7 +60,7 @@ export default class EventHydrator {
       rounds: EventHydrator.inferRounds(entity),
       mapping: entity.mapping ?? null,
       spreadsheet: entity.spreadsheet ?? null,
-      date: new Date(rawData.event.actualStartTime ?? rawData.event.scheduledStartTime),
+      date: new Date(rawData.event.actualStartTime ?? rawData.event.scheduledStartTime).toISOString(),
       title: rawData.event.title,
       raw_data: { // raw data is to be preserved
         ...entity.raw_data
@@ -94,7 +94,7 @@ export default class EventHydrator {
       const teamId = teamRank + 1; // inferred from registered players index
       let currentPlayerDbo = undefined
       if (!entity.players) {
-        currentPlayerDbo = entity.players.find((p) => p.id === player.personaId)
+        currentPlayerDbo = entity.players?.find((p) => p.id === player.personaId)
       }
       const currentOverrideDbo = currentPlayerDbo?.overrides || null
 

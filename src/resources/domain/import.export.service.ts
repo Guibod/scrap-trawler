@@ -41,13 +41,13 @@ export class ExportNotFoundError extends ImportExportError {
 }
 
 export class ImportExportService {
-  private dao: EventDao;
+  private dao: EventDao
   private progressCallback: (index: number, size: number | null) => Promise<void>;
   private index: number
   private size: number | null
 
   constructor(dao: EventDao, progressCallback: (index: number, size: number) => Promise<void>) {
-    this.dao = dao;
+    this.dao = dao || new EventDao();
     this.index = 0
     this.size = null
     this.progressCallback = progressCallback || (() => Promise.resolve());
