@@ -59,3 +59,32 @@ export default class EventEntity {
   scrapeStatus: EventScrapeStateDbo
   lastUpdated!: Date | null
 }
+
+/**
+ * Type guard to check if an object is a valid `EventEntity`.
+ * Ensures required fields exist with correct types.
+ *
+ * @param obj - The object to validate.
+ * @returns {obj is EventEntity} - `true` if the object matches the type, otherwise `false`.
+ */
+export function isEventEntity(obj: any): obj is EventEntity {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    typeof obj.id === "string" &&
+    typeof obj.title === "string" &&
+    obj.date instanceof Date &&
+    typeof obj.organizer === "object" &&
+    Array.isArray(obj.players) &&
+    Array.isArray(obj.teams) &&
+    Array.isArray(obj.rounds) &&
+    (obj.mapping === null || typeof obj.mapping === "object") &&
+    (obj.spreadsheet === null || typeof obj.spreadsheet === "object") &&
+    typeof obj.raw_data === "object" &&
+    "wotc" in obj.raw_data &&
+    typeof obj.raw_data.wotc === "object" &&
+    typeof obj.version === "number" &&
+    typeof obj.scrapeStatus === "object" &&
+    (obj.lastUpdated === null || obj.lastUpdated instanceof Date)
+  );
+}
