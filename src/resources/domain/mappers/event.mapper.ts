@@ -14,7 +14,7 @@ export default class EventMapper {
     return {
       id: entity.id,
       title: entity.title,
-      date: entity.date,
+      date: new Date(entity.date),
       organizer: {
         id: entity.organizer.id,
         name: entity.organizer.name,
@@ -37,7 +37,7 @@ export default class EventMapper {
       lastRound: EventHydrator.inferLastRound(entity),
       raw_data: entity.raw_data,
       status: EventHydrator.inferStatus(entity),
-      lastUpdated: entity.lastUpdated || null,
+      lastUpdated: entity.lastUpdated ? new Date(entity.lastUpdated) : null,
       scrapeStatus: entity.scrapeStatus,
       mapping: entity.mapping,
       spreadsheet: entity.spreadsheet ? {
@@ -51,10 +51,10 @@ export default class EventMapper {
     return {
       id: entity.id,
       title: entity.title,
-      date: entity.date,
+      date: new Date(entity.date),
       organizer: entity.organizer.name,
       status: EventHydrator.inferStatus(entity),
-      lastUpdated: entity.lastUpdated || null,
+      lastUpdated: entity.lastUpdated ? new Date(entity.lastUpdated) : null,
       scrapeStatus: entity.scrapeStatus
     };
   }
@@ -77,9 +77,9 @@ export default class EventMapper {
       })),
       spreadsheet: dbo.spreadsheet?.meta ?? null,
       mapping: dbo.mapping ?? null,
-      date: new Date(dbo.date),
+      date: dbo.date.toISOString(),
       raw_data: dbo.raw_data ?? {},
-      lastUpdated: new Date()
+      lastUpdated: new Date().toISOString()
     });
 
     return entity
