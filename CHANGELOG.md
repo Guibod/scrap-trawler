@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.9.0 - 2025-03-09
+#### Features
+- added import / export ui - (396d177) - Guillaume Boddaert
+#### Miscellaneous Chores
+- import/export service - (9453ca9) - Guillaume Boddaert
+- storage don’t use date type anymore - (12ba394) - Guillaume Boddaert
+- added type guards for event entity and write dbo - (7e6e09a) - Guillaume Boddaert
+- sync package.json version - (7c83d5f) - Cog Bot
+#### Tests
+- opportunisticly highen the coverage threshold - (43ff78c) - Guillaume Boddaert
+
+- - -
+
 ## 0.8.0 - 2025-03-08
 #### Continuous Integration
 - codecov enabled on the project - (45a61f8) - Guillaume Boddaert
