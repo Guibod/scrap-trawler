@@ -41,7 +41,7 @@ describe("EventDao", () => {
     const retrievedEvent = await eventDao.get(event.id);
     expect(retrievedEvent).toEqual({
       ...event,
-      lastUpdated: expect.any(Date)
+      lastUpdated: expect.any(String)
     });
   });
 
@@ -63,7 +63,7 @@ describe("EventDao", () => {
     expect(streamedEvents).toHaveLength(1);
     expect(streamedEvents[0]).toEqual({
       ...events[0],
-      lastUpdated: expect.any(Date)
+      lastUpdated: expect.any(String)
     });
   });
 
@@ -84,11 +84,11 @@ describe("EventDao", () => {
 
     expect(streamedEvents[0]).toEqual({
       ...events[0],
-      lastUpdated: expect.any(Date)
+      lastUpdated: expect.any(String)
     });
     expect(streamedEvents[1]).toEqual({
       ...events[1],
-      lastUpdated: expect.any(Date)
+      lastUpdated: expect.any(String)
     });
   });
 
