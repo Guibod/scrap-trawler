@@ -70,6 +70,16 @@ export class EventDao {
     return this.table.count()
   }
 
+  async countWith(field: keyof EventEntity, values: any[]): Promise<number> {
+    let query = this.table.where(field).equals(values[0])
+
+    for (let i = 1; i < values.length; i++) {
+      query = query.or(field).equals(values[i])
+    }
+
+    return query.count()
+  }
+
   /**
    * Retrieves an extracted event from local storage.
    */
