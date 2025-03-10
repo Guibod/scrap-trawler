@@ -1,7 +1,7 @@
 import type { PlasmoMessaging } from "@plasmohq/messaging"
 import { eventService } from "../../singletons"
-import type { EventModel } from "~resources/domain/models/event.model"
-import { getLogger } from "~resources/logging/logger"
+import type { EventModel } from "~/resources/domain/models/event.model"
+import { getLogger } from "~/resources/logging/logger"
 
 const logger = getLogger("event-scrape")
 

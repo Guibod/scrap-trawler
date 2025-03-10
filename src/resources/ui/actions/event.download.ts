@@ -1,4 +1,4 @@
-import { EventDao } from "~resources/storage/event.dao"
+import { EventDao } from "~/resources/storage/event.dao"
 
 export const eventDownloadJson = async (eventId: string) => {
   try {

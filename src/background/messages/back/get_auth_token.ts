@@ -1,5 +1,5 @@
 import type { PlasmoMessaging } from "@plasmohq/messaging"
-import { getLogger } from "~resources/logging/logger"
+import { getLogger } from "~/resources/logging/logger"
 
 const logger = getLogger("get_auth_token")
 

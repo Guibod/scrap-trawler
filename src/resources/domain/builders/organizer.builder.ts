@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import type { GeoJSON, Point } from "geojson"
-import type { EventOrganizerDbo } from "~resources/domain/dbos/event.organizer.dbo"
-import type EventModelBuilder from "~resources/domain/builders/event.builder"
+import type { EventOrganizerDbo } from "~/resources/domain/dbos/event.organizer.dbo"
+import type EventModelBuilder from "~/resources/domain/builders/event.builder"
 
 export default class EventOrganizerBuilder {
   private organizer: Partial<EventOrganizerDbo> = {};

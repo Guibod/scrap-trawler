@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
-import type { OverrideDbo, PlayerDbo } from "~resources/domain/dbos/player.dbo"
-import type EventModelBuilder from "~resources/domain/builders/event.builder"
-import { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
+import type { OverrideDbo, PlayerDbo } from "~/resources/domain/dbos/player.dbo"
+import type EventModelBuilder from "~/resources/domain/builders/event.builder"
+import { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
 
 export default class PlayerBuilder {
   private player: Partial<PlayerDbo> = {};

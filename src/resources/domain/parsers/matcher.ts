@@ -1,6 +1,6 @@
-import type { SpreadsheetData } from "~resources/domain/dbos/spreadsheet.dbo"
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
-import type { MappingDbo } from "~resources/domain/dbos/mapping.dbo"
+import type { SpreadsheetData } from "~/resources/domain/dbos/spreadsheet.dbo"
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
+import type { MappingDbo } from "~/resources/domain/dbos/mapping.dbo"
 
 export abstract class AutoMatcher {
   constructor(

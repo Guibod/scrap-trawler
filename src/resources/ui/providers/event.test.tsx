@@ -2,14 +2,14 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import React from "react"
 import { render, screen, act, waitFor } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { EventProvider, useEvent } from "~resources/ui/providers/event";
-import EventService from "~resources/domain/services/event.service";
-import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo";
-import { PairStatus } from "~resources/domain/enums/status.dbo";
-import type { EventModel } from "~resources/domain/models/event.model"
+import { EventProvider, useEvent } from "~/resources/ui/providers/event";
+import EventService from "~/resources/domain/services/event.service";
+import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo";
+import { PairStatus } from "~/resources/domain/enums/status.dbo";
+import type { EventModel } from "~/resources/domain/models/event.model"
 
 // ✅ Mock EventService
-vi.mock("~resources/domain/services/event.service");
+vi.mock("~/resources/domain/services/event.service");
 
 const mockEvent = {
   id: "123",

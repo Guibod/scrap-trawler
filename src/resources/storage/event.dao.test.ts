@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import "fake-indexeddb/auto";
-import { EventDao } from "~resources/storage/event.dao";
-import Database from "~resources/storage/database";
-import EventBuilder from "~resources/domain/builders/event.builder"
-import EventMapper from "~resources/domain/mappers/event.mapper"
-import { sampleEvent, sampleGameState, sampleOrganizer } from "~resources/eventlink/sample.event"
-import EventEntity, { EVENT_ENTITY_VERSION } from "~resources/storage/entities/event.entity"
+import { EventDao } from "~/resources/storage/event.dao";
+import Database from "~/resources/storage/database";
+import EventBuilder from "~/resources/domain/builders/event.builder"
+import EventMapper from "~/resources/domain/mappers/event.mapper"
+import { sampleEvent, sampleGameState, sampleOrganizer } from "~/resources/integrations/eventlink/data/sample.event"
+import EventEntity, { EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity"
 
 // Mock database instance
 const db = new Database();

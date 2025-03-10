@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import PlayerBuilder from "~resources/domain/builders/player.builder"
-import type EventModelBuilder from "~resources/domain/builders/event.builder"
-import { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
+import PlayerBuilder from "~/resources/domain/builders/player.builder"
+import type EventModelBuilder from "~/resources/domain/builders/event.builder"
+import { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
 
 // Mock EventModelBuilder since it's only used as a parent reference
 const mockEventModelBuilder = {} as EventModelBuilder;

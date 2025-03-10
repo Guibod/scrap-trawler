@@ -5,11 +5,11 @@ import MappingDboBuilder from "./mapping.builder"
 import RoundBuilder from "./round.builder"
 import TeamBuilder from "./team.builder"
 import OrganizerBuilder from "./organizer.builder"
-import type { EventModel } from "~resources/domain/models/event.model"
-import { PairingStrategyDbo } from "~resources/domain/enums/pairing.strategy.dbo"
-import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
-import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~resources/domain/enums/status.dbo"
-import type { RoundDbo } from "~resources/domain/dbos/round.dbo"
+import type { EventModel } from "~/resources/domain/models/event.model"
+import { PairingStrategyDbo } from "~/resources/domain/enums/pairing.strategy.dbo"
+import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
+import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
+import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
 
 export default class EventBuilder {
   private event: Partial<EventModel> = {};

@@ -1,5 +1,5 @@
 import { Card, CardBody } from "@heroui/card"
-import Player, { type PlayerProps } from "~resources/ui/components/player/player"
+import Player, { type PlayerProps } from "~/resources/ui/components/player/player"
 import React from "react"
 
 

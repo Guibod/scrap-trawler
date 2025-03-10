@@ -1,9 +1,9 @@
-import { useEvent } from "~resources/ui/providers/event"
+import { useEvent } from "~/resources/ui/providers/event"
 import React, { useState } from "react"
 import { ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/modal"
 import { Input } from "@heroui/input"
 import { Button } from "@heroui/button"
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 
 type PlayerEditProps = {
   playerId: string

@@ -1,8 +1,8 @@
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/table"
-import Team from "~resources/ui/components/team"
-import MatchResult from "~resources/ui/components/match/result"
+import Team from "~/resources/ui/components/team"
+import MatchResult from "~/resources/ui/components/match/result"
 import React from "react"
-import type { RoundDbo } from "~resources/domain/dbos/round.dbo"
+import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
 
 interface EventPairingsProps {
   round: RoundDbo

@@ -1,4 +1,4 @@
-import { ScrapTrawlerError } from "~resources/exception"
+import { ScrapTrawlerError } from "~/resources/exception"
 
 export class GraphQlError extends ScrapTrawlerError {
   constructor(message: string, sourceError?: Error) {

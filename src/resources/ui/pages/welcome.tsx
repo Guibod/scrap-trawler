@@ -5,10 +5,10 @@ import { Card, CardBody, CardHeader } from "@heroui/card"
 import ButtonScrape from "~/resources/ui/components/button.scrape"
 import screenshotAgenda from "data-base64:../../../../assets/screenshots/eventlink.agenda.png"
 import screenshotEvent from "data-base64:../../../../assets/screenshots/eventlink.event.png"
-import Roadmap from "~resources/ui/components/roadmap"
+import Roadmap from "~/resources/ui/components/roadmap"
 import { useNavigate } from "react-router-dom"
-import ButtonOpen from "~resources/ui/components/button.open"
-import { useSettings } from "~resources/ui/providers/settings"
+import ButtonOpen from "~/resources/ui/components/button.open"
+import { useSettings } from "~/resources/ui/providers/settings"
 
 const CURRENT_VERSION = packageJson.version
 

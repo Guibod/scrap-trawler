@@ -1,6 +1,6 @@
-import { NotYetImplemented } from "~resources/exception"
-import { SpreadsheetParser } from "~resources/domain/parsers/spreadsheet.parser"
-import type { SpreadsheetRawRow, SpreadsheetColumnMetaData } from "~resources/domain/dbos/spreadsheet.dbo"
+import { NotYetImplemented } from "~/resources/exception"
+import { SpreadsheetParser } from "~/resources/domain/parsers/spreadsheet.parser"
+import type { SpreadsheetRawRow, SpreadsheetColumnMetaData } from "~/resources/domain/dbos/spreadsheet.dbo"
 
 export class GoogleSheetsParser extends SpreadsheetParser {
   async parse(data: ArrayBuffer | string): Promise<{ columns: SpreadsheetColumnMetaData[], rows: SpreadsheetRawRow[] }> {

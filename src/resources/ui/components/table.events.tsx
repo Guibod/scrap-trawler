@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { Pagination, TableColumn } from "@heroui/react"
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@heroui/table"
-import { GlobalStatusIcon } from "~resources/ui/components/status.icons"
+import { GlobalStatusIcon } from "~/resources/ui/components/status.icons"
 import { Button } from "@heroui/button"
 import { DocumentArrowDownIcon, TrashIcon } from "@heroicons/react/24/outline"
-import { eventDownloadJson } from "~resources/ui/actions/event.download"
-import { eventDelete } from "~resources/ui/actions/event.delete"
-import { eventOpen } from "~resources/ui/actions/event.open"
-import EventService from "~resources/domain/services/event.service"
+import { eventDownloadJson } from "~/resources/ui/actions/event.download"
+import { eventDelete } from "~/resources/ui/actions/event.delete"
+import { eventOpen } from "~/resources/ui/actions/event.open"
+import EventService from "~/resources/domain/services/event.service"
 import { ArrowPathIcon } from "@heroicons/react/24/solid"
 
 type TableEventsProps = {

@@ -1,14 +1,14 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import React from 'react'
 import { render, screen, fireEvent, act } from "@testing-library/react";
-import ButtonScrape from "~resources/ui/components/button.scrape";
-import { ScrapeStatus } from "~resources/domain/enums/status.dbo";
-import { eventScrape } from "~resources/ui/actions/event.scrape";
+import ButtonScrape from "~/resources/ui/components/button.scrape";
+import { ScrapeStatus } from "~/resources/domain/enums/status.dbo";
+import { eventScrape } from "~/resources/ui/actions/event.scrape";
 import { sendToBackground } from "@plasmohq/messaging";
-import type { EventModel } from "~resources/domain/models/event.model"
+import type { EventModel } from "~/resources/domain/models/event.model"
 
 // ✅ Mock `eventScrape` and `sendToBackground`
-vi.mock("~resources/ui/actions/event.scrape", () => ({
+vi.mock("~/resources/ui/actions/event.scrape", () => ({
   eventScrape: vi.fn(),
 }));
 

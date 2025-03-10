@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest"
-import EventMapper from "~resources/domain/mappers/event.mapper"
-import EventEntity, { EVENT_ENTITY_VERSION, isEventEntity } from "~resources/storage/entities/event.entity"
-import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
-import type { EventModel } from "~resources/domain/models/event.model"
-import type { EventSummarizedDbo } from "~resources/domain/dbos/event.summarized.dbo"
-import { sampleEvent, sampleGameState, sampleOrganizer } from "~resources/eventlink/sample.event"
-import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
+import EventMapper from "~/resources/domain/mappers/event.mapper"
+import EventEntity, { EVENT_ENTITY_VERSION, isEventEntity } from "~/resources/storage/entities/event.entity"
+import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo"
+import type { EventModel } from "~/resources/domain/models/event.model"
+import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo"
+import { sampleEvent, sampleGameState, sampleOrganizer } from "~/resources/integrations/eventlink/data/sample.event"
+import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 
 // Mock event entity
 const mockEventEntity = new EventEntity();

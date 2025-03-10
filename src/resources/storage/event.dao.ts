@@ -1,9 +1,9 @@
-import { getLogger } from "~resources/logging/logger"
-import { singleton as defaultDb } from "~resources/storage/singleton";
-import Database from "~resources/storage/database"
-import EventEntity, { isEventEntity } from "~resources/storage/entities/event.entity"
+import { getLogger } from "~/resources/logging/logger"
+import { singleton as defaultDb } from "~/resources/storage/singleton";
+import Database from "~/resources/storage/database"
+import EventEntity, { isEventEntity } from "~/resources/storage/entities/event.entity"
 import type { EntityTable } from "dexie"
-import { NotFoundStorageError, WriteStorageError, InvalidFormatError } from "~resources/storage/exceptions"
+import { NotFoundStorageError, WriteStorageError, InvalidFormatError } from "~/resources/storage/exceptions"
 
 const logger = getLogger("event-dao")
 

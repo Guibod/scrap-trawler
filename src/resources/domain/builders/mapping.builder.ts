@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
-import type { MappingDbo, PairingMode } from "~resources/domain/dbos/mapping.dbo"
-import type { SpreadsheetData } from "~resources/domain/dbos/spreadsheet.dbo"
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
+import type { MappingDbo, PairingMode } from "~/resources/domain/dbos/mapping.dbo"
+import type { SpreadsheetData } from "~/resources/domain/dbos/spreadsheet.dbo"
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 
 export default class MappingDboBuilder {
   private mapping: MappingDbo = {};

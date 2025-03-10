@@ -1,5 +1,5 @@
-import { useEvent } from "~resources/ui/providers/event"
-import Player from "~resources/ui/components/player/player"
+import { useEvent } from "~/resources/ui/providers/event"
+import Player from "~/resources/ui/components/player/player"
 import React from "react"
 import { Card, CardBody, CardHeader } from "@heroui/card"
 

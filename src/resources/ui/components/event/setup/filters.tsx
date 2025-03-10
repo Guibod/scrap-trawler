@@ -1,14 +1,14 @@
 import { Card, CardBody, CardHeader } from "@heroui/card"
-import { useEventSetup } from "~resources/ui/components/event/setup/provider"
+import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
 import React, { useState } from "react"
-import { DUPLICATE_STRATEGY_META, FILTER_OPERATOR } from "~resources/domain/enums/spreadsheet.dbo"
+import { DUPLICATE_STRATEGY_META, FILTER_OPERATOR } from "~/resources/domain/enums/spreadsheet.dbo"
 import { Radio, RadioGroup } from "@heroui/radio"
 import { Button } from "@heroui/button"
-import FilterInput from "~resources/ui/components/event/setup/filter"
-import { type SpreadsheetFilter, type SpreadsheetRow } from "~resources/domain/dbos/spreadsheet.dbo"
+import FilterInput from "~/resources/ui/components/event/setup/filter"
+import { type SpreadsheetFilter, type SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { Alert } from "@heroui/alert"
 import { Accordion, AccordionItem } from "@heroui/react"
-import Duplicates from "~resources/ui/components/event/setup/duplicates"
+import Duplicates from "~/resources/ui/components/event/setup/duplicates"
 
 const strategies = Object.entries(DUPLICATE_STRATEGY_META).map(([key, value]) => ({
   key,

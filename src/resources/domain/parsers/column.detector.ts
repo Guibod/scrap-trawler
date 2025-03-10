@@ -1,6 +1,6 @@
-import { COLUMN_TYPE, COLUMN_TYPE_UNIQUE } from "~resources/domain/enums/spreadsheet.dbo"
-import type { SpreadsheetRawRow } from "~resources/domain/dbos/spreadsheet.dbo";
-import { SpreadsheetColumnScorer } from "~resources/domain/parsers/column.scorer"
+import { COLUMN_TYPE, COLUMN_TYPE_UNIQUE } from "~/resources/domain/enums/spreadsheet.dbo"
+import type { SpreadsheetRawRow } from "~/resources/domain/dbos/spreadsheet.dbo";
+import { SpreadsheetColumnScorer } from "~/resources/domain/parsers/column.scorer"
 
 export class SpreadsheetColumnDetector {
   private readonly knownFirstNames: Set<string>;

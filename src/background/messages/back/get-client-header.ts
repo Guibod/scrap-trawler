@@ -1,6 +1,6 @@
 import { type PlasmoMessaging, sendToContentScript } from "@plasmohq/messaging"
 import Bowser from "bowser"
-import { getLogger } from "~resources/logging/logger"
+import { getLogger } from "~/resources/logging/logger"
 
 const logger = getLogger("get-client-header")
 

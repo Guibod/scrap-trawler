@@ -1,9 +1,9 @@
-import { removeDiacritics } from "~resources/utils/text";
-import type { SpreadsheetRow } from "~resources/domain/dbos/spreadsheet.dbo";
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo";
+import { removeDiacritics } from "~/resources/utils/text";
+import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo";
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo";
 import { closest as levenshteinClosest, distance as levenshteinDistance } from "fastest-levenshtein";
-import { AutoMatcher } from "~resources/domain/parsers/matcher";
-import type { MappingDbo, PairingMode } from "~resources/domain/dbos/mapping.dbo"
+import { AutoMatcher } from "~/resources/domain/parsers/matcher";
+import type { MappingDbo, PairingMode } from "~/resources/domain/dbos/mapping.dbo"
 
 export class NameMatcher extends AutoMatcher {
   static readonly LENGTH_THRESHOLD = 3;

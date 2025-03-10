@@ -1,8 +1,8 @@
 import { Tooltip } from "@heroui/tooltip"
 import { Circle, Triangle, Square, Hexagon } from "lucide-react"
 import type { ComponentType, ReactNode } from "react"
-import { GlobalStatus, FetchStatus, PairStatus, ScrapeStatus } from "~resources/domain/enums/status.dbo"
-import statusColors from "~resources/ui/colors/status"
+import { GlobalStatus, FetchStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
+import statusColors from "~/resources/ui/colors/status"
 
 export const statusDescriptions = {
   scrape: {

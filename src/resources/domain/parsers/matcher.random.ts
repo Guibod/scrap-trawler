@@ -1,7 +1,7 @@
-import { AutoMatcher } from "~resources/domain/parsers/matcher";
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo";
-import type { SpreadsheetData } from "~resources/domain/dbos/spreadsheet.dbo";
-import type { MappingDbo } from "~resources/domain/dbos/mapping.dbo";
+import { AutoMatcher } from "~/resources/domain/parsers/matcher";
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo";
+import type { SpreadsheetData } from "~/resources/domain/dbos/spreadsheet.dbo";
+import type { MappingDbo } from "~/resources/domain/dbos/mapping.dbo";
 
 export class RandomMatcher extends AutoMatcher {
   constructor(eventPlayers: PlayerDbo[], spreadsheetPlayers: SpreadsheetData, pairs: MappingDbo | null) {

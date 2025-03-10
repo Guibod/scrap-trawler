@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isEventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
+import { isEventWriteDbo } from "~/resources/domain/dbos/event.write.dbo"
 
 // Mock valid and invalid test cases
 const validEvent = {

@@ -1,4 +1,4 @@
-import type { RoundDbo } from "~resources/domain/dbos/round.dbo"
+import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
 
 export type TeamId = string;
 export type TeamPairing = [TeamId, TeamId] | [TeamId];

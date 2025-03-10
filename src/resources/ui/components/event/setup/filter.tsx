@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useRef, useState } from "react"
 import { Select, SelectItem } from "@heroui/select";
 import { type Selection } from "@heroui/react";
 import { Button } from "@heroui/button";
-import { COLUMN_TYPE, FILTER_OPERATOR, FILTER_OPERATOR_META } from "~resources/domain/enums/spreadsheet.dbo"
-import type { SpreadsheetColumnMetaData, SpreadsheetFilter } from "~resources/domain/dbos/spreadsheet.dbo"
-import { useEventSetup } from "~resources/ui/components/event/setup/provider"
+import { COLUMN_TYPE, FILTER_OPERATOR, FILTER_OPERATOR_META } from "~/resources/domain/enums/spreadsheet.dbo"
+import type { SpreadsheetColumnMetaData, SpreadsheetFilter } from "~/resources/domain/dbos/spreadsheet.dbo"
+import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
 
 type FilterInputProps = {
   filter: SpreadsheetFilter;

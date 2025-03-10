@@ -5,15 +5,15 @@ import {
   type PlasmoGetStyle,
   type PlasmoRender
 } from "plasmo"
-import { getLogger } from "~resources/logging/logger"
-import { HeroUIProvider, ToastProvider } from "@heroui/react"
-import EventCalendarAction from "~resources/ui/containers/event-calendar-action"
-import EventTitleActions from "~resources/ui/containers/event-title-actions"
+import { getLogger } from "~/resources/logging/logger"
+import { HeroUIProvider } from "@heroui/react"
+import EventCalendarAction from "~/resources/ui/containers/event-calendar-action"
+import EventTitleActions from "~/resources/ui/containers/event-title-actions"
 import { createRoot } from "react-dom/client"
-import cssText from "data-text:~resources/ui/style.css"
-import { OverlayRelativeToShadowHostCSUIContainer } from "~resources/ui/components/plasmo.custom"
+import cssText from "data-text:~/resources/ui/style.css"
+import { OverlayRelativeToShadowHostCSUIContainer } from "~/resources/ui/components/plasmo.custom"
 import { listen } from "@plasmohq/messaging/message"
-import Context from "~resources/eventlink/context"
+import Context from "~/resources/integrations/eventlink/context"
 import React from "react"
 const logger = getLogger("eventlink-content");
 

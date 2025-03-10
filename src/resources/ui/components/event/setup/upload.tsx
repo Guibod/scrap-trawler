@@ -1,6 +1,6 @@
 import { Card, CardBody } from "@heroui/card";
 import { Input } from "@heroui/input";
-import { useEventSetup } from "~resources/ui/components/event/setup/provider"
+import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
 import React from "react"
 import { Checkbox, Form } from "@heroui/react"
 import { Button } from "@heroui/button"

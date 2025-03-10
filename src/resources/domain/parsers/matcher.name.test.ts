@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo";
-import type { SpreadsheetRow } from "~resources/domain/dbos/spreadsheet.dbo";
-import type { MappingDbo } from "~resources/domain/dbos/mapping.dbo";
-import { NameMatcher } from "~resources/domain/parsers/matcher.name"
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo";
+import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo";
+import type { MappingDbo } from "~/resources/domain/dbos/mapping.dbo";
+import { NameMatcher } from "~/resources/domain/parsers/matcher.name"
 
 // Sample test data
 const eventPlayers: PlayerDbo[] = [

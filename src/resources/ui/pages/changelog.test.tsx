@@ -18,7 +18,7 @@ vi.mock("~/changelog.json", () => ({
   ]
 }));
 
-import ChangelogPage from "~resources/ui/pages/changelog";
+import ChangelogPage from "~/resources/ui/pages/changelog";
 describe("ChangelogPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();

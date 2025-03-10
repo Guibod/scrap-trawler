@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import type EventModelBuilder from "~resources/domain/builders/event.builder"
-import RoundBuilder from "~resources/domain/builders/round.builder"
-import { PairingStrategyDbo } from "~resources/domain/enums/pairing.strategy.dbo"
+import type EventModelBuilder from "~/resources/domain/builders/event.builder"
+import RoundBuilder from "~/resources/domain/builders/round.builder"
+import { PairingStrategyDbo } from "~/resources/domain/enums/pairing.strategy.dbo"
 
 // Mock EventModelBuilder since it's only used as a parent reference
 const mockEventModelBuilder = {} as EventModelBuilder;

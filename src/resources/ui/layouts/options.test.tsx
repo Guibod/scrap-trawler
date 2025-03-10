@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import packageJson from "../../../../package.json";
 import React from "react"
-import OptionPageLayout from "~resources/ui/layouts/options"
+import OptionPageLayout from "~/resources/ui/layouts/options"
 
 // ✅ Mock `window.matchMedia`
 beforeEach(() => {

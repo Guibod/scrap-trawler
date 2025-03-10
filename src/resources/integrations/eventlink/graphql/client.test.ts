@@ -1,8 +1,7 @@
 import { describe, test, expect, beforeEach, afterEach, vi, type Mocked } from "vitest";
 import { GraphQLClient } from "graphql-request";
-import { EventLinkGraphQLClient } from "./graphql.client";
-import { GraphQlError, InvalidGraphQlResponseError } from "~resources/eventlink/exceptions"
-import { getLogger } from "~resources/logging/logger"
+import { EventLinkGraphQLClient } from "~/resources/integrations/eventlink/graphql/client";
+import { GraphQlError, InvalidGraphQlResponseError } from "~/resources/integrations/eventlink/exceptions"
 
 // Mock GraphQLClient to prevent real API calls
 vi.mock("graphql-request", () => ({
@@ -12,7 +11,7 @@ vi.mock("graphql-request", () => ({
   })),
 }));
 
-vi.mock("~resources/logging/logger", () => ({
+vi.mock("~/resources/logging/logger", () => ({
   getLogger: vi.fn(() => ({
     start: vi.fn(),
     debug: vi.fn(),

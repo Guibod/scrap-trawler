@@ -1,8 +1,8 @@
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/table"
-import Team from "~resources/ui/components/team"
+import Team from "~/resources/ui/components/team"
 import React from "react"
-import type { RoundDbo } from "~resources/domain/dbos/round.dbo"
-import Percentage from "~resources/ui/components/percentage"
+import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
+import Percentage from "~/resources/ui/components/percentage"
 
 interface EventPairingsProps {
   round: RoundDbo

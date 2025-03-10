@@ -1,20 +1,20 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
-import { useEvent } from "~resources/ui/providers/event"
-import { SpreadsheetParserFactory } from "~resources/domain/parsers/spreadsheet.parser.factory"
+import { useEvent } from "~/resources/ui/providers/event"
+import { SpreadsheetParserFactory } from "~/resources/domain/parsers/spreadsheet.parser.factory"
 import type {
   SpreadsheetColumnMetaData,
   SpreadsheetFilter,
   SpreadsheetMetadata,
   SpreadsheetRawData,
   SpreadsheetRowId
-} from "~resources/domain/dbos/spreadsheet.dbo"
-import { COLUMN_TYPE, COLUMN_TYPE_UNIQUE, DUPLICATE_STRATEGY } from "~resources/domain/enums/spreadsheet.dbo"
+} from "~/resources/domain/dbos/spreadsheet.dbo"
+import { COLUMN_TYPE, COLUMN_TYPE_UNIQUE, DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo"
 import { addToast, Spinner } from "@heroui/react"
-import { SetupStatus } from "~resources/ui/components/event/setup/status"
+import { SetupStatus } from "~/resources/ui/components/event/setup/status"
 import { CheckIcon } from "@heroicons/react/24/solid"
-import type { EventModel } from "~resources/domain/models/event.model"
-import type { WotcId } from "~resources/domain/dbos/identifiers.dbo"
-import type { MappingDbo } from "~resources/domain/dbos/mapping.dbo"
+import type { EventModel } from "~/resources/domain/models/event.model"
+import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
+import type { MappingDbo } from "~/resources/domain/dbos/mapping.dbo"
 
 class EventSetupContextType {
   event: EventModel | null;

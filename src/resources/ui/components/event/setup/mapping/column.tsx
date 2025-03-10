@@ -4,9 +4,9 @@ import { Input } from "@heroui/input";
 import { Select } from "@heroui/select";
 import { SelectItem, useDisclosure } from "@heroui/react"
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/modal";
-import { COLUMN_TYPE, COLUMN_TYPE_META } from "~resources/domain/enums/spreadsheet.dbo"
+import { COLUMN_TYPE, COLUMN_TYPE_META } from "~/resources/domain/enums/spreadsheet.dbo"
 import { PencilIcon } from "@heroicons/react/24/outline";
-import type { SpreadsheetColumnMetaData } from "~resources/domain/dbos/spreadsheet.dbo";
+import type { SpreadsheetColumnMetaData } from "~/resources/domain/dbos/spreadsheet.dbo";
 import { Chip } from "@heroui/chip"
 
 type SpreadsheetColumnProps = {

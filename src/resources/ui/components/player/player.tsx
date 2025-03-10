@@ -1,14 +1,14 @@
-import { useEvent } from "~resources/ui/providers/event"
+import { useEvent } from "~/resources/ui/providers/event"
 import React, { useEffect, useState } from "react"
 import { User } from "@heroui/user"
 import { Button } from "@heroui/button"
 import { PencilIcon } from "@heroicons/react/20/solid"
-import PlayerName from "~resources/ui/components/player/name"
-import PlayerModalEdit from "~resources/ui/components/player/edit.modal"
+import PlayerName from "~/resources/ui/components/player/name"
+import PlayerModalEdit from "~/resources/ui/components/player/edit.modal"
 import { useDisclosure } from "@heroui/react"
 import { Modal } from "@heroui/modal"
-import { hashStringSHA1 } from "~resources/utils/crypto"
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
+import { hashStringSHA1 } from "~/resources/utils/crypto"
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 
 export interface PlayerProps {
   playerId?: string

@@ -1,10 +1,10 @@
 import { faker } from "@faker-js/faker";
 import MatchBuilder from "./match.builder";
-import type { RoundDbo } from "~resources/domain/dbos/round.dbo"
-import type EventModelBuilder from "~resources/domain/builders/event.builder"
-import { PairingStrategyDbo } from "~resources/domain/enums/pairing.strategy.dbo"
-import StandingBuilder from "~resources/domain/builders/standings.builder"
-import PairingSystem, { type TeamPairing } from "~resources/domain/pairing"
+import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
+import type EventModelBuilder from "~/resources/domain/builders/event.builder"
+import { PairingStrategyDbo } from "~/resources/domain/enums/pairing.strategy.dbo"
+import StandingBuilder from "~/resources/domain/builders/standings.builder"
+import PairingSystem, { type TeamPairing } from "~/resources/domain/pairing"
 
 export default class RoundBuilder {
   private round: Partial<RoundDbo> = {};

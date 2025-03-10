@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "@heroui/button";
-import { useEventSetup } from "~resources/ui/components/event/setup/provider";
-import Player from "~resources/ui/components/player/player";
+import { useEventSetup } from "~/resources/ui/components/event/setup/provider";
+import Player from "~/resources/ui/components/player/player";
 import { Card, CardBody } from "@heroui/card";
-import PlayerCard from "~resources/ui/components/player/card"
+import PlayerCard from "~/resources/ui/components/player/card"
 
 const SetupFinalize: React.FC = () => {
   const { event, status, handleFinalization } = useEventSetup();

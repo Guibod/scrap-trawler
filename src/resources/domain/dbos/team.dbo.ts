@@ -1,4 +1,4 @@
-import type { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
+import type { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
 
 export interface TeamDbo {
   id: string  // internal id for the tournament

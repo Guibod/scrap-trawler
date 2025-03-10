@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
-import type { StandingDbo } from "~resources/domain/dbos/standing.dbo"
-import type { MatchDbo } from "~resources/domain/dbos/match.dbo"
-import type RoundBuilder from "~resources/domain/builders/round.builder"
+import type { StandingDbo } from "~/resources/domain/dbos/standing.dbo"
+import type { MatchDbo } from "~/resources/domain/dbos/match.dbo"
+import type RoundBuilder from "~/resources/domain/builders/round.builder"
 
 export default class StandingBuilder {
   private standing: Partial<StandingDbo> = {};

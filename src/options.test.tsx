@@ -4,15 +4,15 @@ import { render, screen } from "@testing-library/react";
 import Options from "./options"
 
 // ✅ Mock Components
-vi.mock("~resources/ui/layouts/options", () => ({
+vi.mock("~/resources/ui/layouts/options", () => ({
   default: ({ children }) => <div data-testid="option-page-layout">{children}</div>,
 }));
 
-vi.mock("~resources/ui/pages/settings", () => ({
+vi.mock("~/resources/ui/pages/settings", () => ({
   default: () => <div data-testid="settings-page">Settings Page</div>,
 }));
 
-vi.mock("~resources/ui/providers/settings", () => ({
+vi.mock("~/resources/ui/providers/settings", () => ({
   SettingsProvider: ({ children }) => <div data-testid="settings-provider">{children}</div>,
 }));
 

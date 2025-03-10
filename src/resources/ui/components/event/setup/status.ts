@@ -1,15 +1,15 @@
-import { SETUP_STEPS } from "~resources/ui/components/event/setup/config";
+import { SETUP_STEPS } from "~/resources/ui/components/event/setup/config";
   import type {
   SpreadsheetData,
   SpreadsheetMetadata,
   SpreadsheetRawData, SpreadsheetRawRow,
   SpreadsheetRow
-  } from "~resources/domain/dbos/spreadsheet.dbo"
-  import { COLUMN_TYPE, COLUMN_TYPE_META } from "~resources/domain/enums/spreadsheet.dbo"
-import { SpreadsheetDataFactory } from "~resources/domain/parsers/spreadsheet.data.factory"
-import type { WotcId } from "~resources/domain/dbos/identifiers.dbo"
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
-import type { MappingDbo, PairingMode } from "~resources/domain/dbos/mapping.dbo"
+  } from "~/resources/domain/dbos/spreadsheet.dbo"
+  import { COLUMN_TYPE, COLUMN_TYPE_META } from "~/resources/domain/enums/spreadsheet.dbo"
+import { SpreadsheetDataFactory } from "~/resources/domain/parsers/spreadsheet.data.factory"
+import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
+import type { MappingDbo, PairingMode } from "~/resources/domain/dbos/mapping.dbo"
 
   export class SetupStatus {
     private _duplicates: Record<string, SpreadsheetData>;

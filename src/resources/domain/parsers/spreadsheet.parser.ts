@@ -2,9 +2,9 @@ import type {
   SpreadsheetColumnMetaData,
   SpreadsheetMetadata,
   SpreadsheetRawData
-} from "~resources/domain/dbos/spreadsheet.dbo";
-import { COLUMN_TYPE } from "~resources/domain/enums/spreadsheet.dbo"
-import { SpreadsheetColumnDetector } from "~resources/domain/parsers/column.detector"
+} from "~/resources/domain/dbos/spreadsheet.dbo";
+import { COLUMN_TYPE } from "~/resources/domain/enums/spreadsheet.dbo"
+import { SpreadsheetColumnDetector } from "~/resources/domain/parsers/column.detector"
 
 export abstract class SpreadsheetParser {
   constructor(

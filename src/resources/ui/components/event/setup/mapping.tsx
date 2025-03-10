@@ -1,8 +1,8 @@
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
-import { useEventSetup } from "~resources/ui/components/event/setup/provider"
-import SpreadsheetColumn from "~resources/ui/components/event/setup/mapping/column"
+import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
+import SpreadsheetColumn from "~/resources/ui/components/event/setup/mapping/column"
 import React, { useState } from "react"
-import MappingTable from "~resources/ui/components/event/setup/mapping/table"
+import MappingTable from "~/resources/ui/components/event/setup/mapping/table"
 import { Switch } from "@heroui/switch"
 import { Alert } from "@heroui/alert"
 

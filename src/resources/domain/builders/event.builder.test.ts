@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import EventBuilder from "~resources/domain/builders/event.builder"
-import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
-import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~resources/domain/enums/status.dbo"
+import EventBuilder from "~/resources/domain/builders/event.builder"
+import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
+import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 
 
 describe("EventBuilder", () => {

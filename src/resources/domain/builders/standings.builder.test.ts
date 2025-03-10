@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import type EventModelBuilder from "~resources/domain/builders/event.builder"
-import StandingBuilder from "~resources/domain/builders/standings.builder"
-import type { MatchDbo } from "~resources/domain/dbos/match.dbo"
-import type { StandingDbo } from "~resources/domain/dbos/standing.dbo"
+import type EventModelBuilder from "~/resources/domain/builders/event.builder"
+import StandingBuilder from "~/resources/domain/builders/standings.builder"
+import type { MatchDbo } from "~/resources/domain/dbos/match.dbo"
+import type { StandingDbo } from "~/resources/domain/dbos/standing.dbo"
 
 // Mock EventModelBuilder since it's only used as a parent reference
 const mockEventModelBuilder = {} as EventModelBuilder;

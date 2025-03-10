@@ -1,7 +1,7 @@
 import React, { type FC } from "react"
 import type { PlasmoCSUIProps } from "plasmo"
-import Context from "~resources/eventlink/context"
-import ButtonScrape from "~resources/ui/components/button.scrape"
+import Context from "~/resources/integrations/eventlink/context"
+import ButtonScrape from "~/resources/ui/components/button.scrape"
 
 const EventCalendarAction: FC<PlasmoCSUIProps> = ({ anchor }) => {
   const organizationId = Context.getOrganizationId(window.location.href)

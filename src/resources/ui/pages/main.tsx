@@ -1,4 +1,4 @@
-import TableEvents from "~resources/ui/components/table.events"
+import TableEvents from "~/resources/ui/components/table.events"
 
 const MainPage = () => {
   return (
