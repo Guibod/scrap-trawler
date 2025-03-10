@@ -1,6 +1,6 @@
 import Papa from "papaparse";
-import { SpreadsheetParser } from "~resources/domain/parsers/spreadsheet.parser"
-import type { SpreadsheetRawRow, SpreadsheetColumnMetaData } from "~resources/domain/dbos/spreadsheet.dbo"
+import { SpreadsheetParser } from "~/resources/domain/parsers/spreadsheet.parser"
+import type { SpreadsheetRawRow, SpreadsheetColumnMetaData } from "~/resources/domain/dbos/spreadsheet.dbo"
 
 export class CSVParser extends SpreadsheetParser {
   async parse(data: string): Promise<{ columns: SpreadsheetColumnMetaData[], rows: SpreadsheetRawRow[] }> {

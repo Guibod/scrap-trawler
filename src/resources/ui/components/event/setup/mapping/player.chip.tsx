@@ -1,8 +1,8 @@
 import { useDraggable } from "@dnd-kit/core";
 import { Chip } from "@heroui/chip";
 import { CSS } from "@dnd-kit/utilities";
-import type { SpreadsheetRow } from "~resources/domain/dbos/spreadsheet.dbo"
-import type { PairingMode } from "~resources/domain/dbos/mapping.dbo"
+import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
+import type { PairingMode } from "~/resources/domain/dbos/mapping.dbo"
 import { HandRaisedIcon, RocketLaunchIcon, UserIcon } from "@heroicons/react/24/outline";
 
 interface DraggableChipProps {

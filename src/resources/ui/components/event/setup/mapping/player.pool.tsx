@@ -1,6 +1,6 @@
-import DraggableChip from "~resources/ui/components/event/setup/mapping/player.chip"
+import DraggableChip from "~/resources/ui/components/event/setup/mapping/player.chip"
 import React from "react"
-import { useEventSetup } from "~resources/ui/components/event/setup/provider"
+import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
 import { useDroppable } from "@dnd-kit/core"
 
 const SpreadsheetPlayerPool = () => {

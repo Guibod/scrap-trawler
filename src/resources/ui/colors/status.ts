@@ -1,4 +1,4 @@
-import { FetchStatus, type GlobalStatus, PairStatus, ScrapeStatus } from "~resources/domain/enums/status.dbo"
+import { FetchStatus, type GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 
 const statusColors: Record<GlobalStatus | FetchStatus | PairStatus | ScrapeStatus, string> = {
   UNRESOLVED: "fill-red-500 stroke-red-700",

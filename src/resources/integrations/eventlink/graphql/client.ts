@@ -3,10 +3,10 @@ import type {
   EventResponse, GameState,
   GameStateResponse, Organization,
   OrganizationResponse
-} from "~resources/eventlink/graphql.dto.types"
+} from "~/resources/integrations/eventlink/graphql/types"
 import { gql, GraphQLClient } from 'graphql-request'
-import { GraphQlError, InvalidGraphQlResponseError } from "~resources/eventlink/exceptions"
-import { getLogger, LoggerProxy } from "~resources/logging/logger"
+import { GraphQlError, InvalidGraphQlResponseError } from "~/resources/integrations/eventlink/exceptions"
+import { getLogger, LoggerProxy } from "~/resources/logging/logger"
 const GRAPHQL_ENDPOINT = "https://api.tabletop.wizards.com/silverbeak-griffin-service/graphql";
 
 type Variables = Record<string, unknown>

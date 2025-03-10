@@ -1,5 +1,5 @@
-import { EventLinkGraphQLClient } from "~resources/eventlink/graphql.client";
-import type { EventDetails, GameState, Organization } from "~resources/eventlink/graphql.dto.types"
+import { EventLinkGraphQLClient } from "~/resources/integrations/eventlink/graphql/client";
+import type { EventDetails, GameState, Organization } from "~/resources/integrations/eventlink/graphql/types"
 
 export interface WotcExtractedEvent {
   event: EventDetails

@@ -2,11 +2,11 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Popup from "~popup";
-import { openApp } from "~resources/ui/actions/open";
+import Popup from "~/popup";
+import { openApp } from "~/resources/ui/actions/open";
 
 // ✅ Mock `openApp` function
-vi.mock("~resources/ui/actions/open", () => ({
+vi.mock("~/resources/ui/actions/open", () => ({
   openApp: vi.fn(),
 }));
 

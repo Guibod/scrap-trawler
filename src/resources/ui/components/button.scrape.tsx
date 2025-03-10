@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { eventScrape } from "~resources/ui/actions/event.scrape"
+import { eventScrape } from "~/resources/ui/actions/event.scrape"
 import { Button } from "@heroui/button"
 import { ArchiveBoxArrowDownIcon } from "@heroicons/react/16/solid"
-import { ScrapeStatus } from "~resources/domain/enums/status.dbo"
-import statusColors from "~resources/ui/colors/status"
+import { ScrapeStatus } from "~/resources/domain/enums/status.dbo"
+import statusColors from "~/resources/ui/colors/status"
 import type { UseButtonProps } from "@heroui/button/dist/use-button"
 import { sendToBackground } from "@plasmohq/messaging"
-import { getLogger } from "~resources/logging/logger"
+import { getLogger } from "~/resources/logging/logger"
 
 type ScrapButtonProps = {
   eventId?: string;

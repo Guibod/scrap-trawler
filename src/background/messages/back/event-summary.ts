@@ -1,7 +1,7 @@
 import type { PlasmoMessaging } from "@plasmohq/messaging"
 import { eventService } from "../../singletons"
-import { getLogger } from "~resources/logging/logger"
-import type { EventSummarizedDbo } from "~resources/domain/dbos/event.summarized.dbo"
+import { getLogger } from "~/resources/logging/logger"
+import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo"
 
 const logger = getLogger("event-summary")
 

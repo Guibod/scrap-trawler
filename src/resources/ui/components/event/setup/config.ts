@@ -1,9 +1,9 @@
-import SetupUpload from "~resources/ui/components/event/setup/upload"
-import SetupFilters from "~resources/ui/components/event/setup/filters"
-import SetupMapping from "~resources/ui/components/event/setup/mapping"
-import type { SetupStatus } from "~resources/ui/components/event/setup/status"
-import SetupPairing from "~resources/ui/components/event/setup/pairing"
-import SetupFinalize from "~resources/ui/components/event/setup/finalize"
+import SetupUpload from "~/resources/ui/components/event/setup/upload"
+import SetupFilters from "~/resources/ui/components/event/setup/filters"
+import SetupMapping from "~/resources/ui/components/event/setup/mapping"
+import type { SetupStatus } from "~/resources/ui/components/event/setup/status"
+import SetupPairing from "~/resources/ui/components/event/setup/pairing"
+import SetupFinalize from "~/resources/ui/components/event/setup/finalize"
 
 export type SetupStep = {
   key: number;

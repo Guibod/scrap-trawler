@@ -1,9 +1,9 @@
-import { useEvent } from "~resources/ui/providers/event"
+import { useEvent } from "~/resources/ui/providers/event"
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/table"
-import Team from "~resources/ui/components/team"
-import MatchResult from "~resources/ui/components/match/result"
+import Team from "~/resources/ui/components/team"
+import MatchResult from "~/resources/ui/components/match/result"
 import React from "react"
-import PlayerName from "~resources/ui/components/player/name"
+import PlayerName from "~/resources/ui/components/player/name"
 
 const EventRegistration = () => {
  const { event } = useEvent()

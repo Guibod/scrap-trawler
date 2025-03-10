@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react"
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/table";
 import { getKeyValue, Pagination } from "@heroui/react"
 import type { TableProps } from "@heroui/table/dist/table";
-import SpreadsheetColumn from "~resources/ui/components/event/setup/mapping/column"
-import { COLUMN_TYPE_META } from "~resources/domain/enums/spreadsheet.dbo"
-import { useEventSetup } from "~resources/ui/components/event/setup/provider"
+import SpreadsheetColumn from "~/resources/ui/components/event/setup/mapping/column"
+import { COLUMN_TYPE_META } from "~/resources/domain/enums/spreadsheet.dbo"
+import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
 
 const ROWS_PER_PAGE = 10;
 

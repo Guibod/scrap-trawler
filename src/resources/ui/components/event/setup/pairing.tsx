@@ -1,15 +1,15 @@
 import React from "react";
 import { Button } from "@heroui/button";
-import { useEventSetup } from "~resources/ui/components/event/setup/provider";
+import { useEventSetup } from "~/resources/ui/components/event/setup/provider";
 import { DndContext } from "@dnd-kit/core";
-import DroppablePlayerCard from "~resources/ui/components/event/setup/mapping/player.card"
-import type { WotcId } from "~resources/domain/dbos/identifiers.dbo"
-import type { SpreadsheetRowId } from "~resources/domain/dbos/spreadsheet.dbo"
-import SpreadsheetPlayerPool from "~resources/ui/components/event/setup/mapping/player.pool"
+import DroppablePlayerCard from "~/resources/ui/components/event/setup/mapping/player.card"
+import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
+import type { SpreadsheetRowId } from "~/resources/domain/dbos/spreadsheet.dbo"
+import SpreadsheetPlayerPool from "~/resources/ui/components/event/setup/mapping/player.pool"
 import { MagnifyingGlassIcon, XCircleIcon, RocketLaunchIcon } from "@heroicons/react/20/solid";
 import { Alert } from "@heroui/alert"
-import { RandomMatcher } from "~resources/domain/parsers/matcher.random"
-import { NameMatcher } from "~resources/domain/parsers/matcher.name"
+import { RandomMatcher } from "~/resources/domain/parsers/matcher.random"
+import { NameMatcher } from "~/resources/domain/parsers/matcher.name"
 import { Card, CardBody, CardHeader } from "@heroui/card"
 
 const SetupPairing: React.FC = () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import type EventModelBuilder from "~resources/domain/builders/event.builder"
-import EventOrganizerBuilder from "~resources/domain/builders/organizer.builder"
+import type EventModelBuilder from "~/resources/domain/builders/event.builder"
+import EventOrganizerBuilder from "~/resources/domain/builders/organizer.builder"
 
 // Mock EventModelBuilder since it's only used as a parent reference
 const mockEventModelBuilder = {} as EventModelBuilder;

@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { COLUMN_TYPE } from "~resources/domain/enums/spreadsheet.dbo";
-import type { SpreadsheetRawRow } from "~resources/domain/dbos/spreadsheet.dbo";
+import { COLUMN_TYPE } from "~/resources/domain/enums/spreadsheet.dbo";
+import type { SpreadsheetRawRow } from "~/resources/domain/dbos/spreadsheet.dbo";
 import { faker } from "@faker-js/faker";
-import { SpreadsheetColumnDetector } from "~resources/domain/parsers/column.detector" // **Using Faker.js for realistic data!**
+import { SpreadsheetColumnDetector } from "~/resources/domain/parsers/column.detector" // **Using Faker.js for realistic data!**
 
 // **Realistic Name Dataset**
 const knownFirstNames = [

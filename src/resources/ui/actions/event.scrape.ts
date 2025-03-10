@@ -1,10 +1,10 @@
-import { EventExtractor } from "~resources/eventlink/event-extractor"
+import { EventExtractor } from "~/resources/integrations/eventlink/event-extractor"
 import { sendToBackground } from "@plasmohq/messaging"
-import type { EventModel } from "~resources/domain/models/event.model"
-import EventHydrator from "~resources/domain/mappers/event.hydrator"
-import { DataLossScrapeError, TooOldToScrapeError } from "~resources/eventlink/exceptions"
-import { getLogger } from "~resources/logging/logger"
-import type EventEntity from "~resources/storage/entities/event.entity"
+import type { EventModel } from "~/resources/domain/models/event.model"
+import EventHydrator from "~/resources/domain/mappers/event.hydrator"
+import { DataLossScrapeError, TooOldToScrapeError } from "~/resources/integrations/eventlink/exceptions"
+import { getLogger } from "~/resources/logging/logger"
+import type EventEntity from "~/resources/storage/entities/event.entity"
 
 const logger = getLogger("event-scrape-action")
 

@@ -1,4 +1,4 @@
-import { ScrapTrawlerError } from "~resources/exception"
+import { ScrapTrawlerError } from "~/resources/exception"
 import type { EntityTable } from "dexie"
 
 export class StorageError extends ScrapTrawlerError {

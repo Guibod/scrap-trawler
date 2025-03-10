@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { GzipUtils } from "~resources/utils/gzip";
+import { GzipUtils } from "~/resources/utils/gzip";
 import pako from "pako";
 
 const text = "Hello, Gzip! This is a test string for compression.";

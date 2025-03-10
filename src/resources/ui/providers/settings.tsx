@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
-import { type SettingsModel } from "~resources/domain/models/settings.model";
-import SettingsService from "~resources/domain/services/settings.service"
+import { type SettingsModel } from "~/resources/domain/models/settings.model";
+import SettingsService from "~/resources/domain/services/settings.service"
 
 interface SettingsContextType {
   settings: SettingsModel;

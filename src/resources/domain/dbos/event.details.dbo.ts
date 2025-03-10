@@ -1,6 +1,6 @@
-import { RelDbo } from "~resources/domain/enums/rel.dbo"
-import type { MoneyDbo } from "~resources/domain/dbos/money.dbo"
-import type { PairingDbo } from "~resources/domain/enums/pairing.dbo"
+import { RelDbo } from "~/resources/domain/enums/rel.dbo"
+import type { MoneyDbo } from "~/resources/domain/dbos/money.dbo"
+import type { PairingDbo } from "~/resources/domain/enums/pairing.dbo"
 import type { GeoJSON, Point } from "geojson"
 
 interface EventDetailsDbo {

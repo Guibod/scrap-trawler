@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import PairingSystem, { type TeamPairing } from "./pairing"
-import type { RoundDbo } from "~resources/domain/dbos/round.dbo"
-import MatchBuilder from "~resources/domain/builders/match.builder"
+import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
+import MatchBuilder from "~/resources/domain/builders/match.builder"
 
 
 describe("PairingSystem", () => {

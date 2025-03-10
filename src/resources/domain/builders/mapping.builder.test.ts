@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import MappingDboBuilder from "~resources/domain/builders/mapping.builder"
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
-import type { SpreadsheetData } from "~resources/domain/dbos/spreadsheet.dbo"
-import { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
+import MappingDboBuilder from "~/resources/domain/builders/mapping.builder"
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
+import type { SpreadsheetData } from "~/resources/domain/dbos/spreadsheet.dbo"
+import { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
 
 
 describe("MappingDboBuilder", () => {

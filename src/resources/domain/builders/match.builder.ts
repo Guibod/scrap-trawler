@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import type { MatchDbo } from "~resources/domain/dbos/match.dbo"
-import type EventModelBuilder from "~resources/domain/builders/event.builder"
+import type { MatchDbo } from "~/resources/domain/dbos/match.dbo"
+import type EventModelBuilder from "~/resources/domain/builders/event.builder"
 
 export default class MatchBuilder {
   private match: Partial<MatchDbo> = {};

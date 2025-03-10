@@ -1,10 +1,10 @@
 import { useDroppable } from "@dnd-kit/core";
 import { Card, CardBody } from "@heroui/card";
-import Player from "~resources/ui/components/player/player";
-import DraggableChip from "~resources/ui/components/event/setup/mapping/player.chip"
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
-import type { SpreadsheetRow } from "~resources/domain/dbos/spreadsheet.dbo"
-import type { PairingMode } from "~resources/domain/dbos/mapping.dbo"
+import Player from "~/resources/ui/components/player/player";
+import DraggableChip from "~/resources/ui/components/event/setup/mapping/player.chip"
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
+import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
+import type { PairingMode } from "~/resources/domain/dbos/mapping.dbo"
 
 interface DroppablePlayerCardProps {
   player: PlayerDbo;

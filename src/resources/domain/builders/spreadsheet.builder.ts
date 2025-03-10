@@ -3,8 +3,8 @@ import type {
   SpreadsheetColumnMetaData,
   SpreadsheetData,
   SpreadsheetMetadata, SpreadsheetRow
-} from "~resources/domain/dbos/spreadsheet.dbo"
-import { COLUMN_TYPE, DUPLICATE_STRATEGY } from "~resources/domain/enums/spreadsheet.dbo"
+} from "~/resources/domain/dbos/spreadsheet.dbo"
+import { COLUMN_TYPE, DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo"
 
 export default class SpreadsheetBuilder {
   private metadata: Partial<SpreadsheetMetadata> = {};

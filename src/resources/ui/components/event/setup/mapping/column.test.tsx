@@ -1,8 +1,8 @@
 import { render, fireEvent, screen } from "@testing-library/react";
-import { COLUMN_TYPE } from "~resources/domain/enums/spreadsheet.dbo";
+import { COLUMN_TYPE } from "~/resources/domain/enums/spreadsheet.dbo";
 import { vi, expect, describe, beforeEach, it } from "vitest";
 import React from "react"
-import SpreadsheetColumn from "~resources/ui/components/event/setup/mapping/column"
+import SpreadsheetColumn from "~/resources/ui/components/event/setup/mapping/column"
 
 describe("SpreadsheetColumn", () => {
   const mockColumn = {

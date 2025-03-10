@@ -1,7 +1,7 @@
 import React from "react"
 import { ShieldExclamationIcon, PencilSquareIcon } from "@heroicons/react/20/solid"
 import { Tooltip } from "@heroui/tooltip"
-import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 
 interface PlayerNameProps {
   player: PlayerDbo

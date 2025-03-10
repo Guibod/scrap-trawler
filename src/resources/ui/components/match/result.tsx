@@ -1,4 +1,4 @@
-import type { MatchDbo } from "~resources/domain/dbos/match.dbo"
+import type { MatchDbo } from "~/resources/domain/dbos/match.dbo"
 import { Chip } from "@heroui/chip"
 import React from "react"
 

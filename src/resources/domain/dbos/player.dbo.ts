@@ -1,5 +1,5 @@
-import type { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
-import type { WotcId } from "~resources/domain/dbos/identifiers.dbo"
+import type { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
+import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
 
 export interface OverrideDbo {
   displayName: string | null

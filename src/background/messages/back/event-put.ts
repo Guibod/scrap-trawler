@@ -1,9 +1,9 @@
 import type { PlasmoMessaging } from "@plasmohq/messaging"
 import { eventService } from "../../singletons"
-import type { EventModel } from "~resources/domain/models/event.model"
-import { getLogger } from "~resources/logging/logger"
-import type EventEntity from "~resources/storage/entities/event.entity"
-import EventMapper from "~resources/domain/mappers/event.mapper"
+import type { EventModel } from "~/resources/domain/models/event.model"
+import { getLogger } from "~/resources/logging/logger"
+import type EventEntity from "~/resources/storage/entities/event.entity"
+import EventMapper from "~/resources/domain/mappers/event.mapper"
 
 const logger = getLogger("event-put")
 

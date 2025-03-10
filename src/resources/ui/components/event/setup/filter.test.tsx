@@ -1,12 +1,12 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import React from "react";
-import { COLUMN_TYPE, FILTER_OPERATOR } from "~resources/domain/enums/spreadsheet.dbo";
-import type { SpreadsheetFilter } from "~resources/domain/dbos/spreadsheet.dbo";
-import { useEventSetup } from "~resources/ui/components/event/setup/provider";
-import FilterInput from "~resources/ui/components/event/setup/filter"
+import { COLUMN_TYPE, FILTER_OPERATOR } from "~/resources/domain/enums/spreadsheet.dbo";
+import type { SpreadsheetFilter } from "~/resources/domain/dbos/spreadsheet.dbo";
+import { useEventSetup } from "~/resources/ui/components/event/setup/provider";
+import FilterInput from "~/resources/ui/components/event/setup/filter"
 
-vi.mock("~resources/ui/components/event/setup/provider", () => ({
+vi.mock("~/resources/ui/components/event/setup/provider", () => ({
   useEventSetup: vi.fn(),
 }));
 
@@ -27,8 +27,8 @@ describe("FilterInput", () => {
     vi.mocked(useEventSetup).mockReturnValue({
       spreadsheetMeta: {
         columns: [
-          { index: 0, name: "Format", type: COLUMN_TYPE.FILTER },
-          { index: 1, name: "Player", type: COLUMN_TYPE.FILTER },
+          { index: 0, name: "Format", type: COLUMN_TYPE.FILTER, originalName: "Format" },
+          { index: 1, name: "Player", type: COLUMN_TYPE.FILTER, originalName: "Player" },
         ],
       },
       status: {

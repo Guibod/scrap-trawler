@@ -1,9 +1,9 @@
 import { vi, describe, it, expect } from 'vitest';
 
-import { ScrapTrawlerError } from "~resources/exception"
-import type EventEntity from "~resources/storage/entities/event.entity"
-import { sampleEvent, sampleGameState, sampleOrganizer } from "~resources/eventlink/sample.event"
-import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~resources/domain/enums/status.dbo"
+import { ScrapTrawlerError } from "~/resources/exception"
+import type EventEntity from "~/resources/storage/entities/event.entity"
+import { sampleEvent, sampleGameState, sampleOrganizer } from "~/resources/integrations/eventlink/data/sample.event"
+import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 
 const loggerErrorMock = vi.fn();
 vi.doMock('~/resources/logging/logger', () => ({

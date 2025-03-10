@@ -1,4 +1,4 @@
-import { type COLUMN_TYPE, DUPLICATE_STRATEGY, FILTER_OPERATOR } from "~resources/domain/enums/spreadsheet.dbo"
+import { type COLUMN_TYPE, DUPLICATE_STRATEGY, FILTER_OPERATOR } from "~/resources/domain/enums/spreadsheet.dbo"
 
 export interface SpreadsheetColumnMetaData {
   name: string

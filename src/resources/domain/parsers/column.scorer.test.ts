@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { COLUMN_TYPE } from "~resources/domain/enums/spreadsheet.dbo";
-import { SpreadsheetColumnScorer } from "~resources/domain/parsers/column.scorer"
+import { COLUMN_TYPE } from "~/resources/domain/enums/spreadsheet.dbo";
+import { SpreadsheetColumnScorer } from "~/resources/domain/parsers/column.scorer"
 
 const knownFirstNames = new Set(["alice", "john", "pierre", "thomas", "emma", "michael", "sophia"]);
 const knownLastNames = new Set(["smith", "dupont", "van den berg", "johnson", "brown", "williams", "davis"]);

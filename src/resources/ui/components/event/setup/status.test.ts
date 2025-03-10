@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { SetupStatus } from "~resources/ui/components/event/setup/status";
-import type { SpreadsheetMetadata, SpreadsheetRawData } from "~resources/domain/dbos/spreadsheet.dbo";
-import { COLUMN_TYPE, DUPLICATE_STRATEGY } from "~resources/domain/enums/spreadsheet.dbo";
+import { SetupStatus } from "~/resources/ui/components/event/setup/status";
+import type { SpreadsheetMetadata, SpreadsheetRawData } from "~/resources/domain/dbos/spreadsheet.dbo";
+import { COLUMN_TYPE, DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo";
 
 describe("SetupStatus", () => {
   let meta: SpreadsheetMetadata;

@@ -1,6 +1,6 @@
 import React from "react"
-import { EventSetupProvider } from "~resources/ui/components/event/setup/provider"
-import SetupSteps from "~resources/ui/components/event/setup/steps"
+import { EventSetupProvider } from "~/resources/ui/components/event/setup/provider"
+import SetupSteps from "~/resources/ui/components/event/setup/steps"
 
 // TODO: add a form to use the filters to exclude / include values
 // TODO: add a form to select the duplicate strategy

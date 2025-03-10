@@ -1,5 +1,5 @@
 import type { EventStatusDbo } from './status.dbo';
-import type { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
+import type { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 
 export interface EventSummarizedDbo {
   id: string;

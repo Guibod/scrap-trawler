@@ -4,9 +4,9 @@ import { openApp } from "~/resources/ui/actions/open";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid"
 import logo from "data-base64:../assets/icon.png"
 import { HeroUIProvider } from "@heroui/react"
-import PopupLayout from "~resources/ui/layouts/popup"
+import PopupLayout from "~/resources/ui/layouts/popup"
 import React from "react"
-import Version from "~resources/ui/components/version"
+import Version from "~/resources/ui/components/version"
 
 
 const Popup = () => {

@@ -1,4 +1,4 @@
-import type { EventDetails, GameState, Organization } from "~resources/eventlink/graphql.dto.types"
+import type { EventDetails, GameState, Organization } from "~/resources/integrations/eventlink/graphql/types"
 
 export const sampleGameState: GameState = {
   eventId: "event-123",

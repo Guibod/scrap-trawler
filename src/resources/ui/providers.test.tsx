@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import React from "react"
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Providers, { RoutedProvider } from "~resources/ui/providers"
+import Providers, { RoutedProvider } from "~/resources/ui/providers"
 
 // ✅ Mock HeroUIProvider and ToastProvider
 vi.mock("@heroui/react", () => ({
@@ -13,7 +13,7 @@ vi.mock("@heroui/react", () => ({
 }));
 
 // ✅ Mock SettingsProvider
-vi.mock("~resources/ui/providers/settings", () => ({
+vi.mock("~/resources/ui/providers/settings", () => ({
   SettingsProvider: ({ children }) => <div data-testid="settings-provider">{children}</div>,
 }));
 

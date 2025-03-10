@@ -1,5 +1,5 @@
-import { DEFAULT_SETTINGS, type SettingsModel } from "~resources/domain/models/settings.model"
-import { getLogger } from "~resources/logging/logger"
+import { DEFAULT_SETTINGS, type SettingsModel } from "~/resources/domain/models/settings.model"
+import { getLogger } from "~/resources/logging/logger"
 
 const STORAGE_KEY = "scrapTrawlerSettings";
 

@@ -1,5 +1,5 @@
-import { SettingsDao } from "~resources/storage/settings.dao"
-import type { SettingsModel } from "~resources/domain/models/settings.model"
+import { SettingsDao } from "~/resources/storage/settings.dao"
+import type { SettingsModel } from "~/resources/domain/models/settings.model"
 
 export default class SettingsService {
   private dao = new SettingsDao(chrome.storage.local);

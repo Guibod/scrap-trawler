@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx";
-import { SpreadsheetParser } from "~resources/domain/parsers/spreadsheet.parser"
-import type { SpreadsheetRawRow, SpreadsheetColumnMetaData } from "~resources/domain/dbos/spreadsheet.dbo"
+import { SpreadsheetParser } from "~/resources/domain/parsers/spreadsheet.parser"
+import type { SpreadsheetRawRow, SpreadsheetColumnMetaData } from "~/resources/domain/dbos/spreadsheet.dbo"
 
 export class ExcelParser extends SpreadsheetParser {
   async parse(data: ArrayBuffer): Promise<{ columns: SpreadsheetColumnMetaData[], rows: SpreadsheetRawRow[] }> {

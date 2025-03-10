@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import SpreadsheetBuilder from "~resources/domain/builders/spreadsheet.builder"
-import { DUPLICATE_STRATEGY } from "~resources/domain/enums/spreadsheet.dbo"
+import SpreadsheetBuilder from "~/resources/domain/builders/spreadsheet.builder"
+import { DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo"
 
 
 describe("SpreadsheetBuilder", () => {

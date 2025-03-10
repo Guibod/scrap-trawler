@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { removeDiacritics } from "~resources/utils/text"
+import { removeDiacritics } from "~/resources/utils/text"
 
 describe('removeDiacritics', () => {
   it('should remove diacritics from common accented characters', () => {

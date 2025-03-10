@@ -1,4 +1,4 @@
-import type { ResultDbo } from "~resources/domain/dbos/result.dbo"
+import type { ResultDbo } from "~/resources/domain/dbos/result.dbo"
 
 export interface MatchDbo {
   id: string

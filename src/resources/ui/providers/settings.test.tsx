@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
-import { SettingsProvider, useSettings } from "~resources/ui/providers/settings";
+import { SettingsProvider, useSettings } from "~/resources/ui/providers/settings";
 import userEvent from "@testing-library/user-event";
-import SettingsService from "~resources/domain/services/settings.service"
+import SettingsService from "~/resources/domain/services/settings.service"
 import React from "react";
-import { DEFAULT_SETTINGS } from "~resources/domain/models/settings.model"
+import { DEFAULT_SETTINGS } from "~/resources/domain/models/settings.model"
 
 // ✅ Ensure `chrome` is mocked globally
 vi.stubGlobal("chrome", {

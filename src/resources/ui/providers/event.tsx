@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from "react";
-import type { EventModel } from "~resources/domain/models/event.model";
+import type { EventModel } from "~/resources/domain/models/event.model";
 import { Spinner } from "@heroui/react"
 import lostImage from "data-base64:~/../assets/lost.png"
-import { PairStatus } from "~resources/domain/enums/status.dbo"
-import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
-import { getLogger } from "~resources/logging/logger"
-import type { OverrideDbo } from "~resources/domain/dbos/player.dbo"
+import { PairStatus } from "~/resources/domain/enums/status.dbo"
+import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
+import { getLogger } from "~/resources/logging/logger"
+import type { OverrideDbo } from "~/resources/domain/dbos/player.dbo"
 import { useParams } from "react-router-dom"
-import EventService from "~resources/domain/services/event.service"
+import EventService from "~/resources/domain/services/event.service"
 
 const logger = getLogger("event-provider")
 

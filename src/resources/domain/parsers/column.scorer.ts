@@ -1,4 +1,4 @@
-import { COLUMN_TYPE } from "~resources/domain/enums/spreadsheet.dbo";
+import { COLUMN_TYPE } from "~/resources/domain/enums/spreadsheet.dbo";
 
 export class SpreadsheetColumnScorer {
   private static basicLands = new Set(["plains", "island", "swamp", "mountain", "forest", "wastes"]);

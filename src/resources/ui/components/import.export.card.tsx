@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { addToast, Button, Card, CardBody, CardHeader, Modal, Progress } from "@heroui/react"
-import { formats, ImportExportService } from "~resources/domain/import.export.service"
-import { humanTimestamp } from "~resources/utils/text"
+import { formats, ImportExportService } from "~/resources/domain/import.export.service"
+import { humanTimestamp } from "~/resources/utils/text"
 import { ModalBody, ModalContent, ModalHeader } from "@heroui/modal"
 
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Button } from "@heroui/button"
-import { openApp } from "~resources/ui/actions/open"
+import { openApp } from "~/resources/ui/actions/open"
 
 type ButtonOpenProps = {
   fake?: boolean

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link, Outlet } from "react-router-dom";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react"
-import Version from "~resources/ui/components/version"
+import Version from "~/resources/ui/components/version"
 
 export const MainLayout = () => {
   const [darkMode, setDarkMode] = useState(false);

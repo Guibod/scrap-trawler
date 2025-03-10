@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
-import ButtonOpen from "~resources/ui/components/button.open"
-import Context from "~resources/eventlink/context"
-import ButtonScrape from "~resources/ui/components/button.scrape"
+import ButtonOpen from "~/resources/ui/components/button.open"
+import Context from "~/resources/integrations/eventlink/context"
+import ButtonScrape from "~/resources/ui/components/button.scrape"
 
 const EventTitleActions = () => {
   const [eventId, setEventId] = useState(null)
