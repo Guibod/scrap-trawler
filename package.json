@@ -54,7 +54,7 @@
     "dexie": "^4.0.11",
     "fastest-levenshtein": "^1.0.16",
     "framer-motion": "^12.4.10",
-    "graphql-request": "^6.1.0",
+    "graphql-request": "^7.1.2",
     "lodash": "^4.17.21",
     "lucide-react": "^0.475.0",
     "motion": "^12.4.3",
