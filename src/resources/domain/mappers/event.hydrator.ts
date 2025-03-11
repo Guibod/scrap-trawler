@@ -8,7 +8,6 @@ import { faker } from "@faker-js/faker"
 import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
 import type { PlayerStatusDbo } from "~resources/domain/enums/player.status.dbo"
 import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
-import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
 
 const logger = getLogger("event-hydrator")
 export class HydrationError extends ScrapTrawlerError {}
@@ -31,7 +30,7 @@ export default class EventHydrator {
   protected static _hydrate(entity: EventEntity): EventEntity {
     // TODO: do not overwrite existing edited data
 
-    const rawData = entity.raw_data.wotc as WotcExtractedEvent
+    const rawData = entity.raw_data?.wotc as WotcExtractedEvent
     const hydrated: EventEntity = {
       id: rawData.event.id,
       scrapeStatus: EventHydrator.inferScrapeStatus(entity),
@@ -173,16 +172,16 @@ export default class EventHydrator {
   }
 
   public static inferStatus(entity: EventEntity): EventModel["status"] {
-    const wotcData = entity.raw_data.wotc
-    const spreadsheetData = entity.raw_data.spreadsheet
-
     let global = GlobalStatus.NOT_STARTED;
     let scrape = ScrapeStatus.IN_PROGRESS;
     let pair = PairStatus.NOT_STARTED;
     let fetch = FetchStatus.NOT_STARTED;
 
     try {
-      if (wotcData.event.status === "ENDED") {
+      const wotcData = entity.raw_data.wotc
+      const spreadsheetData = entity.raw_data.spreadsheet
+
+      if (wotcData && wotcData.event && wotcData.event.status === "ENDED") {
         scrape = ScrapeStatus.COMPLETED;
         global = GlobalStatus.PARTIAL;
       }
