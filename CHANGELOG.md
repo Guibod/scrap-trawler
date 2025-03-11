@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.9.1 - 2025-03-11
+#### Bug Fixes
+- scrape an unknown event should not cause a failure in the hydrator anymore - (2444808) - Guillaume Boddaert
+#### Continuous Integration
+- release job will also upload main branch coverage - (0f5468c) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(deps)** bump framer-motion from 12.4.4 to 12.4.10 - (2932360) - dependabot[bot]
+- **(deps)** bump @faker-js/faker from 9.5.1 to 9.6.0 - (8c6094d) - dependabot[bot]
+- sync package.json version - (7205965) - Cog Bot
+
+- - -
+
 ## 0.9.0 - 2025-03-09
 #### Features
 - added import / export ui - (396d177) - Guillaume Boddaert
