@@ -12,13 +12,15 @@ import type { PlayerDbo } from "~resources/domain/dbos/player.dbo"
 const logger = getLogger("event-hydrator")
 export class HydrationError extends ScrapTrawlerError {}
 
+type HydratableEntity = Pick<EventEntity, 'id' | 'raw_data'> & Partial<EventEntity>
+
 /**
  * Recompose a Model from raw data
  *
  * It’s a fallback for unrecoverable data in the database.
  */
 export default class EventHydrator {
-  public static hydrate(entity: EventEntity): EventEntity {
+  public static hydrate(entity: HydratableEntity): EventEntity {
     try {
       return EventHydrator._hydrate(entity);
     } catch (error) {
@@ -27,7 +29,7 @@ export default class EventHydrator {
     }
   }
 
-  protected static _hydrate(entity: EventEntity): EventEntity {
+  protected static _hydrate(entity: HydratableEntity): EventEntity {
     // TODO: do not overwrite existing edited data
 
     const rawData = entity.raw_data?.wotc as WotcExtractedEvent
@@ -74,7 +76,7 @@ export default class EventHydrator {
     }
   }
 
-  public static inferPlayers(entity: EventEntity): PlayerDbo[] {
+  public static inferPlayers(entity: HydratableEntity): PlayerDbo[] {
     const isAnonymized = (value: string): boolean => {
       if (value === null || value.startsWith("[") && value.endsWith("]")) {
         return true
@@ -123,7 +125,7 @@ export default class EventHydrator {
     })
   }
 
-  public static inferRounds(entity: EventEntity): RoundEntity[] {
+  public static inferRounds(entity: HydratableEntity): RoundEntity[] {
     const map: RoundEntity[] = []
     const rawData = entity.raw_data.wotc as WotcExtractedEvent
 
@@ -171,7 +173,7 @@ export default class EventHydrator {
     return Object.values(map)
   }
 
-  public static inferStatus(entity: EventEntity): EventModel["status"] {
+  public static inferStatus(entity: HydratableEntity): EventModel["status"] {
     let global = GlobalStatus.NOT_STARTED;
     let scrape = ScrapeStatus.IN_PROGRESS;
     let pair = PairStatus.NOT_STARTED;
@@ -210,14 +212,14 @@ export default class EventHydrator {
     };
   }
 
-  static inferLastRound(entity: EventEntity) {
+  static inferLastRound(entity: HydratableEntity) {
     if (Object.values(entity.rounds).length === 0) {
       return 0;
     }
     return Math.max(...Object.values(entity.rounds).map(round => round.roundNumber))
   }
 
-  static inferTeams(entity: EventEntity) {
+  static inferTeams(entity: HydratableEntity) {
     // TODO: support real teams
     return entity.players.map((player) => ({
       status: undefined,
@@ -230,7 +232,7 @@ export default class EventHydrator {
     }))
   }
 
-  private static inferScrapeStatus(entity: EventEntity): EventScrapeStateDbo {
+  private static inferScrapeStatus(entity: HydratableEntity): EventScrapeStateDbo {
     if (!entity.raw_data.wotc.rounds) {
       return EventScrapeStateDbo.PURGED
     }

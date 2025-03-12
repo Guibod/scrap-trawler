@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { eventScrape } from "~resources/ui/actions/event.scrape";
-import { Button } from "@heroui/button";
-import { ArchiveBoxArrowDownIcon } from "@heroicons/react/16/solid";
-import { ScrapeStatus } from "~resources/domain/enums/status.dbo";
-import statusColors from "~resources/ui/colors/status";
+import { eventScrape } from "~resources/ui/actions/event.scrape"
+import { Button } from "@heroui/button"
+import { ArchiveBoxArrowDownIcon } from "@heroicons/react/16/solid"
+import { ScrapeStatus } from "~resources/domain/enums/status.dbo"
+import statusColors from "~resources/ui/colors/status"
 import type { UseButtonProps } from "@heroui/button/dist/use-button"
 import { sendToBackground } from "@plasmohq/messaging"
 import { getLogger } from "~resources/logging/logger"
@@ -45,6 +45,7 @@ const ButtonScrape: React.FC<ScrapButtonProps> = ({eventId, organizationId, fake
         setScrapeStatus(event.status.scrape);
       } catch (error) {
         logger.debug("Failed to fetch event status:", error);
+        setScrapeStatus(ScrapeStatus.NOT_STARTED);
       }
       setIsFetching(false);
     }

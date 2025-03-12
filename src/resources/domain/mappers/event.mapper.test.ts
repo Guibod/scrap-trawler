@@ -1,10 +1,11 @@
-import { describe, it, expect } from "vitest";
-import EventMapper from "~resources/domain/mappers/event.mapper";
-import EventEntity from "~resources/storage/entities/event.entity";
-import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo";
-import type { EventModel } from "~resources/domain/models/event.model";
-import type { EventSummarizedDbo } from "~resources/domain/dbos/event.summarized.dbo";
-import { sampleEvent, sampleOrganizer, sampleGameState } from "~resources/eventlink/sample.event"
+import { describe, expect, it } from "vitest"
+import EventMapper from "~resources/domain/mappers/event.mapper"
+import EventEntity, { EVENT_ENTITY_VERSION, isEventEntity } from "~resources/storage/entities/event.entity"
+import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
+import type { EventModel } from "~resources/domain/models/event.model"
+import type { EventSummarizedDbo } from "~resources/domain/dbos/event.summarized.dbo"
+import { sampleEvent, sampleGameState, sampleOrganizer } from "~resources/eventlink/sample.event"
+import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
 
 // Mock event entity
 const mockEventEntity = new EventEntity();
@@ -66,6 +67,7 @@ describe("EventMapper", () => {
         },
         spreadsheet: []
       },
+      scrapeStatus: EventScrapeStateDbo.COMPLETE
     };
 
     const result: EventEntity = EventMapper.toEntity(mockWriteDbo);
@@ -74,5 +76,8 @@ describe("EventMapper", () => {
     expect(result.title).toBe("Test Event");
     expect(result.date).toBe("2023-03-01T00:00:00.000Z");
     expect(result.organizer.id).toBe("org-1");
+    expect(result.version).toBe(EVENT_ENTITY_VERSION);
+
+    expect(isEventEntity(result)).toBe(true);
   });
 });
