@@ -6,7 +6,7 @@ import ImportExportCard from "~resources/ui/components/import.export.card"
 
 const SettingsPage = () => {
   const { settings, setMany } = useSettings();
-  const [currentSettings, setCurrentSettings] = useState<SettingsModel|null>(null);
+  const [currentSettings, setCurrentSettings] = useState<SettingsModel>(null);
 
   useEffect(() => {
     setCurrentSettings(settings);

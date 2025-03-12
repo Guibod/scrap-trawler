@@ -3,7 +3,7 @@ import { type SettingsModel } from "~resources/domain/models/settings.model";
 import SettingsService from "~resources/domain/services/settings.service"
 
 interface SettingsContextType {
-  settings: SettingsModel | null;
+  settings: SettingsModel;
   setOne: (key: keyof SettingsModel, value: any) => Promise<void>;
   setMany: (values: Partial<SettingsModel>) => Promise<void>;
 }
@@ -12,7 +12,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 
 export interface SettingsProviderProps {
   children: React.ReactNode;
-  service: SettingsService
+  service?: SettingsService
 }
 
 export const SettingsProvider = (
@@ -33,6 +33,14 @@ export const SettingsProvider = (
   const setOne = (key, value) => currentService.setOne(key, value).then(setSettings);
 
   const setMany = (values: Partial<SettingsModel>) => currentService.setMany(values).then(setSettings)
+
+  if (!settings) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-gray-500 dark:text-gray-300">Loading settings...</p>
+      </div>
+    );
+  }
 
   return (
     <SettingsContext.Provider value={{

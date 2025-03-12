@@ -17,13 +17,15 @@ describe("SettingsPage", () => {
     vi.clearAllMocks();
 
     // ✅ Ensure `useSettings` returns consistent test data
-    useSettings.mockReturnValue({
+    vi.mocked(useSettings).mockReturnValue({
       settings: {
         version: 1,
         moxfieldApiKey: "test-key",
         enableCrossEventIdentification: true,
+        showWelcome: true
       },
-      updateSettings: mockUpdateSettings,
+      setMany: mockUpdateSettings,
+      setOne: vi.fn()
     });
   });
 
@@ -66,7 +68,8 @@ describe("SettingsPage", () => {
     expect(mockUpdateSettings).toHaveBeenCalledWith({
       moxfieldApiKey: "test-key",
       enableCrossEventIdentification: true,
-      version: 1
+      version: 1,
+      showWelcome: true
     });
   });
 });

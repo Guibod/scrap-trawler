@@ -34,6 +34,7 @@ describe("SettingsDao", () => {
     expect(settings).toEqual({
       moxfieldApiKey: "test-key",
       enableCrossEventIdentification: true,
+      showWelcome: true,
       version: 1
     });
 

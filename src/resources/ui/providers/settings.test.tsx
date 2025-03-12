@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { SettingsProvider, useSettings } from "~resources/ui/providers/settings";
 import userEvent from "@testing-library/user-event";
 import SettingsService from "~resources/domain/services/settings.service"
@@ -65,11 +65,8 @@ describe("SettingsProvider", () => {
       </SettingsProvider>
     );
 
-    const button = screen.getByRole("button", { name: /update key/i });
-
-    await act(async () => {
-      await userEvent.click(button);
-    });
+    await waitFor(() => screen.getByRole("button", { name: /update key/i }))
+      .then((button) => userEvent.click(button));
 
     expect(screen.getByTestId("moxfield")).toHaveTextContent("new-key");
     expect(settingsServiceMock.setMany).toHaveBeenCalledWith({
