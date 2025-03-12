@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Pagination, TableColumn } from "@heroui/react"
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@heroui/table"
 import { GlobalStatusIcon } from "~resources/ui/components/status.icons"
@@ -44,7 +44,7 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
   return (
     <Table
       aria-label={title}
-      className="border-l shadow-md text-sm"
+      className="shadow-md text-sm"
       classNames={{
         wrapper: "min-h-[222px]",
       }}
