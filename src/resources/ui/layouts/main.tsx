@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react"
 import { Link, Outlet } from "react-router-dom";
 import packageJson from "../../../../package.json";
 
 export const MainLayout = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Check system preference
+    const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setDarkMode(isDark);
+  }, []);
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className={`${darkMode ? 'dark' : 'light'} text-foreground bg-background flex flex-col min-h-screen`}>
       {/* ✅ Top Navigation */}
       <nav className="bg-gray-900 text-white py-4 px-6 shadow-md">
         <div className="max-w-7xl mx-auto flex justify-between items-center">

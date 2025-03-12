@@ -3,7 +3,7 @@ import { Card, CardBody, CardHeader } from "@heroui/card"
 
 const EventEmpty = () => {
   return (
-    <div className="flex-1 p-6 bg-gray-100">
+    <div className="flex-1 p-6">
       <Card>
         <CardHeader className={"text-2xl font-mtg"}>
           Empty event 😖
