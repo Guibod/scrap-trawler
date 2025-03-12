@@ -15,8 +15,8 @@ const logger = getLogger("event-provider")
 class EventContextType {
   event: EventModel | null;
   showSetupByDefault: boolean;
-  updatePlayerOverride: (playerId: string, overrideData: Partial<OverrideDbo>) => void;
-  updateEvent: (event: Partial<EventModel>) => void;
+  updatePlayerOverride: (playerId: string, overrideData: Partial<OverrideDbo>) => Promise<EventModel>;
+  updateEvent: (event: Partial<EventModel>) => Promise<EventModel>;
 }
 
 const EventContext = createContext<EventContextType | undefined>(undefined);
@@ -55,17 +55,16 @@ export function EventProvider({ children }: { eventId?: string; children: React.
   const value = useMemo(() => ({
     event,
     showSetupByDefault,
-    updateEvent: async (updatedEvent: Partial<EventModel>) => {
+    updateEvent: async (updatedEvent: Partial<EventModel>): Promise<EventModel> => {
       if (!event) return; // Ensure event exists before modifying
 
-      try {
-        await eventService.saveEvent({ ...event, ...updatedEvent })
-          .then(model => setEvent(model));
-      } catch (error) {
-        console.error("Failed to save event overrides:", error);
-      }
+      return eventService.saveEvent({ ...event, ...updatedEvent })
+          .then(model => {
+            setEvent(model)
+            return model
+          });
     },
-    updatePlayerOverride: async (playerId: string, overrideData: OverrideDbo) => {
+    updatePlayerOverride: async (playerId: string, overrideData: OverrideDbo): Promise<EventModel> => {
       if (!event) return; // Ensure event exists before modifying
 
       const player = event.players[playerId];
@@ -87,12 +86,11 @@ export function EventProvider({ children }: { eventId?: string; children: React.
         },
       };
 
-      try {
-        await eventService.saveEvent(updatedEvent)
-          .then(model => setEvent(model));
-      } catch (error) {
-        console.error("Failed to save event overrides:", error);
-      }
+      return eventService.saveEvent(updatedEvent)
+          .then(model => {
+            setEvent(model)
+            return model
+          })
     }
   }), [event]);
 

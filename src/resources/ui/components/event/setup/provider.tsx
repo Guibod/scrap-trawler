@@ -171,22 +171,21 @@ export const EventSetupProvider = ({ children }) => {
         const parser = SpreadsheetParserFactory.create(updatedMeta, event.players, autodetect);
         const { columns, rows } = await parser.parse(evt.target.result);
 
-        setSpreadsheetMeta((prev) => ({ ...prev, columns }));
-        setSpreadsheetData(rows);
-
-        updateEvent({
+        await updateEvent({
           spreadsheet: { ...event.spreadsheet, meta: { ...updatedMeta, columns } },
           raw_data: { ...event.raw_data, spreadsheet: rows },
-        });
-
-        addToast({
-          title: "File Uploaded",
-          icon: <CheckIcon className="fill-green-400 border-green-800" />,
-          description: `The file ${file.name} was successfully uploaded.`,
-          severity: "success",
-          timeout: 3000,
-        });
-
+        }).then(() =>
+          addToast({
+            title: "File Uploaded",
+            icon: <CheckIcon className="fill-green-400 border-green-800" />,
+            description: `The file ${file.name} was successfully uploaded.`,
+            severity: "success",
+            timeout: 3000,
+          })
+        ).then(() => {
+          setSpreadsheetMeta((prev) => ({ ...prev, columns }));
+          setSpreadsheetData(rows);
+        })
       } catch (error) {
         console.error("Error processing file:", error);
         addToast({
