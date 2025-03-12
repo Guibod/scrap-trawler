@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link, Outlet } from "react-router-dom";
-import packageJson from "../../../../package.json";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react"
+import Version from "~resources/ui/components/version"
 
 export const MainLayout = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -13,22 +14,24 @@ export const MainLayout = () => {
 
   return (
     <div className={`${darkMode ? 'dark' : 'light'} text-foreground bg-background flex flex-col min-h-screen`}>
-      {/* ✅ Top Navigation */}
-      <nav className="bg-gray-900 text-white py-4 px-6 shadow-md">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          {/* ✅ Brand */}
-          <Link to="/" className="text-lg font-mtg">
+      <Navbar>
+        <NavbarBrand>
+          <Link to="/" className="font-mtg text-2xl">
             Scrap Trawler
           </Link>
-
-          {/* ✅ Navigation Links */}
-          <div className="flex gap-6">
-            <Link to="/" className="hover:text-gray-400 transition">Home</Link>
-            <Link to="/events" className="hover:text-gray-400 transition">Events</Link>
-            <Link to="/settings" className="hover:text-gray-400 transition">Settings</Link>
-          </div>
-        </div>
-      </nav>
+        </NavbarBrand>
+        <NavbarContent>
+          <NavbarItem>
+            <Link to="/">Events</Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Link to="/settings">Settings</Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Link to="/welcome">About</Link>
+          </NavbarItem>
+        </NavbarContent>
+      </Navbar>
 
       {/* ✅ Main Content Area */}
       <main className="flex-grow container mx-auto p-6">
@@ -37,7 +40,7 @@ export const MainLayout = () => {
 
       {/* ✅ Footer (Optional) */}
       <footer className="bg-gray-900 text-white py-4 text-center text-sm">
-        Scrap Trawler v{packageJson.version} &copy; {new Date().getFullYear()}
+        Scrap Trawler <Version /> &copy; {new Date().getFullYear()}
       </footer>
     </div>
   );
