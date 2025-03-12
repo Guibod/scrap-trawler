@@ -4,6 +4,7 @@ import type { EventModel } from "~resources/domain/models/event.model"
 import EventHydrator from "~resources/domain/mappers/event.hydrator"
 import { DataLossScrapeError, TooOldToScrapeError } from "~resources/eventlink/exceptions"
 import { getLogger } from "~resources/logging/logger"
+import type EventEntity from "~resources/storage/entities/event.entity"
 
 const logger = getLogger("event-scrape-action")
 
@@ -28,15 +29,16 @@ export const eventScrape   = async (eventId: string, organizationId: string, alr
     throw new DataLossScrapeError(eventId)
   }
 
-  const body: EventModel = EventHydrator.hydrate({
+  const entity: EventEntity = EventHydrator.hydrate({
     id: extracted.event.id,
     raw_data: {
       wotc: extracted
     },
   })
 
+  // Note: We send an EventEntity because it supports json serialization
   return sendToBackground({
     name: "back/event-put",
-    body
+    body: entity
   })
 };

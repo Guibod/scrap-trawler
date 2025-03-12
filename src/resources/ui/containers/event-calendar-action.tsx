@@ -20,8 +20,6 @@ const EventCalendarAction: FC<PlasmoCSUIProps> = ({ anchor }) => {
     return null;
   }
 
-  console.log("EventCalendarAction", eventId, organizationId)
-
   return (
     <ButtonScrape
       eventId={eventId}

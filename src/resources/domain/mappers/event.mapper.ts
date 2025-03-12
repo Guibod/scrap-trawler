@@ -1,5 +1,5 @@
 import { type EventModel } from "~resources/domain/models/event.model"
-import EventEntity from "../../storage/entities/event.entity"
+import EventEntity, { EVENT_ENTITY_VERSION } from "../../storage/entities/event.entity"
 import type { EventSummarizedDbo } from "~resources/domain/dbos/event.summarized.dbo"
 import type { EventWriteDbo } from "~resources/domain/dbos/event.write.dbo"
 import { getLogger } from "~resources/logging/logger"
@@ -79,7 +79,9 @@ export default class EventMapper {
       mapping: dbo.mapping ?? null,
       date: dbo.date.toISOString(),
       raw_data: dbo.raw_data ?? {},
-      lastUpdated: new Date().toISOString()
+      lastUpdated: new Date().toISOString(),
+      version: EVENT_ENTITY_VERSION,
+      scrapeStatus: dbo.scrapeStatus
     });
 
     return entity
