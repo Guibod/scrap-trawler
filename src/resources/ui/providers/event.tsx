@@ -3,11 +3,11 @@ import type { EventModel } from "~resources/domain/models/event.model";
 import { Spinner } from "@heroui/react"
 import lostImage from "data-base64:~/../assets/lost.png"
 import { PairStatus } from "~resources/domain/enums/status.dbo"
-import { eventService } from "~background/singletons"
 import { EventScrapeStateDbo } from "~resources/domain/enums/event.scrape.state.dbo"
 import { getLogger } from "~resources/logging/logger"
 import type { OverrideDbo } from "~resources/domain/dbos/player.dbo"
 import { useParams } from "react-router-dom"
+import EventService from "~resources/domain/services/event.service"
 
 const logger = getLogger("event-provider")
 
@@ -29,8 +29,14 @@ export function useEvent() {
   return context;
 }
 
-export function EventProvider({ children }: { eventId?: string; children: React.ReactNode }) {
+export type EventProviderProps = {
+  children: React.ReactNode;
+  service?: EventService
+}
+
+export function EventProvider({ service = new EventService(), children }: EventProviderProps) {
   const { eventId } = useParams();
+  const [eventService] = useState(service);
   const [event, setEvent] = useState<EventModel | null>(null);
   const [isFetching, setIsFetching] = useState(false);
 
