@@ -22,6 +22,14 @@ export default defineConfig({
         lines: 52
       }
     },
-  }
+  },
+  resolve: {
+    alias: [
+      {
+        find: /^data-base64:.*/,
+        replacement: "/__mocks__/mockImage.ts",
+      },
+    ],
+  },
 });
 
