@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       fontFamily: {
         mtg: ["'IM Fell English'", "sans-serif"], // Define a custom font class "font-mtg"
+        sans: ["sans-serif"], // Define a custom font class "font-mtg"
       },
     },
   },

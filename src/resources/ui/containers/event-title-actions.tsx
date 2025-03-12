@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import ButtonToggle from "~resources/ui/components/button.toggle"
+import ButtonOpen from "~resources/ui/components/button.open"
 import Context from "~resources/eventlink/context"
 import ButtonScrape from "~resources/ui/components/button.scrape"
 
@@ -17,7 +17,7 @@ const EventTitleActions = () => {
   return (
     <div className={"flex gap-2"}>
       <ButtonScrape organizationId={organizationId} eventId={eventId}/>
-      <ButtonToggle />
+      <ButtonOpen />
     </div>
   )
 };
