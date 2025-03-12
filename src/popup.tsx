@@ -1,11 +1,12 @@
 import { Button } from "@heroui/button";
 import "~/resources/ui/style.css";
-import packageJson from "../package.json";
 import { openApp } from "~/resources/ui/actions/open";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid"
 import logo from "data-base64:../assets/icon.png"
 import { HeroUIProvider } from "@heroui/react"
 import PopupLayout from "~resources/ui/layouts/popup"
+import React from "react"
+import Version from "~resources/ui/components/version"
 
 
 const Popup = () => {
@@ -32,8 +33,7 @@ const Popup = () => {
 
               {/* App Info */}
               <div className="text-center">
-                  <h1 className="text-lg font-mtg">Scrap Trawler</h1>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Version {packageJson.version}</p>
+                  <h1 className="text-lg font-mtg">Scrap Trawler <span className="text-sm"><Version linked={false}/></span></h1>
               </div>
 
               {/* Buttons */}
