@@ -1,0 +1,104 @@
+[
+  {
+    "version": "0.9.1",
+    "timestamp": 1741707782,
+    "changes": [
+      "Fix — scrape an unknown event should not cause a failure in the hydrator anymore"
+    ]
+  },
+  {
+    "version": "0.9.0",
+    "timestamp": 1741555889,
+    "changes": [
+      "Feature — added import / export ui"
+    ]
+  },
+  {
+    "version": "0.8.0",
+    "timestamp": 1741446289,
+    "changes": [
+      "Feature — added layout to the routed pages"
+    ]
+  },
+  {
+    "version": "0.7.1",
+    "timestamp": 1741350568,
+    "changes": [
+      "Documentation — Add GitHub issue templates for bug reports, feature requests, and tasks",
+      "Fix — per google request remove the used scripting and storage permissions from the project"
+    ]
+  },
+  {
+    "version": "0.7.0",
+    "timestamp": 1741348421,
+    "changes": [
+      "Feature — support for spreadsheet display and property overrides",
+      "Feature — spreadsheet column types should be almost correctly infered from data",
+      "Fix — fixed hydration of older records without players",
+      "Feature — complete support for setup (mapping, pairing, etc)"
+    ]
+  },
+  {
+    "version": "0.6.1",
+    "timestamp": 1741300216,
+    "changes": [
+      "Fix — reverted changes on scrape button"
+    ]
+  },
+  {
+    "version": "0.6.0",
+    "timestamp": 1740845725,
+    "changes": [
+      "Feature — players can now be edited"
+    ]
+  },
+  {
+    "version": "0.5.0",
+    "timestamp": 1740740610,
+    "changes": [
+      "Documentation — added PRIVACY.md file",
+      "Feature — event consultation and setup page"
+    ]
+  },
+  {
+    "version": "0.4.0",
+    "timestamp": 1740398915,
+    "changes": [
+      "Feature — event list download button saves dao as a json file"
+    ]
+  },
+  {
+    "version": "0.3.0",
+    "timestamp": 1740150541,
+    "changes": [
+      "Fix — eventlink-content used async method at root, moved inside an IFE",
+      "Feature — added sidebar ( event status ico) added scrape button on agenda view"
+    ]
+  },
+  {
+    "version": "0.2.0",
+    "timestamp": 1740006221,
+    "changes": [
+      "Feature — initial commit",
+      "Documentation — added more notes",
+      "Feature — request graphql proof of concept",
+      "Feature — complete tournament extraction that properly reaches all layers",
+      "Feature — added a bad chatgpt logo",
+      "Feature — added storage support",
+      "Documentation — added a nice README.md",
+      "Documentation — added LICENSE file",
+      "Fix — added missing pnpm dependency to the CI build",
+      "Fix — attempted to install PNPM correctly",
+      "Fix — attempted to install PNPM correctly (again)(",
+      "Fix — attempted to install PNPM correctly (again 2)",
+      "Documentation — added OpenSSF Best Practices id to the README.md",
+      "Fix — attempted to fix release script",
+      "Documentation — fix the project action status badge",
+      "Fix — added cog commit compliance as a CI job",
+      "Fix — README.md build status should be ok",
+      "Documentation — fix the project refactorio badge",
+      "Feature — added logger",
+      "Feature — added indexDB storage for events"
+    ]
+  }
+]
