@@ -9,6 +9,6 @@ export class ExcelParser extends SpreadsheetParser {
     const allRows = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as SpreadsheetRawRow[];
 
     const [columns, ...rows] = allRows;
-    return { columns: this.computeColumns(columns), rows };
+    return { columns: this.computeColumns(columns, rows), rows };
   }
 }
