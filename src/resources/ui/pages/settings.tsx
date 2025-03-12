@@ -5,7 +5,7 @@ import type { SettingsModel } from "~resources/domain/models/settings.model"
 import ImportExportCard from "~resources/ui/components/import.export.card"
 
 const SettingsPage = () => {
-  const { settings, updateSettings } = useSettings();
+  const { settings, setMany } = useSettings();
   const [currentSettings, setCurrentSettings] = useState<SettingsModel|null>(null);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const SettingsPage = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await updateSettings(currentSettings);
+    await setMany(currentSettings);
     addToast({
       title: "Settings Saved",
       description: "Your settings have been saved successfully",

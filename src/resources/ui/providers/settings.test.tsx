@@ -1,9 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, act } from "@testing-library/react";
 import { SettingsProvider, useSettings } from "~resources/ui/providers/settings";
-import { DEFAULT_SETTINGS } from "~resources/domain/models/settings.model";
 import userEvent from "@testing-library/user-event";
+import SettingsService from "~resources/domain/services/settings.service"
 import React from "react";
+import { DEFAULT_SETTINGS } from "~resources/domain/models/settings.model"
 
 // ✅ Ensure `chrome` is mocked globally
 vi.stubGlobal("chrome", {
@@ -15,41 +16,41 @@ vi.stubGlobal("chrome", {
   },
 });
 
-// ✅ Mock `SettingsDao`
-vi.mock("~resources/storage/settings.dao", () => ({
-  SettingsDao: vi.fn().mockImplementation(() => ({
-    load: vi.fn().mockResolvedValue(DEFAULT_SETTINGS),
-    save: vi.fn(),
-  })),
-}));
-
-// ✅ Import after mocks to ensure they are applied
-import { SettingsDao } from "~resources/storage/settings.dao";
 
 // ✅ Test Component to Consume Settings Context
 const TestComponent = () => {
-  const { settings, updateSettings } = useSettings();
+  const { settings, setMany } = useSettings();
   return (
     <div>
       <p data-testid="moxfield">{settings?.moxfieldApiKey ?? ''}</p>
-      <button onClick={() => updateSettings({ moxfieldApiKey: "new-key" })}>
+      <button onClick={() => setMany({ moxfieldApiKey: "new-key" })}>
         Update Key
       </button>
     </div>
   );
 };
 
-describe("SettingsProvider", () => {
-  let settingsDaoMock: ReturnType<typeof vi.mocked<SettingsDao>>;
+const settingsServiceMock = new SettingsService()
+vi.spyOn(settingsServiceMock, "get").mockResolvedValue(DEFAULT_SETTINGS);
+vi.spyOn(settingsServiceMock, "setOne")
+  .mockImplementation((key, value) =>
+    new Promise((resolve) => {
+      resolve({ ...DEFAULT_SETTINGS, [key]: value });
+    }))
+vi.spyOn(settingsServiceMock, "setMany")
+  .mockImplementation((props) =>
+    new Promise((resolve) => {
+      resolve({ ...DEFAULT_SETTINGS, ...props });
+    }))
 
+describe("SettingsProvider", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    settingsDaoMock = vi.mocked(new SettingsDao(chrome.storage.local), true);
   });
 
   it("provides default settings", async () => {
     render(
-      <SettingsProvider dao={settingsDaoMock}>
+      <SettingsProvider service={settingsServiceMock}>
         <TestComponent />
       </SettingsProvider>
     );
@@ -59,7 +60,7 @@ describe("SettingsProvider", () => {
 
   it("updates settings when calling updateSettings", async () => {
     render(
-      <SettingsProvider dao={settingsDaoMock}>
+      <SettingsProvider service={settingsServiceMock}>
         <TestComponent />
       </SettingsProvider>
     );
@@ -71,7 +72,7 @@ describe("SettingsProvider", () => {
     });
 
     expect(screen.getByTestId("moxfield")).toHaveTextContent("new-key");
-    expect(settingsDaoMock.save).toHaveBeenCalledWith({
+    expect(settingsServiceMock.setMany).toHaveBeenCalledWith({
       moxfieldApiKey: "new-key",
     });
   });
