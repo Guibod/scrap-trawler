@@ -1,9 +1,8 @@
+import TableEvents from "~resources/ui/components/table.events"
+
 const MainPage = () => {
   return (
-    <div>
-      <h1>Main Page</h1>
-      <p>This is the main page</p>
-    </div>
+    <TableEvents  title={"foo"}/>
   )
 }
 

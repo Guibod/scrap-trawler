@@ -12,7 +12,7 @@ const AppRoutes = () => (
     <Route path="/" element={<MainLayout />}>
       <Route index element={<MainPage />} />
       <Route path="/settings" element={<SettingsPage />} />
-      {/*<Route path="/welcome" element={<WelcomePage />} />*/}
+      <Route path="/welcome" element={<WelcomePage />} />
       <Route path="/changelog" element={<ChangelogPage />} />
       <Route path="/event/:eventId" element={<EventPage />} />
       <Route path="*" element={<Navigate to="/" />} />
