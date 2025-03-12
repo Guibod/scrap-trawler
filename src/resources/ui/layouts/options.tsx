@@ -1,9 +1,17 @@
-import React, { type ReactNode } from "react";
+import React, { type ReactNode, useEffect, useState } from "react"
 import packageJson from "../../../../package.json";
 
 export const OptionPageLayout = ({children}: {children: ReactNode}) => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Check system preference
+    const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setDarkMode(isDark);
+  }, []);
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div aria-label="layout-container" className={`${darkMode ? 'dark' : 'light'} text-foreground bg-background flex flex-col min-h-screen`}>
       {/* ✅ Main Content Area */}
       <main className="flex-grow container mx-auto p-6">
         {children}

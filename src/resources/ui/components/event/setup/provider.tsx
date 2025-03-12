@@ -207,7 +207,7 @@ export const EventSetupProvider = ({ children }) => {
 
   if (!status) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
+      <div className="fixed inset-0 flex items-center justify-center">
         <Spinner size="lg" color="primary" label="Please wait while recovering the data"  />
       </div>
     )

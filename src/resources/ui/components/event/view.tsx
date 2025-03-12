@@ -19,8 +19,8 @@ const EventView = () => {
   })));
 
   return (
-    <div className="flex-1 p-6 bg-gray-100">
-      <Select className="max-w-xs" label="Round" items={rounds} defaultSelectedKeys={[currentRound.roundNumber]} onSelectionChange={(keys) => {
+    <div className="p-6 relative">
+      <Select className="max-w-xs absolute top-0 right-0 mt-2" label="Round" items={rounds} defaultSelectedKeys={[currentRound.roundNumber]} onSelectionChange={(keys) => {
         setCurrentRound(event.rounds[[...keys][0]])
       }}>
         {(round) => <SelectItem>{round.label}</SelectItem>}
@@ -28,15 +28,12 @@ const EventView = () => {
 
       <Tabs defaultSelectedKey="pairings">
         <Tab value="pairings" title={<span>🔢 Round Pairings</span>}>
-          <h2 className="text-lg font-mtg mb-4">Round Pairings</h2>
           <RoundPairings round={currentRound} />
         </Tab>
         <Tab value="standings" title={<span>📊 Standings</span>}>
-          <h2 className="text-lg font-mtg mb-4">Standings</h2>
           <RoundStandings round={currentRound} />
         </Tab>
         <Tab value="registrations" title={<span>👤 Registration</span>}>
-          <h2 className="text-lg font-bold mb-4">Registration</h2>
           <EventRegistration />
         </Tab>
       </Tabs>
