@@ -1,38 +1,45 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { DEFAULT_SETTINGS, type SettingsModel } from "~resources/domain/models/settings.model";
-import { SettingsDao } from "~resources/storage/settings.dao";
+import React, { createContext, useContext, useEffect, useState } from "react"
+import { type SettingsModel } from "~resources/domain/models/settings.model";
+import SettingsService from "~resources/domain/services/settings.service"
 
 interface SettingsContextType {
   settings: SettingsModel | null;
-  updateSettings: (newSettings: Partial<SettingsModel>) => Promise<SettingsModel>;
+  setOne: (key: keyof SettingsModel, value: any) => Promise<void>;
+  setMany: (values: Partial<SettingsModel>) => Promise<void>;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export interface SettingsProviderProps {
   children: React.ReactNode;
-  dao?: SettingsDao;
+  service: SettingsService
 }
 
 export const SettingsProvider = (
-  { children, dao = new SettingsDao(chrome.storage.local),}: SettingsProviderProps) => {
-  const [currentDao, setCurrentDao] = useState(dao)
-  const [settings, setSettings] = useState<SettingsModel|null>(null);
+  { children, service = new SettingsService() }: SettingsProviderProps) => {
+  const [currentService] = useState(service); // Keep service reference
+  const [settings, setSettings] = useState(null); // Store settings
 
+  // Load settings asynchronously on mount
   useEffect(() => {
-    currentDao.load().then(setSettings);
-  }, [currentDao]);
+    const fetchSettings = async () => {
+      const loadedSettings = await currentService.get();
+      setSettings(loadedSettings);
+    };
+    fetchSettings();
+  }, [currentService]);
 
-  const updateSettings = async (newSettings: Partial<SettingsModel>) => {
-    const updated = { ...settings, ...newSettings };
+  // Wrapper to update settings state after setting new values
+  const setOne = (key, value) => currentService.setOne(key, value).then(setSettings);
 
-    await currentDao.save(updated);
-    setSettings(updated);
-    return updated
-  };
+  const setMany = (values: Partial<SettingsModel>) => currentService.setMany(values).then(setSettings)
 
   return (
-    <SettingsContext.Provider value={{ settings, updateSettings }}>
+    <SettingsContext.Provider value={{
+      settings,
+      setMany,
+      setOne
+    }}>
       {children}
     </SettingsContext.Provider>
   );
