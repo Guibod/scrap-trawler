@@ -21,7 +21,7 @@ const EventContainer = () => {
   }
 
   return (
-    <div className="flex h-screen w-full flex-col">
+    <div className="flex w-full flex-col">
       <div className="w-full bg-gray-800 text-white p-4 flex justify-between items-center">
         <h1 className="text-4xl font-bold font-mtg">{event.title} <span
           className="text-xl">{event.date.toLocaleDateString()}</span>

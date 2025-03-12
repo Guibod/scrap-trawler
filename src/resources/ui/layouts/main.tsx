@@ -13,7 +13,7 @@ export const MainLayout = () => {
   }, []);
 
   return (
-    <div className={`${darkMode ? 'dark' : 'light'} text-foreground bg-background flex flex-col min-h-screen`}>
+    <div aria-label="layout-container" className={`${darkMode ? 'dark' : 'light'} text-foreground bg-background flex flex-col min-h-screen`}>
       <Navbar>
         <NavbarBrand>
           <Link to="/" className="font-mtg text-2xl">
@@ -39,7 +39,7 @@ export const MainLayout = () => {
       </main>
 
       {/* ✅ Footer (Optional) */}
-      <footer className="bg-gray-900 text-white py-4 text-center text-sm">
+      <footer className="bg-gray-900 text-white py-4 text-center text-sm mt-auto">
         Scrap Trawler <Version /> &copy; {new Date().getFullYear()}
       </footer>
     </div>

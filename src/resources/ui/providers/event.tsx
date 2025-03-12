@@ -104,7 +104,7 @@ export function EventProvider({ children }: { eventId?: string; children: React.
 
   if (!event) {
     return (
-      <div className="flex h-screen w-full flex-col items-center justify-center relative">
+      <div className="flex w-full flex-col items-center justify-center relative">
         {/* Centered Text */}
         <div className="text-center">
           <h1 className="font-mtg text-4xl">Event not found</h1>

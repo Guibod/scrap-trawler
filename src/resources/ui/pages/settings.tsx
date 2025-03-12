@@ -33,7 +33,7 @@ const SettingsPage = () => {
   if (!currentSettings) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-5">
+    <div className="flex flex-col items-center justify-center gap-5">
       <Card className="w-full max-w-lg">
         <CardHeader className={"text-lg font-semibold"}>Settings</CardHeader>
 
