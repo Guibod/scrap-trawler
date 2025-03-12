@@ -5,6 +5,8 @@ import EventEntity, { isEventEntity } from "~resources/storage/entities/event.en
 import type { EntityTable } from "dexie"
 import { NotFoundStorageError, WriteStorageError, InvalidFormatError } from "~resources/storage/exceptions"
 
+const logger = getLogger("event-dao")
+
 /**
  * Minimal format for listing events.
  */
@@ -31,7 +33,9 @@ export class EventDao {
    * Updates the stored data if the event already exists.
    */
   async save(event: EventEntity): Promise<EventEntity> {
+    logger.debug("Saving event", event);
     if (!isEventEntity(event)) {
+      logger.error("Invalid event format", event);
       throw new InvalidFormatError(event);
     }
 
