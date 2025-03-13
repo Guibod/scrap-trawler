@@ -2,17 +2,12 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, act } from "@testing-library/react";
 import React from "react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter, useNavigate } from "react-router-dom"
+import { MemoryRouter } from "react-router-dom"
 import { SettingsProvider } from "~/resources/ui/providers/settings";
 import WelcomePage from "~/resources/ui/pages/welcome";
 import { DEFAULT_SETTINGS } from "~/resources/domain/models/settings.model";
 import SettingsService from "~/resources/domain/services/settings.service"
 
-vi.stubGlobal("chrome", { storage: { local: {
-  get: vi.fn().mockResolvedValue({
-    scrapTrawlerSettings: DEFAULT_SETTINGS,
-  })
-} } });
 vi.stubGlobal(
   "data-base64:../../../../assets/screenshots/eventlink.agenda.png",
   "mock-image"

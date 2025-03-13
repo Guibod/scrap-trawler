@@ -2,17 +2,6 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { SettingsDao } from "~/resources/storage/settings.dao";
 import { DEFAULT_SETTINGS, type SettingsModel } from "~/resources/domain/models/settings.model"
 
-// ✅ Mock Storage Engine
-
-vi.stubGlobal('chrome', {
-  storage: {
-    local: {
-      get: vi.fn(),
-      set: vi.fn()
-    }
-  }
-})
-
 describe("SettingsDao", () => {
   let settingsDao: SettingsDao;
 
