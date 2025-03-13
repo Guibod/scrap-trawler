@@ -2,6 +2,38 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.10.0 - 2025-03-13
+#### Bug Fixes
+- layout content should not overflow anymore - (ab71bd2) - Guillaume Boddaert
+- XSLX support recovered - (b941712) - Guillaume Boddaert
+- scraping and saving were broken - (ab620d3) - Guillaume Boddaert
+- scrape button uses font-sans instead of times - (5b0a34d) - Guillaume Boddaert
+#### Continuous Integration
+- git-cliff used to generate changelog.json is installed on ci host (for release only) - (975e67d) - Guillaume Boddaert
+- a light changelog.json is added to the sources of the project - (b9e441c) - Guillaume Boddaert
+- release job won’t complain about missing coverage anymore - (649e810) - Guillaume Boddaert
+#### Features
+- welcome page opens at first launch of the application. - (72937bc) - Guillaume Boddaert
+- added about/welcome page - (f99227f) - Guillaume Boddaert
+- added a changelog page - (f2c54d5) - Guillaume Boddaert
+- application don’t open a sidepanel, but a popup on button click - (edc7d9c) - Guillaume Boddaert
+- added support for dark theme - (4d7ed21) - Guillaume Boddaert
+- added minimalistic option page - (60802a9) - Guillaume Boddaert
+#### Miscellaneous Chores
+- Settings provider uses the new SettingsService - (7c6542c) - Guillaume Boddaert
+- more debug in the event dao - (503ccca) - Guillaume Boddaert
+- better flow between event and event setup provider - (b53acd1) - Guillaume Boddaert
+- main app herouiprovider uses navigate and href from the router - (4d81edd) - Guillaume Boddaert
+- updated pnpm-lock.yaml - (e825f67) - Guillaume Boddaert
+- gitignored key.json - (bc5cc82) - Guillaume Boddaert
+- sync package.json version - (f211149) - Cog Bot
+#### Style
+- removed a glitch in TableEvent component - (680df32) - Guillaume Boddaert
+#### Tests
+- fixed event provider that imported a background singleton in the ui - (c7ec791) - Guillaume Boddaert
+
+- - -
+
 ## 0.9.1 - 2025-03-11
 #### Bug Fixes
 - scrape an unknown event should not cause a failure in the hydrator anymore - (2444808) - Guillaume Boddaert
