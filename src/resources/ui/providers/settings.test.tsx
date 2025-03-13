@@ -6,17 +6,6 @@ import SettingsService from "~/resources/domain/services/settings.service"
 import React from "react";
 import { DEFAULT_SETTINGS } from "~/resources/domain/models/settings.model"
 
-// ✅ Ensure `chrome` is mocked globally
-vi.stubGlobal("chrome", {
-  storage: {
-    local: {
-      get: vi.fn(),
-      set: vi.fn(),
-    },
-  },
-});
-
-
 // ✅ Test Component to Consume Settings Context
 const TestComponent = () => {
   const { settings, setMany } = useSettings();
