@@ -1,5 +1,21 @@
 [
   {
+    "version": "0.10.0",
+    "timestamp": 1741870441,
+    "changes": [
+      "Feature — added minimalistic option page",
+      "Feature — added support for dark theme",
+      "Feature — application don’t open a sidepanel, but a popup on button click",
+      "Feature — added a changelog page",
+      "Fix — scrape button uses font-sans instead of times",
+      "Feature — added about/welcome page",
+      "Fix — scraping and saving were broken",
+      "Fix — XSLX support recovered",
+      "Fix — layout content should not overflow anymore",
+      "Feature — welcome page opens at first launch of the application."
+    ]
+  },
+  {
     "version": "0.9.1",
     "timestamp": 1741707782,
     "changes": [
