@@ -13,16 +13,6 @@ vi.mock("~/resources/ui/actions/open", () => ({
 describe("Popup Component", () => {
   beforeEach(() => {
     vi.resetAllMocks()
-    vi.stubGlobal("matchMedia", (query) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: vi.fn(), // Deprecated method
-      removeListener: vi.fn(), // Deprecated method
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    }));
   });
 
 
