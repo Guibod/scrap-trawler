@@ -46,7 +46,7 @@
     "@heroui/card": "^2.2.10",
     "@heroui/react": "^2.7.2",
     "@heroui/system": "^2.4.7",
-    "@heroui/table": "^2.2.9",
+    "@heroui/table": "^2.2.15",
     "@heroui/theme": "^2.4.6",
     "@heroui/tooltip": "^2.2.11",
     "@plasmohq/messaging": "^0.7.1",
