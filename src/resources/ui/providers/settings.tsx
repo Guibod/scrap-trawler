@@ -16,7 +16,7 @@ export interface SettingsProviderProps {
 }
 
 export const SettingsProvider = (
-  { children, service = new SettingsService() }: SettingsProviderProps) => {
+  { children, service = SettingsService.getInstance() }: SettingsProviderProps) => {
   const [currentService] = useState(service); // Keep service reference
   const [settings, setSettings] = useState(null); // Store settings
 

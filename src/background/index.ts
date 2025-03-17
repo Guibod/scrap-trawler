@@ -1,5 +1,6 @@
+import SettingsService from "~/resources/domain/services/settings.service"
 import DatabaseService from "~/resources/storage/database"
-import { logger, settingsService } from "./singletons"
+import { logger } from "./singletons"
 
 (async () => {
   logger.debug("Background script started")
@@ -7,7 +8,7 @@ import { logger, settingsService } from "./singletons"
   const db = DatabaseService.getInstance()
   await db.open()
 
-  await settingsService.get()
+  await SettingsService.getInstance().get()
     .then(settings => settings?.showWelcome)
     .then(showWelcome => {
       if (showWelcome) {

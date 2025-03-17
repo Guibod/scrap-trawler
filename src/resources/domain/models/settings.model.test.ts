@@ -7,6 +7,7 @@ describe("SettingsModel", () => {
       version: expect.any(Number),
       moxfieldApiKey: null,
       enableCrossEventIdentification: expect.any(Boolean),
+      showWelcome: true
     });
   });
 
@@ -15,12 +16,14 @@ describe("SettingsModel", () => {
       version: 2,
       moxfieldApiKey: "my-api-key",
       enableCrossEventIdentification: true,
+      showWelcome: false
     };
 
     expect(newSettings).toMatchObject<SettingsModel>({
       version: 2,
       moxfieldApiKey: "my-api-key",
       enableCrossEventIdentification: true,
+      showWelcome: false
     });
   });
 });
