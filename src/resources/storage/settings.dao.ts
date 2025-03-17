@@ -1,14 +1,22 @@
-import { DEFAULT_SETTINGS, type SettingsModel } from "~/resources/domain/models/settings.model"
-import { getLogger } from "~/resources/logging/logger"
+import { DEFAULT_SETTINGS, type SettingsModel } from "~/resources/domain/models/settings.model";
+import { getLogger } from "~/resources/logging/logger";
 
 const STORAGE_KEY = "scrapTrawlerSettings";
-
 const logger = getLogger("SettingsDao");
 
 export class SettingsDao {
-  private storage: chrome.storage.StorageArea
-  constructor(storage: chrome.storage.StorageArea) {
+  private static instance: SettingsDao;
+  private storage: chrome.storage.StorageArea;
+
+  private constructor(storage: chrome.storage.StorageArea) {
     this.storage = storage;
+  }
+
+  static getInstance(storage: chrome.storage.StorageArea = chrome.storage.local): SettingsDao {
+    if (!SettingsDao.instance) {
+      SettingsDao.instance = new SettingsDao(storage);
+    }
+    return SettingsDao.instance;
   }
 
   async save(settings: SettingsModel): Promise<void> {
