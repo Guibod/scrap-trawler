@@ -17,7 +17,7 @@ export class ContentScriptLogger implements LoggerInterface {
   start(message: string, data?: object): void {
     this.logger.start(message, data)
     sendToBackground({
-      name: "back/log",
+      name: "logging/page-to-backend",
       body: {
         level: "start",
         message: message,
@@ -30,7 +30,7 @@ export class ContentScriptLogger implements LoggerInterface {
   debug(message: string, data?: object): void {
     this.logger.debug(message, data)
     sendToBackground({
-      name: "back/log",
+      name: "logging/page-to-backend",
       body: {
         level: "start",
         message: message,
@@ -43,7 +43,7 @@ export class ContentScriptLogger implements LoggerInterface {
   info(message: string, data?: object): void {
     this.logger.info(message, data)
     sendToBackground({
-      name: "back/log",
+      name: "logging/page-to-backend",
       body: {
         level: "info",
         message: message,
@@ -56,7 +56,7 @@ export class ContentScriptLogger implements LoggerInterface {
   warn(message: string, data?: object): void {
     this.logger.warn(message, data)
     sendToBackground({
-      name: "back/log",
+      name: "logging/page-to-backend",
       body: {
         level: "warn",
         message: message,
@@ -69,7 +69,7 @@ export class ContentScriptLogger implements LoggerInterface {
   error(message: string, data?: object): void {
     this.logger.error(message, data)
     sendToBackground({
-      name: "back/log",
+      name: "logging/page-to-backend",
       body: {
         level: "error",
         message: message,
@@ -82,7 +82,7 @@ export class ContentScriptLogger implements LoggerInterface {
   exception(error: Error): void {
     this.logger.error(error)
     sendToBackground({
-      name: "back/log",
+      name: "logging/page-to-backend",
       body: {
         level: "error",
         message: error.message,

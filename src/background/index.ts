@@ -1,8 +1,9 @@
 import SettingsService from "~/resources/domain/services/settings.service"
 import DatabaseService from "~/resources/storage/database"
-import { logger } from "./singletons"
+import { getLogger } from "~/resources/logging/logger"
 
 (async () => {
+  const logger = getLogger("background")
   logger.debug("Background script started")
 
   const db = DatabaseService.getInstance()

@@ -24,7 +24,7 @@ describe("ContentScriptLogger", () => {
     logger.debug("Debug message", { key: "value" })
 
     expect(sendToBackground).toHaveBeenCalledWith({
-      name: "back/log", // ✅ Fix the expected message name
+      name: "logging/page-to-backend", // ✅ Fix the expected message name
       body: {
         level: "start", // ❌ Fix the level (was "debug", but logger calls it "start")
         context: "TestContext",
@@ -38,7 +38,7 @@ describe("ContentScriptLogger", () => {
     logger.info("Info message")
 
     expect(sendToBackground).toHaveBeenCalledWith({
-      name: "back/log",
+      name: "logging/page-to-backend",
       body: {
         level: "info",
         context: "TestContext",
@@ -52,7 +52,7 @@ describe("ContentScriptLogger", () => {
     logger.warn("Warning message")
 
     expect(sendToBackground).toHaveBeenCalledWith({
-      name: "back/log",
+      name: "logging/page-to-backend",
       body: {
         level: "warn",
         context: "TestContext",
@@ -66,7 +66,7 @@ describe("ContentScriptLogger", () => {
     logger.error("Error message")
 
     expect(sendToBackground).toHaveBeenCalledWith({
-      name: "back/log",
+      name: "logging/page-to-backend",
       body: {
         level: "error",
         context: "TestContext",
@@ -81,7 +81,7 @@ describe("ContentScriptLogger", () => {
     logger.exception(error)
 
     expect(sendToBackground).toHaveBeenCalledWith({
-      name: "back/log",
+      name: "logging/page-to-backend",
       body: {
         level: "error",
         context: "TestContext",

@@ -11,9 +11,13 @@ global.chrome = {
     },
   },
   runtime: {
+    getURL: vi.fn(),
     sendMessage: vi.fn(),
     onMessage: {
       addListener: vi.fn(),
     },
   },
+  tabs: {
+    create: vi.fn()
+  }
 } as unknown as typeof chrome;

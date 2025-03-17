@@ -10,10 +10,10 @@ const logger = getLogger("event-scrape-action")
 
 export const eventScrape   = async (eventId: string, organizationId: string, alreadyStored = false): Promise<EventModel> => {
   const accessToken = await sendToBackground({
-    name: "back/get_auth_token"
+    name: "eventlink/auth-token"
   })
   const clientHeader = await sendToBackground({
-    name: "back/get-client-header"
+    name: "eventlink/client-header"
   })
 
   const extractor = new EventExtractor(accessToken, clientHeader, eventId, organizationId);
