@@ -1,10 +1,11 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import React from "react";
-import { COLUMN_TYPE, FILTER_OPERATOR } from "~/resources/domain/enums/spreadsheet.dbo";
-import type { SpreadsheetFilter } from "~/resources/domain/dbos/spreadsheet.dbo";
-import { useEventSetup } from "~/resources/ui/components/event/setup/provider";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { beforeEach, describe, expect, it, vi } from "vitest"
+import React from "react"
+import { COLUMN_TYPE, DUPLICATE_STRATEGY, FILTER_OPERATOR } from "~/resources/domain/enums/spreadsheet.dbo"
+import type { SpreadsheetFilter } from "~/resources/domain/dbos/spreadsheet.dbo"
+import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
 import FilterInput from "~/resources/ui/components/event/setup/filter"
+import type { SetupStatus } from "~/resources/ui/components/event/setup/status"
 
 vi.mock("~/resources/ui/components/event/setup/provider", () => ({
   useEventSetup: vi.fn(),
@@ -26,6 +27,11 @@ describe("FilterInput", () => {
 
     vi.mocked(useEventSetup).mockReturnValue({
       spreadsheetMeta: {
+        source: "test",
+        tabName: "test",
+        filters: [],
+        duplicateStrategy: DUPLICATE_STRATEGY.NONE,
+        finalized: false,
         columns: [
           { index: 0, name: "Format", type: COLUMN_TYPE.FILTER, originalName: "Format" },
           { index: 1, name: "Player", type: COLUMN_TYPE.FILTER, originalName: "Player" },
@@ -38,8 +44,8 @@ describe("FilterInput", () => {
           ["Modern", "Charlie"],
           ["Legacy", "David"],
         ],
-      },
-    });
+      } as SetupStatus,
+    } as unknown as ReturnType<typeof useEventSetup>);
   });
 
   it("renders without errors", () => {

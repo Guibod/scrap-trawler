@@ -36,7 +36,7 @@ const FilterInput: React.FC<FilterInputProps> = ({ filter, onChange, onRemove })
     })
   }, [columns, operators, values])
 
-  const availableColumns: {key: string, label: string}[] = useMemo(() => {
+  const availableColumns: {key: number, label: string}[] = useMemo(() => {
     return spreadsheetMeta.columns
       .filter((col: SpreadsheetColumnMetaData) => col.type === COLUMN_TYPE.FILTER)
       .map((col: SpreadsheetColumnMetaData) => ({ key: col.index, label: col.name, index: col.index }));

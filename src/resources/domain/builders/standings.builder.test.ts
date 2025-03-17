@@ -3,9 +3,10 @@ import type EventModelBuilder from "~/resources/domain/builders/event.builder"
 import StandingBuilder from "~/resources/domain/builders/standings.builder"
 import type { MatchDbo } from "~/resources/domain/dbos/match.dbo"
 import type { StandingDbo } from "~/resources/domain/dbos/standing.dbo"
+import type RoundBuilder from "~/resources/domain/builders/round.builder"
 
 // Mock EventModelBuilder since it's only used as a parent reference
-const mockEventModelBuilder = {} as EventModelBuilder;
+const mockEventModelBuilder = {} as RoundBuilder;
 
 describe("StandingBuilder", () => {
   it("should build a StandingDbo with default values", () => {

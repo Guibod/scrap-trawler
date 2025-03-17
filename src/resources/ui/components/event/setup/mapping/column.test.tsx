@@ -38,7 +38,7 @@ describe("SpreadsheetColumn", () => {
 
     fireEvent.click(screen.getByTitle("Edit Column"));
 
-    const nameInput = screen.getByLabelText("Column Name");
+    const nameInput = screen.getByLabelText("Column Name") as HTMLInputElement;
     fireEvent.change(nameInput, { target: { value: "Updated Name" } });
 
     expect(nameInput.value).toBe("Updated Name");

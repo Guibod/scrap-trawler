@@ -1,7 +1,7 @@
 import { Card, CardBody, CardHeader } from "@heroui/card"
 import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
 import React, { useState } from "react"
-import { DUPLICATE_STRATEGY_META, FILTER_OPERATOR } from "~/resources/domain/enums/spreadsheet.dbo"
+import { DUPLICATE_STRATEGY, DUPLICATE_STRATEGY_META, FILTER_OPERATOR } from "~/resources/domain/enums/spreadsheet.dbo"
 import { Radio, RadioGroup } from "@heroui/radio"
 import { Button } from "@heroui/button"
 import FilterInput from "~/resources/ui/components/event/setup/filter"
@@ -86,7 +86,7 @@ const SetupFilters = () => {
                 size="sm"
                 aria-label={"Select a strategy"}
                 value={spreadsheetMeta.duplicateStrategy}
-                onValueChange={(strategy) => handleStrategy(strategy)}
+                onValueChange={(strategy) => handleStrategy(strategy as DUPLICATE_STRATEGY)}
               >
                 {strategies.map((strategy) => (
                   <Radio key={strategy.key} value={strategy.key} description={strategy.description}>{strategy.label}</Radio>

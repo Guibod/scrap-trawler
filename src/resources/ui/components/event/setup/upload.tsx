@@ -40,8 +40,15 @@ const SetupUpload = ({...props}: SetupUploadProps) => {
 
           <Form className="col-span-2" onSubmit={(e) => {
             e.preventDefault();
-            const d = Object.fromEntries(new FormData(e.currentTarget));
-            handleFileUpload(d['file'], !!d['autodetect']);
+            const formData = new FormData(e.currentTarget);
+            const file = formData.get("file"); // Use `.get()` instead of `Object.fromEntries()`
+
+            if (file instanceof File) {
+              const autodetect = formData.get("autodetect") === "true"; // Ensure boolean conversion
+              handleFileUpload(file, autodetect);
+            } else {
+              console.error("Invalid file input");
+            }
           }}>
             <div className="flex gap-4 w-full">
               <Input name="file" isRequired type="file" className="w-1/2" />
