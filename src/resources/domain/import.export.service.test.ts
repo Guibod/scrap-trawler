@@ -8,15 +8,13 @@ import {
   ImportExportService,
   LDJSON_DELIMITER
 } from "~/resources/domain/import.export.service"
-import Database from "~/resources/storage/database"
 import EventBuilder from "~/resources/domain/builders/event.builder"
 import EventMapper from "~/resources/domain/mappers/event.mapper"
 import EventEntity, { EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity"
 import { sampleEvent, sampleGameState, sampleOrganizer } from "~/resources/integrations/eventlink/data/sample.event"
 import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 
-let db = new Database();
-let dao: EventDao = new EventDao(db);
+let dao: EventDao = new EventDao();
 let service: ImportExportService
 let events: EventEntity[]
 const progressMock: ReturnType<typeof vi.fn> = vi.fn()
@@ -24,7 +22,7 @@ const progressMock: ReturnType<typeof vi.fn> = vi.fn()
 
 beforeEach(() => {
   vi.clearAllMocks()
-  db.events.clear()
+  dao.clear()
 });
 
 describe("ImportExportService", () => {

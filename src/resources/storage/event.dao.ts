@@ -1,9 +1,8 @@
 import { getLogger } from "~/resources/logging/logger"
-import { singleton as defaultDb } from "~/resources/storage/singleton";
-import Database from "~/resources/storage/database"
 import EventEntity, { isEventEntity } from "~/resources/storage/entities/event.entity"
 import type { EntityTable } from "dexie"
 import { NotFoundStorageError, WriteStorageError, InvalidFormatError } from "~/resources/storage/exceptions"
+import DatabaseService from "~/resources/storage/database"
 
 const logger = getLogger("event-dao")
 
@@ -21,11 +20,12 @@ export class EventDao {
   protected logger = getLogger(this.constructor.name);
   protected table: EntityTable<EventEntity, "id">;
 
-  constructor(db?: Database) {
-    if (!db) {
-      db = defaultDb;
-    }
-    this.table = db.events;
+  constructor(dbService: DatabaseService = DatabaseService.getInstance()) {
+    this.table = dbService.events;
+  }
+
+  async clear() {
+    return this.table.clear()
   }
 
   /**
