@@ -29,6 +29,10 @@ export default defineConfig({
         find: /^data-base64:.*/,
         replacement: "/__mocks__/mockImage.ts",
       },
+      {
+        find: /^data-text:.*/,
+        replacement: "/__mocks__/mockText.ts",
+      },
     ],
   },
 });

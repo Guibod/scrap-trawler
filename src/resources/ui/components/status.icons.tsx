@@ -1,3 +1,4 @@
+import React from "react"
 import { Tooltip } from "@heroui/tooltip"
 import { Circle, Triangle, Square, Hexagon } from "lucide-react"
 import type { ComponentType, ReactNode } from "react"

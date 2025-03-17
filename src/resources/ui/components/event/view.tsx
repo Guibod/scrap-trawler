@@ -20,7 +20,7 @@ const EventView = () => {
 
   return (
     <div className="p-6 relative">
-      <Select className="max-w-xs absolute top-0 right-0 mt-2" label="Round" items={rounds} defaultSelectedKeys={[currentRound.roundNumber]} onSelectionChange={(keys) => {
+      <Select aria-label="event-round-selector" className="max-w-xs absolute top-0 right-0 mt-2" label="Round" items={rounds} defaultSelectedKeys={[currentRound.roundNumber]} onSelectionChange={(keys) => {
         setCurrentRound(event.rounds[[...keys][0]])
       }}>
         {(round) => <SelectItem>{round.label}</SelectItem>}
