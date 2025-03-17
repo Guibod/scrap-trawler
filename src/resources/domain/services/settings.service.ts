@@ -2,7 +2,7 @@ import { SettingsDao } from "~/resources/storage/settings.dao"
 import type { SettingsModel } from "~/resources/domain/models/settings.model"
 
 export default class SettingsService {
-  private dao = new SettingsDao(chrome.storage.local);
+  private dao = SettingsDao.getInstance();
 
   async get() : Promise<SettingsModel>{
     return this.dao.load();

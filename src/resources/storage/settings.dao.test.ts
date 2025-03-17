@@ -1,13 +1,21 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { SettingsDao } from "~/resources/storage/settings.dao";
 import { DEFAULT_SETTINGS, type SettingsModel } from "~/resources/domain/models/settings.model"
+import { EventDao } from "~/resources/storage/event.dao"
 
 describe("SettingsDao", () => {
   let settingsDao: SettingsDao;
 
   beforeEach(() => {
     vi.clearAllMocks(); // Reset mocks before each test
-    settingsDao = new SettingsDao(chrome.storage.local); // Inject mock storage
+    settingsDao = SettingsDao.getInstance(chrome.storage.local); // Inject mock storage
+  });
+
+  it('should create a singleton instance', () => {
+    const dao1 = SettingsDao.getInstance();
+    const dao2 = SettingsDao.getInstance();
+
+    expect(dao1).toBe(dao2); // Singleton check
   });
 
   it("loads settings from storage", async () => {
