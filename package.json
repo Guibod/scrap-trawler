@@ -25,6 +25,7 @@
     "tournament"
   ],
   "scripts": {
+    "type-check": "tsc --noEmit",
     "dev": "plasmo dev",
     "build": "plasmo build",
     "package": "plasmo package",

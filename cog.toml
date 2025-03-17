@@ -1,4 +1,5 @@
 pre_bump_hooks = [
+    "pnpm type-check",
     "pnpm lint",
     "pnpm test"
 ]
