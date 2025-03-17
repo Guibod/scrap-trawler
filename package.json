@@ -68,6 +68,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@golevelup/ts-vitest": "^0.5.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
