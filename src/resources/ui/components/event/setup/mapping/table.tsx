@@ -22,7 +22,7 @@ const MappingTable: React.FC<TableProps> = ({ ...props }) => {
 
   const pages = Math.ceil(spreadsheetData.length / ROWS_PER_PAGE);
 
-  const items: {key: string, [key: string]: string}[] = React.useMemo(() => {
+  const items: Record<number | string, string>[] = React.useMemo(() => {
     const start = (page - 1) * ROWS_PER_PAGE;
     const end = start + ROWS_PER_PAGE;
 
