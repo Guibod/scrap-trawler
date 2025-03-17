@@ -14,7 +14,7 @@ import EventEntity, { EVENT_ENTITY_VERSION } from "~/resources/storage/entities/
 import { sampleEvent, sampleGameState, sampleOrganizer } from "~/resources/integrations/eventlink/data/sample.event"
 import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 
-let dao: EventDao = new EventDao();
+let dao: EventDao = EventDao.getInstance();
 let service: ImportExportService
 let events: EventEntity[]
 const progressMock: ReturnType<typeof vi.fn> = vi.fn()

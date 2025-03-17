@@ -17,11 +17,19 @@ export interface EventSummary {
 }
 
 export class EventDao {
+  private static instance: EventDao;
   protected logger = getLogger(this.constructor.name);
   protected table: EntityTable<EventEntity, "id">;
 
-  constructor(dbService: DatabaseService = DatabaseService.getInstance()) {
+  private constructor(dbService: DatabaseService) {
     this.table = dbService.events;
+  }
+
+  static getInstance(dbService: DatabaseService = DatabaseService.getInstance()): EventDao {
+    if (!EventDao.instance) {
+      EventDao.instance = new EventDao(dbService);
+    }
+    return EventDao.instance;
   }
 
   async clear() {

@@ -2,7 +2,7 @@ import { EventDao } from "~/resources/storage/event.dao"
 
 export const eventDownloadJson = async (eventId: string) => {
   try {
-    const dao = new EventDao();
+    const dao = EventDao.getInstance();
     // Retrieve the event entity from EventDao
     const eventEntity = await dao.get(eventId);
 

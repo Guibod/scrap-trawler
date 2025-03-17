@@ -10,7 +10,10 @@ import EventHydrator from "~/resources/domain/mappers/event.hydrator"
 const logger = getLogger("event-service")
 
 export default class EventService {
-  private dao = new EventDao();
+  private dao: EventDao
+  constructor(dao: EventDao = EventDao.getInstance()) {
+    this.dao = dao
+  }
 
   async getEvent(id: string): Promise<EventModel | null> {
     return this.dao.get(id)
