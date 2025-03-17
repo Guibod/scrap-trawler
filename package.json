@@ -56,7 +56,7 @@
     "framer-motion": "^12.4.10",
     "graphql-request": "^6.1.0",
     "lodash": "^4.17.21",
-    "lucide-react": "^0.475.0",
+    "lucide-react": "^0.482.0",
     "motion": "^12.4.3",
     "pako": "^2.1.0",
     "papaparse": "^5.5.2",
