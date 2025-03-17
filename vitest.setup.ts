@@ -21,3 +21,12 @@ global.chrome = {
     create: vi.fn()
   }
 } as unknown as typeof chrome;
+
+vi.stubGlobal("matchMedia", () => ({
+  matches: vi.fn().mockReturnValue(false),
+  addListener: vi.fn(),
+  removeListener: vi.fn(),
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+  dispatchEvent: vi.fn(),
+}));
