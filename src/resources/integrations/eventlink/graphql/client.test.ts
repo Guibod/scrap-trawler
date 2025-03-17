@@ -42,12 +42,12 @@ describe("EventLinkGraphQLClient", () => {
 
     mockGraphQLClient.request.mockResolvedValueOnce(mockResponse);
 
-    const result = await client.getOrganization(1);
+    const result = await client.getOrganization("1");
 
     expect(result).toEqual(mockResponse.organization);
     expect(mockGraphQLClient.request).toHaveBeenCalledWith(
       expect.any(String),
-      { id: 1 }
+      { id: "1" }
     );
   });
 
@@ -58,28 +58,28 @@ describe("EventLinkGraphQLClient", () => {
 
     mockGraphQLClient.request.mockResolvedValueOnce(mockResponse);
 
-    const result = await client.getGameStateAtRound(42, 3);
+    const result = await client.getGameStateAtRound("42", 3);
 
     expect(result).toEqual(mockResponse.gameStateV2AtRound);
     expect(mockGraphQLClient.request).toHaveBeenCalledWith(
       expect.any(String),
-      { eventId: 42, round: 3 }
+      { eventId: "42", round: 3 }
     );
   });
 
   test("getEventDetails - successful response", async () => {
     const mockResponse = {
-      event: { id: 99, title: "MTG Tournament" },
+      event: { id: "99", title: "MTG Tournament" },
     };
 
     mockGraphQLClient.request.mockResolvedValueOnce(mockResponse);
 
-    const result = await client.getEventDetails(99, "en");
+    const result = await client.getEventDetails("99", "en");
 
     expect(result).toEqual(mockResponse.event);
     expect(mockGraphQLClient.request).toHaveBeenCalledWith(
       expect.any(String),
-      { id: 99, locale: "en" }
+      { id: "99", locale: "en" }
     );
   });
 
@@ -88,8 +88,8 @@ describe("EventLinkGraphQLClient", () => {
       new Error("Network failure")
     );
 
-    await expect(client.getOrganization(1)).rejects.toThrow(GraphQlError);
-    await expect(client.getOrganization(1)).rejects.toThrow(
+    await expect(client.getOrganization("1")).rejects.toThrow(GraphQlError);
+    await expect(client.getOrganization("1")).rejects.toThrow(
       "GraphQL request failed."
     );
 
@@ -99,8 +99,8 @@ describe("EventLinkGraphQLClient", () => {
   test("GraphQL unexpected payload should throw InvalidGraphQlResponseError", async () => {
     mockGraphQLClient.request.mockResolvedValue(null);
 
-    await expect(client.getOrganization(1)).rejects.toThrow(InvalidGraphQlResponseError);
-    await expect(client.getOrganization(1)).rejects.toThrow(
+    await expect(client.getOrganization("1")).rejects.toThrow(InvalidGraphQlResponseError);
+    await expect(client.getOrganization("1")).rejects.toThrow(
       "GraphQL Error: Received an invalid or malformed GraphQL response."
     );
 
@@ -112,6 +112,6 @@ describe("EventLinkGraphQLClient", () => {
       errors: [{ message: "Invalid request" }],
     });
 
-    await expect(client.getEventDetails(99)).rejects.toThrow(GraphQlError);
+    await expect(client.getEventDetails("99")).rejects.toThrow(GraphQlError);
   });
 });
