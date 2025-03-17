@@ -36,3 +36,4 @@ dist/
 
 ._*/*
 key.json
+tsconfig.tsbuildinfo
