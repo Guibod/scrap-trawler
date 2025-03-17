@@ -34,7 +34,7 @@ export type EventProviderProps = {
   service?: EventService
 }
 
-export function EventProvider({ service = new EventService(), children }: EventProviderProps) {
+export function EventProvider({ service = EventService.getInstance(), children }: EventProviderProps) {
   const { eventId } = useParams();
   const [eventService] = useState(service);
   const [event, setEvent] = useState<EventModel | null>(null);
@@ -47,7 +47,7 @@ export function EventProvider({ service = new EventService(), children }: EventP
 
     async function fetchEvent() {
       setIsFetching(true)
-      eventService.getEvent(eventId)
+      eventService.get(eventId)
         .then((event) => {
           setEvent(event)
           setIsFetching(false)
@@ -64,7 +64,7 @@ export function EventProvider({ service = new EventService(), children }: EventP
     updateEvent: async (updatedEvent: Partial<EventModel>): Promise<EventModel> => {
       if (!event) return; // Ensure event exists before modifying
 
-      return eventService.saveEvent({ ...event, ...updatedEvent })
+      return eventService.save({ ...event, ...updatedEvent })
           .then(model => {
             setEvent(model)
             return model
@@ -92,7 +92,7 @@ export function EventProvider({ service = new EventService(), children }: EventP
         },
       };
 
-      return eventService.saveEvent(updatedEvent)
+      return eventService.save(updatedEvent)
           .then(model => {
             setEvent(model)
             return model

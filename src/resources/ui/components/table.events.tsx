@@ -17,8 +17,6 @@ type TableEventsProps = {
 
 const isDate = (date: any): date is Date => date instanceof Date;
 
-const service = new EventService();
-
 export default function TableEvents({ title = "Stored Events Table", rowsPerPage = 5 }: TableEventsProps) {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [page, setPage] = useState(1)
@@ -28,7 +26,7 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
     fetchEvents();
 
     async function fetchEvents() {
-      setEvents(await service.listEvents());
+      setEvents(await EventService.getInstance().listEvents());
     };
   }, [refreshTrigger]);
 

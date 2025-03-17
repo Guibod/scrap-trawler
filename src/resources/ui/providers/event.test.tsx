@@ -7,9 +7,7 @@ import EventService from "~/resources/domain/services/event.service";
 import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo";
 import { PairStatus } from "~/resources/domain/enums/status.dbo";
 import type { EventModel } from "~/resources/domain/models/event.model"
-
-// ✅ Mock EventService
-vi.mock("~/resources/domain/services/event.service");
+import { createMock } from "@golevelup/ts-vitest"
 
 const mockEvent = {
   id: "123",
@@ -43,7 +41,10 @@ describe("EventProvider", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    eventServiceMock = new EventService();
+    eventServiceMock = createMock<EventService>({
+      get: vi.fn().mockResolvedValue(mockEvent),
+      save: vi.fn().mockResolvedValue(mockEvent)
+    });
 
     vi.mocked(eventServiceMock.getEvent).mockResolvedValue(mockEvent);
     vi.mocked(eventServiceMock.saveEvent).mockImplementation(async (event) => event);
@@ -107,7 +108,7 @@ describe("EventProvider", () => {
     await waitFor(() => screen.getByRole("button", { name: /update player/i }))
       .then((button) => act(() => button.click()));
 
-    expect(eventServiceMock.saveEvent).toHaveBeenCalledWith(
+    expect(eventServiceMock.save).toHaveBeenCalledWith(
       expect.objectContaining({
         players: expect.objectContaining({
           "1": expect.objectContaining({
@@ -137,13 +138,13 @@ describe("EventProvider", () => {
     await waitFor(() => screen.getByRole("button", { name: /update event/i }))
       .then((button) => act(() => button.click()))
 
-    expect(eventServiceMock.saveEvent).toHaveBeenCalledWith(
+    expect(eventServiceMock.save).toHaveBeenCalledWith(
       expect.objectContaining({ title: "Updated Event" })
     );
   });
 
   it("renders not found message when event is missing", async () => {
-    vi.mocked(eventServiceMock.getEvent).mockResolvedValue(null);
+    vi.mocked(eventServiceMock.get).mockResolvedValue(null);
 
     render(
       <MemoryRouter initialEntries={["/event/123"]}>
