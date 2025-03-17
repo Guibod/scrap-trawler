@@ -20,7 +20,7 @@ const EventRegistration = () => {
       </TableHeader>
       <TableBody emptyContent={"No matches yet, use scrape button on EventLink.com page to add events."} items={Object.values(event.players)}>
         {(player) => (
-          <TableRow>
+          <TableRow aria-label={`player-${player.id}`} key={player.id}>
             <TableCell>{player.teamId}</TableCell>
             <TableCell><PlayerName player={player} /></TableCell>
             <TableCell>{player.displayName}</TableCell>

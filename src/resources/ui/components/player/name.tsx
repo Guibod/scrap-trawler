@@ -47,7 +47,7 @@ const PlayerName = ({ player }: PlayerNameProps) => {
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2" aria-label={`player-name-${player.id}`}>
       {renderPatchedIcon()}
       {renderAnonymizedIcon()}
       <span>

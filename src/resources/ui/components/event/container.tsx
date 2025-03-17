@@ -1,4 +1,3 @@
-import ButtonScrape from "~/resources/ui/components/button.scrape"
 import { Switch } from "@heroui/switch"
 import { Cog6ToothIcon, EyeIcon } from "@heroicons/react/16/solid"
 import EventView from "~/resources/ui/components/event/view"
