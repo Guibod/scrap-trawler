@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import SettingsService from "~/resources/domain/services/settings.service"
 import React from "react";
 import { DEFAULT_SETTINGS } from "~/resources/domain/models/settings.model"
+import { createMock } from "@golevelup/ts-vitest"
 
 // ✅ Test Component to Consume Settings Context
 const TestComponent = () => {
@@ -19,15 +20,13 @@ const TestComponent = () => {
   );
 };
 
-const settingsServiceMock = new SettingsService()
-vi.spyOn(settingsServiceMock, "get").mockResolvedValue(DEFAULT_SETTINGS);
-vi.spyOn(settingsServiceMock, "setOne")
-  .mockImplementation((key, value) =>
+const settingsServiceMock = createMock<SettingsService>()
+settingsServiceMock.get.mockResolvedValue(DEFAULT_SETTINGS);
+settingsServiceMock.setOne.mockImplementation((key, value) =>
     new Promise((resolve) => {
       resolve({ ...DEFAULT_SETTINGS, [key]: value });
     }))
-vi.spyOn(settingsServiceMock, "setMany")
-  .mockImplementation((props) =>
+settingsServiceMock.setMany.mockImplementation((props) =>
     new Promise((resolve) => {
       resolve({ ...DEFAULT_SETTINGS, ...props });
     }))

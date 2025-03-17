@@ -7,6 +7,7 @@ import { SettingsProvider } from "~/resources/ui/providers/settings";
 import WelcomePage from "~/resources/ui/pages/welcome";
 import { DEFAULT_SETTINGS } from "~/resources/domain/models/settings.model";
 import SettingsService from "~/resources/domain/services/settings.service"
+import { createMock } from "@golevelup/ts-vitest"
 
 vi.stubGlobal(
   "data-base64:../../../../assets/screenshots/eventlink.agenda.png",
@@ -26,8 +27,8 @@ vi.mock("react-router-dom", async () => {
 
 
 // ✅ Mock SettingsService
-const settingsServiceMock = new SettingsService()
-vi.spyOn(settingsServiceMock, "setOne").mockResolvedValue(DEFAULT_SETTINGS);
+const settingsServiceMock = createMock<SettingsService>()
+settingsServiceMock.setOne.mockResolvedValue(DEFAULT_SETTINGS);
 
 describe("WelcomePage", () => {
   beforeEach(() => {
