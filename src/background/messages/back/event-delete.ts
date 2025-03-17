@@ -1,7 +1,7 @@
 import type { PlasmoMessaging } from "@plasmohq/messaging"
-import { eventService } from "../../singletons"
 import type { EventModel } from "~/resources/domain/models/event.model"
 import { getLogger } from "~/resources/logging/logger"
+import EventService from "~/resources/domain/services/event.service"
 
 const logger = getLogger("delete_event")
 
@@ -11,7 +11,7 @@ type DeleteEventRequest = {
 
 const handler: PlasmoMessaging.MessageHandler<DeleteEventRequest, EventModel | null> = async (req, res) => {
   logger.debug("Received delete_event message", req)
-  await eventService.deleteEvent(req.body.eventId)
+  await EventService.getInstance().delete(req.body.eventId)
 }
 
 export default handler

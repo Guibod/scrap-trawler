@@ -1,4 +1,5 @@
 import type { EventDetails, GameState, Organization } from "~/resources/integrations/eventlink/graphql/types"
+import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/event-extractor"
 
 export const sampleGameState: GameState = {
   eventId: "event-123",
@@ -257,3 +258,11 @@ export const sampleEvent: EventDetails = {
   teams: [],
   incidents: [],
 };
+
+export const sampleRawData: WotcExtractedEvent = {
+  event: sampleEvent,
+  organization: sampleOrganizer,
+  rounds: {
+    1: sampleGameState,
+  }
+}

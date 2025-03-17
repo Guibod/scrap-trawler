@@ -1,28 +1,37 @@
-import { EventDao } from "~/resources/storage/event.dao"
-import { type EventModel } from "~/resources/domain/models/event.model"
-import EventMapper from "~/resources/domain/mappers/event.mapper"
-import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo"
-import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo"
-import EventEntity, { EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity"
-import { getLogger } from "~/resources/logging/logger"
-import EventHydrator from "~/resources/domain/mappers/event.hydrator"
+import { EventDao } from "~/resources/storage/event.dao";
+import { type EventModel } from "~/resources/domain/models/event.model";
+import EventMapper from "~/resources/domain/mappers/event.mapper";
+import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo";
+import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo";
+import EventEntity, { EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity";
+import { getLogger } from "~/resources/logging/logger";
+import EventHydrator from "~/resources/domain/mappers/event.hydrator";
 
-const logger = getLogger("event-service")
+const logger = getLogger("event-service");
 
 export default class EventService {
-  private dao: EventDao
-  constructor(dao: EventDao = EventDao.getInstance()) {
-    this.dao = dao
+  private static instance: EventService;
+  private dao: EventDao;
+
+  private constructor(dao: EventDao) {
+    this.dao = dao;
   }
 
-  async getEvent(id: string): Promise<EventModel | null> {
+  static getInstance(dao: EventDao = EventDao.getInstance()): EventService {
+    if (!EventService.instance) {
+      EventService.instance = new EventService(dao);
+    }
+    return EventService.instance;
+  }
+
+  async get(id: string): Promise<EventModel | null> {
     return this.dao.get(id)
       .then(this.hydrateOldVersion.bind(this))
       .then((entity: EventEntity) => EventMapper.toDbo(entity))
       .catch((e) => {
-        logger.warn(`Failed to get event ${id}`, e)
-        return null
-      })
+        logger.warn(`Failed to get event ${id}`, e);
+        return null;
+      });
   }
 
   async getSummary(id: string): Promise<EventSummarizedDbo | null> {
@@ -30,21 +39,20 @@ export default class EventService {
       .then(this.hydrateOldVersion.bind(this))
       .then((entity: EventEntity) => EventMapper.toLightDbo(entity))
       .catch((e) => {
-        logger.warn(`Failed to get event ${id} summary`, e)
-        return null
-      })
-  }
-
-  async saveEvent(event: EventWriteDbo): Promise<EventModel> {
-    const entity = EventMapper.toEntity(event);
-    return this.dao.save(entity)
-      .then(() => {
-        logger.info(`Saved event ${entity.id}`, entity)
-        return EventMapper.toDbo(entity)
+        logger.warn(`Failed to get event ${id} summary`, e);
+        return null;
       });
   }
 
-  async deleteEvent(id: string): Promise<void> {
+  async save(event: EventWriteDbo): Promise<EventModel> {
+    const entity = EventMapper.toEntity(event);
+    return this.dao.save(entity)
+      .then(entity => {
+        return EventMapper.toDbo(entity);
+      });
+  }
+
+  async delete(id: string): Promise<void> {
     await this.dao.delete(id).then(() => logger.info(`Deleted event ${id}`));
   }
 
@@ -69,6 +77,6 @@ export default class EventService {
       return this.dao.save(hydratedEvent);
     }
 
-    return entity
+    return entity;
   }
 }
