@@ -1,5 +1,7 @@
 import type { PlasmoMessaging } from "@plasmohq/messaging"
-import { logger } from "../../singletons"
+import { getLogger } from "~/resources/logging/logger"
+
+const logger = getLogger("background")
 
 type LogMessage = {
   level: "debug" | "info" | "warn" | "error",
