@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { GzipUtils } from "~/resources/utils/gzip";
-import pako from "pako";
+import { gzipSync, gunzipSync } from "fflate";
 
 const text = "Hello, Gzip! This is a test string for compression.";
 const encoder = new TextEncoder();
@@ -49,12 +49,12 @@ describe("GzipUtils", () => {
 
     expect(compressedBuffer.byteLength).toBeGreaterThan(0);
 
-    const decompressed = pako.inflate(new Uint8Array(compressedBuffer), { to: "string" });
+    const decompressed = decoder.decode(gunzipSync(new Uint8Array(compressedBuffer)));
     expect(decompressed).toBe(text);
   });
 
   it("should decompress a ReadableStream correctly", async () => {
-    const compressedData = pako.deflate(encoder.encode(text), { gzip: true });
+    const compressedData = gzipSync(encoder.encode(text));
     const inputStream = new ReadableStream({
       start(controller) {
         controller.enqueue(compressedData);
@@ -84,12 +84,12 @@ describe("GzipUtils", () => {
 
     expect(compressedChunks.length).toBeGreaterThan(0);
 
-    const decompressed = pako.inflate(mergeUint8Arrays(compressedChunks), { to: "string" });
+    const decompressed = decoder.decode(gunzipSync(mergeUint8Arrays(compressedChunks)));
     expect(decompressed).toBe(text);
   });
 
   it("should decompress a WritableStream correctly", async () => {
-    const compressedData = pako.deflate(encoder.encode(text), { gzip: true });
+    const compressedData = gzipSync(encoder.encode(text));
 
     let decompressedChunks: Uint8Array[] = [];
 

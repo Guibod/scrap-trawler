@@ -1,7 +1,7 @@
 import "fake-indexeddb/auto";
 import { vi, describe, it, expect, beforeEach, beforeAll } from "vitest";
 import { EventDao } from "~/resources/storage/event.dao";
-import pako from "pako";
+import { gzipSync, gunzipSync } from "fflate";
 import {
   ExportNotFoundError,
   formats,
@@ -128,7 +128,7 @@ describe("ImportExportService", () => {
 
     describe("GZIP stream - 10 events", async () => {
       beforeEach(async () => {
-        stream = streamFromData(pako.gzip(generateLdJson(events)))
+        stream = streamFromData(gzipSync(new TextEncoder().encode(generateLdJson(events))))
       })
 
       it("should be detected as GZIP", async () => {
@@ -211,7 +211,7 @@ describe("ImportExportService", () => {
         const { stream, getOutput } = createMockWritableStream();
 
         await service.exportEvents(stream, null, formats.GZIP);
-        const output = pako.inflate(await getOutput(), { to: "string" });
+        const output = new TextDecoder().decode(gunzipSync(await getOutput()));
 
         const expectedJson = events
           .slice()
@@ -237,7 +237,7 @@ describe("ImportExportService", () => {
         const { stream, getOutput } = createMockWritableStream();
 
         await service.exportEvents(stream, ['event-1'], formats.GZIP);
-        const output = pako.inflate(await getOutput(), { to: "string" });
+        const output = new TextDecoder().decode(gunzipSync(await getOutput()));
 
         expect(removeTimeDependentValues(output))
           .toBe(removeTimeDependentValues(JSON.stringify(events[0], null, 2)));
