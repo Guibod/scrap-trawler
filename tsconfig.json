@@ -1,11 +1,16 @@
 {
   "extends": "plasmo/templates/tsconfig.base",
   "exclude": ["node_modules"],
+  "types": ["vitest", "node"],
   "include": [".plasmo/index.d.ts", "./**/*.ts", "./**/*.tsx"],
   "compilerOptions": {
     "paths": {
       "~/*": ["./src/*"]
     },
     "baseUrl": "."
-  }
+  },
+  "noImplicitAny": false,
+  "noImplicitReturns": false,
+  "noImplicitThis": false,
+  "strictNullChecks": false
 }

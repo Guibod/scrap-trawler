@@ -10,6 +10,11 @@ export class BackgroundLogger implements LoggerInterface {
     this.logger = createConsola({
       level: 4,
       fancy: true,
+      formatOptions: {
+        showTime: true,
+        secondaryColor: "cyan",
+        primaryColor: "green"
+      }
     });
   }
 

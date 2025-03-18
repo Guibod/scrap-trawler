@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Link, Outlet } from "react-router-dom";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react"
 import Version from "~/resources/ui/components/version"
+import CardDatabaseStatus from "~/resources/ui/components/card/status"
 
 export const MainLayout = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -39,8 +40,10 @@ export const MainLayout = () => {
       </main>
 
       {/* ✅ Footer (Optional) */}
-      <footer className="bg-gray-900 text-white py-4 text-center text-sm mt-auto">
-        Scrap Trawler <Version /> &copy; {new Date().getFullYear()}
+      <footer className="bg-gray-900 text-white py-4 text-center text-sm mt-auto flex justify-center items-center gap-5">
+        <span>Scrap Trawler <Version /> &copy; {new Date().getFullYear()}</span>
+
+        <CardDatabaseStatus />
       </footer>
     </div>
   );

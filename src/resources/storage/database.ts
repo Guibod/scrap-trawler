@@ -1,5 +1,6 @@
 import Dexie, { type EntityTable } from 'dexie';
 import EventEntity from '~/resources/storage/entities/event.entity';
+import CardEntity, { CardLanguage } from "~/resources/storage/entities/card.entity"
 import { getLogger } from "~/resources/logging/logger";
 
 class DatabaseService {
@@ -8,15 +9,23 @@ class DatabaseService {
   private readonly logger = getLogger(this.constructor.name);
 
   readonly events: EntityTable<EventEntity, 'id'>;
+  readonly cards!: EntityTable<CardEntity, 'name'>;
 
   private constructor() {
     this.db = new Dexie('ScrapTrawlerDB');
     this.db.version(1).stores({
-      events: '++id, name, date'
+      events: '++id, name, date',
+      cards: `
+          name,
+          ${Object.values(CardLanguage).map(lang => `localizedNames.${lang}`).join(', ')}
+        `
     });
 
     this.events = this.db.table<EventEntity, 'id'>('events');
     this.events.mapToClass(EventEntity);
+
+    this.cards = this.db.table<CardEntity, 'name'>('cards');
+    this.cards.mapToClass(CardEntity);
 
     this.logger.start("Database initialized.");
   }

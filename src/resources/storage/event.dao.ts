@@ -41,7 +41,7 @@ export class EventDao {
    * Updates the stored data if the event already exists.
    */
   async save(event: EventEntity): Promise<EventEntity> {
-    logger.debug("Saving event", event);
+    logger.debug(`Saving event ${event.id}`);
     if (!isEventEntity(event)) {
       logger.error("Invalid event format", event);
       throw new InvalidFormatError(event);

@@ -91,35 +91,35 @@ const ImportExportCard = ({ service } : ImportExportCardProps) => {
     <Card className="w-full max-w-lg">
       <CardHeader className="text-lg font-semibold">Import & Export Data</CardHeader>
       <CardBody className="flex flex-col gap-4">
-        <p className="text-gray-700">
+        <p className="text-medium">
           Scrap Trawler allows you to <strong>export</strong> and <strong>import</strong> tournament data for backup, transfer, or analysis.
         </p>
         <div>
-          <h3 className="text-lg font-semibold text-gray-800">Export Data</h3>
-          <p className="text-gray-700">
+          <h3 className="text-lg font-semibold">Export Data</h3>
+          <p>
             Clicking the <strong>Export Data</strong> button will generate a <code className="bg-gray-200 px-1 rounded">.json.gz</code> file containing all stored tournament data.
             This file can be <strong>re-imported later</strong> to restore data or shared with others.
           </p>
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-gray-800">Import Data</h3>
-          <p className="text-gray-700">
+          <h3 className="text-lg font-semibold">Import Data</h3>
+          <p>
             You can <strong>import data</strong> from two file formats:
           </p>
-          <ul className="list-disc list-inside text-gray-700 mt-2">
+          <ul className="list-disc list-inside mt-2">
             <li>
-              <code className="bg-gray-200 px-1 rounded">.json.gz</code> - Compressed JSON (Recommended for large datasets, reduces file size).
+              <code className="px-1 rounded">.json.gz</code> - Compressed JSON (Recommended for large datasets, reduces file size).
             </li>
             <li>
-              <code className="bg-gray-200 px-1 rounded">.json</code> - Standard JSON (Uncompressed, useful for manual edits).
+              <code className="px-1 rounded">.json</code> - Standard JSON (Uncompressed, useful for manual edits).
             </li>
           </ul>
-          <p className="text-gray-700 mt-2">
+          <p className="mt-2">
             When you import a file, any existing event data will be <strong>replaced</strong> based on the file contents.
           </p>
         </div>
 
-        <Button onPress={handleExport} color="secondary" className="w-full py-2">
+        <Button onPress={handleExport} color="primary" className="w-full py-2">
           Export Data
         </Button>
         <input type="file" accept=".json.gz,.json,.gz" onChange={handleImport} className="hidden" id="importFile" />

@@ -21,6 +21,10 @@ export const features: Feature[] = [
           { title: "Randomly", status: 'done' },
         ] },
     ]},
+  { title: "Card database",  status: 'done', items: [
+      {title: "Recovery from MTG-JSON", status: 'done'},
+      {title: "Searchable", status: 'done'},
+    ]},
   { title: "Recover player decklists",  status: 'planned', items: [
       {title: "Moxfield", status: 'planned'},
       {title: "Archidekt", status: 'planned'},

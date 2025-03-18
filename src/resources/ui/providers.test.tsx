@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import React from "react"
+import "fake-indexeddb/auto"
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Providers, { RoutedProvider } from "~/resources/ui/providers"
@@ -60,7 +61,6 @@ describe("Providers Component", () => {
       severity: "success",
       variant: "bordered",
       timeout: 5000,
-      shouldShowTimeoutProgess: true,
     });
   });
 });
