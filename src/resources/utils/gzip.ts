@@ -1,4 +1,4 @@
-import pako from "pako";
+import { Gunzip, gunzipSync, Gzip, gzipSync } from "fflate"
 
 export class GzipUtils {
   /**
@@ -7,8 +7,7 @@ export class GzipUtils {
   static createGzipStream(): TransformStream {
     return new TransformStream({
       transform(chunk, controller) {
-        const compressed = pako.deflate(chunk, { gzip: true });
-        controller.enqueue(new Uint8Array(compressed));
+        controller.enqueue(gzipSync(chunk));
       }
     });
   }
@@ -19,8 +18,7 @@ export class GzipUtils {
   static createGunzipStream(): TransformStream {
     return new TransformStream({
       transform(chunk, controller) {
-        const decompressed = pako.inflate(chunk);
-        controller.enqueue(new Uint8Array(decompressed));
+        controller.enqueue(gunzipSync(chunk));
       }
     });
   }
@@ -43,22 +41,20 @@ export class GzipUtils {
    * Takes a WritableStream and returns a compressed WritableStream.
    */
   static gzipWritableStream(targetStream: WritableStream): WritableStream {
-    const gzip = new pako.Deflate({ gzip: true });
     const writer = targetStream.getWriter();
+    const gzip = new Gzip();
+
+    gzip.ondata = async (chunk, final) => {
+      await writer.write(chunk);
+      if (final) await writer.close();
+    };
 
     return new WritableStream({
       async write(chunk) {
-        gzip.push(chunk, false); // ✅ Compress chunk
-        if (gzip.result) {
-          await writer.write(new Uint8Array(gzip.result));
-        }
+        gzip.push(chunk, false); // 🔥 Push chunk into Gzip stream
       },
       async close() {
-        gzip.push(new Uint8Array(0), true); // ✅ Finalize compression
-        if (gzip.result) {
-          await writer.write(new Uint8Array(gzip.result));
-        }
-        await writer.close();
+        gzip.push(new Uint8Array(0), true); // 🔥 Finalize stream
       }
     });
   }
@@ -67,24 +63,22 @@ export class GzipUtils {
    * Takes a WritableStream and returns a decompressed WritableStream.
    */
   static gunzipWritableStream(targetStream: WritableStream): WritableStream {
-    const inflate = new pako.Inflate();
     const writer = targetStream.getWriter();
+    const gunzip = new Gunzip();
+
+    gunzip.ondata = async (chunk, final) => {
+      await writer.write(chunk);
+      if (final) await writer.close();
+    };
 
     return new WritableStream({
       async write(chunk) {
-        inflate.push(chunk, false); // ✅ Process chunk normally
-        if (inflate.result) {
-          await writer.write(new Uint8Array(inflate.result));
-          inflate.result = null; // ✅ Clear result to prevent duplicates
-        }
+        gunzip.push(chunk, false);
       },
       async close() {
-        inflate.push(new Uint8Array(0), true); // ✅ Finalize decompression
-        if (inflate.result) {
-          await writer.write(new Uint8Array(inflate.result));
-        }
-        await writer.close();
+        gunzip.push(new Uint8Array(0), true);
       }
     });
   }
+
 }
