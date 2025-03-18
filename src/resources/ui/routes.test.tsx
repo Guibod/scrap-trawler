@@ -3,6 +3,7 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter, Outlet } from "react-router-dom"
 import AppRoutes from "~/resources/ui/routes"
+import MtgJsonService from "~/resources/integrations/mtg-json/service"
 
 vi.mock("~/resources/ui/pages/main", () => ({
   default: () => <div data-testid="main-page">MainPage</div>
@@ -22,6 +23,10 @@ vi.mock("~/resources/ui/pages/changelog", () => ({
 
 vi.mock("~/resources/ui/pages/event", () => ({
   default: () => <div data-testid="event-page">EventPage</div>
+}))
+
+vi.mock("~/resources/ui/components/card/status", () => ({
+  default: () => <div data-testid="card-status-widget">CardStatus</div>
 }))
 
 describe("AppRoutes", () => {

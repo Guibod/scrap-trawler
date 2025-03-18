@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { SettingsDao } from "~/resources/storage/settings.dao";
 import { DEFAULT_SETTINGS, type SettingsModel } from "~/resources/domain/models/settings.model"
 import { EventDao } from "~/resources/storage/event.dao"
+import { CardLanguage } from "~/resources/storage/entities/card.entity"
 
 describe("SettingsDao", () => {
   let settingsDao: SettingsDao;
@@ -30,9 +31,11 @@ describe("SettingsDao", () => {
 
     expect(settings).toEqual({
       moxfieldApiKey: "test-key",
+      mtgJsonVersion: null,
       enableCrossEventIdentification: true,
       showWelcome: true,
-      version: 1
+      version: 1,
+      searchLanguages: [CardLanguage.ENGLISH]
     });
 
     expect(vi.mocked(chrome.storage.local.get)).toHaveBeenCalledWith(["scrapTrawlerSettings"]);

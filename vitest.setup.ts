@@ -15,6 +15,7 @@ global.chrome = {
     sendMessage: vi.fn(),
     onMessage: {
       addListener: vi.fn(),
+      removeListener: vi.fn(),
     },
   },
   tabs: {

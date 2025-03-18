@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSettings } from "~/resources/ui/providers/settings";
-import { Form, Button, Input, Checkbox, Card, CardHeader, CardBody, addToast, Divider } from "@heroui/react"
+import { Form, Button, Input, Checkbox, Card, CardHeader, CardBody, addToast } from "@heroui/react"
 import type { SettingsModel } from "~/resources/domain/models/settings.model"
 import ImportExportCard from "~/resources/ui/components/import.export.card"
+import CardDatabaseSettings from "~/resources/ui/components/card/db.settings"
+import CardIndexSettings from "~/resources/ui/components/card/index.settings"
 
 const SettingsPage = () => {
   const { settings, setMany } = useSettings();
@@ -21,13 +23,14 @@ const SettingsPage = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await setMany(currentSettings);
-    addToast({
-      title: "Settings Saved",
-      description: "Your settings have been saved successfully",
-      color: "success",
-      variant: "solid",
-    });
+    await setMany(currentSettings).then(() => {
+      addToast({
+        title: "Settings Saved",
+        description: "Your settings have been saved successfully",
+        color: "success",
+        variant: "solid",
+      });
+    })
   };
 
   if (!currentSettings) return null;
@@ -60,7 +63,11 @@ const SettingsPage = () => {
         </Form>
       </Card>
 
-      <ImportExportCard />
+      <ImportExportCard aria-label="settings-import-export"/>
+
+      <CardDatabaseSettings aria-label="settings-db-cards"/>
+
+      <CardIndexSettings aria-label="settings-index-cards"/>
     </div>
   );
 };

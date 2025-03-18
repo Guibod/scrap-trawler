@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest"
 import DatabaseService from "~/resources/storage/database"
 import { createMock } from "@golevelup/ts-vitest"
 import type SettingsService from "~/resources/domain/services/settings.service"
+import type { LoggerInterface } from "~/resources/logging/interface"
 
 // Mock dependencies
 const mockSettingsService = createMock<SettingsService>({
@@ -13,28 +14,56 @@ vi.mock("~/resources/domain/services/settings.service", () => ({
   }
 }))
 
-const mockDatabaseService = createMock<DatabaseService>()
+const mockDatabaseService = createMock<DatabaseService>({
+  open: vi.fn(),
+  cards: {
+    count: vi.fn(() => Promise.resolve(0))
+  },
+  events: {
+    count: vi.fn(() => Promise.resolve(0))
+  }
+})
+
 vi.mock("~/resources/storage/database", () => ({
   default: {
     getInstance: vi.fn(() => mockDatabaseService)
   }
 }))
 
+const loggerMock = createMock<LoggerInterface>()
+vi.doMock("~/resources/logging/logger", () => ({
+  getLogger: vi.fn(() => loggerMock)
+}))
+
 describe("Background script", () => {
-  let mockChromeTabsCreate: any
-
   beforeEach(() => {
-    // Reset mocks before each test
     vi.resetModules()
-    vi.clearAllMocks()
+    vi.resetAllMocks()
   })
+  describe("Database Related", () => {
+    it("should open the database on startup", async () => {
+      mockSettingsService.get.mockResolvedValue({ showWelcome: false })
 
-  it("should open the database on startup", async () => {
-    mockSettingsService.get.mockResolvedValue({ showWelcome: false })
+      await import("~/background/index")
 
-    await import("~/background/index")
+      expect(mockDatabaseService.open).toHaveBeenCalled()
+    })
 
-    expect(mockDatabaseService.open).toHaveBeenCalled()
+    it("should display the number of cards in database", async () => {
+      mockSettingsService.get.mockResolvedValue({ showWelcome: false })
+
+      await import("~/background/index")
+
+      expect(loggerMock.debug).toHaveBeenCalledWith(`Database has 0 cards`)
+    })
+
+    it("should display the number of events in database", async () => {
+      mockSettingsService.get.mockResolvedValue({ showWelcome: false })
+
+      await import("~/background/index")
+
+      expect(loggerMock.debug).toHaveBeenCalledWith(`Database has 0 events`)
+    })
   })
 
   it("should check the settings on startup", async () => {

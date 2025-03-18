@@ -4,6 +4,10 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import MainLayout from "~/resources/ui/layouts/main";
 
+vi.mock("~/resources/ui/components/card/status", () => ({
+  default: () => <div data-testid="card-db-status" />,
+}));
+
 describe("MainLayout Component", () => {
   beforeEach(() => {
     vi.clearAllMocks();

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { type SettingsModel } from "~/resources/domain/models/settings.model";
 import SettingsService from "~/resources/domain/services/settings.service"
+import { addToast } from "@heroui/react"
 
 interface SettingsContextType {
   settings: SettingsModel;
@@ -30,9 +31,35 @@ export const SettingsProvider = (
   }, [currentService]);
 
   // Wrapper to update settings state after setting new values
-  const setOne = (key, value) => currentService.setOne(key, value).then(setSettings);
+  const setOne = (key, value) => {
+    return currentService.setOne(key, value)
+      .then(setSettings)
+      .then(() => addToast({
+        title: "Settings Saved",
+        description: "Your settings have been saved successfully",
+        color: "success",
+      }))
+      .catch(() => addToast({
+        title: "Error",
+        description: "An error occurred while saving settings",
+        color: "danger",
+      }));
+  }
 
-  const setMany = (values: Partial<SettingsModel>) => currentService.setMany(values).then(setSettings)
+  const setMany = (values: Partial<SettingsModel>) => {
+    return currentService.setMany(values)
+      .then(setSettings)
+      .then(() => addToast({
+        title: "Settings Saved",
+        description: "Your settings have been saved successfully",
+        color: "success",
+      }))
+      .catch(() => addToast({
+        title: "Error",
+        description: "An error occurred while saving settings",
+        color: "danger",
+      }));
+  }
 
   if (!settings) {
     return (

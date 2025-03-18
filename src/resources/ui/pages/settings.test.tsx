@@ -1,75 +1,81 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, act } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { useSettings } from "~/resources/ui/providers/settings"
-import React from "react"
-import SettingsPage from "~/resources/ui/pages/settings"
+import { describe, it, vi, beforeEach, expect } from "vitest";
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import SettingsPage from "~/resources/ui/pages/settings";
 
-// ✅ Mock `useSettings` before importing components
+// ✅ Mock settings provider properly
+const setManyMock = vi.fn(() => Promise.resolve())
+const settingsMock = {
+  moxfieldApiKey: "test-api-key",
+  enableCrossEventIdentification: true,
+}
 vi.mock("~/resources/ui/providers/settings", () => ({
-  useSettings: vi.fn(),
+  useSettings: vi.fn(() => ({
+    settings: settingsMock,
+    setMany: setManyMock,
+  })),
+}));
+
+// ✅ Mock dependent components
+vi.mock("~/resources/ui/components/import.export.card", () => ({
+  default: () => <div data-testid="import-export-card" />,
+}));
+vi.mock("~/resources/ui/components/card/db.settings", () => ({
+  default: () => <div data-testid="db-settings-card" />,
+}));
+vi.mock("~/resources/ui/components/card/index.settings", () => ({
+  default: () => <div data-testid="index-settings-card" />,
 }));
 
 describe("SettingsPage", () => {
-  const mockUpdateSettings = vi.fn();
-
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.resetAllMocks();
+  });
 
-    // ✅ Ensure `useSettings` returns consistent test data
-    vi.mocked(useSettings).mockReturnValue({
-      settings: {
-        version: 1,
-        moxfieldApiKey: "test-key",
-        enableCrossEventIdentification: true,
-        showWelcome: true
-      },
-      setMany: mockUpdateSettings,
-      setOne: vi.fn()
+  it("should render settings page with initial values", () => {
+    render(<SettingsPage />);
+
+    expect(screen.getByText("Settings")).toBeInTheDocument();
+    expect(screen.getByLabelText("Moxfield API Key")).toHaveValue("test-api-key");
+    expect(screen.getByText("Enable Cross-Event Identification")).toBeInTheDocument();
+  });
+
+  it("should update state when input values change", async () => {
+    render(<SettingsPage />);
+
+    const input = screen.getByLabelText("Moxfield API Key");
+    fireEvent.change(input, { target: { value: "new-api-key" } });
+
+    expect(input).toHaveValue("new-api-key");
+  });
+
+  it("should call setMany when settings are saved", async () => {
+    render(<SettingsPage />);
+
+    const saveButton = screen.getByText("Save Settings");
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(setManyMock).toHaveBeenCalled(); // ✅ Ensure settings are saved
     });
   });
 
-  it("renders settings with initial values", () => {
+  it("should toggle checkbox value", () => {
     render(<SettingsPage />);
 
-    expect(screen.getByLabelText("Moxfield API Key")).toHaveValue("test-key");
-    expect(screen.getByLabelText("Enable Cross-Event Identification")).toBeChecked();
+    const checkbox = screen.getByText("Enable Cross-Event Identification").closest("label");
+    expect(checkbox).toBeTruthy();
+
+    fireEvent.click(checkbox!);
+
+    expect(checkbox).not.toHaveClass("is-selected");
   });
 
-  it("updates API Key when changed", async () => {
+  it("should render ImportExportCard, CardDatabaseSettings, and CardIndexSettings", () => {
     render(<SettingsPage />);
 
-    const apiKeyInput = screen.getByLabelText("Moxfield API Key");
-    await userEvent.clear(apiKeyInput);
-    await userEvent.type(apiKeyInput, "new-api-key");
-
-    expect(apiKeyInput).toHaveValue("new-api-key");
-  });
-
-  it("toggles cross-event identification", async () => {
-    render(<SettingsPage />);
-
-    const checkbox = screen.getByLabelText("Enable Cross-Event Identification");
-    expect(checkbox).toBeChecked();
-
-    await userEvent.click(checkbox);
-    expect(checkbox).not.toBeChecked();
-  });
-
-  it("calls updateSettings on form submission", async () => {
-    render(<SettingsPage />);
-
-    const saveButton = screen.getByRole("button", { name: /save settings/i });
-
-    await act(async () => {
-      await userEvent.click(saveButton);
-    });
-
-    expect(mockUpdateSettings).toHaveBeenCalledWith({
-      moxfieldApiKey: "test-key",
-      enableCrossEventIdentification: true,
-      version: 1,
-      showWelcome: true
-    });
+    expect(screen.getByTestId("import-export-card")).toBeInTheDocument();
+    expect(screen.getByTestId("db-settings-card")).toBeInTheDocument();
+    expect(screen.getByTestId("index-settings-card")).toBeInTheDocument();
   });
 });

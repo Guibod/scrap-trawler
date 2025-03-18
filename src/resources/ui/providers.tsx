@@ -2,6 +2,8 @@ import { HeroUIProvider, ToastProvider } from "@heroui/react";
 import { HashRouter as Router, useNavigate, useHref } from "react-router-dom"
 import React from "react";
 import { SettingsProvider } from "~/resources/ui/providers/settings"
+import { CardProvider } from "~/resources/ui/providers/card"
+import { MtgJsonProvider } from "~/resources/ui/providers/mtgjson"
 
 export const RoutedProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate()
@@ -13,10 +15,13 @@ export const RoutedProvider = ({ children }: { children: React.ReactNode }) => {
         severity: "success",
         variant: "bordered",
         timeout: 5000,
-        shouldShowTimeoutProgess: true
       }} />
       <SettingsProvider>
-        {children}
+        <MtgJsonProvider>
+          <CardProvider>
+            {children}
+          </CardProvider>
+        </MtgJsonProvider>
       </SettingsProvider>
     </HeroUIProvider>
   );
