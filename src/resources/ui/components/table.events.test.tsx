@@ -1,4 +1,4 @@
-import { vi, expect } from "vitest";
+import { vi, expect, it, describe } from "vitest";
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import TableEvents from "~/resources/ui/components/table.events";
@@ -20,7 +20,7 @@ vi.mock("~/resources/domain/services/event.service", () => ({
 }));
 
 describe("TableEvents Component", () => {
-  test("renders event table correctly", async () => {
+  it("renders event table correctly", async () => {
     render(<TableEvents title="Test Events" rowsPerPage={2} />);
 
     await waitFor(() => expect(screen.getByText("Event 1")).toBeInTheDocument());
@@ -28,7 +28,7 @@ describe("TableEvents Component", () => {
     expect(screen.queryByText("Event 3")).not.toBeInTheDocument(); // Paginated out
   });
 
-  test("pagination works", async () => {
+  it("pagination works", async () => {
     render(<TableEvents title="Test Events" rowsPerPage={2} />);
 
     await waitFor(() => expect(screen.getByText("Event 1")).toBeInTheDocument());
@@ -39,7 +39,7 @@ describe("TableEvents Component", () => {
     await waitFor(() => expect(screen.getByText("Event 3")).toBeInTheDocument());
   });
 
-  test("refresh button reloads events", async () => {
+  it("refresh button reloads events", async () => {
     const { getByTitle } = render(<TableEvents title="Test Events" rowsPerPage={2} />);
     await waitFor(() => expect(screen.getByText("Event 1")).toBeInTheDocument());
 

@@ -1,4 +1,4 @@
-import { beforeAll, beforeEach, describe, expect, it } from "vitest"
+import { beforeAll, beforeEach, afterEach, describe, expect, it } from "vitest"
 import "fake-indexeddb/auto"
 import CardDao from "~/resources/storage/card.dao"
 import DatabaseService from "./database"

@@ -3,15 +3,17 @@ import { getLogger } from "~/resources/logging/logger"
 
 const logger = getLogger("background")
 
-type LogMessage = {
-  level: "debug" | "info" | "warn" | "error",
+export type LogMessage = {
+  level: "debug" | "info" | "warn" | "error" | "start",
   message: string,
   context: string,
   data?: object
 }
 
-const handler: PlasmoMessaging.MessageHandler<LogMessage, never> = async (req) => {
-  logger[req.body.level](`${req.body.context}: ${req.body.message}`, req.body.data)
+const handler: PlasmoMessaging.MessageHandler<LogMessage[], void> = async (req) => {
+  for (const log of req.body) {
+    logger[log.level](`${log.context}: ${log.message}`, log.data)
+  }
 }
 
 export default handler

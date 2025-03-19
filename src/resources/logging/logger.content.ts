@@ -1,12 +1,11 @@
 import { type LoggerInterface } from "./interface";
-import { type ConsolaInstance, createConsola, type ConsolaReporter, type LogObject } from "consola";
+import { type ConsolaInstance, createConsola } from "consola";
 import { sendToBackground } from "@plasmohq/messaging";
-
 
 export class ContentScriptLogger implements LoggerInterface {
   name: string;
   private logger: ConsolaInstance;
-  private static logQueue: Array<{ level: string; message: string; context: string; data?: any }> = [];
+  private static logQueue: any[] = [];
   private static isProcessing = false;
 
   constructor(name: string) {
