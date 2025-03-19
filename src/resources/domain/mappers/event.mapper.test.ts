@@ -56,6 +56,7 @@ describe("EventMapper", () => {
       players: {},
       teams: {},
       rounds: {},
+      decks: {},
       raw_data: {
         wotc: {
           event: sampleEvent,
