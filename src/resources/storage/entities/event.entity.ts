@@ -8,9 +8,39 @@ import type { StandingDbo } from "~/resources/domain/dbos/standing.dbo"
 import type { DropDbo } from "~/resources/domain/dbos/drop.dbo"
 import type { SpreadsheetRawRow, SpreadsheetMetadata } from "~/resources/domain/dbos/spreadsheet.dbo"
 import type { MappingDbo } from "~/resources/domain/dbos/mapping.dbo"
+import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
+import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
+import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 
-export const EVENT_ENTITY_VERSION = 21
+export const EVENT_ENTITY_VERSION = 22
 
+export type CardName = string
+export type CardNameAndQuantity = { name: CardName, quantity: number }
+export type DeckBoards = {
+  mainboard: CardNameAndQuantity[],
+  sideboard?: CardNameAndQuantity[],
+  commanders?: CardNameAndQuantity[],
+  companions?: CardNameAndQuantity[],
+  signatureSpells?: CardNameAndQuantity[],
+}
+export type DeckDescription = {
+  id: string,
+  name: string,
+  url: string | null,
+  face: CardName | null,
+  boards: DeckBoards | null,
+  lastUpdated: string | null,
+  format: MTG_FORMATS | null,
+  legal: boolean
+  colors: MTG_COLORS[],
+}
+
+export interface DeckEntity extends DeckDescription {
+  id: string
+  spreadsheetRowId: string
+  errors?: string[]
+  status: DeckStatus
+}
 
 export interface ResultEntity {
   id: string,
@@ -44,12 +74,14 @@ export default class EventEntity {
   id!: string;
   title!: string;
   date!: string;
+  format: MTG_FORMATS | null;
   organizer!: EventOrganizerDbo
   players!: PlayerDbo[]
   teams!: TeamDbo[]
   rounds!: RoundEntity[]
   mapping!: MappingDbo | null
-  spreadsheet!: SpreadsheetMetadata | null
+  spreadsheet!: SpreadsheetMetadata | null // We only keep the metadata, the rest is computed from raw_data.spreadsheet
+  decks!: DeckEntity[]
   raw_data: {
     wotc: WotcExtractedEvent
     spreadsheet?: SpreadsheetRawRow[]
@@ -82,6 +114,7 @@ export function isEventEntity(obj: any): obj is EventEntity {
   if (!Array.isArray(obj.rounds)) return false;
   if (obj.mapping !== null && typeof obj.mapping !== "object") return false;
   if (obj.spreadsheet !== null && typeof obj.spreadsheet !== "object") return false;
+  if (!Array.isArray(obj.decks)) return false;
   if (typeof obj.raw_data !== "object") return false;
   if (!("wotc" in obj.raw_data) || typeof obj.raw_data.wotc !== "object") return false;
   if (typeof obj.version !== "number") return false;

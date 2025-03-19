@@ -14,6 +14,7 @@ export default class EventMapper {
     return {
       id: entity.id,
       title: entity.title,
+      format: entity.format,
       date: new Date(entity.date),
       organizer: {
         id: entity.organizer.id,
@@ -40,9 +41,13 @@ export default class EventMapper {
       lastUpdated: entity.lastUpdated ? new Date(entity.lastUpdated) : null,
       scrapeStatus: entity.scrapeStatus,
       mapping: entity.mapping,
+      decks: Object.fromEntries((entity.decks || []).map(deck => [deck.id, {
+        ...deck,
+        lastUpdated: entity.lastUpdated ? new Date(deck.lastUpdated) : null,
+      }])),
       spreadsheet: entity.spreadsheet ? {
         meta: entity.spreadsheet,
-        data: await mapSpreadsheetData(entity.raw_data.spreadsheet, entity.spreadsheet) // Store raw spreadsheet data in `data`
+        data: await mapSpreadsheetData(entity.raw_data.spreadsheet, entity.spreadsheet)
       } : null
     };
   }
@@ -75,6 +80,7 @@ export default class EventMapper {
         drops: Object.values(round.drops),
         standings: Object.values(round.standings),
       })),
+      decks: Object.values(dbo.decks),
       spreadsheet: dbo.spreadsheet?.meta ?? null,
       mapping: dbo.mapping ?? null,
       date: dbo.date.toISOString(),

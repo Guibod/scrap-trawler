@@ -8,6 +8,7 @@ import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state
 import type { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
 import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/event-extractor"
+import { EventLinkFormats } from "~/resources/integrations/eventlink/enum"
 
 const logger = getLogger("event-hydrator")
 export class HydrationError extends ScrapTrawlerError {}
@@ -35,6 +36,7 @@ export default class EventHydrator {
     const rawData = entity.raw_data?.wotc as WotcExtractedEvent
     const hydrated: EventEntity = {
       id: rawData.event.id,
+      format: EventLinkFormats[rawData.event.eventFormat.name] ?? null,
       scrapeStatus: EventHydrator.inferScrapeStatus(entity),
       organizer: {
         id: rawData.organization.id,
@@ -59,6 +61,7 @@ export default class EventHydrator {
       teams: [], // TODO: support real teams
       players: EventHydrator.inferPlayers(entity),
       rounds: EventHydrator.inferRounds(entity),
+      decks: [],
       mapping: entity.mapping ?? null,
       spreadsheet: entity.spreadsheet ?? null,
       date: new Date(rawData.event.actualStartTime ?? rawData.event.scheduledStartTime).toISOString(),
