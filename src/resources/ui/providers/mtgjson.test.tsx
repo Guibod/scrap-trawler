@@ -1,4 +1,4 @@
-import { vi, expect } from "vitest";
+import { vi, expect, describe, it } from "vitest";
 import { render, act, screen } from "@testing-library/react";
 import { MtgJsonProvider, useMtgJson } from "~/resources/ui/providers/mtgjson";
 import React from "react";
