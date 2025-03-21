@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import packageJson from "../../../../package.json"
 import { Button } from "@heroui/button"
 import { Card, CardBody, CardHeader } from "@heroui/card"
 import ButtonScrape from "~/resources/ui/components/button.scrape"
@@ -9,8 +8,7 @@ import Roadmap from "~/resources/ui/components/roadmap"
 import { useNavigate } from "react-router-dom"
 import ButtonOpen from "~/resources/ui/components/button.open"
 import { useSettings } from "~/resources/ui/providers/settings"
-
-const CURRENT_VERSION = packageJson.version
+import { getHumanVersion } from "~/resources/utils/version"
 
 const WelcomePage = () => {
   const navigate = useNavigate()
@@ -27,7 +25,7 @@ const WelcomePage = () => {
       <Card>
         <CardHeader className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-mtg">Welcome to Scrap Trawler!</h1>
-          <p className="text-sm">Version {CURRENT_VERSION} (Alpha)</p>
+          <p className="text-sm">Version {getHumanVersion()}</p>
         </CardHeader>
 
         <CardBody className={"text-medium"}>
