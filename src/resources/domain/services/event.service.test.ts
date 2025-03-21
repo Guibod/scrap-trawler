@@ -1,13 +1,16 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import EventService from "~/resources/domain/services/event.service";
+import { beforeEach, describe, expect, it, vi } from "vitest"
+import EventService from "~/resources/domain/services/event.service"
 import { EventDao } from "~/resources/storage/event.dao"
-import EventEntity, { EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity";
-import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo";
-import EventMapper from "~/resources/domain/mappers/event.mapper";
+import EventEntity, { type DeckEntity, EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity"
+import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo"
+import EventMapper from "~/resources/domain/mappers/event.mapper"
 import { createMock, type DeepMocked } from "@golevelup/ts-vitest"
 import type { EventModel } from "~/resources/domain/models/event.model"
 import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo"
 import EventHydrator from "~/resources/domain/mappers/event.hydrator"
+import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
+import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
+import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 
 vi.mock("~/resources/storage/event.dao"); // Mock EventDao
 const mockDao: DeepMocked<EventDao> = createMock<EventDao>();
@@ -111,4 +114,65 @@ describe("EventService", () => {
     expect(mockDao.save).not.toHaveBeenCalled();
     expect(result).toEqual(upToDateEvent);
   });
+
+  describe("EventService.addDeckToEvent", () => {
+    let service: EventService
+
+    beforeEach(() => {
+      vi.clearAllMocks()
+      service = EventService.getInstance(mockDao)
+    })
+
+    it("should update the deck and raw data, then save and return mapped result", async () => {
+      const deck: DeckEntity = {
+        archetype: "",
+        name: "",
+        status: DeckStatus.PENDING,
+        boards: {
+          mainboard: [
+            { name: "Forest", quantity: 24 }
+          ]
+        },
+        id: "deck-1",
+        url: "https://example.com",
+        spreadsheetRowId: "row-1",
+        lastUpdated: new Date().toISOString(),
+        face: undefined,
+        legal: true,
+        format: MTG_FORMATS.COMMANDER,
+        colors: [MTG_COLORS.GREEN]
+      }
+
+      const rawData = { raw: true }
+
+      const entity = new EventEntity()
+      entity.id = "event-1"
+      entity.decks = [{ id: "deck-1" }, { id: "deck-2" }] as DeckEntity[]
+
+      mockDao.get.mockResolvedValue(entity)
+      mockDao.save.mockResolvedValue(entity)
+      vi.spyOn(EventMapper, "toDbo").mockResolvedValue({ id: "event-1" } as EventModel)
+
+      const result = await service.addDeckToEvent("event-1", deck, rawData)
+
+      expect(mockDao.get).toHaveBeenCalledWith("event-1")
+      expect(entity.raw_data.fetch["deck-1"]).toEqual(rawData)
+      expect(entity.decks).toContain(deck)
+      expect(entity.decks.find(d => d.id === "deck-1")).toEqual(deck)
+      expect(entity.decks.find(d => d.id === "deck-2")).toBeDefined()
+      expect(mockDao.save).toHaveBeenCalledWith(entity)
+      expect(EventMapper.toDbo).toHaveBeenCalledWith(entity)
+      expect(result).toEqual({ id: "event-1" })
+    })
+
+    it("should return null and log a warning if event is not found", async () => {
+      mockDao.get.mockResolvedValue(null)
+
+      const deck = { id: "deck-1" } as DeckEntity
+      const result = await service.addDeckToEvent("missing-event", deck, {})
+
+      expect(result).toBeNull()
+      expect(mockDao.save).not.toHaveBeenCalled()
+    })
+  })
 });

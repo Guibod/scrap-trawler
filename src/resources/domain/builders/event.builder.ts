@@ -10,11 +10,13 @@ import { PairingStrategyDbo } from "~/resources/domain/enums/pairing.strategy.db
 import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
+import DeckBuilder from "~/resources/domain/builders/deck.builder"
 
 export default class EventBuilder {
   private event: Partial<EventModel> = {};
   private organizerBuilder: OrganizerBuilder;
   private playerBuilders: PlayerBuilder[] = [];
+  private deckBuilders: DeckBuilder[] = [];
   private playoff: boolean = false;
 
   constructor() {
@@ -57,6 +59,13 @@ export default class EventBuilder {
     return this;
   }
 
+  withDecks(count: number) {
+    for (let i = 0; i < count; i++) {
+      this.deckBuilders.push(new DeckBuilder(this));
+    }
+    return this;
+  }
+
   organizer() {
     return this.organizerBuilder;
   }
@@ -64,6 +73,12 @@ export default class EventBuilder {
   player() {
     const builder = new PlayerBuilder(this);
     this.playerBuilders.push(builder);
+    return builder;
+  }
+
+  deck() {
+    const builder = new DeckBuilder(this);
+    this.deckBuilders.push(builder);
     return builder;
   }
 
@@ -142,6 +157,13 @@ export default class EventBuilder {
       this.playerBuilders.map(builder => {
         const player = builder.build();
         return [player.id, player];
+      })
+    );
+
+    this.event.decks = Object.fromEntries(
+      this.deckBuilders.map(builder => {
+        const deck = builder.build();
+        return [deck.id, deck];
       })
     );
 

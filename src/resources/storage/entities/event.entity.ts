@@ -25,6 +25,7 @@ export type DeckBoards = {
 }
 export type DeckDescription = {
   id: string,
+  archetype: string | null,
   name: string,
   url: string | null,
   face: CardName | null,
@@ -85,6 +86,7 @@ export default class EventEntity {
   raw_data: {
     wotc: WotcExtractedEvent
     spreadsheet?: SpreadsheetRawRow[]
+    fetch?: Record<string, any>
     [key: string]: any
   }
   version: number
@@ -114,7 +116,7 @@ export function isEventEntity(obj: any): obj is EventEntity {
   if (!Array.isArray(obj.rounds)) return false;
   if (obj.mapping !== null && typeof obj.mapping !== "object") return false;
   if (obj.spreadsheet !== null && typeof obj.spreadsheet !== "object") return false;
-  if (!Array.isArray(obj.decks)) return false;
+  if (obj.decks && !Array.isArray(obj.decks)) return false;
   if (typeof obj.raw_data !== "object") return false;
   if (!("wotc" in obj.raw_data) || typeof obj.raw_data.wotc !== "object") return false;
   if (typeof obj.version !== "number") return false;

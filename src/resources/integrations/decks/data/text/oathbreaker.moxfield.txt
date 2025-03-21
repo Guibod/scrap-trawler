@@ -1,0 +1,39 @@
+1 Nissa of Shadowed Boughs (ZNR) 231
+1 Reanimate (OTP) 18
+1 Ashaya, Soul of the Wild (DSC) 170
+1 Avenger of Zendikar (CMR) 422
+1 Cultivate (PLST) C18-138
+1 Cut Down (DMU) 89
+1 Doubling Season (MMA) 141
+1 Endurance (MH2) 157
+1 Fecund Greenshell (BLB) 171
+1 Fell (BLB) 95
+16 Forest (M20) 280
+1 Go for the Throat (MBS) 43
+1 Golgari Signet (CLU) 222
+1 Grief (MH2) 87
+1 Llanowar Loamspeaker (DMU) 170
+1 Lumra, Bellow of the Woods (BLB) 183
+1 Maha, Its Feathers Night (BLB) 100
+1 Mossborn Hydra (FDN) 107
+1 Nissa, Resurgent Animist (MAT) 22
+1 Nissa, Vastwood Seer // Nissa, Sage Animist (V17) 15 *F*
+1 Nissa, Vital Force (KLD) 163
+1 Nissa, Who Shakes the World (WAR) 169
+1 Nyxbloom Ancient (PTHB) 190s *F*
+1 Oath of Nissa (OGW) 140
+1 Omenpath Journey (BIG) 48
+1 Omnath, Locus of Mana (CC1) 2
+1 Patchwork Banner (BLB) 247
+1 Roaming Throne (LCI) 258
+1 Shriekmaw (AFC) 110
+10 Swamp (DOM) 260
+1 Tangled Florahedron // Tangled Vale (ZNR) 211
+1 Titania, Nature's Force (DSC) 202
+1 Titania, Protector of Argoth (OTC) 210
+1 Toxic Deluge (MH3) 277
+1 Ygra, Eater of All (BLB) 241
+1 Zendikar's Roil (J22) 747
+
+SIDEBOARD:
+1 Jumbo Cactuar (FIN) 191

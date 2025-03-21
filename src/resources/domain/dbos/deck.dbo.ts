@@ -29,5 +29,6 @@ export interface DeckDbo {
 export enum DeckStatus {
   PENDING = "PENDING",
   FETCHED = "FETCHED",
-  ERROR = "ERROR"
+  ERROR = "ERROR",
+  FAILED = "FAILED"
 }

@@ -1,0 +1,33 @@
+2 All Is Dust (CMM) 800
+2 Chalice of the Void (MMA) 203
+4 Devourer of Destiny (MH3) 2
+2 Dismember (MM2) 79
+4 Eldrazi Temple (DDP) 68
+4 Expedition Map (2XM) 255 *F*
+4 Glaring Fleshraker (MH3) 7
+4 Karn, the Great Creator (RVR) 1 *F*
+4 Kozilek's Command (MH3) 11
+4 Mind Stone (DCI) 11 *F*
+3 Sire of Seven Deaths (FDN) 1
+1 Swamp (UNH) 138
+4 Thought-Knot Seer (OGW) 9
+1 Ugin, the Spirit Dragon (FRF) 1 *F*
+4 Ugin's Labyrinth (MH3) 233 *F*
+4 Urza's Mine (2XM) 329 *F*
+4 Urza's Power Plant (2XM) 330 *F*
+4 Urza's Tower (2XM) 331 *F*
+1 Wastes (OGW) 183
+
+SIDEBOARD:
+1 Chalice of the Void (MMA) 203
+1 Cityscape Leveler (BRO) 233
+2 Disruptor Flute (MH3) 209 *F*
+1 Engineered Explosives (2XM) 252 *F*
+1 Ensnaring Bridge (2XM) 253
+1 Liquimetal Coating (BRR) 28 *F*
+1 Pithing Needle (10E) 338 *F*
+1 Soulless Jailer (ONE) 397 *F*
+2 The Stone Brain (BRO) 247 *F*
+1 Tormod's Crypt (M21) 241 *F*
+2 Torpor Orb (NPH) 162
+1 Trinisphere (2XM) 303 *F*

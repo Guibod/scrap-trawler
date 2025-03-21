@@ -1,0 +1,40 @@
+1 Reanimate
+1 Ashaya, Soul of the Wild
+1 Avenger of Zendikar
+1 Cultivate
+1 Cut Down
+1 Doubling Season
+1 Endurance
+1 Fecund Greenshell
+1 Fell
+16 Forest
+1 Go for the Throat
+1 Golgari Signet
+1 Grief
+1 Llanowar Loamspeaker
+1 Lumra, Bellow of the Woods
+1 Maha, Its Feathers Night
+1 Mossborn Hydra
+1 Nissa, Resurgent Animist
+1 Nissa, Vastwood Seer
+1 Nissa, Vital Force
+1 Nissa, Who Shakes the World
+1 Nyxbloom Ancient
+1 Oath of Nissa
+1 Omenpath Journey
+1 Omnath, Locus of Mana
+1 Patchwork Banner
+1 Roaming Throne
+1 Shriekmaw
+10 Swamp
+1 Tangled Florahedron
+1 Titania, Nature's Force
+1 Titania, Protector of Argoth
+1 Toxic Deluge
+1 Ygra, Eater of All
+1 Zendikar's Roil
+
+SIDEBOARD:
+1 Jumbo Cactuar
+
+1 Nissa of Shadowed Boughs

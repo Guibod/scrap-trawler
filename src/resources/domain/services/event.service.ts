@@ -3,7 +3,7 @@ import { type EventModel } from "~/resources/domain/models/event.model";
 import EventMapper from "~/resources/domain/mappers/event.mapper";
 import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo";
 import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo";
-import EventEntity, { EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity";
+import EventEntity, { type DeckEntity, EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity"
 import { getLogger } from "~/resources/logging/logger";
 import EventHydrator from "~/resources/domain/mappers/event.hydrator";
 
@@ -78,5 +78,22 @@ export default class EventService {
     }
 
     return entity;
+  }
+
+  async addDeckToEvent(eventId: any, deck: DeckEntity, raw: any): Promise<EventModel | null> {
+    const event = await this.dao.get(eventId);
+    if (!event) {
+      logger.warn(`Skipping add deck for event ${eventId}: Event not found.`);
+      return null;
+    }
+
+    if (!event.raw_data) event.raw_data = {} as unknown as EventEntity["raw_data"];
+    if (!event.raw_data.fetch) event.raw_data.fetch = {}
+    event.raw_data.fetch[deck.id] = raw
+    event.decks = event.decks.filter(existingDeck => existingDeck.id !== deck.id);
+    event.decks.push(deck);
+    await this.dao.save(event);
+
+    return EventMapper.toDbo(event);
   }
 }
