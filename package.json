@@ -103,7 +103,13 @@
     "vitest-mock-extended": "^2.0.2"
   },
   "lint-staged": {
-    "**/*.{ts,tsx,js,jsx,json,md}": "biome format --write"
+    "**/*.{ts,tsx,js,jsx,json,md}": "biome format --write",
+    "**/*.{ts,tsx,js,jsx}": "biome lint --fix",
+    "package.json": "biome sort",
+    "**/*.{ts,tsx}": [
+      "tsc --noEmit --skipLibCheck",
+      "vitest related --run"
+    ]
   },
   "manifest": {
     "manifest_version": 3,
