@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import packageJson from "../../../../package.json";
 import React from "react"
 import OptionPageLayout from "~/resources/ui/layouts/options"
+import { getHumanVersion } from "~/resources/utils/version"
 
 describe("OptionPageLayout Component", () => {
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe("OptionPageLayout Component", () => {
 
     expect(await screen.findByText("Test Content")).toBeInTheDocument();
     expect(
-      screen.getByText((content) => content.includes(`Scrap Trawler v${packageJson.version}`))
+      screen.getByText((content) => content.includes(`Scrap Trawler ${getHumanVersion()}`))
     ).toBeInTheDocument();
   });
 
@@ -40,6 +40,6 @@ describe("OptionPageLayout Component", () => {
     render(<OptionPageLayout><p>Footer Test</p></OptionPageLayout>);
 
     const year = new Date().getFullYear();
-    expect(screen.getByText(`Scrap Trawler v${packageJson.version} © ${year}`)).toBeInTheDocument();
+    expect(screen.getByText(`Scrap Trawler ${getHumanVersion()} © ${year}`)).toBeInTheDocument();
   });
 });

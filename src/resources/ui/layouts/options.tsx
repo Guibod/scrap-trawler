@@ -1,5 +1,5 @@
 import React, { type ReactNode, useEffect, useState } from "react"
-import packageJson from "../../../../package.json";
+import { getHumanVersion } from "~/resources/utils/version"
 
 export const OptionPageLayout = ({children}: {children: ReactNode}) => {
   const [darkMode, setDarkMode] = useState(false);
@@ -19,7 +19,7 @@ export const OptionPageLayout = ({children}: {children: ReactNode}) => {
 
       {/* ✅ Footer (Optional) */}
       <footer className="bg-gray-900 text-white py-4 text-center text-sm">
-        Scrap Trawler v{packageJson.version} &copy; {new Date().getFullYear()}
+        Scrap Trawler {getHumanVersion()} &copy; {new Date().getFullYear()}
       </footer>
     </div>
   );
