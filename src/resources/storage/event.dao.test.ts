@@ -5,7 +5,6 @@ import EventBuilder from "~/resources/domain/builders/event.builder"
 import EventMapper from "~/resources/domain/mappers/event.mapper"
 import { sampleEvent, sampleGameState, sampleOrganizer } from "~/resources/integrations/eventlink/data/sample.event"
 import EventEntity, { EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity"
-import DatabaseService from "~/resources/storage/database"
 
 let eventDao: EventDao
 

@@ -1,0 +1,36 @@
+3 Deadly Cover-Up (PMKM) 83p
+1 Demolition Field (M3C) 335
+2 Forest (J25) 94
+1 Gix's Command (PBRO) 97p
+2 Glarb, Calamity's Augur (BLB) 215
+3 Gloomlake Verge (PDSK) 260p
+4 Go for the Throat (J25) 447
+3 Hedge Maze (MKM) 262
+1 Herd Migration (DMU) 165
+2 Island (WC04) gn336
+2 Maelstrom Pulse (BLC) 126
+2 Nissa, Ascended Animist (ONE) 327
+4 Overlord of the Floodpits (PDSK) 68p
+4 Overlord of the Hauntwoods (DSK) 194
+1 Restless Cottage (WOE) 258
+1 Restless Reef (LCI) 282
+1 Ruthless Negotiation (BLB) 108
+1 Sab-Sunen, Luxa Embodied (DFT) 221
+2 Swamp (LCI) 398
+1 Tear Asunder (DMU) 183
+2 The End (WOE) 87
+3 Three Steps Ahead (OTJ) 75
+1 Undercity Sewers (MKM) 270
+1 Underground Mortuary (MKM) 271
+4 Up the Beanstalk (WOE) 195
+4 Wastewood Verge (DFT) 268
+4 Willowrush Verge (DFT) 270
+
+SIDEBOARD:
+3 Cut Down (DMU) 89
+1 Doppelgang (MKM) 198
+2 Dreams of Steel and Oil (BRO) 92
+2 Duress (DMR) 81
+3 Leyline of the Void (PDSK) 106p
+2 Negate (ORI) 65
+2 Obstinate Baloth (J25) 692

@@ -1,0 +1,29 @@
+About
+Name [Modern] Karn Father
+
+Deck
+2 Chalice of the Void
+4 Devourer of Destiny
+2 Dismember
+4 Expedition Map
+4 Glaring Fleshraker
+4 Karn, the Great Creator
+4 Kozilek's Command
+4 Mind Stone
+3 Sire of Seven Deaths
+1 Swamp
+4 Thought-Knot Seer
+1 Ugin, the Spirit Dragon
+4 Ugin's Labyrinth
+1 Wastes
+
+Sideboard
+1 Chalice of the Void
+1 Cityscape Leveler
+2 Disruptor Flute
+1 Liquimetal Coating
+1 Pithing Needle
+1 Soulless Jailer
+2 The Stone Brain
+1 Tormod's Crypt
+2 Torpor Orb

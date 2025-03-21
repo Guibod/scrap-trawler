@@ -11,6 +11,7 @@ const validEvent = {
   players: [],
   teams: [],
   rounds: [],
+  decks: [],
   mapping: null,
   spreadsheet: null,
   raw_data: {

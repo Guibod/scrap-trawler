@@ -90,7 +90,7 @@ describe("EventBuilder", () => {
   });
 
   it("should generate teams corresponding to players", () => {
-    const event = new EventBuilder().withPlayers(10).build();
+    const event = new EventBuilder().withPlayers(10).withDecks(10).build();
     expect(Object.keys(event.teams)).toHaveLength(10);
     expect(Object.entries(event.teams)
       .map(([_, team]) => team.players[0]))
