@@ -2,24 +2,23 @@ import { describe, it, expect, beforeEach, vi } from "vitest"
 import React from "react"
 import { render, screen, waitFor } from "@testing-library/react"
 import EventRegistration from "~/resources/ui/components/registration/registration"
-import { useEvent } from "~/resources/ui/providers/event"
+import { usePlayers } from "~/resources/ui/providers/event"
+import type { PlayerProfile } from "~/resources/domain/mappers/player.mapper"
 
 // Mock `useEvent` to provide test data
 vi.mock("~/resources/ui/providers/event", () => ({
-  useEvent: vi.fn()
+  usePlayers: vi.fn()
 }))
 
 // Mock PlayerName component
 vi.mock("~/resources/ui/components/player/name", () => ({
-  default: ({ player }: { player: any }) => <span data-testid="player-name">{player.name}</span>
+  default: ({ player }: { player: PlayerProfile }) => <span data-testid="player-name">{player.firstName}</span>
 }))
 
 describe("EventRegistration", () => {
-  const mockEvent = {
-    players: {
-      "1": { id: "1", teamId: "Team A", name: "Alice", displayName: "Alice", archetype: "Control", tableNumber: 5 },
-      "2": { id: "2", teamId: "Team B", name: "Bob", displayName: "Bob", archetype: "Aggro", tableNumber: 10 }
-    }
+  const mockPlayers = {
+    "1": { id: "1", teamId: "Team A", firstName: "Alice", displayName: "Alice", archetype: "Control", tableNumber: 5 },
+    "2": { id: "2", teamId: "Team B", firstName: "Bob", displayName: "Bob", archetype: "Aggro", tableNumber: 10 }
   }
 
   beforeEach(() => {
@@ -27,7 +26,7 @@ describe("EventRegistration", () => {
   })
 
   it("renders table headers correctly", () => {
-    vi.mocked(useEvent).mockReturnValue({ event: mockEvent } as unknown as ReturnType<typeof useEvent>)
+    vi.mocked(usePlayers).mockReturnValue(mockPlayers as unknown as ReturnType<typeof usePlayers>)
 
     render(<EventRegistration />)
 
@@ -40,7 +39,7 @@ describe("EventRegistration", () => {
   })
 
   it("displays player data correctly", async () => {
-    vi.mocked(useEvent).mockReturnValue({ event: mockEvent } as unknown as ReturnType<typeof useEvent>)
+    vi.mocked(usePlayers).mockReturnValue(mockPlayers as unknown as ReturnType<typeof usePlayers>)
 
     render(<EventRegistration />)
 
@@ -58,7 +57,7 @@ describe("EventRegistration", () => {
   })
 
   it("shows empty state when no players are available", () => {
-    vi.mocked(useEvent).mockReturnValue({ event: { players: {} } } as unknown as ReturnType<typeof useEvent>)
+    vi.mocked(usePlayers).mockReturnValue({} as unknown as ReturnType<typeof usePlayers>)
 
     render(<EventRegistration />)
 

@@ -3,13 +3,16 @@ import { SETUP_STEPS } from "~/resources/ui/components/event/setup/config";
   SpreadsheetData,
   SpreadsheetMetadata,
   SpreadsheetRawData, SpreadsheetRawRow,
-  SpreadsheetRow
-  } from "~/resources/domain/dbos/spreadsheet.dbo"
+  SpreadsheetRow, SpreadsheetRowId
+} from "~/resources/domain/dbos/spreadsheet.dbo"
   import { COLUMN_TYPE, COLUMN_TYPE_META } from "~/resources/domain/enums/spreadsheet.dbo"
 import { SpreadsheetDataFactory } from "~/resources/domain/parsers/spreadsheet.data.factory"
 import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
 import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 import type { MappingDbo, PairingMode } from "~/resources/domain/dbos/mapping.dbo"
+import type { DeckDbo } from "~/resources/domain/dbos/deck.dbo"
+import type { CardDbo } from "~/resources/domain/dbos/card.dbo"
+import { PlayerMapper, type PlayerProfile } from "~/resources/domain/mappers/player.mapper"
 
   export class SetupStatus {
     private _duplicates: Record<string, SpreadsheetData>;
@@ -126,28 +129,6 @@ import type { MappingDbo, PairingMode } from "~/resources/domain/dbos/mapping.db
 
     get uniqueColumnIndex() {
       return this.meta.columns.find(({ type }) => type === COLUMN_TYPE.UNIQUE_ID)?.index;
-    }
-
-    players(players: Record<WotcId, PlayerDbo>): PlayerDbo[] {
-      if (!this.pairs) return Object.values(players); // No pairings, return players as-is
-
-      return Object.entries(players).map(([wotcId, player]) => {
-        const mappingEntry = this.pairs?.[wotcId];
-        if (!mappingEntry) return player; // No pairing, return unchanged player
-
-        const spreadsheetRow = this.data.find(row => row.id === mappingEntry.rowId);
-        if (!spreadsheetRow) return player; // Invalid pairing, return unchanged player
-
-        return {
-          ...player,
-          overrides: {
-            displayName: `${spreadsheetRow.firstName} ${spreadsheetRow.lastName}`,
-            firstName: spreadsheetRow.firstName,
-            lastName: spreadsheetRow.lastName,
-            archetype: spreadsheetRow.archetype,
-          },
-        };
-      });
     }
 
     private regroupRawDuplicates(): Record<string, SpreadsheetRawRow[]> {

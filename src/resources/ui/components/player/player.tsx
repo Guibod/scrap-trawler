@@ -1,5 +1,5 @@
-import { useEvent } from "~/resources/ui/providers/event"
-import React, { useEffect, useState } from "react"
+import { usePlayer } from "~/resources/ui/providers/event"
+import React, { useState } from "react"
 import { User } from "@heroui/user"
 import { Button } from "@heroui/button"
 import { PencilIcon } from "@heroicons/react/20/solid"
@@ -7,32 +7,18 @@ import PlayerName from "~/resources/ui/components/player/name"
 import PlayerModalEdit from "~/resources/ui/components/player/edit.modal"
 import { useDisclosure } from "@heroui/react"
 import { Modal } from "@heroui/modal"
-import { hashStringSHA1 } from "~/resources/utils/crypto"
-import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
+import ColorIdentity from "~/resources/ui/components/mana/identity"
 
 export interface PlayerProps {
   playerId?: string
-  player?: PlayerDbo
   editable?: boolean
   children?: React.ReactNode
 }
 
-const Player = ({ playerId, player, editable, children }: PlayerProps) => {
-  const { event } = useEvent()
-  const [avatar, setAvatar] = useState<string | null>(null)
-  const [currentPlayer, setCurrentPlayer] = useState(player ?? event.players[playerId])
+const Player = ({ playerId, editable, children }: PlayerProps) => {
+  const player = usePlayer(playerId)
   const [isHovered, setIsHovered] = useState(false) // Hover state
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
-  useEffect(() => {
-    if (!avatar) {
-      createAvatarHash()
-    }
-    async function createAvatarHash() {
-      const hash = await hashStringSHA1(currentPlayer.id)
-      setAvatar(`https://www.gravatar.com/avatar/${hash}?d=identicon`)
-    }
-  }, [])
 
   return (
     <>
@@ -45,12 +31,14 @@ const Player = ({ playerId, player, editable, children }: PlayerProps) => {
         {/* User Component */}
         <User
           avatarProps={{
-            src: avatar,
+            size: "lg",
+            src: player.avatar,
           }}
-          name={<PlayerName player={currentPlayer} />}
+          name={<PlayerName player={player} />}
           description={
-            <div className="flex items-center space-x-5">
-              {currentPlayer.overrides?.archetype || currentPlayer.archetype || currentPlayer.overrides?.displayName || currentPlayer.displayName}
+            <div className="flex items-center gap-3 mt-2">
+              <ColorIdentity identity={player.deck?.colors} size="sm" />
+              {player.archetype}
             </div>
           }
         />

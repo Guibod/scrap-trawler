@@ -24,9 +24,11 @@ interface FetchStatus {
   isFetching: boolean
   count: number
   processed: number
+  hasError: boolean
+  hasFailure: boolean
 }
 
-const defaultStatus: FetchStatus = { isFetching: false, count: 0, processed: 0 }
+const defaultStatus: FetchStatus = { isFetching: false, count: 0, processed: 0, hasError: false, hasFailure: false }
 
 const FetchContext = createContext<FetchContextType | undefined>(undefined)
 const FetchStatusStoreContext = createContext<{
@@ -37,6 +39,16 @@ const FetchStatusStoreContext = createContext<{
 export type FetchServiceProviderProps = {
   children: ReactNode
   service?: DeckFetchService
+}
+
+const statusDescription: Record<EventFetchStatus, {
+  description: string,
+  severity: ToastProps["severity"]
+}> = {
+  [EventFetchStatus.PENDING]: { description: "Deck recovery has not started yet", severity: "default" },
+  [EventFetchStatus.SUCCESS]: { description: "All decks have been recovered", severity: "success" },
+  [EventFetchStatus.PARTIAL]: { description: "Some decks have not been recovered", severity: "warning" },
+  [EventFetchStatus.FAILED]: { description: "An error occurred while fetching decks", severity: "danger" },
 }
 
 export const FetchServiceProvider = ({ children, service }: FetchServiceProviderProps) => {
@@ -50,16 +62,16 @@ export const FetchServiceProvider = ({ children, service }: FetchServiceProvider
   }, [])
 
   const setFetching = useCallback(
-    (eventId: string, isFetching: boolean, count = 0, processed = 0) => {
-      statusMap.current.set(eventId, { isFetching, count, processed })
+    (eventId: string, isFetching: boolean, count = 0, processed = 0, hasError = false, hasFailure= false) => {
+      statusMap.current.set(eventId, { isFetching, count, processed, hasError, hasFailure })
       notify(eventId)
     },
     [notify]
   )
 
   useEffect(() => {
-    fetchService.setOnProgress((eventId, processed, count) => {
-      setFetching(eventId, true, count, processed)
+    fetchService.setOnProgress((eventId, processed, count, hasError, hasFailure) => {
+      setFetching(eventId, true, count, processed, hasError, hasFailure)
     })
     fetchService.setOnEventStart((eventId) => {
       fetchService.eventService.get(eventId).then((event) => {
@@ -72,27 +84,11 @@ export const FetchServiceProvider = ({ children, service }: FetchServiceProvider
     })
     fetchService.setOnEventComplete((eventId, status, count) => {
       fetchService.eventService.get(eventId).then((event) => {
-        let description: string
-        let severity: ToastProps["severity"]
-        switch (status) {
-          case EventFetchStatus.SUCCESS:
-            description = "All decks have been recovered"
-            severity = "success"
-            break
-          case EventFetchStatus.PARTIAL:
-            description = "Some decks have not been recovered"
-            severity = "warning"
-            break
-          case EventFetchStatus.FAILED:
-            description = "An error occurred while fetching decks"
-            severity = "danger"
-            break
-        }
         setFetching(eventId, false, count)
         addToast({
           title: `Deck fetch for ${event?.title}`,
-          description,
-          severity,
+          description: statusDescription[status].description,
+          severity: statusDescription[status].severity,
         })
       })
     })
@@ -122,7 +118,7 @@ export const FetchServiceProvider = ({ children, service }: FetchServiceProvider
         severity: "warning",
       })
       statusMap.current.clear()
-      subscribers.current.forEach((subs, eventId) => subs.forEach((fn) => fn()))
+      subscribers.current.forEach((subs) => subs.forEach((fn) => fn()))
     })
   }, [fetchService])
 
@@ -173,7 +169,7 @@ export const FetchServiceProvider = ({ children, service }: FetchServiceProvider
   )
 }
 
-export const useFetch = (): FetchContextType => {
+export const useFetchService = (): FetchContextType => {
   const ctx = useContext(FetchContext)
   if (!ctx) throw new Error("useFetch must be used within a FetchServiceProvider")
   return ctx

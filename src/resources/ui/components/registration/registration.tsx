@@ -1,12 +1,10 @@
-import { useEvent } from "~/resources/ui/providers/event"
+import { usePlayers } from "~/resources/ui/providers/event"
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/table"
-import Team from "~/resources/ui/components/team"
-import MatchResult from "~/resources/ui/components/match/result"
 import React from "react"
 import PlayerName from "~/resources/ui/components/player/name"
 
 const EventRegistration = () => {
- const { event } = useEvent()
+ const players = usePlayers()
 
   return (
     <Table>
@@ -18,7 +16,7 @@ const EventRegistration = () => {
         <TableColumn>Unique Identifier</TableColumn>
         <TableColumn>Table</TableColumn>
       </TableHeader>
-      <TableBody emptyContent={"No matches yet, use scrape button on EventLink.com page to add events."} items={Object.values(event.players)}>
+      <TableBody emptyContent={"No matches yet, use scrape button on EventLink.com page to add events."} items={Object.values(players)}>
         {(player) => (
           <TableRow aria-label={`player-${player.id}`} key={player.id}>
             <TableCell>{player.teamId}</TableCell>

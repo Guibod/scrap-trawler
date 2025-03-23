@@ -9,9 +9,13 @@ import SetupSteps from "~/resources/ui/components/event/setup/steps"
 // TODO: display a sample of the data from the spreadsheet in the end
 // TODO: control the accordion depending on the progress of the setup
 
-const EventSetup = () => {
+type EventSetupProps = {
+  onQuitHandler?: () => Promise<void>
+}
+
+const EventSetup = ({onQuitHandler}: EventSetupProps) => {
   return (
-    <EventSetupProvider>
+    <EventSetupProvider onQuitHandler={onQuitHandler}>
       <SetupSteps />
     </EventSetupProvider>
   );

@@ -5,10 +5,15 @@ import EventContainer from "~/resources/ui/components/event/container"
 import { useEvent } from "~/resources/ui/providers/event"
 import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import userEvent from "@testing-library/user-event"
+import { useEventFetchStatus } from "~/resources/ui/providers/fetcher"
 
 // Mock `useEvent` to provide test data
 vi.mock("~/resources/ui/providers/event", () => ({
   useEvent: vi.fn()
+}))
+// Mock `useEventFetchStatus` to provide test data
+vi.mock("~/resources/ui/components/fetch/status", () => ({
+  default: vi.fn(() => <div data-testid="fetch-status">FetchStatus</div>),
 }))
 
 // Mock Components

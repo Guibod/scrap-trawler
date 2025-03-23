@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import React from "react"
 import { renderHook, act } from "@testing-library/react"
-import { FetchServiceProvider, useFetch, useEventFetchStatus } from "./fetcher"
+import { FetchServiceProvider, useFetchService, useEventFetchStatus } from "./fetcher"
 import { DeckFetchRequest } from "~/resources/integrations/decks/request"
 import DeckFetchService from "~/resources/integrations/decks/service"
 
@@ -43,7 +43,7 @@ describe("FetchServiceProvider", () => {
   )
 
   it("should call schedule on fetchEvent", async () => {
-    const { result } = renderHook(() => useFetch(), { wrapper })
+    const { result } = renderHook(() => useFetchService(), { wrapper })
     await act(() => result.current.fetchEvent("e1"))
     expect(mockSchedule).toHaveBeenCalledWith(requests)
   })

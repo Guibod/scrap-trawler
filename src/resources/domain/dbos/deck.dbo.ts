@@ -7,18 +7,21 @@ export interface DeckCardDbo {
   quantity: number
 }
 
+export interface DeckBoardsDbo {
+  mainboard: DeckCardDbo[],
+  sideboard?: DeckCardDbo[],
+  commanders?: DeckCardDbo[],
+  companions?: DeckCardDbo[],
+  signatureSpells?: DeckCardDbo[],
+}
+
 export interface DeckDbo {
   id: string;  // Optional UUID
   url?: string;  // External source (Moxfield, Archidekt, etc.)
   spreadsheetRowId: string;  // Reference to SpreadsheetRawRow.id
   lastUpdated: Date | null; // ISO timestamp, if available from the source
-  boards: {
-    mainboard: DeckCardDbo[],
-    sideboard?: DeckCardDbo[],
-    commanders?: DeckCardDbo[],
-    companions?: DeckCardDbo[],
-    signatureSpells?: DeckCardDbo[],
-  },
+  boards: DeckBoardsDbo,
+  archetype: string | null,
   face: CardName | null,
   status: DeckStatus;
   legal: boolean;

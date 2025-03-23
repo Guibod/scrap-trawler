@@ -17,6 +17,7 @@ export class CardMapper {
       types: entity.types,
       subtypes: entity.subtypes,
       manaValue: entity.manaValue,
+      legalities: entity.legalities,
       imageCrop: `https://api.scryfall.com/cards/named?exact=${encodedName}&format=image&version=art_crop`,
       imageLarge: `https://api.scryfall.com/cards/named?exact=${encodedName}&format=image&version=large`,
       imageMedium: `https://api.scryfall.com/cards/named?exact=${encodedName}&format=image&version=normal`,
