@@ -6,15 +6,14 @@ import type {
   SpreadsheetFilter,
   SpreadsheetMetadata,
   SpreadsheetRawData,
-  SpreadsheetRowId
 } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { COLUMN_TYPE, COLUMN_TYPE_UNIQUE, DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo"
 import { addToast, Spinner } from "@heroui/react"
 import { SetupStatus } from "~/resources/ui/components/event/setup/status"
 import { CheckIcon } from "@heroicons/react/24/solid"
 import type { EventModel } from "~/resources/domain/models/event.model"
-import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
 import type { MappingDbo } from "~/resources/domain/dbos/mapping.dbo"
+import { useFetchService } from "~/resources/ui/providers/fetcher"
 
 class EventSetupContextType {
   event: EventModel | null;
@@ -39,8 +38,14 @@ export const useEventSetup = () => {
   return context;
 };
 
-export const EventSetupProvider = ({ children }) => {
+type EventSetupProviderProps = {
+  children: React.ReactNode,
+  onQuitHandler: () => Promise<void>
+}
+
+export const EventSetupProvider = ({ children, onQuitHandler }: EventSetupProviderProps) => {
   const { event, updateEvent } = useEvent();
+  const { fetchEvent } = useFetchService()
 
   const [spreadsheetData, setSpreadsheetData] = useState<SpreadsheetRawData | null>(
     event.raw_data.spreadsheet || null
@@ -135,15 +140,20 @@ export const EventSetupProvider = ({ children }) => {
     }
 
     updateEvent({
-      spreadsheet: { ...event.spreadsheet, meta: { ...spreadsheetMeta, finalized: true } },
+      spreadsheet: {
+        ...event.spreadsheet,
+        meta: { ...spreadsheetMeta, finalized: true }
+      },
     })
-
-    addToast({
-      title: "Finalization Success",
-      description: "The event setup has been completed.",
-      color: "success",
-      timeout: 300
-    })
+      .then(() => fetchEvent(event.id))
+      .then(() => {
+        addToast({
+          title: "Setup Completed",
+          description: "The event setup has been completed.",
+          color: "success"
+        })
+      })
+      .then(() => onQuitHandler())
   }
 
   const handleFileUpload = (file: File, autodetect: boolean) => {

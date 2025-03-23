@@ -4,6 +4,7 @@ import { ScrapTrawlerError } from "~/resources/exception"
 import type EventEntity from "~/resources/storage/entities/event.entity"
 import { sampleEvent, sampleGameState, sampleOrganizer } from "~/resources/integrations/eventlink/data/sample.event"
 import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
+import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 
 const loggerErrorMock = vi.fn();
 vi.doMock('~/resources/logging/logger', () => ({
@@ -96,10 +97,11 @@ describe('EventHydrator', () => {
       expect(status.pair).toBe(PairStatus.COMPLETED);
     });
 
-    it('should set global to COMPLETED when both scrape and pair are completed', () => {
+    it('should set global to COMPLETED when both scrape and pair and fetch are completed', () => {
       const entity = {
-        raw_data: { wotc: { event: { status: 'ENDED' } }, spreadsheet: {} },
+        raw_data: { wotc: { event: { status: 'ENDED' } }, spreadsheet: {}, fetch: {} },
         mapping: true,
+        decks: [{ status: DeckStatus.FETCHED }],
         spreadsheet: { columns: [1], finalized: true },
       }   as unknown as EventEntity
       const status = EventHydrator.inferStatus(entity);

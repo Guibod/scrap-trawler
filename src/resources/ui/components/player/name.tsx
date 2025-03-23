@@ -1,16 +1,81 @@
 import React from "react"
-import { ShieldExclamationIcon, PencilSquareIcon } from "@heroicons/react/20/solid"
+import { ShieldExclamationIcon, PencilSquareIcon, HandThumbUpIcon, HandThumbDownIcon, HandRaisedIcon, ClockIcon } from "@heroicons/react/20/solid"
 import { Tooltip } from "@heroui/tooltip"
-import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
+import type { PlayerProfile } from "~/resources/domain/mappers/player.mapper"
+import type { PairingMode } from "~/resources/domain/dbos/mapping.dbo"
+import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 
 interface PlayerNameProps {
-  player: PlayerDbo
+  player: PlayerProfile
+}
+
+function mappingDescription({ mapMode }: { mapMode: PairingMode }) {
+  switch (mapMode) {
+    case "manual":
+      return "manual matching"
+    case "random":
+      return "random assignment"
+    case "name-strict":
+      return "strict name matching"
+    case "name-swap":
+      return "first/last name swap"
+    case "name-first-initial":
+      return "first name initial match"
+    case "name-last-initial":
+      return "last name initial match"
+    case "name-levenshtein":
+      return "fuzzy name matching (Levenshtein)"
+    default:
+      return "an unknown method"
+  }
+}
+
+const deckStatusMap: Record<DeckStatus, {icon: React.ReactNode, description: string}> = {
+  [DeckStatus.PENDING]: {
+    icon: <ClockIcon className="h-5 w-5 fill-gray-100 stroke-gray-700 cursor-help" />,
+    description: "Their decklist has not been fetched yet."
+  },
+  [DeckStatus.FETCHED]: {
+    icon: <HandThumbUpIcon className="h-5 w-5 fill-success-100 stroke-success-700 cursor-help" />,
+    description: "Their decklist has been fetched."
+  },
+  [DeckStatus.FAILED]: {
+    icon: <HandThumbDownIcon className="h-5 w-5 fill-warning-100 stroke-warning-700 cursor-help" />,
+    description: "Their decklist could not be fetched."
+  },
+  [DeckStatus.ERROR]: {
+    icon: <HandRaisedIcon className="h-5 w-5 fill-danger-100 stroke-danger-700 cursor-help" />,
+    description: "An error occurred while fetching their decklist."
+  }
 }
 
 const PlayerName = ({ player }: PlayerNameProps) => {
   // Render Override Tooltip if player is patched
+  const renderMappedIcon = () => {
+    if (!player.mapMode) return null; // Hide if not patched
+
+    return (
+      <Tooltip content={
+        <div className="text-xs text-gray-800">
+          <p>
+            This player was mapped from the spreadsheet using <strong>{mappingDescription(player)}</strong>.
+
+            {deckStatusMap[player.deck?.status]?.description && (
+              <span>
+                {" "}
+                {deckStatusMap[player.deck?.status]?.description}
+              </span>
+            )}
+          </p>
+        </div>
+      }>
+        {deckStatusMap[player.deck?.status]?.icon && deckStatusMap[player.deck?.status]?.icon}
+      </Tooltip>
+    );
+  };
+
   const renderPatchedIcon = () => {
-    if (!player.overrides) return null; // Hide if not patched
+    if (!player.isOverride) return null; // Hide if not patched
 
     return (
       <Tooltip content={
@@ -25,7 +90,7 @@ const PlayerName = ({ player }: PlayerNameProps) => {
 
   // Render Anonymization Tooltip if player is anonymized (Only if NOT patched)
   const renderAnonymizedIcon = () => {
-    if (player.overrides || !player.isAnonymized) return null; // Hide if patched
+    if (player.isOverride || !player.isAnonymized) return null; // Hide if patched
     return (
       <Tooltip content={
         <div className="text-xs text-gray-800">
@@ -48,12 +113,11 @@ const PlayerName = ({ player }: PlayerNameProps) => {
 
   return (
     <div className="flex items-center space-x-2" aria-label={`player-name-${player.id}`}>
-      {renderPatchedIcon()}
-      {renderAnonymizedIcon()}
+      {renderMappedIcon() || renderPatchedIcon() || renderAnonymizedIcon()}
       <span>
-        { player.overrides?.firstName || player.firstName }
+        { player.firstName }
         {" "}
-        { player.overrides?.lastName || player.lastName}
+        { player.lastName }
       </span>
     </div>
   );

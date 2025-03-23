@@ -1,12 +1,10 @@
 import React from "react";
 import { Button } from "@heroui/button";
 import { useEventSetup } from "~/resources/ui/components/event/setup/provider";
-import Player from "~/resources/ui/components/player/player";
-import { Card, CardBody } from "@heroui/card";
 import PlayerCard from "~/resources/ui/components/player/card"
 
 const SetupFinalize: React.FC = () => {
-  const { event, status, handleFinalization } = useEventSetup();
+  const { event, handleFinalization } = useEventSetup();
 
   return (
     <div className="flex flex-col w-full p-4">
@@ -19,14 +17,14 @@ const SetupFinalize: React.FC = () => {
         <Button
           onPress={handleFinalization}
           className="mt-3 bg-green-500 text-white px-6 py-3 text-lg rounded-md shadow-lg hover:scale-105 active:scale-95">
-          ✅ Save & Exit Setup
+          ✅ Finish setup & Start fetching decklists
         </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {(status.players(event.players).map((player) => {
+        {(Object.keys(event.players).map(playerId => {
           return (
-            <PlayerCard key={player.id} player={player} editable={false} />
+            <PlayerCard key={playerId} playerId={playerId} editable={false} />
           );
         }))}
       </div>

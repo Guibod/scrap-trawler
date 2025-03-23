@@ -4,6 +4,7 @@ import React from "react";
 import { SettingsProvider } from "~/resources/ui/providers/settings"
 import { CardProvider } from "~/resources/ui/providers/card"
 import { MtgJsonProvider } from "~/resources/ui/providers/mtgjson"
+import { FetchServiceProvider } from "~/resources/ui/providers/fetcher"
 
 export const RoutedProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate()
@@ -17,11 +18,13 @@ export const RoutedProvider = ({ children }: { children: React.ReactNode }) => {
         timeout: 5000,
       }} />
       <SettingsProvider>
-        <MtgJsonProvider>
-          <CardProvider>
-            {children}
-          </CardProvider>
-        </MtgJsonProvider>
+        <FetchServiceProvider>
+          <MtgJsonProvider>
+            <CardProvider>
+              {children}
+            </CardProvider>
+          </MtgJsonProvider>
+        </FetchServiceProvider>
       </SettingsProvider>
     </HeroUIProvider>
   );

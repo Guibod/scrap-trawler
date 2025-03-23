@@ -8,6 +8,12 @@ import { getLogger } from "~/resources/logging/logger"
 import type { OverrideDbo } from "~/resources/domain/dbos/player.dbo"
 import { useParams } from "react-router-dom"
 import EventService from "~/resources/domain/services/event.service"
+import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
+import type { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
+import type { PairingMode } from "~/resources/domain/dbos/mapping.dbo"
+import type { DeckDbo } from "~/resources/domain/dbos/deck.dbo"
+import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
+import { PlayerMapper, type PlayerProfile } from "~/resources/domain/mappers/player.mapper"
 
 const logger = getLogger("event-provider")
 
@@ -129,4 +135,26 @@ export function EventProvider({ service = EventService.getInstance(), children }
   }
 
   return <EventContext.Provider value={value}>{children}</EventContext.Provider>;
+}
+
+export function usePlayer(playerId: string): PlayerProfile {
+  const { event } = useEvent()
+
+  if (!event) {
+    throw new Error("usePlayer called before event is loaded")
+  }
+
+  return PlayerMapper.toProfile(event, playerId)
+}
+export function usePlayers(): Record<string, PlayerProfile> {
+  const { event } = useEvent()
+
+  if (!event) {
+    throw new Error("usePlayer called before event is loaded")
+  }
+
+  return Object.fromEntries(
+    Object.keys(event.players)
+      .map(playerId => [playerId, PlayerMapper.toProfile(event, playerId)])
+  )
 }

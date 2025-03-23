@@ -6,6 +6,7 @@ import { useEvent } from "~/resources/ui/providers/event"
 import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import EventEmpty from "~/resources/ui/components/event/empty"
 import EventSetup from "~/resources/ui/components/event/setup"
+import FetchStatus from "~/resources/ui/components/fetch/status"
 
 const EventContainer = () => {
   const { event, showSetupByDefault} = useEvent()
@@ -13,7 +14,7 @@ const EventContainer = () => {
 
   let component = <EventView />
   if (isSetupMode) {
-    component = <EventSetup />
+    component = <EventSetup onQuitHandler={async () => setIsSetupMode(false)}/>
   }
   if (event?.scrapeStatus === EventScrapeStateDbo.PURGED) {
     component = <EventEmpty />
@@ -26,7 +27,9 @@ const EventContainer = () => {
           className="text-xl">{event.date.toLocaleDateString()}</span>
         </h1>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-5">
+          <FetchStatus size="sm" />
+
           <Switch id="mode-switch" isSelected={isSetupMode}
                   onChange={() => setIsSetupMode(!isSetupMode)}
                   thumbIcon={({ isSelected, className }) =>
