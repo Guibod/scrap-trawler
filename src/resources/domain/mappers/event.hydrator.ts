@@ -9,6 +9,7 @@ import type { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo
 import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/event-extractor"
 import { EventLinkFormats } from "~/resources/integrations/eventlink/enum"
+import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 
 const logger = getLogger("event-hydrator")
 export class HydrationError extends ScrapTrawlerError {}
@@ -199,7 +200,15 @@ export default class EventHydrator {
         }
       }
 
-      if (scrape === ScrapeStatus.COMPLETED && pair === PairStatus.COMPLETED) {
+      if (entity.raw_data.fetch) {
+        fetch = FetchStatus.PARTIAL
+
+        if (entity.decks && entity.decks.every(deck => deck.status === DeckStatus.FETCHED)) {
+          fetch = FetchStatus.COMPLETED
+        }
+      }
+
+      if (scrape === ScrapeStatus.COMPLETED && pair === PairStatus.COMPLETED && fetch === FetchStatus.COMPLETED) {
         global = GlobalStatus.COMPLETED;
       }
 
