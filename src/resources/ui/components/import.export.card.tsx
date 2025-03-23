@@ -3,6 +3,7 @@ import { addToast, Button, Card, CardBody, CardHeader, Modal, Progress } from "@
 import { formats, ImportExportService } from "~/resources/domain/import.export.service"
 import { humanTimestamp } from "~/resources/utils/text"
 import { ModalBody, ModalContent, ModalHeader } from "@heroui/modal"
+import { EventDao } from "~/resources/storage/event.dao"
 
 
 type ImportExportCardProps = {
@@ -19,7 +20,7 @@ const ImportExportCard = ({ service } : ImportExportCardProps) => {
   }
 
   if (!service) {
-    service = new ImportExportService(null, progressCallback)
+    service = new ImportExportService(EventDao.getInstance(), progressCallback)
   }
 
   const handleExport = async () => {
