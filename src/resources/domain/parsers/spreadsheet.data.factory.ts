@@ -1,4 +1,9 @@
-import type { SpreadsheetData, SpreadsheetMetadata, SpreadsheetRawData } from "~/resources/domain/dbos/spreadsheet.dbo"
+import type {
+  SpreadsheetData,
+  SpreadsheetMetadata,
+  SpreadsheetRawData,
+  SpreadsheetRow
+} from "~/resources/domain/dbos/spreadsheet.dbo"
 import { COLUMN_TYPE, COLUMN_TYPE_META, FILTER_OPERATOR } from "~/resources/domain/enums/spreadsheet.dbo"
 import { DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo";
 import { hashStringSHA1 } from "~/resources/utils/crypto"
@@ -72,22 +77,18 @@ export class SpreadsheetDataFactory {
 
     if (!data) return [];
 
-    return Promise.all(data.map(async (row) => {
-      const uniqueId = row[columnMap[COLUMN_TYPE.UNIQUE_ID]]
-      const hashedId = uniqueId ? await hashStringSHA1(uniqueId) : "";
+    return Promise.all(data.map(async (row, index) => {
+      const uniqueId = await hashStringSHA1(row[columnMap[COLUMN_TYPE.UNIQUE_ID]] ?? index.toString());
 
       return {
         id: uniqueId,
-        hash: hashedId,
-        wotcId: null,
-        personaId: null,
         player: this.extractPlayerData(row, columnMap),
         archetype: SpreadsheetDataFactory.normalizeText(row[columnMap[COLUMN_TYPE.ARCHETYPE]]),
         decklistUrl: SpreadsheetDataFactory.normalizeText(row[columnMap[COLUMN_TYPE.DECKLIST_URL]]),
         decklistTxt: SpreadsheetDataFactory.normalizeText(row[columnMap[COLUMN_TYPE.DECKLIST_TXT]]),
         firstName: SpreadsheetDataFactory.normalizeText(row[columnMap[COLUMN_TYPE.FIRST_NAME]], true),
         lastName: SpreadsheetDataFactory.normalizeText(row[columnMap[COLUMN_TYPE.LAST_NAME]], true),
-      };
+      } as SpreadsheetRow;
     }));
   }
 
