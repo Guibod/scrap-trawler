@@ -22,7 +22,6 @@ describe("SettingsDao", () => {
   it("loads settings from storage", async () => {
     vi.mocked(chrome.storage.local.get).mockImplementation(async () => ({
       scrapTrawlerSettings: {
-        moxfieldApiKey: "test-key",
         enableCrossEventIdentification: true,
       }
     }))
@@ -30,7 +29,6 @@ describe("SettingsDao", () => {
     const settings = await settingsDao.load();
 
     expect(settings).toEqual({
-      moxfieldApiKey: "test-key",
       mtgJsonVersion: null,
       enableCrossEventIdentification: true,
       showWelcome: true,
@@ -54,7 +52,6 @@ describe("SettingsDao", () => {
   it("saves settings to storage", async () => {
     const newSettings: SettingsModel = {
       ...DEFAULT_SETTINGS,
-      moxfieldApiKey: "new-saved-key",
     };
 
     await settingsDao.save(newSettings);

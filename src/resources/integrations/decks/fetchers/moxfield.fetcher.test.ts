@@ -32,10 +32,6 @@ describe('MoxfieldFetcher', () => {
   const mockEventService = createMock<EventService>()
 
   beforeEach(() => {
-    mockSettings = {
-      get: vi.fn().mockResolvedValue({ moxfieldApiKey: null }),
-    } as unknown as Mocked<SettingsService>
-
     vi.mocked(sendToBackground).mockResolvedValue({
       ok: true,
       data: mockResponse

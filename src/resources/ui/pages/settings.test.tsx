@@ -6,7 +6,6 @@ import SettingsPage from "~/resources/ui/pages/settings";
 // ✅ Mock settings provider properly
 const setManyMock = vi.fn(() => Promise.resolve())
 const settingsMock = {
-  moxfieldApiKey: "test-api-key",
   enableCrossEventIdentification: true,
 }
 vi.mock("~/resources/ui/providers/settings", () => ({
@@ -30,23 +29,6 @@ vi.mock("~/resources/ui/components/card/index.settings", () => ({
 describe("SettingsPage", () => {
   beforeEach(() => {
     vi.resetAllMocks();
-  });
-
-  it("should render settings page with initial values", () => {
-    render(<SettingsPage />);
-
-    expect(screen.getByText("Settings")).toBeInTheDocument();
-    expect(screen.getByLabelText("Moxfield API Key")).toHaveValue("test-api-key");
-    expect(screen.getByText("Enable Cross-Event Identification")).toBeInTheDocument();
-  });
-
-  it("should update state when input values change", async () => {
-    render(<SettingsPage />);
-
-    const input = screen.getByLabelText("Moxfield API Key");
-    fireEvent.change(input, { target: { value: "new-api-key" } });
-
-    expect(input).toHaveValue("new-api-key");
   });
 
   it("should call setMany when settings are saved", async () => {

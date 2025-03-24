@@ -12,8 +12,8 @@ const TestComponent = () => {
   const { settings, setMany } = useSettings();
   return (
     <div>
-      <p data-testid="moxfield">{settings?.moxfieldApiKey ?? ''}</p>
-      <button onClick={() => setMany({ moxfieldApiKey: "new-key" })}>
+      <p data-testid="cross-identification">{String(settings?.enableCrossEventIdentification)}</p>
+      <button onClick={() => setMany({ enableCrossEventIdentification: true })}>
         Update Key
       </button>
     </div>
@@ -43,7 +43,7 @@ describe("SettingsProvider", () => {
       </SettingsProvider>
     );
 
-    expect(await screen.findByTestId("moxfield")).toHaveTextContent("");
+    expect(await screen.findByTestId("cross-identification")).toHaveTextContent("false");
   });
 
   it("updates settings when calling updateSettings", async () => {
@@ -56,9 +56,9 @@ describe("SettingsProvider", () => {
     await waitFor(() => screen.getByRole("button", { name: /update key/i }))
       .then((button) => userEvent.click(button));
 
-    expect(screen.getByTestId("moxfield")).toHaveTextContent("new-key");
+    expect(screen.getByTestId("cross-identification")).toHaveTextContent("true");
     expect(settingsServiceMock.setMany).toHaveBeenCalledWith({
-      moxfieldApiKey: "new-key",
+      enableCrossEventIdentification: true,
     });
   });
 

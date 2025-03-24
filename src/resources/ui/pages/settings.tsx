@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSettings } from "~/resources/ui/providers/settings";
-import { Form, Button, Input, Checkbox, Card, CardHeader, CardBody, addToast } from "@heroui/react"
+import { Form, Button, Checkbox, Card, CardHeader, CardBody, addToast } from "@heroui/react"
 import type { SettingsModel } from "~/resources/domain/models/settings.model"
 import ImportExportCard from "~/resources/ui/components/import.export.card"
 import CardDatabaseSettings from "~/resources/ui/components/card/db.settings"
@@ -42,13 +42,6 @@ const SettingsPage = () => {
 
         <Form onSubmit={onSubmit}>
           <CardBody className={"flex flex-col gap-5"}>
-            <Input
-              label="Moxfield API Key"
-              placeholder="Enter your Moxfield API Key"
-              defaultValue={currentSettings.moxfieldApiKey ?? ""}
-              onValueChange={(v) => handleKeyChange("moxfieldApiKey", v)} // ✅ Fully controlled
-            />
-
             <Checkbox
               isSelected={!!currentSettings.enableCrossEventIdentification}
               onValueChange={(v) => handleKeyChange("enableCrossEventIdentification", v)} // ✅ Fully controlled
