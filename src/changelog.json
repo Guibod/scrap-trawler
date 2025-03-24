@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.11.0",
+    "timestamp": 1742851143,
+    "changes": [
+      "Feature — added mtgjson ui components",
+      "Feature — added DeckFetchService()",
+      "Feature — fetcher provider",
+      "Fix — import/export was not working",
+      "Feature — fetch related ui",
+      "Fix — spreadsheet data was never available",
+      "Feature — added configuration for a cloudflare proxy",
+      "Fix — removed dependency to lodash"
+    ]
+  },
+  {
     "version": "0.10.0",
     "timestamp": 1741870441,
     "changes": [
