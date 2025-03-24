@@ -16,12 +16,16 @@ const SpreadsheetPlayerPool = () => {
   }
 
   return (
-    <div ref={setNodeRef} className="overflow-auto grid-cols-3 grid gap-2 min-w-0">
-      {remaining.map(p => (
-        <DraggableChip key={p.id} player={p}
-                       className="overflow-hidden text-ellipsis whitespace-nowrap max-w-full min-w-0" />
-      ))}
-    </div>
+    <>
+      <p className="text-medium mb-5">Each chip represent a player and can be drag’n’dropped on the left side of the page.</p>
+      <div ref={setNodeRef} className="overflow-auto grid-cols-3 grid gap-2 min-w-0">
+
+        {remaining.map(p => (
+          <DraggableChip key={p.id} player={p}
+                         className="overflow-hidden text-ellipsis whitespace-nowrap max-w-full min-w-0" />
+        ))}
+      </div>
+    </>
     )
 }
 
