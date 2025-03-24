@@ -87,7 +87,7 @@
     "autoprefixer": "^10.4.20",
     "biome": "^0.3.3",
     "blob-polyfill": "^9.0.20240710",
-    "eslint": "^9.20.1",
+    "eslint": "^9.23.0",
     "eslint-config-biome": "^1.9.4",
     "eslint-plugin-biome": "^0.9.19",
     "fake-indexeddb": "^6.0.0",
