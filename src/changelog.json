@@ -1,5 +1,13 @@
 [
   {
+    "version": "0.11.1",
+    "timestamp": 1742857000,
+    "changes": [
+      "Fix — rankings are sorted numerically not as string",
+      "Fix — added a small text to explain dnd support on pairing page"
+    ]
+  },
+  {
     "version": "0.11.0",
     "timestamp": 1742851143,
     "changes": [
