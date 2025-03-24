@@ -1,11 +1,11 @@
 pre_bump_hooks = [
     "pnpm lint",
-    "pnpm test"
+    "pnpm test",
+    "scripts/changelog.json.sh && git add src/changelog.json && git commit -m 'chore(release): update changelog.json'",
+    "pnpm sync-version && git add package.json CHANGELOG.md && git commit -m 'chore(release): sync package.json version'"
 ]
 
 post_bump_hooks = [
-    "scripts/changelog.json.sh && git add src/changelog.json && git commit -m 'chore(release): update changelog.json'",
-    "pnpm sync-version && git add package.json CHANGELOG.md && git commit -m 'chore(release): sync package.json version'",
     "git push && git push --tags"
 ]
 
