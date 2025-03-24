@@ -1,10 +1,8 @@
-import type { SpreadsheetData, SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
+import type { SpreadsheetData } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { Accordion, AccordionItem, TableColumn } from "@heroui/react"
 import React from "react"
 import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
-import { User } from "@heroui/user"
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@heroui/table"
-import _ from "lodash"
 
 const itemClasses = {
   base: "py-0 w-full",
@@ -18,14 +16,17 @@ type DuplicateProps = {
 
 }
 
+const isEqual = (a: any, b: any): boolean =>
+  JSON.stringify(a) === JSON.stringify(b)
+
 const summarizeDuplicates = (rows: SpreadsheetData): string => {
-  if (rows.every((row) => _.isEqual(row, rows[0]))) {
+  if (rows.every((row) => isEqual(row, rows[0]))) {
     return "✅ All rows are identical";
   }
 
   const differingValues = rows.reduce((acc, row) => {
     Object.entries(row).forEach(([key, value]) => {
-      if (!_.isEqual(value, rows[0][key])) {
+      if (!isEqual(value, rows[0][key])) {
         acc[key] = acc[key] || new Set();
         acc[key].add(value);
       }
@@ -66,7 +67,7 @@ const Duplicates = ({}: DuplicateProps) => {
           }
           title={id}
         >
-          <Table>
+          <Table aria-label="duplicates-table">
             <TableHeader>
               <TableColumn>First Name</TableColumn>
               <TableColumn>Last Name</TableColumn>
