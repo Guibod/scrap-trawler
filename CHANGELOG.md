@@ -2,6 +2,55 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.11.0 - 2025-03-24
+#### Bug Fixes
+- removed dependency to lodash - (c37685a) - Guillaume Boddaert
+- spreadsheet data was never available - (379399b) - Guillaume Boddaert
+- import/export was not working - (50f692f) - Guillaume Boddaert
+#### Continuous Integration
+- removed tsc type check from ci - (b66f60b) - Guillaume Boddaert
+- attempt to fix ci because of generated pnpm-loc.yaml in cloudflare-proxy - (5f2c6e0) - Guillaume Boddaert
+- relaxed codecov 85% is too much - (5a1020d) - Guillaume Boddaert
+- removed tsc type check from ci - (802cb7c) - Guillaume Boddaert
+- tsc is now part of the build process - (e5f8383) - Guillaume Boddaert
+#### Features
+- added configuration for a cloudflare proxy - (8a7921c) - Guillaume Boddaert
+- fetch related ui - (350e35e) - Guillaume Boddaert
+- fetcher provider - (6222154) - Guillaume Boddaert
+- added DeckFetchService() - (14f7fd0) - Guillaume Boddaert
+- added mtgjson ui components - (bb7886a) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(deps)** bump vitest-mock-extended from 2.0.2 to 3.0.1 - (3a55b6e) - dependabot[bot]
+- **(deps)** bump react-router-dom from 7.3.0 to 7.4.0 - (a46a11e) - dependabot[bot]
+- **(deps)** bump framer-motion from 12.4.10 to 12.5.0 - (49784cc) - dependabot[bot]
+- **(deps)** bump the npm_and_yarn group with 2 updates - (98f55f2) - dependabot[bot]
+- **(deps)** bump lucide-react from 0.475.0 to 0.482.0 - (9769729) - dependabot[bot]
+- **(release)** sync package.json version - (6aa8d7b) - Cog Bot
+- **(release)** update changelog.json - (0075399) - Cog Bot
+- typing issue in status.test.tsx - (6a2786c) - Guillaume Boddaert
+- removed ability to setup moxfield key since we use our own reverse proxy - (f5b05f5) - Guillaume Boddaert
+- fixed development extension id - (733265c) - Guillaume Boddaert
+- added decks to event dbo, and entities - (8a75824) - Guillaume Boddaert
+- added many lint-staged checks - (36a26bb) - Guillaume Boddaert
+- getHumanVersion() method added - (4f7d6c0) - Guillaume Boddaert
+- fixed some typescript issues - (ca4c139) - Guillaume Boddaert
+- got rid of pako in favor of fflate that’s more easier to use - (c0a1b4f) - Guillaume Boddaert
+- silenced typing errors - (57540c8) - Guillaume Boddaert
+- reorganized background messages - (707331c) - Guillaume Boddaert
+- fixed some typescript issues in graphql client - (31db77f) - Guillaume Boddaert
+- SettingsService has a singleton pattern - (31d99bc) - Guillaume Boddaert
+- EventService has a singleton pattern - (8e43467) - Guillaume Boddaert
+- SettingsDao uses a singleton pattern - (5d060c4) - Guillaume Boddaert
+- EventDao uses a singleton pattern - (0987129) - Guillaume Boddaert
+- database is a service with singletons - (d34eaf3) - Guillaume Boddaert
+- tsconfig path was changed to something recognized by webstorm - (8b21d11) - Guillaume Boddaert
+#### Tests
+- window.matchMedia is globally mocked - (da0ab0d) - Guillaume Boddaert
+- added more coverage - (1c6308e) - Guillaume Boddaert
+- chrome object is globally stubbed using vitest configuration - (979416b) - Guillaume Boddaert
+
+- - -
+
 ## 0.10.0 - 2025-03-13
 #### Bug Fixes
 - layout content should not overflow anymore - (ab71bd2) - Guillaume Boddaert
