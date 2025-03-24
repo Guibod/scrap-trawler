@@ -9,7 +9,7 @@ describe("FetchStatus", () => {
   const mockFetchEvent = vi.fn()
 
   beforeEach(() => {
-    vi.spyOn(eventProvider, "useEvent").mockReturnValue({ event: { id: "abc", mapping: true } })
+    vi.spyOn(eventProvider, "useEvent").mockReturnValue({ event: { id: "abc", mapping: {  } } } as any)
     vi.spyOn(fetcher, "useFetchService").mockReturnValue({ fetchEvent: mockFetchEvent } as any)
   })
 
