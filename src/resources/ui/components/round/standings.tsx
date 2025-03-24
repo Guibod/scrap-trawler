@@ -20,7 +20,7 @@ const RoundStandings = ({round}: EventPairingsProps) => {
         <TableColumn aria-label="Opponent Game Win Percentage">OGWP</TableColumn>
         <TableColumn aria-label="Opponent Match Win Percentage">OMWP</TableColumn>
       </TableHeader>
-      <TableBody emptyContent={"No standings yet for this round, use scrape button on EventLink.com page to add events."} items={Object.values(round.standings)}>
+      <TableBody emptyContent={"No standings yet for this round, use scrape button on EventLink.com page to add events."} items={Object.values(round.standings).sort((a, b) => a.rank - b.rank)}>
         {(standing) => (
           <TableRow>
             <TableCell>{standing.rank}</TableCell>
