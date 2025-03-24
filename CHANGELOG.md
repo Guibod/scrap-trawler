@@ -2,6 +2,22 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.11.1 - 2025-03-24
+#### Bug Fixes
+- added a small text to explain dnd support on pairing page - (80e65da) - Guillaume Boddaert
+- rankings are sorted numerically not as string - (8be0c95) - Guillaume Boddaert
+#### Continuous Integration
+- reverted change in bump order - (f4c8acf) - Guillaume Boddaert
+- reverted change in bump order - (6045fc5) - Guillaume Boddaert
+- changelog and package.json are bumped before commit. - (462a944) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(deps)** bump lucide-react from 0.482.0 to 0.483.0 - (e0ef397) - dependabot[bot]
+- **(deps)** bump eslint from 9.22.0 to 9.23.0 - (72777cf) - dependabot[bot]
+- **(release)** sync package.json version - (5ab2628) - Cog Bot
+- **(release)** update changelog.json - (0050983) - Cog Bot
+
+- - -
+
 ## 0.11.0 - 2025-03-24
 #### Bug Fixes
 - removed dependency to lodash - (c37685a) - Guillaume Boddaert
