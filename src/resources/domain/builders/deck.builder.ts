@@ -94,6 +94,11 @@ export default class DeckBuilder {
     return this
   }
 
+  withArchetype(archetype: string) {
+    this.deck.archetype = archetype
+    return this
+  }
+
   end() {
     return this.parentBuilder
   }
@@ -107,6 +112,7 @@ export default class DeckBuilder {
     this.deck.legal ??= true
     this.deck.format ??= MTG_FORMATS.COMMANDER
     this.deck.colors ??= [MTG_COLORS.GREEN]
+    this.deck.archetype ??= faker.word.words(2)
     this.deck.lastUpdated ??= new Date()
   }
 

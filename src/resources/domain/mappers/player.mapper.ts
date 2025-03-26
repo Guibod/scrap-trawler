@@ -30,8 +30,8 @@ export class PlayerMapper {
       throw new Error(`Player ${playerId} not found in event`)
     }
 
-    const rowId = event.mapping[playerId]?.rowId
-    const row : SpreadsheetRow | null = event.spreadsheet?.data.find((row) => row.id == rowId)
+    const rowId = event.mapping?.[playerId]?.rowId
+    const row : SpreadsheetRow | null = event.spreadsheet?.data?.find((row) => row.id == rowId) ?? null
 
     const deck = Object.values(event.decks ?? {}).find(
       (deck) => deck.spreadsheetRowId === rowId
@@ -51,7 +51,7 @@ export class PlayerMapper {
       firstName: player.overrides?.firstName ?? row?.firstName ?? player.firstName,
       lastName: player.overrides?.lastName ?? row?.lastName ?? player.lastName,
       archetype: player.overrides?.archetype ?? deck?.archetype ?? row?.archetype ?? player.archetype,
-      mapMode: event.mapping[playerId]?.mode ?? null,
+      mapMode: event.mapping?.[playerId]?.mode ?? null,
       extra: row?.player ?? null,
       deck: deck ?? null,
     }

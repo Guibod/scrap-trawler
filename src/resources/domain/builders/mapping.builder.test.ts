@@ -33,12 +33,35 @@ describe("MappingDboBuilder", () => {
     ];
 
     const mapping = new MappingDboBuilder()
-      .withPlayersAndSpreadsheet(players, spreadsheet, "name-strict")
+      .withPlayersAndSpreadsheet(players, spreadsheet, new Map(), "name-strict")
       .build();
 
     expect(Object.keys(mapping)).toHaveLength(2);
     expect(mapping["player-1"].rowId).toBeDefined();
     expect(mapping["player-2"].rowId).toBeDefined();
+  });
+
+  it("should pair players with spreadsheet rows with knowledge of forced pairs", () => {
+    const players: PlayerDbo[] = [
+      { id: "player-1", avatar: null, isAnonymized: false, archetype: null, tournamentId: "tournament-1", teamId: "team-1", displayName: "Player One", firstName: "John", lastName: "Doe", status: PlayerStatusDbo.IDENTIFIED, tableNumber: null, overrides: null },
+      { id: "player-2", avatar: null, isAnonymized: false, archetype: null, tournamentId: "tournament-1", teamId: "team-2", displayName: "Player Two", firstName: "Jane", lastName: "Doe", status: PlayerStatusDbo.IDENTIFIED, tableNumber: null, overrides: null }
+    ];
+
+    const spreadsheet: SpreadsheetData = [
+      { id: "row-1", player: { WotcID: "player-1" }, archetype: "Control", decklistUrl: "", decklistTxt: "", firstName: "John", lastName: "Doe" },
+      { id: "row-2", player: { WotcID: "player-2" }, archetype: "Aggro", decklistUrl: "", decklistTxt: "", firstName: "Jane", lastName: "Doe" }
+    ];
+
+    const forcedMap = new Map();
+    forcedMap.set("player-1", "row-2");
+
+    const mapping = new MappingDboBuilder()
+      .withPlayersAndSpreadsheet(players, spreadsheet, forcedMap, "name-strict")
+      .build();
+
+    expect(Object.keys(mapping)).toHaveLength(2);
+    expect(mapping["player-1"].rowId).toEqual("row-2");
+    expect(mapping["player-2"].rowId).toEqual("row-1");
   });
 
   it("should not assign a row if there are more players than spreadsheet rows", () => {
@@ -52,7 +75,7 @@ describe("MappingDboBuilder", () => {
     ];
 
     const mapping = new MappingDboBuilder()
-      .withPlayersAndSpreadsheet(players, spreadsheet, "name-strict")
+      .withPlayersAndSpreadsheet(players, spreadsheet, new Map(), "name-strict")
       .build();
 
     expect(Object.keys(mapping)).toHaveLength(1);
