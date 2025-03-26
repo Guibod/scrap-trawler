@@ -11,6 +11,8 @@ import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state
 import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
 import DeckBuilder from "~/resources/domain/builders/deck.builder"
+import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
+import type { SpreadsheetRowId } from "~/resources/domain/dbos/spreadsheet.dbo"
 
 export default class EventBuilder {
   private event: Partial<EventModel> = {};
@@ -18,6 +20,7 @@ export default class EventBuilder {
   private playerBuilders: PlayerBuilder[] = [];
   private deckBuilders: DeckBuilder[] = [];
   private playoff: boolean = false;
+  private playerRowMatching: Map<WotcId, SpreadsheetRowId> = new Map();
 
   constructor() {
     this.organizerBuilder = new OrganizerBuilder(this);
@@ -66,6 +69,11 @@ export default class EventBuilder {
     return this;
   }
 
+  withWotcIdToRowIdMapping(wotcId: WotcId, rowId: SpreadsheetRowId) {
+    this.playerRowMatching.set(wotcId, rowId);
+    return this;
+  }
+
   organizer() {
     return this.organizerBuilder;
   }
@@ -93,6 +101,7 @@ export default class EventBuilder {
     this.event.organizer ??= this.organizerBuilder.build();
 
     const players = Object.values(this.event.players)
+    const decksRowIds = Object.values(this.event.decks).map(deck => deck.spreadsheetRowId);
 
     // Infer number of rounds
     const roundsCount = this.inferRounds(players.length);
@@ -104,10 +113,10 @@ export default class EventBuilder {
     this.event.teams = teams
 
     // Build spreadsheet & mapping
-    const spreadsheet = new SpreadsheetBuilder().withDimension(10, players.length).build();
+    const spreadsheet = new SpreadsheetBuilder().withDimension(10, players.length).withRowIds(decksRowIds).build();
     this.event.spreadsheet = spreadsheet;
 
-    const mapping = new MappingDboBuilder().withPlayersAndSpreadsheet(players, spreadsheet.data).build();
+    const mapping = new MappingDboBuilder().withPlayersAndSpreadsheet(players, spreadsheet.data, this.playerRowMatching).build();
     this.event.mapping = mapping;
 
     // Build rounds with previous rounds reference

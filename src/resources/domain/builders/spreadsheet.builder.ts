@@ -10,6 +10,7 @@ export default class SpreadsheetBuilder {
   private metadata: Partial<SpreadsheetMetadata> = {};
   private data: SpreadsheetData = [];
   private dimensions: { x: number; y: number } = { x: 0, y: 0 };
+  private rowIds: string[] = [];
 
   withSource(source: string) {
     this.metadata.source = source;
@@ -46,6 +47,11 @@ export default class SpreadsheetBuilder {
     return this;
   }
 
+  withRowIds(rowIds: string[]) {
+    this.rowIds = rowIds;
+    return this;
+  }
+
   withDimension(x: number, y: number) {
     this.dimensions = { x, y };
     return this
@@ -62,7 +68,7 @@ export default class SpreadsheetBuilder {
 
   private generateFakeRows(rowCount: number) {
     return Array.from({ length: rowCount }, () => ({
-      id: faker.string.uuid(),
+      id: this.rowIds.pop() ?? faker.string.uuid(),
       player: { "WotcID": faker.string.alphanumeric(10) },
       archetype: faker.word.words(2),
       decklistUrl: faker.internet.url(),
