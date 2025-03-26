@@ -38,21 +38,21 @@ const SetupUpload = ({...props}: SetupUploadProps) => {
             <p className="mt-1">Make sure your file contains clearly labeled columns for player names, decklists, and any other required data. The system will guide you through mapping your columns to ensure proper integration.</p>
           </div>
 
-          <Form className="col-span-2" onSubmit={(e) => {
+          <Form aria-label="upload-form" className="col-span-2" onSubmit={(e) => {
             e.preventDefault();
             const formData = new FormData(e.currentTarget);
-            const file = formData.get("file"); // Use `.get()` instead of `Object.fromEntries()`
+            const file = formData.get("file");
 
             if (file instanceof File) {
-              const autodetect = formData.get("autodetect") === "true"; // Ensure boolean conversion
+              const autodetect = formData.get("autodetect") === "1"; // Ensure boolean conversion
               handleFileUpload(file, autodetect);
             } else {
               console.error("Invalid file input");
             }
           }}>
             <div className="flex gap-4 w-full">
-              <Input name="file" isRequired type="file" className="w-1/2" />
-              <Checkbox name="autodetect" size="sm" value="1" defaultSelected>Auto-detect columns on upload</Checkbox>
+              <Input aria-label="file-upload" name="file" isRequired type="file" className="w-1/2" />
+              <Checkbox aria-label="auto-detect" name="autodetect" size="sm" value="1" defaultSelected>Auto-detect columns on upload</Checkbox>
               <Button type="submit" color={"primary"} className="ml-auto">
                 Submit
               </Button>
