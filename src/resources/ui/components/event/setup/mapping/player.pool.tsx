@@ -18,7 +18,7 @@ const SpreadsheetPlayerPool = () => {
   return (
     <>
       <p className="text-medium mb-5">Each chip represent a player and can be drag’n’dropped on the left side of the page.</p>
-      <div ref={setNodeRef} className="overflow-auto grid-cols-3 grid gap-2 min-w-0">
+      <div ref={setNodeRef} className="overflow-auto grid-cols-3 grid gap-2 min-w-0 px-2">
 
         {remaining.map(p => (
           <DraggableChip key={p.id} player={p}
