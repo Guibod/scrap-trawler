@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.11.2 - 2025-03-26
+#### Bug Fixes
+- unassigned player chip in player pool are not clipped on animation anymore - (0199c87) - Guillaume Boddaert
+- in pairing view, the step is considered done if all players are mapped - (8b32374) - Guillaume Boddaert
+- in pairing view the right column chips are more readable - (dc7518f) - Guillaume Boddaert
+- pairing page was broken if no mapping was available yet - (fcf00be) - Guillaume Boddaert
+- spreadsheet autodetection is restored - (9e20dde) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(release)** sync package.json version - (fbf98c7) - Cog Bot
+- **(release)** update changelog.json - (3c28a47) - Cog Bot
+
+- - -
+
 ## 0.11.1 - 2025-03-24
 #### Bug Fixes
 - added a small text to explain dnd support on pairing page - (80e65da) - Guillaume Boddaert
