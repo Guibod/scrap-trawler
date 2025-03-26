@@ -3,16 +3,12 @@ import { SETUP_STEPS } from "~/resources/ui/components/event/setup/config";
   SpreadsheetData,
   SpreadsheetMetadata,
   SpreadsheetRawData, SpreadsheetRawRow,
-  SpreadsheetRow, SpreadsheetRowId
+  SpreadsheetRow
 } from "~/resources/domain/dbos/spreadsheet.dbo"
   import { COLUMN_TYPE, COLUMN_TYPE_META } from "~/resources/domain/enums/spreadsheet.dbo"
 import { SpreadsheetDataFactory } from "~/resources/domain/parsers/spreadsheet.data.factory"
 import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
-import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 import type { MappingDbo, PairingMode } from "~/resources/domain/dbos/mapping.dbo"
-import type { DeckDbo } from "~/resources/domain/dbos/deck.dbo"
-import type { CardDbo } from "~/resources/domain/dbos/card.dbo"
-import { PlayerMapper, type PlayerProfile } from "~/resources/domain/mappers/player.mapper"
 
   export class SetupStatus {
     private _duplicates: Record<string, SpreadsheetData>;
@@ -23,14 +19,15 @@ import { PlayerMapper, type PlayerProfile } from "~/resources/domain/mappers/pla
       public readonly rawData: SpreadsheetRawData | null,
       public readonly data: SpreadsheetData | null,
       public readonly pairs: MappingDbo | null,
+      public readonly players: number
     ) {
       this._rawDuplicates = this.regroupRawDuplicates();
       this._duplicates = this.regroupDuplicates();
     }
 
-    static async create(meta: SpreadsheetMetadata, data: SpreadsheetRawData | null, pairs: MappingDbo | null = null): Promise<SetupStatus> {
+    static async create(meta: SpreadsheetMetadata, data: SpreadsheetRawData | null, pairs: MappingDbo | null = null, players: number): Promise<SetupStatus> {
       const factory = new SpreadsheetDataFactory(meta, data)
-      return new SetupStatus(meta, data, await factory.generate(), pairs);
+      return new SetupStatus(meta, data, await factory.generate(), pairs, players);
     }
 
     get rows() {
@@ -107,6 +104,10 @@ import { PlayerMapper, type PlayerProfile } from "~/resources/domain/mappers/pla
 
     get hasPairings() {
       return this.pairs !== null && Object.keys(this.pairs).length > 0;
+    }
+
+    get hasAllPairings() {
+      return this.pairs !== null && Object.keys(this.pairs).length >= this.players;
     }
 
     getRowByWotcId(wotcId: WotcId): SpreadsheetRow | null {

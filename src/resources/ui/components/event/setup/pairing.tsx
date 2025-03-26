@@ -59,7 +59,7 @@ const SetupPairing: React.FC = () => {
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <div className="flex flex-col w-full p-4">
-        {status.hasPairings && (
+        {status.hasAllPairings && (
           <Alert color="success" className="mb-4" isClosable={true}>
             Pairings are complete !
           </Alert>

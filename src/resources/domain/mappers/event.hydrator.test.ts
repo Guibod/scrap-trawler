@@ -67,7 +67,7 @@ describe('EventHydrator', () => {
       const entity = { raw_data: {} } as unknown as EventEntity;
       const status = EventHydrator.inferStatus(entity);
       expect(status).toEqual({
-        global: GlobalStatus.NOT_STARTED,
+        global: GlobalStatus.PARTIAL,
         scrape: ScrapeStatus.IN_PROGRESS,
         pair: PairStatus.NOT_STARTED,
         fetch: FetchStatus.NOT_STARTED,
@@ -90,7 +90,8 @@ describe('EventHydrator', () => {
     it('should set pair to COMPLETED when spreadsheet is fully mapped and finalized', () => {
       const entity = {
         raw_data: { spreadsheet: {} },
-        mapping: true,
+        mapping: { a: 'b' },
+        players: [{}],
         spreadsheet: { columns: [1], finalized: true },
       }  as unknown as EventEntity;
       const status = EventHydrator.inferStatus(entity);
@@ -100,7 +101,8 @@ describe('EventHydrator', () => {
     it('should set global to COMPLETED when both scrape and pair and fetch are completed', () => {
       const entity = {
         raw_data: { wotc: { event: { status: 'ENDED' } }, spreadsheet: {}, fetch: {} },
-        mapping: true,
+        mapping: { a: "b" },
+        players: [{}],
         decks: [{ status: DeckStatus.FETCHED }],
         spreadsheet: { columns: [1], finalized: true },
       }   as unknown as EventEntity

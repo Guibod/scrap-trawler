@@ -67,7 +67,7 @@ export const EventSetupProvider = ({ children, onQuitHandler }: EventSetupProvid
     updateStatus()
 
     async function updateStatus() {
-      setStatus(await SetupStatus.create(spreadsheetMeta, spreadsheetData, spreadsheetMapping))
+      setStatus(await SetupStatus.create(spreadsheetMeta, spreadsheetData, spreadsheetMapping, Object.keys(event.players).length))
     }
   }, [spreadsheetMeta, spreadsheetData, spreadsheetMapping])
 

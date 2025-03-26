@@ -40,7 +40,7 @@ export const SETUP_STEPS: SetupStep[] = [
     title: "Pair Players",
     subtitle: "Pair players with their decklists.",
     component: SetupPairing,
-    isComplete: (status) => status.hasPairings,
+    isComplete: (status) => status.hasAllPairings,
   },
   {
     key: 5,
