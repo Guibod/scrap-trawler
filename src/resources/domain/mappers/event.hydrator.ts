@@ -38,7 +38,7 @@ export default class EventHydrator {
     const hydrated: EventEntity = {
       id: rawData.event.id,
       format: EventLinkFormats[rawData.event.eventFormat.name] ?? null,
-      scrapeStatus: EventHydrator.inferScrapeStatus(entity),
+      scrapeStatus: EventHydrator.inferEventScrapeStatus(entity),
       organizer: {
         id: rawData.organization.id,
         name: rawData.organization.name,
@@ -178,51 +178,82 @@ export default class EventHydrator {
   }
 
   public static inferStatus(entity: HydratableEntity): EventModel["status"] {
-    let global = GlobalStatus.NOT_STARTED;
-    let scrape = ScrapeStatus.IN_PROGRESS;
-    let pair = PairStatus.NOT_STARTED;
-    let fetch = FetchStatus.NOT_STARTED;
-
     try {
-      const wotcData = entity.raw_data.wotc
-      const spreadsheetData = entity.raw_data.spreadsheet
+      const scrape = this.inferScrapeStatus(entity);
+      const pair = this.inferPairStatus(entity);
+      const fetch = this.inferFetchStatus(entity);
 
-      if (wotcData && wotcData.event && wotcData.event.status === "ENDED") {
-        scrape = ScrapeStatus.COMPLETED;
-        global = GlobalStatus.PARTIAL;
-      }
+      const global = this.inferGlobalStatus(scrape, pair, fetch);
 
-      if (spreadsheetData) {
-        pair = PairStatus.PARTIAL
-
-        if (entity.mapping && entity.spreadsheet.columns.length && entity.spreadsheet.finalized) {
-          pair = PairStatus.COMPLETED
-        }
-      }
-
-      if (entity.raw_data.fetch) {
-        fetch = FetchStatus.PARTIAL
-
-        if (entity.decks && entity.decks.every(deck => deck.status === DeckStatus.FETCHED)) {
-          fetch = FetchStatus.COMPLETED
-        }
-      }
-
-      if (scrape === ScrapeStatus.COMPLETED && pair === PairStatus.COMPLETED && fetch === FetchStatus.COMPLETED) {
-        global = GlobalStatus.COMPLETED;
-      }
-
+      return { global, scrape, pair, fetch };
     } catch (error) {
       logger.error("Failed to infer status:", error);
+      return {
+        global: GlobalStatus.NOT_STARTED,
+        scrape: ScrapeStatus.NOT_STARTED,
+        pair: PairStatus.NOT_STARTED,
+        fetch: FetchStatus.NOT_STARTED,
+      };
+    }
+  }
+
+  private static inferScrapeStatus(entity: HydratableEntity): ScrapeStatus {
+    const wotc = entity.raw_data?.wotc;
+
+    return wotc?.event?.status === "ENDED"
+      ? ScrapeStatus.COMPLETED
+      : ScrapeStatus.IN_PROGRESS;
+  }
+
+  private static inferPairStatus(entity: HydratableEntity): PairStatus {
+    if (!entity.raw_data.spreadsheet) return PairStatus.NOT_STARTED;
+
+    const hasMapping =
+      entity.mapping &&
+      Object.keys(entity.mapping).length === Object.keys(entity.players).length;
+
+    const hasFinalizedSheet =
+      !!entity.spreadsheet?.columns?.length && entity.spreadsheet.finalized;
+
+    return hasMapping && hasFinalizedSheet
+      ? PairStatus.COMPLETED
+      : PairStatus.PARTIAL;
+  }
+
+  private static inferFetchStatus(entity: HydratableEntity): FetchStatus {
+    if (!entity.raw_data.fetch) return FetchStatus.NOT_STARTED;
+
+    const allFetched = Object.values(entity.decks).every(
+      (deck) => deck.status === DeckStatus.FETCHED
+    );
+
+    return allFetched ? FetchStatus.COMPLETED : FetchStatus.PARTIAL;
+  }
+
+  private static inferGlobalStatus(
+    scrape: ScrapeStatus,
+    pair: PairStatus,
+    fetch: FetchStatus
+  ): GlobalStatus {
+    if (
+      scrape === ScrapeStatus.COMPLETED &&
+      pair === PairStatus.COMPLETED &&
+      fetch === FetchStatus.COMPLETED
+    ) {
+      return GlobalStatus.COMPLETED;
     }
 
-    return {
-      global,
-      scrape,
-      pair,
-      fetch,
-    };
+    if (
+      scrape !== ScrapeStatus.NOT_STARTED ||
+      pair !== PairStatus.NOT_STARTED ||
+      fetch !== FetchStatus.NOT_STARTED
+    ) {
+      return GlobalStatus.PARTIAL;
+    }
+
+    return GlobalStatus.NOT_STARTED;
   }
+
 
   static inferLastRound(entity: HydratableEntity) {
     if (Object.values(entity.rounds).length === 0) {
@@ -244,7 +275,7 @@ export default class EventHydrator {
     }))
   }
 
-  private static inferScrapeStatus(entity: HydratableEntity): EventScrapeStateDbo {
+  private static inferEventScrapeStatus(entity: HydratableEntity): EventScrapeStateDbo {
     if (!entity.raw_data.wotc.rounds) {
       return EventScrapeStateDbo.PURGED
     }
