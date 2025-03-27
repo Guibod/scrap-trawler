@@ -107,7 +107,7 @@ import type { MappingDbo, PairingMode } from "~/resources/domain/dbos/mapping.db
     }
 
     get hasAllPairings() {
-      return this.pairs !== null && Object.keys(this.pairs).length >= this.players;
+      return this.pairs !== null && Object.keys(this.pairs).length >= Math.min(this.players, this.rows);
     }
 
     getRowByWotcId(wotcId: WotcId): SpreadsheetRow | null {

@@ -1,63 +1,144 @@
-import React from "react";
+import React, { useEffect, useState } from "react"
 import { Button } from "@heroui/button";
 import { useEventSetup } from "~/resources/ui/components/event/setup/provider";
-import { DndContext } from "@dnd-kit/core";
-import DroppablePlayerCard from "~/resources/ui/components/event/setup/mapping/player.card"
+import { DndContext, DragOverlay, type Active, rectIntersection } from "@dnd-kit/core"
 import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
-import type { SpreadsheetRowId } from "~/resources/domain/dbos/spreadsheet.dbo"
-import SpreadsheetPlayerPool from "~/resources/ui/components/event/setup/mapping/player.pool"
+import type { SpreadsheetRow, SpreadsheetRowId } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { MagnifyingGlassIcon, XCircleIcon, RocketLaunchIcon } from "@heroicons/react/20/solid";
 import { Alert } from "@heroui/alert"
 import { RandomMatcher } from "~/resources/domain/parsers/matcher.random"
 import { NameMatcher } from "~/resources/domain/parsers/matcher.name"
 import { Card, CardBody, CardHeader } from "@heroui/card"
+import PlayerChip from "~/resources/ui/components/event/setup/mapping/player.chip"
+import Droppable from "~/resources/ui/components/dnd/droppable"
+import { Draggable } from "~/resources/ui/components/dnd/draggable"
+import type { MappingDbo, PairingMode } from "~/resources/domain/dbos/mapping.dbo"
+import Player from "~/resources/ui/components/player/player"
+import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
+import { addToast } from "@heroui/react"
+import { countDiff } from "~/resources/utils/diff"
+
+type PairingPlayer = {
+  row?: SpreadsheetRow
+  mode?: PairingMode
+} & PlayerDbo
 
 const SetupPairing: React.FC = () => {
   const { status, handlePairings, event } = useEventSetup();
+  const [active, setActive] = useState<Active>(null);
+  const [unassigned, setUnassigned] = useState<SpreadsheetRow[]>([])
+  const [localMapping, setLocalMapping] = useState<MappingDbo>(event.mapping);
+
+  const getSortedPlayers = (): PairingPlayer[] => {
+    return Object.values(event.players)
+      .map(player => ({
+        ...player,
+        mode: localMapping?.[player.id]?.mode,
+        row: status.data.find((row) => localMapping?.[player.id]?.rowId === row.id),
+      }))
+      .sort((a, b) => {
+        const isAUnassigned = !localMapping?.[a.id];
+        const isBUnassigned = !localMapping?.[b.id];
+
+        if (isAUnassigned !== isBUnassigned) {
+          return isAUnassigned ? -1 : 1; // unassigned first
+        }
+
+        return a.lastName.localeCompare(b.lastName) ||
+            a.firstName.localeCompare(b.firstName)
+    });
+  }
+
+  useEffect(() => {
+    setUnassigned(status.data.filter((p) => !status.getWotcIdByRow(p)))
+  }, [status])
+
 
   const matchByName = () => {
     const matcher = new NameMatcher(Object.values(event.players), status.data, status.pairs);
-    handlePairings(matcher.match());
+    const updated = matcher.match()
+    const diff = countDiff(updated, status.pairs);
+    if (diff) {
+      setLocalMapping(updated);
+      handlePairings(updated)
+      addToast({
+        title: "Pairings Updated",
+        description: `${diff} player(s) have been matched by name.`,
+        severity: "success"
+      })
+    }
   };
 
   const assignRandomly = () => {
     const matcher = new RandomMatcher(Object.values(event.players), status.data, status.pairs);
-    handlePairings(matcher.match());
+    const updated = matcher.match()
+    const diff = countDiff(updated, status.pairs);
+    if (diff) {
+      setLocalMapping(updated);
+      handlePairings(updated)
+      addToast({
+        title: "Pairings Updated",
+        description: `${diff} player(s) have been randomly by name.`,
+        severity: "success"
+      })
+    }
   };
 
+  const unassignAll = () => {
+    const previousCount = Object.keys(status.pairs).length
+    if (previousCount > 0) {
+      handlePairings(null)
+      setLocalMapping(null)
+      addToast({
+        title: "Pairings Updated",
+        description: `${previousCount} player(s) have been unassigned.`,
+        severity: "success"
+      })
+    }
+  }
+
+  const handleDragStart = (event) => {
+    setActive(event.active);
+  }
+
   const handleDragEnd = ({ active, over }) => {
+    setActive(null);
     if (!over) return;
 
     const rowId: SpreadsheetRowId = active.id; // Spreadsheet player ID
     const wotcId: WotcId = over.id; // EventLink player ID or "pool"
 
     // Clone current pairings
-    const updatedMapping = { ...event.mapping };
-
+    let updatedMapping = { ...localMapping };
     if (wotcId === "pool") {
-      // Dropped into the pool → Remove pairing
-      Object.keys(updatedMapping).forEach((personaId) => {
-        if (updatedMapping[personaId].rowId === rowId) {
-          delete updatedMapping[personaId];
-        }
-      });
+      for (const id in updatedMapping) {
+        if (updatedMapping[id].rowId === rowId) delete updatedMapping[id];
+      }
     } else {
-      // Assign to a new player
-      Object.keys(updatedMapping).forEach((personaId) => {
-        if (updatedMapping[personaId].rowId === rowId) {
-          delete updatedMapping[personaId]; // Remove previous assignment
-        }
-      });
-
-      updatedMapping[wotcId] = { rowId, mode: "manual" }; // New pairing
+      for (const id in updatedMapping) {
+        if (updatedMapping[id].rowId === rowId) delete updatedMapping[id];
+      }
+      updatedMapping[wotcId] = { rowId, mode: "manual" };
     }
 
+    setLocalMapping(updatedMapping);
+
+    // Optimistically update unassigned
+    const stillAssigned = new Set(Object.values(updatedMapping).map((m) => m.rowId));
+    setUnassigned(status.data.filter((row) => !stillAssigned.has(row.id)));
+
+    // Then call the actual store update
     handlePairings(updatedMapping);
   };
 
-
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} collisionDetection={rectIntersection}>
+      <DragOverlay>
+        {active ? (
+          <PlayerChip row={active.data.current.row} />
+        ): null}
+      </DragOverlay>
+
       <div className="flex flex-col w-full p-4">
         {status.hasAllPairings && (
           <Alert color="success" className="mb-4" isClosable={true}>
@@ -83,7 +164,7 @@ const SetupPairing: React.FC = () => {
             </Button>
 
             <Button
-              onPress={() => handlePairings(null)}
+              onPress={unassignAll}
               color="danger"
               startContent={<XCircleIcon className={"fill-gray-500 stroke-black"} />}
             >
@@ -100,14 +181,26 @@ const SetupPairing: React.FC = () => {
             </CardHeader>
             <CardBody className="overflow-auto flex-1">
               <div className="flex flex-col gap-2">
-                {Object.values(event.players).map((player) => (
-                  <DroppablePlayerCard
-                    key={player.id}
-                    player={player}
-                    assignedPlayer={status.getRowByWotcId(player.id)}
-                    mode={status.getModeByWotcId(player.id)}
-                  />
-                ))}
+                {getSortedPlayers().map((player) => {
+                  return (
+                    <Droppable
+                      id={player.id}
+                      key={player.id}
+                      element="div"
+                    >
+                      <Card className={`mt-3 transition-all`}>
+                        <CardBody>
+                          <Player playerId={player.id}>
+                            {player.row &&
+                              <Draggable<{row: SpreadsheetRow}> id={player.row.id} data={{ row: player.row }}>
+                                <PlayerChip row={player.row} mode={player.mode} />
+                              </Draggable>}
+                          </Player>
+                        </CardBody>
+                      </Card>
+                    </Droppable>
+                  )
+                })}
               </div>
             </CardBody>
           </Card>
@@ -118,7 +211,20 @@ const SetupPairing: React.FC = () => {
               Spreadsheet Players
             </CardHeader>
             <CardBody className="overflow-auto flex-1">
-              <SpreadsheetPlayerPool />
+              <p className="text-medium mb-5">Each chip represent a player and can be drag’n’dropped on the left side of
+                the page.</p>
+
+              <Droppable id={"pool"} element="div" className="overflow-auto grid-cols-3 grid gap-2 min-w-0 px-2 content-start">
+                {unassigned.map((row) => (
+                  <Draggable<{ row: SpreadsheetRow }> key={row.id} id={row.id} data={{ row }}>
+                    <PlayerChip
+                      key={row.id}
+                      row={row}
+                      className="overflow-hidden text-ellipsis whitespace-nowrap max-w-full w-fit min-w-40"
+                    />
+                  </Draggable>
+                ))}
+              </Droppable>
             </CardBody>
           </Card>
         </div>
