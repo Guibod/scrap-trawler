@@ -1,5 +1,6 @@
 import React, { type ReactNode, useEffect, useState } from "react"
 import { getHumanVersion } from "~/resources/utils/version"
+import { ErrorBoundary } from "~/resources/ui/error"
 
 export const OptionPageLayout = ({children}: {children: ReactNode}) => {
   const [darkMode, setDarkMode] = useState(false);
@@ -14,7 +15,9 @@ export const OptionPageLayout = ({children}: {children: ReactNode}) => {
     <div aria-label="layout-container" className={`${darkMode ? 'dark' : 'light'} text-foreground bg-background flex flex-col min-h-screen`}>
       {/* ✅ Main Content Area */}
       <main className="flex-grow container mx-auto p-6">
-        {children}
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
       </main>
 
       {/* ✅ Footer (Optional) */}
