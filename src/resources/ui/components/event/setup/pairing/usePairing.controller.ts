@@ -9,12 +9,15 @@ import type { MappingDbo } from "~/resources/domain/dbos/mapping.dbo"
 import type { Active } from "@dnd-kit/core"
 import type { EventModel } from "~/resources/domain/models/event.model"
 import { SetupStatus } from "~/resources/ui/components/event/setup/status"
+import type { Selection } from "@heroui/react"
 
 export function usePairingController(event: EventModel, status: SetupStatus, handlePairings: (updatedPairings: MappingDbo | null) => void) {
   const [localMapping, setLocalMapping] = useState<MappingDbo>(event.mapping)
   const [unassigned, setUnassigned] = useState<SpreadsheetRow[]>([])
   const [active, setActive] = useState<Active | null>(null)
+  const [modeFilter, setModeFilter] = useState<Selection>(new Set([]));
 
+console.log(modeFilter)
   useEffect(() => {
     setUnassigned(status.data.filter((p) => !status.getWotcIdByRow(p)))
   }, [status])
@@ -26,6 +29,12 @@ export function usePairingController(event: EventModel, status: SetupStatus, han
         mode: localMapping?.[player.id]?.mode,
         row: status.data.find((row) => localMapping?.[player.id]?.rowId === row.id),
       }))
+      .filter((player) => {
+        if (modeFilter === 'all') return true
+        if (modeFilter.size === 0) return true
+        if (modeFilter.has('none')) return !player.mode
+        return modeFilter.has(player.mode)
+      })
       .sort((a, b) => {
         const isAUnassigned = !localMapping?.[a.id]
         const isBUnassigned = !localMapping?.[b.id]
@@ -118,5 +127,7 @@ export function usePairingController(event: EventModel, status: SetupStatus, han
     unassignAll,
     handleDragStart,
     handleDragEnd,
+    modeFilter,
+    setModeFilter
   }
 }

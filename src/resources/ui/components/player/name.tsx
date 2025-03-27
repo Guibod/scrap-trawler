@@ -2,32 +2,11 @@ import React from "react"
 import { ShieldExclamationIcon, PencilSquareIcon, HandThumbUpIcon, HandThumbDownIcon, HandRaisedIcon, ClockIcon } from "@heroicons/react/20/solid"
 import { Tooltip } from "@heroui/tooltip"
 import type { PlayerProfile } from "~/resources/domain/mappers/player.mapper"
-import type { PairingMode } from "~/resources/domain/dbos/mapping.dbo"
+import { pairingModeDescription } from "~/resources/domain/dbos/mapping.dbo"
 import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 
 interface PlayerNameProps {
   player: PlayerProfile
-}
-
-function mappingDescription({ mapMode }: { mapMode: PairingMode }) {
-  switch (mapMode) {
-    case "manual":
-      return "manual matching"
-    case "random":
-      return "random assignment"
-    case "name-strict":
-      return "strict name matching"
-    case "name-swap":
-      return "first/last name swap"
-    case "name-first-initial":
-      return "first name initial match"
-    case "name-last-initial":
-      return "last name initial match"
-    case "name-levenshtein":
-      return "fuzzy name matching (Levenshtein)"
-    default:
-      return "an unknown method"
-  }
 }
 
 const deckStatusMap: Record<DeckStatus, {icon: React.ReactNode, description: string}> = {
@@ -58,7 +37,7 @@ const PlayerName = ({ player }: PlayerNameProps) => {
       <Tooltip content={
         <div className="text-xs text-gray-800">
           <p>
-            This player was mapped from the spreadsheet using <strong>{mappingDescription(player)}</strong>.
+            This player was mapped from the spreadsheet using <strong>{pairingModeDescription(player.mapMode)}</strong>.
 
             {deckStatusMap[player.deck?.status]?.description && (
               <span>
