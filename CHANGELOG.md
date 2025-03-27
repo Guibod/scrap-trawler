@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.0 - 2025-03-27
+#### Features
+- added a select box in the pairing page to filter players out/in - (041be55) - Guillaume Boddaert
+- fixed many dragndrop behavior on pairing page - (04cd17c) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(release)** sync package.json version - (8d73bf7) - Cog Bot
+- **(release)** update changelog.json - (e2c46bc) - Cog Bot
+#### Refactoring
+- setup pairings - (9cdb957) - Guillaume Boddaert
+
+- - -
+
 ## 0.11.2 - 2025-03-26
 #### Bug Fixes
 - unassigned player chip in player pool are not clipped on animation anymore - (0199c87) - Guillaume Boddaert
