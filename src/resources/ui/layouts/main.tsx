@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom"
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react"
 import Version from "~/resources/ui/components/version"
 import CardDatabaseStatus from "~/resources/ui/components/card/status"
+import { ErrorBoundary } from "~/resources/ui/error"
 
 export const MainLayout = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const location = useLocation()
 
   useEffect(() => {
     // Check system preference
@@ -36,7 +38,9 @@ export const MainLayout = () => {
 
       {/* ✅ Main Content Area */}
       <main className="flex-grow container mx-auto p-6">
-        <Outlet />
+        <ErrorBoundary key={location.pathname}>
+          <Outlet />
+        </ErrorBoundary>
       </main>
 
       {/* ✅ Footer (Optional) */}
