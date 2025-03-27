@@ -1,5 +1,13 @@
 [
   {
+    "version": "0.12.0",
+    "timestamp": 1743105754,
+    "changes": [
+      "Feature — fixed many dragndrop behavior on pairing page",
+      "Feature — added a select box in the pairing page to filter players out/in"
+    ]
+  },
+  {
     "version": "0.11.2",
     "timestamp": 1743029524,
     "changes": [
