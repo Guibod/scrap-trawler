@@ -11,6 +11,9 @@ import { EventBus } from "~/resources/utils/event-bus"
 import BulkDeletionButton from "~/resources/ui/components/button/delete.selection"
 import { TrashIcon, DocumentArrowDownIcon } from '@heroicons/react/20/solid'
 import { exportEventsToFile } from "~/resources/utils/export"
+import type EventEntity from "~/resources/storage/entities/event.entity"
+import { Input } from "@heroui/input"
+import { useDebouncedValue } from "~/resources/utils/hooks"
 
 type TableEventsProps = {
   title?: string;
@@ -24,27 +27,32 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
   const [events, setEvents] = useState([]);
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
+  const [total, setTotal] = useState(0)
+  const [search, setSearch] = useState("")
+  const [sortDescriptor, setSortDescriptor] = useState<{
+    column: keyof EventEntity
+    direction: "ascending" | "descending"
+  }>({
+    column: "date",
+    direction: "descending"
+  })
 
-  useEffect(() => {
-    fetchEvents();
+  const debouncedSearch = useDebouncedValue(search, 300)
 
-    const unsub = EventBus.on("storage:changed", ({ table }) => {
-      if (table === "events") {
-        console.log("Events table changed, fetching new events")
-        fetchEvents()
-      }
-    });
+  const fetchEvents = useCallback(async () => {
+    setIsLoading(true)
+    const result = await eventService.listEvents({
+      page,
+      pageSize: rowsPerPage,
+      search: debouncedSearch,
+      sort: sortDescriptor.column,
+      direction: sortDescriptor.direction === "ascending" ? "asc" : "desc"
+    })
 
-    return () => {
-      unsub();
-    };
-
-    async function fetchEvents() {
-      setIsLoading(true)
-      setEvents(await eventService.listEvents());
-      setIsLoading(false)
-    }
-  }, [eventService]);
+    setEvents(result.data)
+    setTotal(result.total)
+    setIsLoading(false)
+  }, [eventService, page, rowsPerPage, debouncedSearch, sortDescriptor])
 
   const downloadSelection = useCallback(async () => {
     let exportedKeys : string[] | null
@@ -82,13 +90,17 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
       })
   }, [selectedKeys, eventService])
 
-  const items = React.useMemo(() => {
-    const start = (page - 1) * rowsPerPage
-    const end = start + rowsPerPage
-    return events.slice(start, end)
-  }, [page, events])
+  useEffect(() => {
+    fetchEvents()
 
-  const pages = Math.ceil(events.length / rowsPerPage)
+    const unsub = EventBus.on("storage:changed", ({ table }) => {
+      if (table === "events") fetchEvents()
+    })
+
+    return () => unsub()
+  }, [fetchEvents])
+
+  const pages = Math.ceil(total / rowsPerPage)
 
   return (
     <Table
@@ -96,6 +108,11 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
       className="shadow-md text-sm"
       classNames={{
         wrapper: "min-h-[222px]",
+      }}
+      sortDescriptor={sortDescriptor}
+      onSortChange={(descriptor) => {
+        setPage(1)
+        setSortDescriptor(descriptor as any);
       }}
       topContent={
         title && (
@@ -120,6 +137,14 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
                 <TrashIcon className="w-4 h-4 fill-red-600 stroke-lime-50" />
                 Delete Selection
               </BulkDeletionButton>
+
+              <Input
+                placeholder="Search events"
+                value={search}
+                onValueChange={(value) => {
+                  setPage(1)
+                  setSearch(value)
+                }} />
             </div>
           </div>
         )
@@ -127,7 +152,7 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
       selectedKeys={selectedKeys}
       selectionMode="multiple"
       onSelectionChange={setSelectedKeys}
-      topContentPlacement="outside"
+      topContentPlacement="inside"
       isStriped
       bottomContent={
       <div className="flex w-full justify-center">
@@ -144,29 +169,29 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
     }>
       <TableHeader>
         <TableColumn>Status</TableColumn>
-        <TableColumn>Date</TableColumn>
-        <TableColumn>Event</TableColumn>
-        <TableColumn>Format</TableColumn>
+        <TableColumn key="date" allowsSorting>Date</TableColumn>
+        <TableColumn key="title" allowsSorting>Event</TableColumn>
+        <TableColumn key="format" allowsSorting>Format</TableColumn>
         <TableColumn>Organizer</TableColumn>
         <TableColumn>Players</TableColumn>
       </TableHeader>
-      <TableBody emptyContent={"No events yet, use scrape button on EventLink.com page to add events."} items={items} isLoading={isLoading}>
-        {(item: EventSummarizedDbo) => (
-            <TableRow key={item.id} className="h-8 cursor-pointer" onClick={() => navigate(`/event/${item.id}`)}>
+      <TableBody emptyContent={"No events yet, use scrape button on EventLink.com page to add events."} items={events} isLoading={isLoading}>
+        {(event: EventSummarizedDbo) => (
+            <TableRow key={event.id} className="h-8 cursor-pointer" onClick={() => navigate(`/event/${event.id}`)}>
               <TableCell>
                 <div className="flex gap-1">
-                <ScrapeStatusIcon status={item.status} size={6} />
-                <PairStatusIcon status={item.status} size={6} />
-                <FetchStatusIcon status={item.status} size={6} />
+                <ScrapeStatusIcon status={event.status} size={6} />
+                <PairStatusIcon status={event.status} size={6} />
+                <FetchStatusIcon status={event.status} size={6} />
                 </div>
               </TableCell>
               <TableCell>
-                {item.date.toLocaleDateString()}
+                {event.date.toLocaleDateString()}
               </TableCell>
-              <TableCell className="text-large">{item.title}</TableCell>
-              <TableCell>{item.format}</TableCell>
-              <TableCell>{item.organizer}</TableCell>
-              <TableCell>{item.players} / {item.capacity}</TableCell>
+              <TableCell className="text-large">{event.title}</TableCell>
+              <TableCell>{event.format}</TableCell>
+              <TableCell>{event.organizer}</TableCell>
+              <TableCell>{event.players} / {event.capacity}</TableCell>
             </TableRow>
         )}
       </TableBody>

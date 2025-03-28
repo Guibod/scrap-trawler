@@ -3,18 +3,9 @@ import EventEntity, { isEventEntity } from "~/resources/storage/entities/event.e
 import type { EntityTable } from "dexie"
 import { NotFoundStorageError, WriteStorageError, InvalidFormatError } from "~/resources/storage/exceptions"
 import DatabaseService from "~/resources/storage/database"
+import type { PaginatedResult, QueryParams } from "~/resources/storage/types"
 
 const logger = getLogger("event-dao")
-
-/**
- * Minimal format for listing events.
- */
-export interface EventSummary {
-  id: string;
-  name: string;
-  date: Date;
-  organizer: string;
-}
 
 export class EventDao {
   private static instance: EventDao;
@@ -102,6 +93,50 @@ export class EventDao {
       }
       return event;
     });
+  }
+
+  async query({
+                search,
+                sort = "date",
+                direction = "desc",
+                page = 1,
+                pageSize = 20,
+              }: QueryParams<EventEntity>): Promise<PaginatedResult<EventEntity>> {
+    let collection = this.table.toCollection()
+
+    if (search) {
+      const lower = search.toLowerCase()
+      collection = collection.filter(e =>
+        e.title.toLowerCase().includes(lower)
+      )
+    }
+
+    const total = await collection.count()
+
+    // Fetch raw data, then sort + paginate manually
+    let data = await collection.toArray()
+
+    if (sort) {
+      data = data.sort((a, b) => {
+        const left = a[sort]
+        const right = b[sort]
+        if (left === right) return 0
+        if (left == null) return 1
+        if (right == null) return -1
+        return left < right ? -1 : 1
+      })
+
+      if (direction === "desc") data.reverse()
+    }
+
+    const pageData = data.slice((page - 1) * pageSize, page * pageSize)
+
+    return {
+      data: pageData,
+      total,
+      page,
+      pageSize,
+    }
   }
 
   async getAll(): Promise<EventEntity[]> {

@@ -81,17 +81,30 @@ describe("EventService", () => {
   });
 
   it("should list all events", async () => {
-    const eventEntities = [
-      { id: "1", title: "Event 1", version: EVENT_ENTITY_VERSION } as unknown as EventEntity,
-      { id: "2", title: "Event 2", version: EVENT_ENTITY_VERSION } as unknown as EventEntity,
-    ];
-    mockDao.getAll.mockResolvedValue(eventEntities);
-    vi.spyOn(EventMapper, "toLightDbo").mockResolvedValue(({ dbo: true} as unknown as EventSummarizedDbo));
+    mockDao.query.mockResolvedValue({
+      data: [
+        { id: "1", title: "Event 1" } as unknown as EventEntity,
+        { id: "2", title: "Event 2" } as unknown as EventEntity,
+      ],
+      total: 2,
+      page: 1,
+      pageSize: 2
+    });
 
     const result = await service.listEvents();
 
-    expect(mockDao.getAll).toHaveBeenCalled();
-    expect(result).toEqual(eventEntities.map(EventMapper.toLightDbo));
+    expect(mockDao.query).toHaveBeenCalledWith({});
+    expect(result.total).toBe(2)
+    expect(result.page).toBe(1)
+    expect(result.pageSize).toBe(2)
+    expect(result.data[0]).toMatchObject({
+      id: "1",
+      title: "Event 1",
+    });
+    expect(result.data[1]).toMatchObject({
+      id: "2",
+      title: "Event 2",
+    });
   });
 
   it("should hydrate outdated events", async () => {

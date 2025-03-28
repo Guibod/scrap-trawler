@@ -206,7 +206,7 @@ export default class EventHydrator {
   }
 
   private static inferPairStatus(entity: HydratableEntity): PairStatus {
-    if (!entity.raw_data.spreadsheet) return PairStatus.NOT_STARTED;
+    if (!entity.raw_data?.spreadsheet) return PairStatus.NOT_STARTED;
 
     const hasMapping =
       entity.mapping &&
@@ -221,7 +221,7 @@ export default class EventHydrator {
   }
 
   private static inferFetchStatus(entity: HydratableEntity): FetchStatus {
-    if (!entity.raw_data.fetch) return FetchStatus.NOT_STARTED;
+    if (!entity.raw_data?.fetch) return FetchStatus.NOT_STARTED;
 
     const allFetched = Object.values(entity.decks).every(
       (deck) => deck.status === DeckStatus.FETCHED
