@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from "react";
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from "react"
 import type { EventModel } from "~/resources/domain/models/event.model";
 import { Spinner } from "@heroui/react"
 import lostImage from "data-base64:~/../assets/lost.png"
@@ -8,12 +8,8 @@ import { getLogger } from "~/resources/logging/logger"
 import type { OverrideDbo } from "~/resources/domain/dbos/player.dbo"
 import { useParams } from "react-router-dom"
 import EventService from "~/resources/domain/services/event.service"
-import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
-import type { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
-import type { PairingMode } from "~/resources/domain/dbos/mapping.dbo"
-import type { DeckDbo } from "~/resources/domain/dbos/deck.dbo"
-import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { PlayerMapper, type PlayerProfile } from "~/resources/domain/mappers/player.mapper"
+import { EventBus } from "~/resources/utils/event-bus"
 
 const logger = getLogger("event-provider")
 
@@ -23,6 +19,7 @@ class EventContextType {
   showSetupByDefault: boolean;
   updatePlayerOverride: (playerId: string, overrideData: Partial<OverrideDbo>) => Promise<EventModel>;
   updateEvent: (event: Partial<EventModel>) => Promise<EventModel>;
+  refreshEvent: () => void;
 }
 
 const EventContext = createContext<EventContextType | undefined>(undefined);
@@ -62,49 +59,63 @@ export function EventProvider({ service = EventService.getInstance(), children }
     }
   }, [eventId]);
 
-  const showSetupByDefault = event?.scrapeStatus !== EventScrapeStateDbo.PURGED
-    && event?.status?.pair !== PairStatus.COMPLETED;
   const value = useMemo(() => ({
     event,
-    showSetupByDefault,
-    updateEvent: async (updatedEvent: Partial<EventModel>): Promise<EventModel> => {
-      if (!event) return; // Ensure event exists before modifying
-
-      return eventService.save({ ...event, ...updatedEvent })
-          .then(model => {
-            setEvent(model)
-            return model
-          });
-    },
-    updatePlayerOverride: async (playerId: string, overrideData: OverrideDbo): Promise<EventModel> => {
-      if (!event) return; // Ensure event exists before modifying
-
-      const player = event.players[playerId];
-      if (!player) return; // Prevent errors if player doesn't exist
-
-      // Merge new override data with existing data
-      const updatedOverride = Object.values({ ...player.overrides, ...overrideData }).some(Boolean)
-        ? { ...player.overrides, ...overrideData }
-        : null;
-
-      const updatedEvent = {
-        ...event,
-        players: {
-          ...event.players,
-          [playerId]: {
-            ...player,
-            overrides: updatedOverride,
-          },
-        },
-      };
-
-      return eventService.save(updatedEvent)
-          .then(model => {
-            setEvent(model)
-            return model
-          })
-    }
+    showSetupByDefault: event?.scrapeStatus !== EventScrapeStateDbo.PURGED
+      && event?.status?.pair !== PairStatus.COMPLETED
   }), [event]);
+
+  const refreshEvent = useCallback(() => {
+    if (!eventId) return;
+    setIsFetching(true);
+    eventService.get(eventId).then((fetched) => {
+      setEvent(fetched);
+      setIsFetching(false);
+    });
+  }, [eventId, eventService]);
+
+
+  useEffect(() => {
+    return EventBus.on("storage:changed", ({ table, key }) => {
+      if (table === "events" && key === eventId) {
+        refreshEvent();
+      }
+    });
+  }, [eventId, refreshEvent]);
+
+  const updateEvent = useCallback(async (updatedEvent: Partial<EventModel>): Promise<EventModel> => {
+    if (!event) return;
+
+    const model = await eventService.save({ ...event, ...updatedEvent });
+    setEvent(model);
+    return model;
+  }, [event, eventService]);
+
+  const updatePlayerOverride = useCallback(async (playerId: string, overrideData: OverrideDbo): Promise<EventModel> => {
+    if (!event) return;
+
+    const player = event.players[playerId];
+    if (!player) return;
+
+    const updatedOverride = Object.values({ ...player.overrides, ...overrideData }).some(Boolean)
+      ? { ...player.overrides, ...overrideData }
+      : null;
+
+    const updatedEvent = {
+      ...event,
+      players: {
+        ...event.players,
+        [playerId]: {
+          ...player,
+          overrides: updatedOverride,
+        },
+      },
+    };
+
+    const model = await eventService.save(updatedEvent);
+    setEvent(model);
+    return model;
+  }, [event, eventService]);
 
   if (isFetching) {
     return (
@@ -134,7 +145,12 @@ export function EventProvider({ service = EventService.getInstance(), children }
     )
   }
 
-  return <EventContext.Provider value={value}>{children}</EventContext.Provider>;
+  return <EventContext.Provider value={{
+    ...value,
+    updateEvent,
+    updatePlayerOverride,
+    refreshEvent
+  }}>{children}</EventContext.Provider>;
 }
 
 export function usePlayer(playerId: string): PlayerProfile {

@@ -2,11 +2,13 @@ import Dexie, { type EntityTable } from 'dexie';
 import EventEntity from '~/resources/storage/entities/event.entity';
 import CardEntity, { CardLanguage } from "~/resources/storage/entities/card.entity"
 import { getLogger } from "~/resources/logging/logger";
+import { DatabaseObserver } from "~/resources/storage/database.observer"
 
 class DatabaseService {
   private static instance: DatabaseService;
   private readonly db: Dexie;
   private readonly logger = getLogger(this.constructor.name);
+  private readonly observer: DatabaseObserver;
 
   readonly events: EntityTable<EventEntity, 'id'>;
   readonly cards!: EntityTable<CardEntity, 'name'>;
@@ -27,6 +29,8 @@ class DatabaseService {
     this.cards = this.db.table<CardEntity, 'name'>('cards');
     this.cards.mapToClass(CardEntity);
 
+    this.observer = new DatabaseObserver(this.db.tables);
+    this.observer.start()
     this.logger.start("Database initialized.");
   }
 

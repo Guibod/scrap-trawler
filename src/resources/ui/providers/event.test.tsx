@@ -8,6 +8,7 @@ import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state
 import { PairStatus } from "~/resources/domain/enums/status.dbo";
 import type { EventModel } from "~/resources/domain/models/event.model"
 import { createMock } from "@golevelup/ts-vitest"
+import { EventBus } from "~/resources/utils/event-bus"
 
 const mockEvent = {
   id: "123",
@@ -166,4 +167,46 @@ describe("EventProvider", () => {
         expect(item).toBeInTheDocument()
       });
   });
+
+  it("refreshes event on storage:changed message", async () => {
+    const getMock = vi.fn().mockResolvedValue(mockEvent)
+    const saveMock = vi.fn().mockResolvedValue(mockEvent)
+
+    const service = createMock<EventService>({
+      get: getMock,
+      save: saveMock
+    })
+
+    render(
+      <MemoryRouter initialEntries={["/event/123"]}>
+        <Routes>
+          <Route
+            path="/event/:eventId"
+            element={
+              <EventProvider service={service}>
+                <TestComponent />
+              </EventProvider>
+            }
+          />
+        </Routes>
+      </MemoryRouter>
+    )
+
+    await waitFor(() => screen.getByText("Test Event"))
+
+    // Reset call count after initial fetch
+    getMock.mockClear()
+
+    act(() => {
+      EventBus.emit("storage:changed", {
+        table: "events",
+        key: "123",
+        action: "update",
+      })
+    })
+
+    await waitFor(() => {
+      expect(getMock).toHaveBeenCalledTimes(1)
+    })
+  })
 });
