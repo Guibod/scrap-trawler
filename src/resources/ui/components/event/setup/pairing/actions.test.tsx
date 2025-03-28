@@ -16,6 +16,8 @@ describe("PairingActions", () => {
         matchByName={matchByName}
         assignRandomly={assignRandomly}
         unassignAll={unassignAll}
+        setModeFilter={vi.fn()}
+        modeFilter={null}
       />
     )
 
