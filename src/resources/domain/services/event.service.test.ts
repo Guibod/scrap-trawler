@@ -75,9 +75,9 @@ describe("EventService", () => {
   it("should delete an event", async () => {
     mockDao.delete.mockResolvedValue();
 
-    await service.delete("1");
+    await service.delete(["1"]);
 
-    expect(mockDao.delete).toHaveBeenCalledWith("1");
+    expect(mockDao.delete).toHaveBeenCalledWith(["1"]);
   });
 
   it("should list all events", async () => {

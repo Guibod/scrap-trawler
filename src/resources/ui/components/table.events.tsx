@@ -1,34 +1,86 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
+import { addToast, type Selection } from "@heroui/react"
 import { Pagination, TableColumn } from "@heroui/react"
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@heroui/table"
-import { GlobalStatusIcon } from "~/resources/ui/components/status.icons"
+import { FetchStatusIcon, PairStatusIcon, ScrapeStatusIcon } from "~/resources/ui/components/status.icons"
 import { Button } from "@heroui/button"
-import { DocumentArrowDownIcon, TrashIcon } from "@heroicons/react/24/outline"
-import { eventDownloadJson } from "~/resources/ui/actions/event.download"
-import { eventDelete } from "~/resources/ui/actions/event.delete"
-import { eventOpen } from "~/resources/ui/actions/event.open"
 import EventService from "~/resources/domain/services/event.service"
-import { ArrowPathIcon } from "@heroicons/react/24/solid"
+import { useNavigate } from "react-router-dom"
+import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo"
+import { EventBus } from "~/resources/utils/event-bus"
+import BulkDeletionButton from "~/resources/ui/components/button/delete.selection"
+import { TrashIcon, DocumentArrowDownIcon } from '@heroicons/react/20/solid'
+import { exportEventsToFile } from "~/resources/utils/export"
 
 type TableEventsProps = {
-  title: string;
+  title?: string;
   rowsPerPage?: number;
+  eventService?: EventService;
 }
 
-const isDate = (date: any): date is Date => date instanceof Date;
-
-export default function TableEvents({ title = "Stored Events Table", rowsPerPage = 5 }: TableEventsProps) {
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
+export default function TableEvents({ title = "Stored Events Table", rowsPerPage = 20, eventService = EventService.getInstance() }: TableEventsProps) {
+  const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set([]));
   const [page, setPage] = useState(1)
   const [events, setEvents] = useState([]);
+  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     fetchEvents();
 
-    async function fetchEvents() {
-      setEvents(await EventService.getInstance().listEvents());
+    const unsub = EventBus.on("storage:changed", ({ table }) => {
+      if (table === "events") {
+        console.log("Events table changed, fetching new events")
+        fetchEvents()
+      }
+    });
+
+    return () => {
+      unsub();
     };
-  }, [refreshTrigger]);
+
+    async function fetchEvents() {
+      setIsLoading(true)
+      setEvents(await eventService.listEvents());
+      setIsLoading(false)
+    }
+  }, [eventService]);
+
+  const downloadSelection = useCallback(async () => {
+    let exportedKeys : string[] | null
+    if (selectedKeys === 'all') {
+      exportedKeys = null
+    } else {
+      exportedKeys = Array.from(selectedKeys).map(key => key.toString())
+    }
+    exportEventsToFile(exportedKeys)
+      .then(() => {
+        addToast({
+          title: "Events Downloaded",
+          description: "The selected events have been downloaded.",
+          severity: "success"
+        })
+      })
+  }, [selectedKeys])
+
+  const deleteSelection = useCallback(async () => {
+    let deleteKeys: string[] | 'all'
+    if (selectedKeys === 'all') {
+      deleteKeys = 'all'
+    } else {
+      deleteKeys = Array.from(selectedKeys).map(key => key.toString())
+    }
+
+    return eventService
+      .delete(deleteKeys)
+      .then(() => {
+        addToast({
+          title: "Event Deleted",
+          description: "The selected event has been deleted.",
+          severity: "warning"
+        })
+      })
+  }, [selectedKeys, eventService])
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage
@@ -37,7 +89,6 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
   }, [page, events])
 
   const pages = Math.ceil(events.length / rowsPerPage)
-  const refresh = () => setRefreshTrigger(refreshTrigger + 1)
 
   return (
     <Table
@@ -47,10 +98,35 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
         wrapper: "min-h-[222px]",
       }}
       topContent={
-        <Button onPress={refresh} variant="flat" isIconOnly size="sm" title={"Refresh"}>
-          <ArrowPathIcon className="w-5 h-5" />
-        </Button>
+        title && (
+          <div>
+            <h3 className="text-2xl font-bold">{title}</h3>
+            <div className="flex gap-5 mt-2">
+              <Button
+                variant="solid"
+                onPress={downloadSelection}
+                aria-label="Download events"
+                isDisabled={selectedKeys !== 'all' && selectedKeys.size === 0}
+              >
+                <DocumentArrowDownIcon className="w-4 h-4 fill-green-600 stroke-lime-50" />
+                Download Selection
+              </Button>
+              <BulkDeletionButton
+                selection={selectedKeys}
+                onDeletion={deleteSelection}
+                threshold={5}
+                variant="solid"
+                modalTitle="Are you sure you want to delete the selected events?">
+                <TrashIcon className="w-4 h-4 fill-red-600 stroke-lime-50" />
+                Delete Selection
+              </BulkDeletionButton>
+            </div>
+          </div>
+        )
       }
+      selectedKeys={selectedKeys}
+      selectionMode="multiple"
+      onSelectionChange={setSelectedKeys}
       topContentPlacement="outside"
       isStriped
       bottomContent={
@@ -67,34 +143,31 @@ export default function TableEvents({ title = "Stored Events Table", rowsPerPage
       </div>
     }>
       <TableHeader>
-        <TableColumn hideHeader={true}>Status</TableColumn>
+        <TableColumn>Status</TableColumn>
+        <TableColumn>Date</TableColumn>
         <TableColumn>Event</TableColumn>
-        <TableColumn hideHeader={true}>Actions</TableColumn>
+        <TableColumn>Format</TableColumn>
+        <TableColumn>Organizer</TableColumn>
+        <TableColumn>Players</TableColumn>
       </TableHeader>
-      <TableBody emptyContent={"No events yet, use scrape button on EventLink.com page to add events."} items={items}>
-        {(item) => (
-          <TableRow key={item.id} className="h-8 cursor-pointer" onClick={() => eventOpen(item.id)}>
-            <TableCell className="px-1">
-              <GlobalStatusIcon {...item} size={16} />
-            </TableCell>
-            <TableCell className="px-2">
-              <div className={"flex flex-col items-start gap-0"}>
-                <span className={"text-sm font-semibold"}>{item.title}</span>
-                <span className={"text-xs text-gray-500"}>{isDate(item.date) ? item.date.toLocaleDateString() : item.date}</span>
-                <span className={"text-xs text-gray-500"}>{item.organizer}</span>
-              </div>
-            </TableCell>
-            <TableCell className="px-1">
-              <Button variant="ghost" isIconOnly size="sm" onPress={() => eventDownloadJson(item.id)}
-                      aria-label={`Download ${item.title}`}>
-                <DocumentArrowDownIcon className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" isIconOnly size="sm" onPress={() => eventDelete(item.id).then(refresh)}
-                      aria-label={`Delete ${item.title}`}>
-                <TrashIcon className="w-4 h-4" />
-              </Button>
-            </TableCell>
-          </TableRow>
+      <TableBody emptyContent={"No events yet, use scrape button on EventLink.com page to add events."} items={items} isLoading={isLoading}>
+        {(item: EventSummarizedDbo) => (
+            <TableRow key={item.id} className="h-8 cursor-pointer" onClick={() => navigate(`/event/${item.id}`)}>
+              <TableCell>
+                <div className="flex gap-1">
+                <ScrapeStatusIcon status={item.status} size={6} />
+                <PairStatusIcon status={item.status} size={6} />
+                <FetchStatusIcon status={item.status} size={6} />
+                </div>
+              </TableCell>
+              <TableCell>
+                {item.date.toLocaleDateString()}
+              </TableCell>
+              <TableCell className="text-large">{item.title}</TableCell>
+              <TableCell>{item.format}</TableCell>
+              <TableCell>{item.organizer}</TableCell>
+              <TableCell>{item.players} / {item.capacity}</TableCell>
+            </TableRow>
         )}
       </TableBody>
     </Table>

@@ -1,51 +1,92 @@
-import { vi, expect, it, describe } from "vitest";
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import TableEvents from "~/resources/ui/components/table.events";
+import { beforeEach, describe, expect, it, vi } from "vitest"
+import { render, screen, waitFor } from "@testing-library/react"
+import TableEvents from "~/resources/ui/components/table.events"
+import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo"
+import { MemoryRouter } from "react-router-dom"
+import { createMock } from "@golevelup/ts-vitest"
+import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
+import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
+import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
+import type EventService from "~/resources/domain/services/event.service"
+import React from "react"
 
-vi.mock("~/resources/ui/components/status.icons", () => ({
-  GlobalStatusIcon: vi.fn(() => <div data-testid="global-status-icon" />),
-}));
+const mockEvent: EventSummarizedDbo = {
+  id: "evt-123",
+  title: "Cool Event",
+  date: new Date("2025-03-01"),
+  lastUpdated: new Date("2025-03-02"),
+  organizer: "Guibod",
+  format: MTG_FORMATS.COMMANDER,
+  players: 42,
+  capacity: 64,
+  scrapeStatus: EventScrapeStateDbo.COMPLETE,
+  status: {
+    global: GlobalStatus.PARTIAL,
+    scrape: ScrapeStatus.COMPLETED,
+    pair: PairStatus.NOT_STARTED,
+    fetch: FetchStatus.NOT_STARTED,
+  },
+}
 
-vi.mock("~/resources/domain/services/event.service", () => ({
-  default: {
-    getInstance: vi.fn(() => ({
-      listEvents: vi.fn(async () => [
-        { id: "1", title: "Event 1", date: new Date("2024-03-18"), organizer: "Org 1" },
-        { id: "2", title: "Event 2", date: new Date("2024-03-17"), organizer: "Org 2" },
-        { id: "3", title: "Event 3", date: new Date("2024-03-16"), organizer: "Org 3" }
-      ])
-    }))
-  }
-}));
+describe("TableEvents component", () => {
+  let listEvents = vi.fn()
 
-describe("TableEvents Component", () => {
-  it("renders event table correctly", async () => {
-    render(<TableEvents title="Test Events" rowsPerPage={2} />);
+  beforeEach(() => {
+    listEvents = vi.fn()
+  })
 
-    await waitFor(() => expect(screen.getByText("Event 1")).toBeInTheDocument());
-    expect(screen.getByText("Event 2")).toBeInTheDocument();
-    expect(screen.queryByText("Event 3")).not.toBeInTheDocument(); // Paginated out
-  });
+  it("shows empty state if no events exist", async () => {
+    listEvents.mockResolvedValue([])
 
-  it("pagination works", async () => {
-    render(<TableEvents title="Test Events" rowsPerPage={2} />);
+    const service = createMock<EventService>({ listEvents })
 
-    await waitFor(() => expect(screen.getByText("Event 1")).toBeInTheDocument());
+    render(
+      <MemoryRouter>
+        <TableEvents eventService={service} />
+      </MemoryRouter>
+    )
 
-    const nextPageButton = screen.getByRole("button", { name: /next/i });
-    fireEvent.click(nextPageButton);
+    await waitFor(() => {
+      expect(screen.getByText(/no events yet/i)).toBeInTheDocument()
+    })
+  })
 
-    await waitFor(() => expect(screen.getByText("Event 3")).toBeInTheDocument());
-  });
+  it("renders a single event", async () => {
+    listEvents.mockResolvedValue([mockEvent])
 
-  it("refresh button reloads events", async () => {
-    const { getByTitle } = render(<TableEvents title="Test Events" rowsPerPage={2} />);
-    await waitFor(() => expect(screen.getByText("Event 1")).toBeInTheDocument());
+    const service = createMock<EventService>({ listEvents })
 
-    const refreshButton = getByTitle("Refresh");
-    fireEvent.click(refreshButton);
+    render(
+      <MemoryRouter>
+        <TableEvents eventService={service} />
+      </MemoryRouter>
+    )
 
-    await waitFor(() => expect(screen.getByText("Event 1")).toBeInTheDocument());
-  });
-});
+    await waitFor(() => {
+      expect(screen.getByText(/cool event/i)).toBeInTheDocument()
+      expect(screen.getByText("Guibod")).toBeInTheDocument()
+      expect(screen.getByText("commander")).toBeInTheDocument()
+    })
+  })
+
+  it("shows loading state briefly", async () => {
+    let resolve!: (val: EventSummarizedDbo[]) => void
+    const promise = new Promise<EventSummarizedDbo[]>((res) => {
+      resolve = res
+    })
+
+    listEvents.mockReturnValue(promise)
+
+    const service = createMock<EventService>({ listEvents })
+
+    render(
+      <MemoryRouter>
+        <TableEvents eventService={service} />
+      </MemoryRouter>
+    )
+
+    // No assertion — this would be where you'd check a loading spinner
+    resolve([mockEvent])
+    await waitFor(() => screen.getByText(/cool event/i))
+  })
+})

@@ -54,6 +54,9 @@ export default class EventMapper {
 
   static toLightDbo(entity: EventEntity): EventSummarizedDbo {
     return {
+      capacity: entity.raw_data?.wotc?.event?.capacity ?? 0,
+      format: entity.format,
+      players: entity.players.length,
       id: entity.id,
       title: entity.title,
       date: new Date(entity.date),

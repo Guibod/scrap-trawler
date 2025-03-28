@@ -108,8 +108,8 @@ export class EventDao {
     return this.table.orderBy('date').toArray();
   }
 
-  async delete(id: string) {
-    return this.table.delete(id)
+  async delete(id: string[]) {
+    return this.table.bulkDelete(id)
   }
 
   /**

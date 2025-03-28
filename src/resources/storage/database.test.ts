@@ -5,6 +5,7 @@ import type { LoggerInterface } from "~/resources/logging/interface"
 import DatabaseService from "~/resources/storage/database"
 import { EventBus } from "~/resources/utils/event-bus"
 import type EventEntity from "~/resources/storage/entities/event.entity"
+import { waitFor } from "@testing-library/react"
 
 const mockLogger = createMock<LoggerInterface>();
 vi.mock("~/resources/logging/logger", () => ({
@@ -46,10 +47,12 @@ describe('DatabaseService', () => {
     await db.events.add({ id: "test-1", title: "before" } as EventEntity)
     await db.events.update("test-1", { title: "after" })
 
-    expect(emit).toHaveBeenCalledWith("storage:changed", {
-      table: "events",
-      key: "test-1",
-      action: "update",
+    await waitFor(() => {
+      expect(emit).toHaveBeenCalledWith("storage:changed", {
+        table: "events",
+        key: "test-1",
+        action: "update",
+      })
     })
   })
 
@@ -59,10 +62,12 @@ describe('DatabaseService', () => {
     await db.events.add({ id: "test-2", title: "to-delete" } as EventEntity)
     await db.events.delete("test-2")
 
-    expect(emit).toHaveBeenCalledWith("storage:changed", {
-      table: "events",
-      key: "test-2",
-      action: "delete",
+    await waitFor(() => {
+      expect(emit).toHaveBeenCalledWith("storage:changed", {
+        table: "events",
+        key: "test-2",
+        action: "delete",
+      })
     })
   })
 
@@ -71,10 +76,12 @@ describe('DatabaseService', () => {
 
     await db.events.add({ id: "test-3", title: "new" } as EventEntity)
 
-    expect(emit).toHaveBeenCalledWith("storage:changed", {
-      table: "events",
-      key: "test-3",
-      action: "create",
+    await waitFor(() => {
+      expect(emit).toHaveBeenCalledWith("storage:changed", {
+        table: "events",
+        key: "test-3",
+        action: "create",
+      })
     })
   })
 });

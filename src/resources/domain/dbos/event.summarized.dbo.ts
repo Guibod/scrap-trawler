@@ -1,5 +1,6 @@
 import type { EventStatusDbo } from './status.dbo';
 import type { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
+import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 
 export interface EventSummarizedDbo {
   id: string;
@@ -9,4 +10,7 @@ export interface EventSummarizedDbo {
   status: EventStatusDbo;
   lastUpdated: Date | null;
   scrapeStatus: EventScrapeStateDbo;
+  players: number;
+  capacity: number;
+  format: MTG_FORMATS | null;
 }

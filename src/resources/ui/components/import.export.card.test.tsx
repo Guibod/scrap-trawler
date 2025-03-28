@@ -1,13 +1,18 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { vi, expect, beforeEach, it, describe } from "vitest"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import React from "react";
 import ImportExportCard from "~/resources/ui/components/import.export.card";
-import { ImportExportService } from "~/resources/domain/import.export.service";
+import { exportEventsToFile, importEventsFromFile } from "~/resources/utils/export"
 
-const serviceMock = {
-  exportEvents: vi.fn(() => Promise.resolve()),
-  importEvents: vi.fn(() => Promise.resolve()),
-} as unknown as ImportExportService;
+const mockedExport = vi.mocked(exportEventsToFile)
+const mockedImport = vi.mocked(importEventsFromFile)
+
+vi.mock("~/resources/utils/export", () => {
+  return {
+    exportEventsToFile: vi.fn(() => Promise.resolve()),
+    importEventsFromFile: vi.fn(() => Promise.resolve()),
+  }
+})
 
 describe("ImportExportCard", () => {
   beforeEach(() => {
@@ -32,24 +37,24 @@ describe("ImportExportCard", () => {
   });
 
   it("calls exportEvents when clicking export button", async () => {
-    render(<ImportExportCard service={serviceMock} />);
+    render(<ImportExportCard />);
     const exportButton = screen.getByRole("button", { name: "Export Data" });
     fireEvent.click(exportButton);
 
     await waitFor(() => {
-      expect(vi.mocked(serviceMock.exportEvents)).toHaveBeenCalled();
+      expect(vi.mocked(exportEventsToFile)).toHaveBeenCalled();
     });
   });
 
   it("triggers file import when selecting a file", async () => {
-    render(<ImportExportCard service={serviceMock} />);
+    render(<ImportExportCard />);
     const fileInput = screen.getByLabelText("Import Data");
     const file = new File(["{}"], "test.json", { type: "application/json" });
 
     fireEvent.change(fileInput, { target: { files: [file] } });
 
     await waitFor(() => {
-      expect(vi.mocked(serviceMock.importEvents)).toHaveBeenCalled();
+      expect(vi.mocked(importEventsFromFile)).toHaveBeenCalled();
     });
   });
 });
