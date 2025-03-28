@@ -1,26 +1,18 @@
 import React, { useState } from "react"
 import { addToast, Button, Card, CardBody, CardHeader, Modal, Progress } from "@heroui/react"
-import { formats, ImportExportService } from "~/resources/domain/import.export.service"
-import { humanTimestamp } from "~/resources/utils/text"
 import { ModalBody, ModalContent, ModalHeader } from "@heroui/modal"
-import { EventDao } from "~/resources/storage/event.dao"
+import { exportEventsToFile, importEventsFromFile } from "~/resources/utils/export"
 
 
-type ImportExportCardProps = {
-  service?: ImportExportService
-}
+type ImportExportCardProps = {}
 
-const ImportExportCard = ({ service } : ImportExportCardProps) => {
+const ImportExportCard = ({}: ImportExportCardProps) => {
   const [progress, setProgress] = useState<{ index: number, size: number } | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [operation, setOperation] = useState<"import" | "export" | null>(null)
 
   const progressCallback = async (index: number, size: number | null) => {
     setProgress({ index, size })
-  }
-
-  if (!service) {
-    service = new ImportExportService(EventDao.getInstance(), progressCallback)
   }
 
   const handleExport = async () => {
@@ -30,27 +22,10 @@ const ImportExportCard = ({ service } : ImportExportCardProps) => {
       setProgress({ index: 0, size: null });
 
       await new Promise((resolve) => setTimeout(resolve, 100)); // ⏳ Force render cycle before running export
-
-      const { writable } = new TransformStream();
-      const writer = writable.getWriter();
-      const chunks = [];
-
-      // Capture chunks while writing
-      const captureStream = new WritableStream({
-        write(chunk) {
-          chunks.push(chunk);
-        },
-      });
-
-      await service.exportEvents(captureStream, null, formats.GZIP);
-      await writer.close();
-
-      const blob = new Blob(chunks, { type: "application/gzip" });
-      const filename = `scrap-trawler.export.${humanTimestamp()}.json.gz`;
-      handleFileDownload(blob, filename);
-
-      addToast({ title: "Export Successful", description: "Your data has been exported.", color: "success" });
-
+      await exportEventsToFile(null, progressCallback)
+        .then(() => {
+          addToast({ title: "Export Successful", description: "Your data has been exported.", color: "success" });
+        })
     } catch (error) {
       addToast({ title: "Export Failed", description: error.message, color: "danger" });
     } finally {
@@ -70,16 +45,10 @@ const ImportExportCard = ({ service } : ImportExportCardProps) => {
     setIsModalOpen(true)
     setProgress({ index: 0, size: null })
     try {
-      // ✅ Ensure file is properly converted to ReadableStream
-      let stream;
-      if (file.stream) {
-        stream = file.stream();
-      } else {
-        stream = new Response(file).body;
-      }
-
-      await service.importEvents(stream)
-      addToast({ title: "Import Successful", description: "Your data has been imported.", color: "success" })
+      await importEventsFromFile(file, progressCallback)
+        .then(() => {
+          addToast({ title: "Import Successful", description: "Your data has been imported.", color: "success" })
+        })
     } catch (error) {
       addToast({ title: "Import Failed", description: error.message, color: "danger" })
     } finally {
@@ -146,16 +115,5 @@ const ImportExportCard = ({ service } : ImportExportCardProps) => {
     </Card>
   )
 }
-
-const handleFileDownload = (blob, filename) => {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-};
 
 export default ImportExportCard

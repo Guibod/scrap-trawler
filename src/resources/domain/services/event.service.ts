@@ -52,8 +52,15 @@ export default class EventService {
       });
   }
 
-  async delete(id: string): Promise<void> {
-    await this.dao.delete(id).then(() => logger.info(`Deleted event ${id}`));
+  async delete(ids: string[] | 'all'): Promise<void> {
+    if (ids === 'all') {
+      await this.dao.clear()
+        .then(() => logger.info(`Deleted all events`));
+      return;
+    }
+
+    await this.dao.delete(ids)
+      .then(() => logger.info(`Deleted event ${ids}`));
   }
 
   async listEvents(): Promise<EventSummarizedDbo[]> {
