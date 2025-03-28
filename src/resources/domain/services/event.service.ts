@@ -1,4 +1,4 @@
-import { EventDao } from "~/resources/storage/event.dao";
+import { EventDao } from "~/resources/storage/event.dao"
 import { type EventModel } from "~/resources/domain/models/event.model";
 import EventMapper from "~/resources/domain/mappers/event.mapper";
 import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo";
@@ -6,6 +6,7 @@ import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo";
 import EventEntity, { type DeckEntity, EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity"
 import { getLogger } from "~/resources/logging/logger";
 import EventHydrator from "~/resources/domain/mappers/event.hydrator";
+import type { PaginatedResult, QueryParams } from "~/resources/storage/types"
 
 const logger = getLogger("event-service");
 
@@ -63,11 +64,14 @@ export default class EventService {
       .then(() => logger.info(`Deleted event ${ids}`));
   }
 
-  async listEvents(): Promise<EventSummarizedDbo[]> {
-    const entities = await this.dao.getAll();
-    return entities.map(EventMapper.toLightDbo);
-  }
+  async listEvents(params: QueryParams<EventEntity> = {}): Promise<PaginatedResult<EventSummarizedDbo>> {
+    const result = await this.dao.query(params)
 
+    return {
+      ...result,
+      data: result.data.map(EventMapper.toLightDbo),
+    }
+  }
   /**
    * Hydrates an old version of the event entity.
    *

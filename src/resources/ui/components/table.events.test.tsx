@@ -9,6 +9,7 @@ import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import type EventService from "~/resources/domain/services/event.service"
 import React from "react"
+import type { PaginatedResult } from "~/resources/storage/types"
 
 const mockEvent: EventSummarizedDbo = {
   id: "evt-123",
@@ -36,7 +37,7 @@ describe("TableEvents component", () => {
   })
 
   it("shows empty state if no events exist", async () => {
-    listEvents.mockResolvedValue([])
+    listEvents.mockResolvedValue({ data: [], total: 0, pageSize: 10, page: 1 })
 
     const service = createMock<EventService>({ listEvents })
 
@@ -52,7 +53,7 @@ describe("TableEvents component", () => {
   })
 
   it("renders a single event", async () => {
-    listEvents.mockResolvedValue([mockEvent])
+    listEvents.mockResolvedValue({ data: [mockEvent], total: 1, pageSize: 10, page: 1 })
 
     const service = createMock<EventService>({ listEvents })
 
@@ -70,8 +71,8 @@ describe("TableEvents component", () => {
   })
 
   it("shows loading state briefly", async () => {
-    let resolve!: (val: EventSummarizedDbo[]) => void
-    const promise = new Promise<EventSummarizedDbo[]>((res) => {
+    let resolve!: (val: PaginatedResult<EventSummarizedDbo>) => void
+    const promise = new Promise<PaginatedResult<EventSummarizedDbo>>((res) => {
       resolve = res
     })
 
@@ -86,7 +87,7 @@ describe("TableEvents component", () => {
     )
 
     // No assertion — this would be where you'd check a loading spinner
-    resolve([mockEvent])
+    resolve({ data: [mockEvent], total: 1, pageSize: 10, page: 1 })
     await waitFor(() => screen.getByText(/cool event/i))
   })
 })

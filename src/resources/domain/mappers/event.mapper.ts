@@ -56,11 +56,11 @@ export default class EventMapper {
     return {
       capacity: entity.raw_data?.wotc?.event?.capacity ?? 0,
       format: entity.format,
-      players: entity.players.length,
+      players: entity.players?.length,
       id: entity.id,
       title: entity.title,
       date: new Date(entity.date),
-      organizer: entity.organizer.name,
+      organizer: entity.organizer?.name,
       status: EventHydrator.inferStatus(entity),
       lastUpdated: entity.lastUpdated ? new Date(entity.lastUpdated) : null,
       scrapeStatus: entity.scrapeStatus

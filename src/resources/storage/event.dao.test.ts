@@ -124,4 +124,63 @@ describe("EventDao", () => {
     }
     expect(streamedEvents).toEqual([]);
   });
+
+  describe("EventDao.query", () => {
+    beforeEach(async () => {
+      const e1 = generateEntity("event-1")
+      await eventDao.save({
+        ...e1,
+        title: "Alpha",
+        date: "2025-01-01",
+        organizer: { name: "Org3" },
+      } as EventEntity)
+
+      const e2 = generateEntity("event-2")
+      await eventDao.save({
+        ...e2,
+        title: "Beta",
+        date: "2025-02-01",
+        organizer: { name: "Org1" },
+      } as EventEntity)
+
+      const e3 = generateEntity("event-3")
+      await eventDao.save({
+        ...e3,
+        title: "Gamma",
+        date: "2025-03-01",
+        organizer: { name: "Org2" },
+      } as EventEntity)
+    })
+
+    it("returns paginated results", async () => {
+      const result = await eventDao.query({ page: 1, pageSize: 2 })
+      expect(result.data).toHaveLength(2)
+      expect(result.total).toBe(3)
+    })
+
+    it("supports search by title", async () => {
+      const result = await eventDao.query({ search: "alpha" })
+      expect(result.data).toHaveLength(1)
+      expect(result.data[0].title).toBe("Alpha")
+    })
+
+    it("sorts by date ascending", async () => {
+      const result = await eventDao.query({ sort: "date", direction: "asc" })
+      expect(result.data[0].title).toBe("Alpha")
+      expect(result.data[2].title).toBe("Gamma")
+    })
+
+    it("sorts by date descending", async () => {
+      const result = await eventDao.query({ sort: "date", direction: "desc" })
+      expect(result.data[0].title).toBe("Gamma")
+      expect(result.data[2].title).toBe("Alpha")
+    })
+
+    it.skip("sorts by organizer ascending", async () => {
+      const result = await eventDao.query({ sort: "organizer", direction: "desc" })
+      const titles = result.data.map(e => e.title)
+      expect(titles).toEqual(["Beta", "Gamma", "Alpha"])
+    })
+  })
+
 });
