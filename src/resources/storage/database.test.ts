@@ -3,6 +3,8 @@ import 'fake-indexeddb/auto';
 import { createMock } from "@golevelup/ts-vitest"
 import type { LoggerInterface } from "~/resources/logging/interface"
 import DatabaseService from "~/resources/storage/database"
+import { EventBus } from "~/resources/utils/event-bus"
+import type EventEntity from "~/resources/storage/entities/event.entity"
 
 const mockLogger = createMock<LoggerInterface>();
 vi.mock("~/resources/logging/logger", () => ({
@@ -10,6 +12,8 @@ vi.mock("~/resources/logging/logger", () => ({
 }))
 
 describe('DatabaseService', () => {
+  const emit = vi.spyOn(EventBus, "emit")
+
   beforeEach(() => {
     vi.clearAllMocks();
     // Reset singleton for test isolation
@@ -35,4 +39,42 @@ describe('DatabaseService', () => {
 
     expect(mockLogger.start).toHaveBeenCalledWith("Database initialized.");
   });
+
+  it("should emit storage:changed on events table update", async () => {
+    const db = DatabaseService.getInstance();
+
+    await db.events.add({ id: "test-1", title: "before" } as EventEntity)
+    await db.events.update("test-1", { title: "after" })
+
+    expect(emit).toHaveBeenCalledWith("storage:changed", {
+      table: "events",
+      key: "test-1",
+      action: "update",
+    })
+  })
+
+  it("should emit storage:changed on events table delete", async () => {
+    const db = DatabaseService.getInstance();
+
+    await db.events.add({ id: "test-2", title: "to-delete" } as EventEntity)
+    await db.events.delete("test-2")
+
+    expect(emit).toHaveBeenCalledWith("storage:changed", {
+      table: "events",
+      key: "test-2",
+      action: "delete",
+    })
+  })
+
+  it("should emit storage:changed on events table create", async () => {
+    const db = DatabaseService.getInstance();
+
+    await db.events.add({ id: "test-3", title: "new" } as EventEntity)
+
+    expect(emit).toHaveBeenCalledWith("storage:changed", {
+      table: "events",
+      key: "test-3",
+      action: "create",
+    })
+  })
 });
