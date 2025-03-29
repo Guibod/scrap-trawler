@@ -36,5 +36,6 @@ export interface EventModel {
   },
   lastRound: number,
   scrapeStatus: EventScrapeStateDbo,
-  lastUpdated: Date
+  lastUpdated: Date,
+  lastScrapedAt: Date
 }

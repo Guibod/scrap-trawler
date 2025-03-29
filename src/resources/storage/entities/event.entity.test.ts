@@ -21,6 +21,7 @@ const validEvent = {
   version: 1,
   scrapeStatus: EventScrapeStateDbo.PURGED,
   lastUpdated: null,
+  lastScrapedAt: null,
 };
 
 const missingRequiredFields = { id: "event456", title: "Incomplete Event" };

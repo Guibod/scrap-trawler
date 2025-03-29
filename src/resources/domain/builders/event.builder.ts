@@ -154,6 +154,7 @@ export default class EventBuilder {
     this.event.status ??= { global: GlobalStatus.COMPLETED, scrape: ScrapeStatus.COMPLETED, pair: PairStatus.COMPLETED, fetch: FetchStatus.COMPLETED };
     this.event.scrapeStatus ??= EventScrapeStateDbo.COMPLETE;
     this.event.lastUpdated ??= new Date();
+    this.event.lastScrapedAt ??= new Date();
     this.event.lastRound ??= Object.keys(rounds).length;
   }
 

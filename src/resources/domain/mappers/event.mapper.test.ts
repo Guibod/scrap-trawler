@@ -68,7 +68,8 @@ describe("EventMapper", () => {
         },
         spreadsheet: []
       },
-      scrapeStatus: EventScrapeStateDbo.COMPLETE
+      scrapeStatus: EventScrapeStateDbo.COMPLETE,
+      lastScrapedAt: null,
     };
 
     const result: EventEntity = EventMapper.toEntity(mockWriteDbo);

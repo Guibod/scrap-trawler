@@ -12,7 +12,7 @@ import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 
-export const EVENT_ENTITY_VERSION = 22
+export const EVENT_ENTITY_VERSION = 23
 
 export type CardName = string
 export type CardNameAndQuantity = { name: CardName, quantity: number }
@@ -92,6 +92,7 @@ export default class EventEntity {
   version: number
   scrapeStatus: EventScrapeStateDbo
   lastUpdated!: string | null
+  lastScrapedAt!: string | null
 }
 
 export function isUpToDateEntity(obj: any): boolean {
@@ -122,6 +123,7 @@ export function isEventEntity(obj: any): obj is EventEntity {
   if (typeof obj.version !== "number") return false;
   if (typeof obj.scrapeStatus !== "string") return false;
   if (obj.lastUpdated !== null && (typeof obj.lastUpdated !== "string"  || isNaN(new Date(obj.lastUpdated).getTime()))) return false;
+  if (obj.lastScrapedAt !== null && (typeof obj.lastScrapedAt !== "string"  || isNaN(new Date(obj.lastScrapedAt).getTime()))) return false;
 
   return true;
 }

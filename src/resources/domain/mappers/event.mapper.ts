@@ -39,6 +39,7 @@ export default class EventMapper {
       raw_data: entity.raw_data,
       status: EventHydrator.inferStatus(entity),
       lastUpdated: entity.lastUpdated ? new Date(entity.lastUpdated) : null,
+      lastScrapedAt: entity.lastScrapedAt ? new Date(entity.lastScrapedAt) : null,
       scrapeStatus: entity.scrapeStatus,
       mapping: entity.mapping,
       decks: Object.fromEntries((entity.decks || []).map(deck => [deck.id, {
@@ -89,6 +90,7 @@ export default class EventMapper {
       date: dbo.date.toISOString(),
       raw_data: dbo.raw_data ?? {},
       lastUpdated: new Date().toISOString(),
+      lastScrapedAt: dbo.lastScrapedAt?.toISOString() ?? null,
       version: EVENT_ENTITY_VERSION,
       scrapeStatus: dbo.scrapeStatus
     });
