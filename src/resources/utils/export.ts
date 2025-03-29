@@ -3,13 +3,15 @@ import { formats, ImportExportService } from "~/resources/domain/import.export.s
 import { humanTimestamp } from "~/resources/utils/text"
 import { handleFileDownload } from "~/resources/utils/download"
 
-const dao = EventDao.getInstance()
+const defaultService = () => new ImportExportService(EventDao.getInstance())
+
 
 export async function exportEventsToFile(
   eventIds: string[] | null,
-  onProgress?: (index: number, size: number) => Promise<void>
+  onProgress?: (index: number, size: number) => Promise<void>,
+  service: ImportExportService = defaultService()
 ) {
-  const service = new ImportExportService(dao, onProgress)
+  if (onProgress) service.onProgress(onProgress)
 
   const chunks = [];
   const sink = new WritableStream({
@@ -27,9 +29,11 @@ export async function exportEventsToFile(
 
 export async function importEventsFromFile(
   file: File,
-  onProgress?: (index: number, size: number) => Promise<void>
+  onProgress?: (index: number, size: number) => Promise<void>,
+  service: ImportExportService = defaultService()
 ): Promise<void> {
+  if (onProgress) service.onProgress(onProgress)
+
   const stream = file.stream()
-  const service = new ImportExportService(dao, onProgress)
   await service.importEvents(stream)
 }

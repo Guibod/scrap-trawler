@@ -55,6 +55,10 @@ export class ImportExportService {
     this.progressCallback = progressCallback || (() => Promise.resolve());
   }
 
+  public onProgress(callback: (index: number, size: number) => Promise<void>) {
+    this.progressCallback = callback;
+  }
+
   public async detectFormat(stream: ReadableStream): Promise<formats> {
     const reader = stream.getReader();
 
