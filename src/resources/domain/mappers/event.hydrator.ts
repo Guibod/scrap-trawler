@@ -71,7 +71,8 @@ export default class EventHydrator {
         ...entity.raw_data
       },
       version: EVENT_ENTITY_VERSION,
-      lastUpdated: entity.lastUpdated ?? null
+      lastUpdated: entity.lastUpdated ?? null,
+      lastScrapedAt: entity.lastScrapedAt ?? null,
     }
 
     return {
