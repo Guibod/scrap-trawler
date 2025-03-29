@@ -2,6 +2,22 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.13.0 - 2025-03-29
+#### Bug Fixes
+- event provider don’t blink the screen upon refreshEvent, only for initial fetch - (09e2efa) - Guillaume Boddaert
+#### Features
+- added many improvement to the event list page - (8081b49) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(release)** sync package.json version - (b7a335c) - Cog Bot
+- **(release)** update changelog.json - (c43769b) - Cog Bot
+- more coverage on utils functions - (8a0d866) - Guillaume Boddaert
+- refactored the ui of event table component - (0005f74) - Guillaume Boddaert
+- added database observer - (df97c7a) - Guillaume Boddaert
+- restored broken types in setup status tests - (a3125ef) - Guillaume Boddaert
+- added error-boundary to catch fatal react errors - (7246a1e) - Guillaume Boddaert
+
+- - -
+
 ## 0.12.0 - 2025-03-27
 #### Features
 - added a select box in the pairing page to filter players out/in - (041be55) - Guillaume Boddaert
