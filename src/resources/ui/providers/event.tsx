@@ -67,10 +67,8 @@ export function EventProvider({ service = EventService.getInstance(), children }
 
   const refreshEvent = useCallback(() => {
     if (!eventId) return;
-    setIsFetching(true);
     eventService.get(eventId).then((fetched) => {
       setEvent(fetched);
-      setIsFetching(false);
     });
   }, [eventId, eventService]);
 
