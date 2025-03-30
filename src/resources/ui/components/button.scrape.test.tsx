@@ -69,4 +69,22 @@ describe("<ButtonScrape />", () => {
       expect(icon).toBeInTheDocument()
     })
   })
+
+  it("auto-scrapes quickly in test mode", async () => {
+    const scrapeMock = vi.fn()
+
+    vi.mocked(sendToBackground).mockImplementation(({ name, body }: any) => {
+      if (name === "back/event-get") {
+        return Promise.resolve({ status: { scrape: ScrapeStatus.COMPLETED_LIVE } })
+      }
+      if (name === "eventlink/scrape") {
+        scrapeMock(body?.trigger)
+        return Promise.resolve({ status: { scrape: ScrapeStatus.COMPLETED_LIVE } })
+      }
+    })
+
+    render(<ButtonScrape eventId="e1" organizationId="o1" autoDelay={50} />)
+
+    await waitFor(() => expect(scrapeMock).toHaveBeenCalledWith("AUTOMATED"))
+  })
 })

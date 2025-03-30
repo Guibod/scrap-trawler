@@ -1,6 +1,6 @@
 import React from "react"
 import { Button } from "@heroui/button"
-import { ArchiveBoxArrowDownIcon, ExclamationCircleIcon } from "@heroicons/react/16/solid"
+import { ArchiveBoxArrowDownIcon, ExclamationCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/16/solid"
 import { ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 import statusColors from "~/resources/ui/colors/status"
 import type { UseButtonProps } from "@heroui/button/dist/use-button"
@@ -8,42 +8,53 @@ import { sendToBackground } from "@plasmohq/messaging"
 import { getLogger } from "~/resources/logging/logger"
 import { isScrapeResponseError, type ScrapeRequest, type ScrapeResponse } from "~/background/messages/eventlink/scrape"
 import { ScrapeTrigger } from "~/resources/integrations/eventlink/types"
+import { DEFAULT_MIN_DELAY_MS } from "~/resources/integrations/eventlink/event.scrape.runner"
 
 type ScrapButtonProps = {
   eventId?: string
   organizationId?: string
   fake?: boolean
+  autoDelay?: number
 } & UseButtonProps
 
 const logger = getLogger("button-scrape")
 
-const statusTextMap = {
+const statusTextMap: Record<ScrapeStatus, {text: string, desc: string, disabled: boolean}> = {
+  [ScrapeStatus.COMPLETED_DEAD]: {
+    text: "Scrape !",
+    desc: "This event was already scraped, but contains no usable data",
+    disabled: true
+  },
   [ScrapeStatus.COMPLETED_LIVE]: {
     text: "Update event !",
-    desc: "Last scrape recovered an ongoing event, it’s maybe time to update it!"
+    desc: "Last scrape recovered an ongoing event, it’s maybe time to update it!",
+    disabled: false
   },
   [ScrapeStatus.COMPLETED_ENDED]: {
     text: "Scrape again !",
-    desc: "It seems like this event has already ended, but you can scrape it again!"
+    desc: "It seems like this event has already ended, but you can scrape it again!",
+    disabled: false
   },
   [ScrapeStatus.NOT_STARTED]: {
     text: "Scrape!",
-    desc: "Scrape data from this event, it will be then available for pairing!"
+    desc: "Scrape data from this event, it will be then available for pairing!",
+    disabled: false
   }
 }
 
-export const ButtonScrape: React.FC<ScrapButtonProps> = ({ eventId, organizationId, fake, ...props }) => {
+export const ButtonScrape: React.FC<ScrapButtonProps> = ({ eventId, organizationId, fake, autoDelay, ...props }) => {
   const {
     status,
     isScraping,
     isFetching,
     triggerScrape,
-    error
-  } = useScrapeStatus(eventId, organizationId, fake)
+    error,
+    icon
+  } = useScrapeStatus(eventId, organizationId, fake, autoDelay)
 
   if (!eventId) return null
 
-  const { text, desc } = statusTextMap[status]
+  const { text, desc, disabled } = statusTextMap[status]
 
   const className = [
     "font-sans bg-blue-600 text-white rounded-md gap-2",
@@ -55,8 +66,8 @@ export const ButtonScrape: React.FC<ScrapButtonProps> = ({ eventId, organization
     <>
       <Button
         {...props}
-        onClick={triggerScrape}
-        disabled={isScraping || isFetching}
+        onClick={() => triggerScrape()}
+        disabled={disabled || isScraping || isFetching}
         size="md"
         className={className}
         color="primary"
@@ -64,30 +75,53 @@ export const ButtonScrape: React.FC<ScrapButtonProps> = ({ eventId, organization
         title={error ?? desc}
         isLoading={isScraping}
       >
-        {error ? (
-          <ExclamationCircleIcon aria-label="error-icon" className="h-5 w-5 fill-pink-300 stroke-red-700" />
-        ) : (
-          <ArchiveBoxArrowDownIcon aria-label="scrape-icon" className={`h-5 w-5 ${statusColors[status]}`} />
-        )}
+        {icon}
         {!props.isIconOnly && text}
       </Button>
+
+      {error && !props.isIconOnly && <div className="border-red-800 fill-gray-100 text-red-500 text-sm">{error}</div>}
     </>
   )
 }
 
 export default ButtonScrape
 
-function useScrapeStatus(eventId?: string, organizationId?: string, fake?: boolean) {
+function useScrapeStatus(eventId?: string, organizationId?: string, fake?: boolean, liveEventAutoDelay?: number) {
   const [status, setStatus] = React.useState<ScrapeStatus>(ScrapeStatus.NOT_STARTED)
   const [isScraping, setIsScraping] = React.useState(false)
   const [isFetching, setIsFetching] = React.useState(false)
+  const [autoDelay, setAutoDelay] = React.useState<number>(liveEventAutoDelay ?? DEFAULT_MIN_DELAY_MS)
   const [error, setError] = React.useState<string | null>(null)
+
+  function isLive(status: ScrapeStatus): boolean {
+    return status === ScrapeStatus.COMPLETED_LIVE
+  }
+
+  React.useEffect(() => {
+    if (!eventId || !organizationId || !isLive(status)) return
+
+    const interval = setInterval(() => {
+      triggerScrape(ScrapeTrigger.AUTOMATED)
+    }, autoDelay)
+
+    return () => clearInterval(interval)
+  }, [eventId, organizationId, status, autoDelay])
 
   React.useEffect(() => {
     if (!eventId) return
 
     fetchStatus()
   }, [eventId, fake])
+
+  const getIcon = () => {
+    if (status === ScrapeStatus.COMPLETED_DEAD) {
+      return (<ExclamationTriangleIcon aria-label="dead-icon" className="h-5 w-5 fill-black-500 stroke-black-700" />)
+    }
+    if (error) {
+      return (<ExclamationCircleIcon aria-label="error-icon" className="h-5 w-5 fill-pink-300 stroke-red-700" />)
+    }
+    return (<ArchiveBoxArrowDownIcon aria-label="scrape-icon" className={`h-5 w-5 ${statusColors[status]}`} />)
+  }
 
   const fetchStatus = async () => {
     setIsFetching(true)
@@ -107,7 +141,7 @@ function useScrapeStatus(eventId?: string, organizationId?: string, fake?: boole
     setIsFetching(false)
   }
 
-  const triggerScrape = async () => {
+  const triggerScrape = async (trigger: ScrapeTrigger = ScrapeTrigger.MANUAL) => {
     if (!eventId || !organizationId) return
 
     setIsScraping(true)
@@ -116,7 +150,7 @@ function useScrapeStatus(eventId?: string, organizationId?: string, fake?: boole
         ? await delayedPromise({ status: { scrape: ScrapeStatus.COMPLETED_ENDED }})
         : await sendToBackground<ScrapeRequest, ScrapeResponse>({
           name: "eventlink/scrape",
-          body: { eventId, organizationId, trigger: ScrapeTrigger.MANUAL }
+          body: { eventId, organizationId, trigger }
         })
 
       if(isScrapeResponseError(event)) {
@@ -132,7 +166,7 @@ function useScrapeStatus(eventId?: string, organizationId?: string, fake?: boole
     setIsScraping(false)
   }
 
-  return { status, isScraping, isFetching, triggerScrape, error }
+  return { status, isScraping, isFetching, triggerScrape, error, icon: getIcon() }
 }
 
 function delayedPromise<T>(value: T): Promise<T> {

@@ -12,7 +12,7 @@ import EventHydrator from "~/resources/storage/hydrators/event.hydrator"
 import type EventEntity from "~/resources/storage/entities/event.entity"
 import { NotFoundStorageError } from "~/resources/storage/exceptions"
 
-const DEFAULT_MIN_DELAY_MS = 10 * 60 * 1000 // 10 minutes
+export const DEFAULT_MIN_DELAY_MS = 10 * 60 * 1000 // 10 minutes
 
 export class EventScrapeRunner {
   private logger = getLogger("event-scrape")
