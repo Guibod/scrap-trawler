@@ -18,11 +18,11 @@ type ScrapButtonProps = {
 const logger = getLogger("button-scrape")
 
 const statusTextMap = {
-  [ScrapeStatus.IN_PROGRESS]: {
+  [ScrapeStatus.COMPLETED_LIVE]: {
     text: "Update event !",
     desc: "Last scrape recovered an ongoing event, it’s maybe time to update it!"
   },
-  [ScrapeStatus.COMPLETED]: {
+  [ScrapeStatus.COMPLETED_ENDED]: {
     text: "Scrape again !",
     desc: "It seems like this event has already ended, but you can scrape it again!"
   },
@@ -113,7 +113,7 @@ function useScrapeStatus(eventId?: string, organizationId?: string, fake?: boole
     setIsScraping(true)
     try {
       const event = fake
-        ? await delayedPromise({ status: { scrape: ScrapeStatus.COMPLETED }})
+        ? await delayedPromise({ status: { scrape: ScrapeStatus.COMPLETED_ENDED }})
         : await sendToBackground<ScrapeRequest, ScrapeResponse>({
           name: "eventlink/scrape",
           body: { eventId, organizationId, trigger: ScrapeTrigger.MANUAL }

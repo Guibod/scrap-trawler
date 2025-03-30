@@ -2,8 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useMemo, useCall
 import type { EventModel } from "~/resources/domain/models/event.model";
 import { Spinner } from "@heroui/react"
 import lostImage from "data-base64:~/../assets/lost.png"
-import { PairStatus } from "~/resources/domain/enums/status.dbo"
-import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
+import { PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 import { getLogger } from "~/resources/logging/logger"
 import type { OverrideDbo } from "~/resources/domain/dbos/player.dbo"
 import { useParams } from "react-router-dom"
@@ -61,7 +60,7 @@ export function EventProvider({ service = EventService.getInstance(), children }
 
   const value = useMemo(() => ({
     event,
-    showSetupByDefault: event?.scrapeStatus !== EventScrapeStateDbo.PURGED
+    showSetupByDefault: event?.status.scrape !== ScrapeStatus.COMPLETED_DEAD
       && event?.status?.pair !== PairStatus.COMPLETED
   }), [event]);
 

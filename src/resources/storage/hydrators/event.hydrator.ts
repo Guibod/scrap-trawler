@@ -4,7 +4,6 @@ import EventEntity, { EVENT_ENTITY_VERSION, type RoundEntity } from "~/resources
 import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 import { ScrapTrawlerError } from "~/resources/exception"
 import { faker } from "@faker-js/faker"
-import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import type { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
 import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 import { EventLinkFormats } from "~/resources/integrations/eventlink/enum"
@@ -38,7 +37,6 @@ export default class EventHydrator {
     const hydrated: EventEntity = {
       id: rawData.event.id,
       format: EventLinkFormats[rawData.event.eventFormat.name] ?? null,
-      scrapeStatus: EventHydrator.inferEventScrapeStatus(entity),
       organizer: {
         id: rawData.organization.id,
         name: rawData.organization.name,
@@ -199,11 +197,23 @@ export default class EventHydrator {
   }
 
   private static inferScrapeStatus(entity: HydratableEntity): ScrapeStatus {
-    const wotc = entity.raw_data?.wotc;
+    if (!entity.raw_data?.wotc) {
+      return ScrapeStatus.NOT_STARTED
+    }
 
-    return wotc?.event?.status === "ENDED"
-      ? ScrapeStatus.COMPLETED
-      : ScrapeStatus.IN_PROGRESS;
+    if (!entity.raw_data.wotc.rounds?.[1]?.rounds) {
+      return ScrapeStatus.COMPLETED_DEAD
+    }
+
+    if (entity.raw_data.wotc.event?.registeredPlayers?.length === 0) {
+      return ScrapeStatus.COMPLETED_DEAD
+    }
+
+    if (entity.raw_data.wotc.event.actualEndTime === null) {
+      return ScrapeStatus.COMPLETED_LIVE
+    }
+
+    return ScrapeStatus.COMPLETED_ENDED
   }
 
   private static inferPairStatus(entity: HydratableEntity): PairStatus {
@@ -236,8 +246,12 @@ export default class EventHydrator {
     pair: PairStatus,
     fetch: FetchStatus
   ): GlobalStatus {
+    if (scrape === ScrapeStatus.COMPLETED_DEAD) {
+      return GlobalStatus.FAILED
+    }
+
     if (
-      scrape === ScrapeStatus.COMPLETED &&
+      [ScrapeStatus.COMPLETED_ENDED, ScrapeStatus.COMPLETED_LIVE].includes(scrape) &&
       pair === PairStatus.COMPLETED &&
       fetch === FetchStatus.COMPLETED
     ) {
@@ -274,30 +288,5 @@ export default class EventHydrator {
         player.id
       ]
     }))
-  }
-
-  private static inferEventScrapeStatus(entity: HydratableEntity): EventScrapeStateDbo {
-    if (!entity.raw_data.wotc.rounds) {
-      return EventScrapeStateDbo.PURGED
-    }
-
-    if (Object.values(entity.raw_data.wotc.rounds).reduce((acc, round) => {
-      if (!round?.rounds) {
-        return acc
-      }
-      return acc + round.rounds.length
-      }, 0) === 0) {
-      return EventScrapeStateDbo.PURGED
-    }
-
-    if (entity.raw_data.wotc.event.registeredPlayers[0].displayName === "[REDACTED]") {
-      return EventScrapeStateDbo.ANONYMIZED
-    }
-
-    if (entity.raw_data.wotc.event.actualEndTime === null) {
-      return EventScrapeStateDbo.LIVE
-    }
-
-    return EventScrapeStateDbo.COMPLETE
   }
 }

@@ -32,7 +32,7 @@ describe("<ButtonScrape />", () => {
         return Promise.resolve({ status: { scrape: ScrapeStatus.NOT_STARTED } })
       }
       if (name === "eventlink/scrape") {
-        return Promise.resolve({ status: { scrape: ScrapeStatus.COMPLETED } })
+        return Promise.resolve({ status: { scrape: ScrapeStatus.COMPLETED_ENDED } })
       }
     })
 

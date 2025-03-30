@@ -12,7 +12,6 @@ import EventBuilder from "~/resources/domain/builders/event.builder"
 import EventMapper from "~/resources/domain/mappers/event.mapper"
 import EventEntity, { EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity"
 import { sampleEvent, sampleGameState, sampleOrganizer } from "~/resources/integrations/eventlink/data/sample.event"
-import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 
 let dao: EventDao = EventDao.getInstance();
 let service: ImportExportService
@@ -31,7 +30,6 @@ describe("ImportExportService", () => {
       return {
         ...EventMapper.toEntity(EventBuilder.anEvent.withId(`event-${index + 1}`).build()),
         version: EVENT_ENTITY_VERSION,
-        scrapeStatus: EventScrapeStateDbo.COMPLETE,
         raw_data: {
           wotc: {
             event: sampleEvent,

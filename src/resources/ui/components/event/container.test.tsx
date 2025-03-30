@@ -3,9 +3,8 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import EventContainer from "~/resources/ui/components/event/container"
 import { useEvent } from "~/resources/ui/providers/event"
-import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import userEvent from "@testing-library/user-event"
-import { useEventFetchStatus } from "~/resources/ui/providers/fetcher"
+import { ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 
 // Mock `useEvent` to provide test data
 vi.mock("~/resources/ui/providers/event", () => ({
@@ -33,7 +32,7 @@ describe("EventContainer", () => {
   const mockEvent = {
     title: "Magic Tournament",
     date: new Date("2024-03-17"),
-    scrapeStatus: EventScrapeStateDbo.COMPLETE
+    status: { scrape: ScrapeStatus.COMPLETED_ENDED }
   }
 
   beforeEach(() => {
@@ -76,7 +75,12 @@ describe("EventContainer", () => {
 
   it("shows EventEmpty if event is purged", () => {
     vi.mocked(useEvent).mockReturnValue({
-      event: { ...mockEvent, scrapeStatus: EventScrapeStateDbo.PURGED },
+      event: {
+        ...mockEvent,
+        status: {
+          scrape: ScrapeStatus.COMPLETED_DEAD
+        }
+      },
       showSetupByDefault: false
     } as unknown as ReturnType<typeof useEvent>)
 

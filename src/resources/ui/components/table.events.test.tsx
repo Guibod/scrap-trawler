@@ -6,7 +6,6 @@ import { MemoryRouter } from "react-router-dom"
 import { createMock } from "@golevelup/ts-vitest"
 import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
-import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import type EventService from "~/resources/domain/services/event.service"
 import React from "react"
 import type { PaginatedResult } from "~/resources/storage/types"
@@ -20,10 +19,9 @@ const mockEvent: EventSummarizedDbo = {
   format: MTG_FORMATS.COMMANDER,
   players: 42,
   capacity: 64,
-  scrapeStatus: EventScrapeStateDbo.COMPLETE,
   status: {
     global: GlobalStatus.PARTIAL,
-    scrape: ScrapeStatus.COMPLETED,
+    scrape: ScrapeStatus.COMPLETED_ENDED,
     pair: PairStatus.NOT_STARTED,
     fetch: FetchStatus.NOT_STARTED,
   },

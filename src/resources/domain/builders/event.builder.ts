@@ -7,7 +7,6 @@ import TeamBuilder from "./team.builder"
 import OrganizerBuilder from "./organizer.builder"
 import type { EventModel } from "~/resources/domain/models/event.model"
 import { PairingStrategyDbo } from "~/resources/domain/enums/pairing.strategy.dbo"
-import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import { FetchStatus, GlobalStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
 import DeckBuilder from "~/resources/domain/builders/deck.builder"
@@ -151,8 +150,7 @@ export default class EventBuilder {
     }
     this.event.rounds = rounds;
 
-    this.event.status ??= { global: GlobalStatus.COMPLETED, scrape: ScrapeStatus.COMPLETED, pair: PairStatus.COMPLETED, fetch: FetchStatus.COMPLETED };
-    this.event.scrapeStatus ??= EventScrapeStateDbo.COMPLETE;
+    this.event.status ??= { global: GlobalStatus.COMPLETED, scrape: ScrapeStatus.COMPLETED_ENDED, pair: PairStatus.COMPLETED, fetch: FetchStatus.COMPLETED };
     this.event.lastUpdated ??= new Date();
     this.event.lastScrapedAt ??= new Date();
     this.event.lastRound ??= Object.keys(rounds).length;

@@ -1,7 +1,6 @@
 import type { EventOrganizerDbo } from "~/resources/domain/dbos/event.organizer.dbo"
 import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 import type { TeamDbo } from "~/resources/domain/dbos/team.dbo"
-import type { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import type { PairingStrategyDbo } from "~/resources/domain/enums/pairing.strategy.dbo"
 import type { StandingDbo } from "~/resources/domain/dbos/standing.dbo"
 import type { DropDbo } from "~/resources/domain/dbos/drop.dbo"
@@ -12,7 +11,7 @@ import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/types"
 
-export const EVENT_ENTITY_VERSION = 23
+export const EVENT_ENTITY_VERSION = 24
 
 export type CardName = string
 export type CardNameAndQuantity = { name: CardName, quantity: number }
@@ -90,7 +89,6 @@ export default class EventEntity {
     [key: string]: any
   }
   version: number
-  scrapeStatus: EventScrapeStateDbo
   lastUpdated!: string | null
   lastScrapedAt!: string | null
 }
@@ -121,7 +119,6 @@ export function isEventEntity(obj: any): obj is EventEntity {
   if (typeof obj.raw_data !== "object") return false;
   if (!("wotc" in obj.raw_data) || typeof obj.raw_data.wotc !== "object") return false;
   if (typeof obj.version !== "number") return false;
-  if (typeof obj.scrapeStatus !== "string") return false;
   if (obj.lastUpdated !== null && (typeof obj.lastUpdated !== "string"  || isNaN(new Date(obj.lastUpdated).getTime()))) return false;
   if (obj.lastScrapedAt !== null && (typeof obj.lastScrapedAt !== "string"  || isNaN(new Date(obj.lastScrapedAt).getTime()))) return false;
 
