@@ -5,11 +5,17 @@ import type { ComponentType, ReactNode } from "react"
 import { GlobalStatus, FetchStatus, PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 import statusColors from "~/resources/ui/colors/status"
 
-export const statusDescriptions = {
+export const statusDescriptions: {
+  scrape: Record<ScrapeStatus, string>,
+  pair: Record<PairStatus, string>,
+  fetch: Record<FetchStatus, string>
+  global: Record<GlobalStatus, string>
+} = {
   scrape: {
-    IN_PROGRESS: "The event was scraped, but was not yet finished. You need to scrape again for updates.",
-    COMPLETED: "All data were retrieved from Event Link.",
-    FAILED: "Scraping process failed. Some data may be missing."
+    [ScrapeStatus.COMPLETED_LIVE]: "The event was scraped, but was not yet finished. You need to scrape again for updates.",
+    [ScrapeStatus.COMPLETED_ENDED]: "All data were retrieved from Event Link.",
+    [ScrapeStatus.COMPLETED_DEAD]: "This event was scraped, but contains no usable data",
+    [ScrapeStatus.NOT_STARTED]: "Scraping process failed. Some data may be missing."
   },
   pair: {
     NOT_STARTED: "Pairing process has not yet started.",
@@ -21,12 +27,12 @@ export const statusDescriptions = {
     NOT_STARTED: "No decklists have been fetched yet.",
     COMPLETED: "All decklists have been successfully retrieved.",
     PARTIAL: "Some decklists were fetched, but others failed.",
-    FAILED: "Decklist retrieval failed. No data could be fetched."
   },
   global: {
     NOT_STARTED: "No processing has been started yet.",
     COMPLETED: "All tournament data has been successfully processed and is ready.",
-    PARTIAL: "Processing is partially completed, with some data still missing."
+    PARTIAL: "Processing is partially completed, with some data still missing.",
+    FAILED: "Something went really wrong and processing failed."
   }
 }
 
@@ -91,7 +97,7 @@ type StatusProps = {
 };
 
 const GlobalStatusIcon = ({ status, size = 24 }: StatusProps) => (
-  <StatusIcon shape={Circle} color={statusColors[status.global]} label="Global Status"
+  <StatusIcon shape={Circle} color={statusColors[status.global]} label="Global Status" aria-label="Global Status"
               description={statusDescriptions.global[status.global]} size={size} tooltip={
     <div className="px-2 flex flex-col">
       <div className="text-sm font-bold">Event Status</div>
@@ -113,17 +119,17 @@ const GlobalStatusIcon = ({ status, size = 24 }: StatusProps) => (
 )
 
 const ScrapeStatusIcon = ({ status, disableTooltip, size = 24 }: StatusProps) => (
-  <StatusIcon shape={Triangle} color={statusColors[status.scrape]} label="Scrape Status"
+  <StatusIcon shape={Triangle} color={statusColors[status.scrape]} label="Scrape Status" aria-label="Scrape Status"
               description={statusDescriptions.scrape[status.scrape]} size={size} disableTooltip={disableTooltip} />
 )
 
 const PairStatusIcon = ({ status, disableTooltip, size = 24 }: StatusProps) => (
-  <StatusIcon shape={Square} color={statusColors[status.pair]} label="Pair Status"
+  <StatusIcon shape={Square} color={statusColors[status.pair]} label="Pair Status" aria-label="Pair Status"
               description={statusDescriptions.pair[status.pair]} size={size} disableTooltip={disableTooltip} />
 )
 
 const FetchStatusIcon = ({ status, disableTooltip, size = 24 }: StatusProps) => (
-  <StatusIcon shape={Hexagon} color={statusColors[status.fetch]} label="Fetch Status"
+  <StatusIcon shape={Hexagon} color={statusColors[status.fetch]} label="Fetch Status" aria-label="Fetch Status"
               description={statusDescriptions.fetch[status.fetch]} size={size} disableTooltip={disableTooltip} />
 )
 

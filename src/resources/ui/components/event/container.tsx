@@ -1,12 +1,13 @@
-import { Switch } from "@heroui/switch"
 import { Cog6ToothIcon, EyeIcon } from "@heroicons/react/16/solid"
 import EventView from "~/resources/ui/components/event/view"
 import React, { useState } from "react"
 import { useEvent } from "~/resources/ui/providers/event"
 import EventEmpty from "~/resources/ui/components/event/empty"
 import EventSetup from "~/resources/ui/components/event/setup"
-import FetchStatus from "~/resources/ui/components/fetch/status"
 import { ScrapeStatus } from "~/resources/domain/enums/status.dbo"
+import ButtonScrape from "~/resources/ui/components/button.scrape"
+import FetchStatus from "~/resources/ui/components/status/fetch"
+import { Switch } from "@heroui/switch"
 
 const EventContainer = () => {
   const { event, showSetupByDefault} = useEvent()
@@ -28,7 +29,8 @@ const EventContainer = () => {
         </h1>
 
         <div className="flex items-center gap-5">
-          <FetchStatus size="sm" />
+          {(event.status.scrape !== ScrapeStatus.COMPLETED_LIVE) && <ButtonScrape eventId={event.id} organizationId={event.organizer.id} />}
+          <FetchStatus size="md" />
 
           <Switch id="mode-switch" isSelected={isSetupMode}
                   onChange={() => setIsSetupMode(!isSetupMode)}
