@@ -2,6 +2,26 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.14.0 - 2025-03-30
+#### Continuous Integration
+- disabled lint-staged on commit - (469b1a1) - Guillaume Boddaert
+- added pre-push prior sending a request to github - (c5a7941) - Guillaume Boddaert
+- lint staged is configured through package.json only - (57aaa3c) - Guillaume Boddaert
+#### Features
+- scrape button is available on live event page - (1fc52c5) - Guillaume Boddaert
+- live event will auto scrape every 10 minutes - (f3c4dd2) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(deps)** bump vite from 6.2.2 to 6.2.3 in the npm_and_yarn group - (31ee290) - dependabot[bot]
+- **(release)** sync package.json version - (427f175) - Cog Bot
+- **(release)** update changelog.json - (4adb0a8) - Cog Bot
+- refactored storage of event scrape status - (a769c8c) - Guillaume Boddaert
+- refactored the whole eventlink scrape chain - (7a530c4) - Guillaume Boddaert
+- added lastScrapedAt data to event model and entity - (68cd425) - Guillaume Boddaert
+- removed unused event-summary message - (40e588c) - Guillaume Boddaert
+- removed unused event-open message - (cd82a5a) - Guillaume Boddaert
+
+- - -
+
 ## 0.13.0 - 2025-03-29
 #### Bug Fixes
 - event provider don’t blink the screen upon refreshEvent, only for initial fetch - (09e2efa) - Guillaume Boddaert
