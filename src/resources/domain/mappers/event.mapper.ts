@@ -3,9 +3,9 @@ import EventEntity, { EVENT_ENTITY_VERSION } from "../../storage/entities/event.
 import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo"
 import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo"
 import { getLogger } from "~/resources/logging/logger"
-import EventHydrator from "~/resources/domain/mappers/event.hydrator"
 import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
 import { mapSpreadsheetData } from "~/resources/domain/mappers/spreadsheet.mapper"
+import EventHydrator from "~/resources/storage/hydrators/event.hydrator"
 
 const logger = getLogger("event-mapper")
 

@@ -1,6 +1,5 @@
 import type { EventOrganizerDbo } from "~/resources/domain/dbos/event.organizer.dbo"
 import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
-import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/event-extractor"
 import type { TeamDbo } from "~/resources/domain/dbos/team.dbo"
 import type { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import type { PairingStrategyDbo } from "~/resources/domain/enums/pairing.strategy.dbo"
@@ -11,6 +10,7 @@ import type { MappingDbo } from "~/resources/domain/dbos/mapping.dbo"
 import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
+import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/types"
 
 export const EVENT_ENTITY_VERSION = 23
 

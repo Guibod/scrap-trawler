@@ -5,8 +5,8 @@ import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarize
 import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo";
 import EventEntity, { type DeckEntity, EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity"
 import { getLogger } from "~/resources/logging/logger";
-import EventHydrator from "~/resources/domain/mappers/event.hydrator";
 import type { PaginatedResult, QueryParams } from "~/resources/storage/types"
+import EventHydrator from "~/resources/storage/hydrators/event.hydrator"
 
 const logger = getLogger("event-service");
 

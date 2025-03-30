@@ -6,11 +6,10 @@ import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo"
 import EventMapper from "~/resources/domain/mappers/event.mapper"
 import { createMock, type DeepMocked } from "@golevelup/ts-vitest"
 import type { EventModel } from "~/resources/domain/models/event.model"
-import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo"
-import EventHydrator from "~/resources/domain/mappers/event.hydrator"
 import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
+import EventHydrator from "~/resources/storage/hydrators/event.hydrator"
 
 vi.mock("~/resources/storage/event.dao"); // Mock EventDao
 const mockDao: DeepMocked<EventDao> = createMock<EventDao>();

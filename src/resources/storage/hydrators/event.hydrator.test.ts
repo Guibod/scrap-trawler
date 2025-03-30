@@ -17,7 +17,7 @@ vi.doMock('~/resources/logging/logger', () => ({
 }));
 
 // 🚀 Re-import EventHydrator AFTER mocking the logger
-const { default: EventHydrator } = await vi.importActual<typeof import("~/resources/domain/mappers/event.hydrator")>('~/resources/domain/mappers/event.hydrator');
+const { default: EventHydrator } = await vi.importActual<typeof import("~/resources/storage/hydrators/event.hydrator")>('~/resources/storage/hydrators/event.hydrator');
 
 // Mock event data
 const validEventData = {

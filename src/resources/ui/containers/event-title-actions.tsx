@@ -16,7 +16,7 @@ const EventTitleActions = () => {
 
   return (
     <div className={"flex gap-2"}>
-      <ButtonScrape organizationId={organizationId} eventId={eventId}/>
+      <ButtonScrape variant="bordered" organizationId={organizationId} eventId={eventId}/>
       <ButtonOpen />
     </div>
   )

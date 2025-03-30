@@ -7,9 +7,9 @@ import { faker } from "@faker-js/faker"
 import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import type { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
 import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
-import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/event-extractor"
 import { EventLinkFormats } from "~/resources/integrations/eventlink/enum"
 import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
+import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/types"
 
 const logger = getLogger("event-hydrator")
 export class HydrationError extends ScrapTrawlerError {}
