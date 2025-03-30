@@ -11,6 +11,7 @@ import { hashStringSHA1 } from "~/resources/utils/crypto"
 import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { checkLegality, getCommanderIdentity, type LegalityBoard } from "~/resources/integrations/mtg-json/legality"
 import type { CardDbo } from "~/resources/domain/dbos/card.dbo"
+import { DeckSource } from "~/resources/domain/dbos/deck.dbo"
 
 type CardDboAndQuantity = {
   quantity: number,
@@ -152,6 +153,7 @@ export class TextFetcher extends AbstractDeckFetcher {
       id: `text:${hash}`,
       url: null,
       archetype,
+      source: DeckSource.TEXT,
       face: boards.commanders[0]?.card.name || boards.mainboard[0]?.card.name || null,
       lastUpdated: null,
       name,
