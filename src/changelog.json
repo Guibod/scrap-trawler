@@ -1,5 +1,13 @@
 [
   {
+    "version": "0.14.0",
+    "timestamp": 1743333516,
+    "changes": [
+      "Feature — live event will auto scrape every 10 minutes",
+      "Feature — scrape button is available on live event page"
+    ]
+  },
+  {
     "version": "0.13.0",
     "timestamp": 1743251399,
     "changes": [
