@@ -6,7 +6,7 @@
 [![Build Status](https://github.com/Guibod/scrap-trawler/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Guibod/scrap-trawler/actions)
 [![CodeFactor](https://www.codefactor.io/repository/github/guibod/scrap-trawler/badge)](https://www.codefactor.io/repository/github/guibod/scrap-trawler)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/10030/badge)](https://bestpractices.coreinfrastructure.org/projects/10030)
-[![codecov](https://codecov.io/gh/Guibod/scrap-trawler/graph/badge.svg?token=50GWNNH7ES)](https://codecov.io/gh/Guibod/scrap-trawler)
+[![codecov](https://codecov.io/gh/Guibod/scrap-trawler/branch/main/graph/badge.svg?token=50GWNNH7ES)](https://codecov.io/gh/Guibod/scrap-trawler)
 
 ## 📖 About Scrap Trawler
 Scrap Trawler is an **open-source browser extension** designed for **tournament organizers** using [EventLink](https://eventlink.wizards.com/). It enables users to **extract event data**, including:
