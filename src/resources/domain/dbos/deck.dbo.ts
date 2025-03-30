@@ -8,12 +8,12 @@ export enum DeckSource {
   UNKNOWN = "Unknown"
 }
 
-export interface DeckCardDbo {
+export type DeckCardDbo = {
   name: string,
   quantity: number
 }
 
-export interface DeckBoardsDbo {
+export type DeckBoardsDbo = {
   mainboard: DeckCardDbo[],
   sideboard?: DeckCardDbo[],
   commanders?: DeckCardDbo[],
@@ -21,7 +21,7 @@ export interface DeckBoardsDbo {
   signatureSpells?: DeckCardDbo[],
 }
 
-export interface DeckDbo {
+export type DeckDbo = {
   id: string;  // Optional UUID
   url?: string;  // External source (Moxfield, Archidekt, etc.)
   spreadsheetRowId: string;  // Reference to SpreadsheetRawRow.id
