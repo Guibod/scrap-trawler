@@ -68,4 +68,18 @@ describe("EventModel null safety", () => {
     expect(player.deck.archetype).toBe("Control");
   });
 
+  it("handles matches recovery", () => {
+    const player = PlayerMapper.toProfile(event, "abc");
+
+    expect(player.matches).toHaveLength(4)
+    expect(player.matches[0].matchId).toBeTypeOf("string")
+    expect(player.matches[0].tableNumber).toBeTypeOf("number")
+    expect(player.matches[1].matchId).toBeTypeOf("string")
+    expect(player.matches[1].tableNumber).toBeTypeOf("number")
+    expect(player.matches[2].matchId).toBeTypeOf("string")
+    expect(player.matches[2].tableNumber).toBeTypeOf("number")
+    expect(player.matches[3].matchId).toBeTypeOf("string")
+    expect(player.matches[3].tableNumber).toBeTypeOf("number")
+  })
+
 });
