@@ -26,12 +26,25 @@ export class ScrapingError extends ScrapTrawlerError {
 
 export class TooOldToScrapeError extends ScrapingError {
   constructor(eventId) {
-    super(`The event ${eventId} was almost fully cleaned up. It is too old to scrape.`);
+    super(`Event ${eventId} was read but it was almost fully cleaned up by Wizards. It is too old to be properly scrapped.`);
   }
 }
 
-export class DataLossScrapeError extends ScrapingError {
-  constructor(eventId) {
-    super(`The event ${eventId} is already stored and would lose data if scraped.`);
+
+export class EventAnonymizationError extends ScrapTrawlerError {
+  constructor(eventId: string) {
+    super(`Event ${eventId} has anonymized data and would override existing user data. Skipping scrape.`);
+  }
+}
+
+export class ScrapeTooSoonError extends ScrapTrawlerError {
+  constructor(eventId: string) {
+    super(`Event ${eventId} was scraped too soon`)
+  }
+}
+
+export class ExpiredTokenError extends ScrapTrawlerError {
+  constructor() {
+    super(`Authentication token has expired. You need to be connected to eventlink.`)
   }
 }

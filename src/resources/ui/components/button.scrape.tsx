@@ -1,110 +1,140 @@
-import React, { useEffect, useState } from "react"
-import { eventScrape } from "~/resources/ui/actions/event.scrape"
+import React from "react"
 import { Button } from "@heroui/button"
-import { ArchiveBoxArrowDownIcon } from "@heroicons/react/16/solid"
+import { ArchiveBoxArrowDownIcon, ExclamationCircleIcon } from "@heroicons/react/16/solid"
 import { ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 import statusColors from "~/resources/ui/colors/status"
 import type { UseButtonProps } from "@heroui/button/dist/use-button"
 import { sendToBackground } from "@plasmohq/messaging"
 import { getLogger } from "~/resources/logging/logger"
+import { isScrapeResponseError, type ScrapeRequest, type ScrapeResponse } from "~/background/messages/eventlink/scrape"
+import { ScrapeTrigger } from "~/resources/integrations/eventlink/types"
 
 type ScrapButtonProps = {
-  eventId?: string;
-  organizationId?: string;
+  eventId?: string
+  organizationId?: string
   fake?: boolean
-} & UseButtonProps;
+} & UseButtonProps
 
 const logger = getLogger("button-scrape")
 
-const delayedPromise = (value: any) =>
-  new Promise<any>((resolve) => setTimeout(() => resolve(value), 400));
-
-const ButtonScrape: React.FC<ScrapButtonProps> = ({eventId, organizationId, fake, ...props}: ScrapButtonProps) => {
-  const [scrapeStatus, setScrapeStatus] = useState<ScrapeStatus>(ScrapeStatus.NOT_STARTED);
-  const [isScraping, setIsScraping] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
-
-  useEffect(() => {
-    if (eventId) {
-      loadScrapeStatus();
-    }
-
-    async function loadScrapeStatus () {
-      let event
-      setIsFetching(true);
-      try {
-        if (fake) {
-          event = await delayedPromise({
-            status: {
-              scrape: ScrapeStatus.NOT_STARTED
-            }
-          })
-        } else {
-          event = await sendToBackground({ name: 'back/event-get', body: { eventId }});
-        }
-        setScrapeStatus(event.status.scrape);
-      } catch (error) {
-        logger.debug("Failed to fetch event status:", error);
-        setScrapeStatus(ScrapeStatus.NOT_STARTED);
-      }
-      setIsFetching(false);
-    }
-  }, [eventId]);
-
-  const handleScrape = async () => {
-    let event
-    setIsScraping(true);
-    try {
-      if (fake) {
-        event = await delayedPromise({
-          status: {
-            scrape: ScrapeStatus.COMPLETED
-          }
-        })
-      } else {
-        event = await eventScrape(eventId, organizationId);
-      }
-      setScrapeStatus(event.status.scrape);
-    } catch (error) {
-      console.error("Scraping failed:", error);
-    }
-    setIsScraping(false);
-  };
-
-  const getButtonText = () => {
-    if (scrapeStatus === ScrapeStatus.IN_PROGRESS) return "Update event !";
-    if (scrapeStatus === ScrapeStatus.COMPLETED) return "Scrape again !";
-    return "Scrape!";
-  };
-
-  const getButtonDescription = () => {
-    if (scrapeStatus === ScrapeStatus.IN_PROGRESS) return "Last scrape recovered a ongoing event, it’s maybe time to update it!";
-    if (scrapeStatus === ScrapeStatus.COMPLETED) return "It seems like this event has already ended, but you can scrape it again!";
-    return "Scrape data from this event, it will be then available for pairing!";
-  };
-  let className = `font-sans bg-blue-600 text-white rounded-md gap-2 ${props.className}`
-
-  if (!props.isIconOnly) {
-    className += " px-4 py-2 flex items-center justify-center";
+const statusTextMap = {
+  [ScrapeStatus.IN_PROGRESS]: {
+    text: "Update event !",
+    desc: "Last scrape recovered an ongoing event, it’s maybe time to update it!"
+  },
+  [ScrapeStatus.COMPLETED]: {
+    text: "Scrape again !",
+    desc: "It seems like this event has already ended, but you can scrape it again!"
+  },
+  [ScrapeStatus.NOT_STARTED]: {
+    text: "Scrape!",
+    desc: "Scrape data from this event, it will be then available for pairing!"
   }
+}
 
-  if (!eventId) return;
+export const ButtonScrape: React.FC<ScrapButtonProps> = ({ eventId, organizationId, fake, ...props }) => {
+  const {
+    status,
+    isScraping,
+    isFetching,
+    triggerScrape,
+    error
+  } = useScrapeStatus(eventId, organizationId, fake)
+
+  if (!eventId) return null
+
+  const { text, desc } = statusTextMap[status]
+
+  const className = [
+    "font-sans bg-blue-600 text-white rounded-md gap-2",
+    !props.isIconOnly && "px-4 py-2 flex items-center justify-center",
+    props.className
+  ].filter(Boolean).join(" ")
 
   return (
-    <Button
-      {...props}
-      onClick={handleScrape}
-      disabled={isScraping || isFetching}
-      size="md"
-      className={className}
-      color="primary"
-      aria-label={getButtonDescription()}
-      isLoading={isScraping}
-    >
-      <ArchiveBoxArrowDownIcon className={`h-5 w-5 ${statusColors[scrapeStatus]}`} />
-      {!props.isIconOnly == true && getButtonText()}
-    </Button>
-  );
-};
+    <>
+      <Button
+        {...props}
+        onClick={triggerScrape}
+        disabled={isScraping || isFetching}
+        size="md"
+        className={className}
+        color="primary"
+        aria-label={`Scrape event ${eventId}`}
+        title={error ?? desc}
+        isLoading={isScraping}
+      >
+        {error ? (
+          <ExclamationCircleIcon aria-label="error-icon" className="h-5 w-5 fill-pink-300 stroke-red-700" />
+        ) : (
+          <ArchiveBoxArrowDownIcon aria-label="scrape-icon" className={`h-5 w-5 ${statusColors[status]}`} />
+        )}
+        {!props.isIconOnly && text}
+      </Button>
+    </>
+  )
+}
 
-export default ButtonScrape;
+export default ButtonScrape
+
+function useScrapeStatus(eventId?: string, organizationId?: string, fake?: boolean) {
+  const [status, setStatus] = React.useState<ScrapeStatus>(ScrapeStatus.NOT_STARTED)
+  const [isScraping, setIsScraping] = React.useState(false)
+  const [isFetching, setIsFetching] = React.useState(false)
+  const [error, setError] = React.useState<string | null>(null)
+
+  React.useEffect(() => {
+    if (!eventId) return
+
+    fetchStatus()
+  }, [eventId, fake])
+
+  const fetchStatus = async () => {
+    setIsFetching(true)
+    try {
+      const event = fake
+        ? await delayedPromise({ status: { scrape: ScrapeStatus.NOT_STARTED } })
+        : await sendToBackground({ name: "back/event-get", body: { eventId } })
+
+      setStatus(event?.status?.scrape ?? ScrapeStatus.NOT_STARTED)
+      setError(null)
+    } catch (e) {
+      logger.debug("Failed to fetch event status:", e)
+      const reason = e instanceof Error ? e.message : "Unknown error"
+      setStatus(ScrapeStatus.NOT_STARTED)
+      setError(`Scrape failed: ${reason}`)
+    }
+    setIsFetching(false)
+  }
+
+  const triggerScrape = async () => {
+    if (!eventId || !organizationId) return
+
+    setIsScraping(true)
+    try {
+      const event = fake
+        ? await delayedPromise({ status: { scrape: ScrapeStatus.COMPLETED }})
+        : await sendToBackground<ScrapeRequest, ScrapeResponse>({
+          name: "eventlink/scrape",
+          body: { eventId, organizationId, trigger: ScrapeTrigger.MANUAL }
+        })
+
+      if(isScrapeResponseError(event)) {
+        setStatus(ScrapeStatus.NOT_STARTED)
+        setError(event.error.message)
+      } else {
+        setStatus(event.status?.scrape ?? ScrapeStatus.NOT_STARTED)
+        setError(null)
+      }
+    } catch (e) {
+      logger.exception(e)
+    }
+    setIsScraping(false)
+  }
+
+  return { status, isScraping, isFetching, triggerScrape, error }
+}
+
+function delayedPromise<T>(value: T): Promise<T> {
+  return new Promise((resolve) => setTimeout(() => resolve(value), 400))
+}

@@ -27,7 +27,7 @@ const EventCalendarAction: FC<PlasmoCSUIProps> = ({ anchor }) => {
       className={"absolute mt-2 mr-2"}
       style={{ top: "-20px", right: "-35px" }}
       color={"primary"}
-      variant={"ghost"}
+      variant={"bordered"}
       isIconOnly={true}
     />
   );

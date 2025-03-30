@@ -1,8 +1,8 @@
-import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/event-extractor"
 import type {
   SpreadsheetRawRow,
 } from "~/resources/domain/dbos/spreadsheet.dbo"
 import type { EventModel } from "~/resources/domain/models/event.model"
+import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/types"
 
 export type EventWriteDbo = Partial<EventModel> & {
   id?: string,

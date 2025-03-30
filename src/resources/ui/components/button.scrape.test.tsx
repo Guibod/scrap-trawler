@@ -1,85 +1,72 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import React from 'react'
-import { render, screen, fireEvent, act } from "@testing-library/react";
-import ButtonScrape from "~/resources/ui/components/button.scrape";
-import { ScrapeStatus } from "~/resources/domain/enums/status.dbo";
-import { eventScrape } from "~/resources/ui/actions/event.scrape";
-import { sendToBackground } from "@plasmohq/messaging";
-import type { EventModel } from "~/resources/domain/models/event.model"
-
-// ✅ Mock `eventScrape` and `sendToBackground`
-vi.mock("~/resources/ui/actions/event.scrape", () => ({
-  eventScrape: vi.fn(),
-}));
+import { describe, it, expect, vi, beforeEach } from "vitest"
+import React from "react"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { ButtonScrape } from "./button.scrape"
+import { ScrapeStatus } from "~/resources/domain/enums/status.dbo"
+import { sendToBackground } from "@plasmohq/messaging"
 
 vi.mock("@plasmohq/messaging", () => ({
-  sendToBackground: vi.fn(),
-}));
+  sendToBackground: vi.fn()
+}))
 
-describe("ButtonScrape", () => {
+describe("<ButtonScrape />", () => {
   beforeEach(() => {
-    vi.clearAllMocks();
-  });
+    vi.clearAllMocks()
+  })
 
-  it("renders with default 'Scrape!' text", async () => {
-    render(<ButtonScrape eventId="test-event" organizationId="test-org" fake />);
+  it("renders nothing if no eventId", () => {
+    const { container } = render(<ButtonScrape organizationId="org" />)
+    expect(container).toBeEmptyDOMElement()
+  })
 
-    expect(await screen.findByRole("button")).toBeInTheDocument();
-  });
+  it("renders the full scrape button with correct text", async () => {
+    render(<ButtonScrape eventId="e1" organizationId="o1" fake={true} />)
 
-  it("loads initial event status", async () => {
-    vi.mocked(sendToBackground).mockResolvedValue({
-      status: { scrape: ScrapeStatus.COMPLETED },
-    });
+    const button = await screen.findByRole("button", { name: /scrape event e1/i })
+    expect(button).toHaveTextContent("Scrape!")
+  })
 
-    render(<ButtonScrape eventId="test-event" organizationId="test-org" />);
+  it("renders and triggers fake scrape (non-icon)", async () => {
+    vi.mocked(sendToBackground).mockImplementation(({ name }) => {
+      if (name === "back/event-get") {
+        return Promise.resolve({ status: { scrape: ScrapeStatus.NOT_STARTED } })
+      }
+      if (name === "eventlink/scrape") {
+        return Promise.resolve({ status: { scrape: ScrapeStatus.COMPLETED } })
+      }
+    })
 
-    expect(await screen.findByRole("button")).toBeInTheDocument();
-  });
+    render(<ButtonScrape eventId="event-123" organizationId="org-456" />)
 
-  it("updates status when clicked", async () => {
-    vi.mocked(eventScrape).mockResolvedValue({
-      status: { scrape: ScrapeStatus.COMPLETED },
-    } as any as EventModel);
+    const button = await screen.findByRole("button", { name: /scrape event event-123/i })
+    expect(button).toHaveTextContent("Scrape!")
 
-    render(<ButtonScrape eventId="test-event" organizationId="test-org" />);
+    fireEvent.click(button)
 
-    const button = await screen.findByRole("button");
+    await waitFor(() => {
+      const updated = screen.getByRole("button", { name: /scrape event event-123/i })
+      expect(updated).toHaveTextContent(/scrape again/i)
+    })
+  })
 
-    await act(async () => {
-      fireEvent.click(button);
-    });
+  it("renders error icon if scrape fails", async () => {
+    vi.mocked(sendToBackground).mockImplementation(({ name }) => {
+      if (name === "back/event-get") {
+        return Promise.resolve({ status: { scrape: ScrapeStatus.NOT_STARTED } })
+      }
+      if (name === "eventlink/scrape") {
+        return Promise.resolve({ error: { message: "Unauthorized" } })
+      }
+    })
 
-    expect(await screen.findByRole("button")).toBeInTheDocument();
-  });
+    render(<ButtonScrape eventId="e2" organizationId="o2" isIconOnly />)
 
-  it("disables button while scraping", async () => {
-    vi.mocked(eventScrape).mockImplementation(
-      () => new Promise((resolve) => setTimeout(() => resolve({ status: { scrape: ScrapeStatus.COMPLETED } } as unknown as EventModel), 1000))
-    );
+    const button = await screen.findByRole("button", { name: /scrape event e2/i })
+    fireEvent.click(button)
 
-    render(<ButtonScrape eventId="test-event" organizationId="test-org" />);
-
-    const button = await screen.findByRole("button");
-
-    await act(async () => {
-      fireEvent.click(button);
-    });
-
-    expect(button).toBeDisabled();
-  });
-
-  it("handles errors gracefully", async () => {
-    vi.mocked(eventScrape).mockRejectedValue(new Error("Scraping failed"));
-
-    render(<ButtonScrape eventId="test-event" organizationId="test-org" />);
-
-    const button = await screen.findByRole("button");
-
-    await act(async () => {
-      fireEvent.click(button);
-    });
-
-    expect(await screen.findByRole("button")).toBeInTheDocument();
-  });
-});
+    await waitFor(() => {
+      const icon = screen.getByLabelText("error-icon")
+      expect(icon).toBeInTheDocument()
+    })
+  })
+})

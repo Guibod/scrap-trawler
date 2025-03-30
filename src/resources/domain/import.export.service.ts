@@ -1,8 +1,8 @@
 import { getLogger } from "~/resources/logging/logger";
 import { EventDao } from "~/resources/storage/event.dao";
 import EventEntity, { isUpToDateEntity } from "~/resources/storage/entities/event.entity"
-import EventHydrator from "~/resources/domain/mappers/event.hydrator"
 import { GzipUtils } from "~/resources/utils/gzip"
+import EventHydrator from "~/resources/storage/hydrators/event.hydrator"
 
 export enum formats {
   GZIP = 'gzip',
