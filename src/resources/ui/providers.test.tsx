@@ -13,6 +13,10 @@ vi.mock("@heroui/react", () => ({
   ),
 }));
 
+vi.mock("~/resources/ui/providers/mtgjson", () => ({
+  MtgJsonProvider: ({ children }) => <div data-testid="mtgjson-provider">{children}</div>,
+}));
+
 // ✅ Mock SettingsProvider
 vi.mock("~/resources/ui/providers/settings", () => ({
   SettingsProvider: ({ children }) => <div data-testid="settings-provider">{children}</div>,
