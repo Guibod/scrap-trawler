@@ -51,6 +51,7 @@
     "@heroui/tooltip": "^2.2.11",
     "@plasmohq/messaging": "^0.7.1",
     "bowser": "^2.11.0",
+    "clsx": "^2.1.1",
     "consola": "^3.4.0",
     "dexie": "^4.0.11",
     "fastest-levenshtein": "^1.0.16",
@@ -67,6 +68,7 @@
     "react-aria": "^3.37.0",
     "react-dom": "18.2.0",
     "react-router-dom": "^7.4.0",
+    "tailwind-merge": "^3.0.2",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
