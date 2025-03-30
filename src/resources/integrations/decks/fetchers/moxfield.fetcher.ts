@@ -9,12 +9,11 @@ import { getLogger } from "~/resources/logging/logger"
 import { MtgJsonFormats } from "~/resources/integrations/mtg-json/types"
 import type CardService from "~/resources/domain/services/card.service"
 import type EventService from "~/resources/domain/services/event.service"
-import {
-  checkLegality, type LegalityBoard,
-} from "~/resources/integrations/mtg-json/legality"
+import { checkLegality, type LegalityBoard } from "~/resources/integrations/mtg-json/legality"
 import { resolveEnumValue } from "~/resources/utils/enum"
 import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 import { sendToBackground } from "@plasmohq/messaging"
+import { DeckSource } from "~/resources/domain/dbos/deck.dbo"
 
 const logger = getLogger("fetcher-moxfield")
 
@@ -117,6 +116,7 @@ export class MoxfieldFetcher extends AbstractDeckFetcher {
       archetype,
       name: raw.name,
       url: raw.publicUrl,
+      source: DeckSource.MOXFIELD,
       lastUpdated: raw.lastUpdatedAtUtc ?? null,
       boards: this.buildBoards(raw.boards, this.extractCardNamesAndQuantities),
       face: faceCard,

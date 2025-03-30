@@ -2,6 +2,12 @@ import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import type { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 import type { CardName } from "~/resources/storage/entities/event.entity"
 
+export enum DeckSource {
+  MOXFIELD = "Moxfield",
+  TEXT = "Text",
+  UNKNOWN = "Unknown"
+}
+
 export interface DeckCardDbo {
   name: string,
   quantity: number
@@ -21,6 +27,7 @@ export interface DeckDbo {
   spreadsheetRowId: string;  // Reference to SpreadsheetRawRow.id
   lastUpdated: Date | null; // ISO timestamp, if available from the source
   boards: DeckBoardsDbo,
+  source: DeckSource,
   archetype: string | null,
   face: CardName | null,
   status: DeckStatus;
