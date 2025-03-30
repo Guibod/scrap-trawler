@@ -3,7 +3,6 @@ import type { EventOrganizerDbo } from "~/resources/domain/dbos/event.organizer.
 import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"
 import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
 import type { TeamDbo } from "~/resources/domain/dbos/team.dbo"
-import type { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import type {
   SpreadsheetRawRow,
   SpreadsheetMetadata, SpreadsheetData, SpreadsheetRowId
@@ -35,7 +34,6 @@ export interface EventModel {
     [key: string]: any
   },
   lastRound: number,
-  scrapeStatus: EventScrapeStateDbo,
   lastUpdated: Date,
   lastScrapedAt: Date
 }

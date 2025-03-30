@@ -101,8 +101,6 @@ export class EventScrapeRunner {
   private hasPurgedData(data: WotcExtractedEvent): boolean {
     const { event, rounds } = data
 
-    console.log("event", event)
-    console.log("rounds", rounds)
     return !rounds?.[1]?.rounds || event.registeredPlayers?.length === 0
   }
 }

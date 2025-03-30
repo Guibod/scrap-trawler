@@ -5,7 +5,6 @@ import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo"
 import type { EventModel } from "~/resources/domain/models/event.model"
 import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarized.dbo"
 import { sampleEvent, sampleGameState, sampleOrganizer } from "~/resources/integrations/eventlink/data/sample.event"
-import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 
 // Mock event entity
 const mockEventEntity = new EventEntity();
@@ -30,7 +29,6 @@ describe("EventMapper", () => {
       title: "Test Event",
       date: new Date("2023-03-01"),
       organizer: { id: "org-1", name: "Test Org" },
-      scrapeStatus: {},
       lastUpdated: new Date("2023-03-02"),
     });
   });
@@ -42,7 +40,6 @@ describe("EventMapper", () => {
       title: "Test Event",
       date: new Date("2023-03-01"),
       organizer: "Test Org",
-      scrapeStatus: {},
       lastUpdated: new Date("2023-03-02"),
     });
   });
@@ -68,7 +65,6 @@ describe("EventMapper", () => {
         },
         spreadsheet: []
       },
-      scrapeStatus: EventScrapeStateDbo.COMPLETE,
       lastScrapedAt: null,
     };
 

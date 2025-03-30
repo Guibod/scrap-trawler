@@ -67,18 +67,25 @@ describe('EventHydrator', () => {
       const entity = { raw_data: {} } as unknown as EventEntity;
       const status = EventHydrator.inferStatus(entity);
       expect(status).toEqual({
-        global: GlobalStatus.PARTIAL,
-        scrape: ScrapeStatus.IN_PROGRESS,
+        global: GlobalStatus.NOT_STARTED,
+        scrape: ScrapeStatus.NOT_STARTED,
         pair: PairStatus.NOT_STARTED,
         fetch: FetchStatus.NOT_STARTED,
       });
     });
 
     it('should set scrape to COMPLETED and global to PARTIAL when event is ENDED', () => {
-      const entity = { raw_data: { wotc: { event: { status: 'ENDED' } } } }  as unknown as EventEntity;
+      const entity = { raw_data: { wotc: { event: { status: 'ENDED', registeredPlayers: [{}] }, rounds: {"1": {rounds: 10}} } } }  as unknown as EventEntity;
       const status = EventHydrator.inferStatus(entity);
-      expect(status.scrape).toBe(ScrapeStatus.COMPLETED);
+      expect(status.scrape).toBe(ScrapeStatus.COMPLETED_ENDED);
       expect(status.global).toBe(GlobalStatus.PARTIAL);
+    });
+
+    it('should set scrape to DEAD and global to FAIL when event was partially purged', () => {
+      const entity = { raw_data: { wotc: { event: { status: 'ENDED', registeredPlayers: [] }, rounds: {"1": {rounds: 0}} } } }  as unknown as EventEntity;
+      const status = EventHydrator.inferStatus(entity);
+      expect(status.scrape).toBe(ScrapeStatus.COMPLETED_DEAD);
+      expect(status.global).toBe(GlobalStatus.FAILED);
     });
 
     it('should set pair to PARTIAL when spreadsheet data exists', () => {
@@ -100,7 +107,7 @@ describe('EventHydrator', () => {
 
     it('should set global to COMPLETED when both scrape and pair and fetch are completed', () => {
       const entity = {
-        raw_data: { wotc: { event: { status: 'ENDED' } }, spreadsheet: {}, fetch: {} },
+        raw_data: { wotc: { event: { status: 'ENDED', registeredPlayers: [{}, {}] }, rounds: {"1": {rounds: 10}} }, spreadsheet: {}, fetch: {} },
         mapping: { a: "b" },
         players: [{}],
         decks: [{ status: DeckStatus.FETCHED }],

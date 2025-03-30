@@ -4,7 +4,6 @@ import { render, screen, act, waitFor } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { EventProvider, useEvent } from "~/resources/ui/providers/event";
 import EventService from "~/resources/domain/services/event.service";
-import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo";
 import { PairStatus } from "~/resources/domain/enums/status.dbo";
 import type { EventModel } from "~/resources/domain/models/event.model"
 import { createMock } from "@golevelup/ts-vitest"
@@ -13,7 +12,6 @@ import { EventBus } from "~/resources/utils/event-bus"
 const mockEvent = {
   id: "123",
   title: "Test Event",
-  scrapeStatus: EventScrapeStateDbo.PURGED,
   status: { pair: PairStatus.COMPLETED },
   players: {
     "1": { name: "Player One", overrides: null },

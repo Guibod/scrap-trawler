@@ -1,7 +1,8 @@
 export enum ScrapeStatus {
   NOT_STARTED = "NOT_STARTED",
-  IN_PROGRESS = "IN_PROGRESS",
-  COMPLETED = "COMPLETED",
+  COMPLETED_LIVE = "COMPLETED_LIVE",
+  COMPLETED_DEAD = "COMPLETED_DEAD",
+  COMPLETED_ENDED = "COMPLETED_ENDED",
 }
 
 export enum PairStatus {
@@ -21,4 +22,5 @@ export enum GlobalStatus {
   NOT_STARTED = "NOT_STARTED",
   COMPLETED = "COMPLETED",
   PARTIAL = "PARTIAL",
+  FAILED = "FAILED",
 }

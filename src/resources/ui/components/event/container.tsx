@@ -3,10 +3,10 @@ import { Cog6ToothIcon, EyeIcon } from "@heroicons/react/16/solid"
 import EventView from "~/resources/ui/components/event/view"
 import React, { useState } from "react"
 import { useEvent } from "~/resources/ui/providers/event"
-import { EventScrapeStateDbo } from "~/resources/domain/enums/event.scrape.state.dbo"
 import EventEmpty from "~/resources/ui/components/event/empty"
 import EventSetup from "~/resources/ui/components/event/setup"
 import FetchStatus from "~/resources/ui/components/fetch/status"
+import { ScrapeStatus } from "~/resources/domain/enums/status.dbo"
 
 const EventContainer = () => {
   const { event, showSetupByDefault} = useEvent()
@@ -16,7 +16,7 @@ const EventContainer = () => {
   if (isSetupMode) {
     component = <EventSetup onQuitHandler={async () => setIsSetupMode(false)}/>
   }
-  if (event?.scrapeStatus === EventScrapeStateDbo.PURGED) {
+  if (event?.status.scrape === ScrapeStatus.COMPLETED_DEAD) {
     component = <EventEmpty />
   }
 
