@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react"
 import { addToast, type Selection } from "@heroui/react"
 import { Pagination, TableColumn } from "@heroui/react"
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@heroui/table"
-import { FetchStatusIcon, PairStatusIcon, ScrapeStatusIcon } from "~/resources/ui/components/status.icons"
 import { Button } from "@heroui/button"
 import EventService from "~/resources/domain/services/event.service"
 import { useNavigate } from "react-router-dom"
@@ -14,6 +13,7 @@ import { exportEventsToFile } from "~/resources/utils/export"
 import type EventEntity from "~/resources/storage/entities/event.entity"
 import { Input } from "@heroui/input"
 import { useDebouncedValue } from "~/resources/utils/hooks"
+import { FetchStatusIcon, PairStatusIcon, ScrapeStatusIcon } from "~/resources/ui/components/status/icons"
 
 type TableEventsProps = {
   title?: string;

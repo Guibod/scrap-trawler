@@ -11,7 +11,7 @@ vi.mock("~/resources/ui/providers/event", () => ({
   useEvent: vi.fn()
 }))
 // Mock `useEventFetchStatus` to provide test data
-vi.mock("~/resources/ui/components/fetch/status", () => ({
+vi.mock("~/resources/ui/components/status/fetch", () => ({
   default: vi.fn(() => <div data-testid="fetch-status">FetchStatus</div>),
 }))
 
@@ -30,7 +30,11 @@ vi.mock("~/resources/ui/components/event/empty", () => ({
 
 describe("EventContainer", () => {
   const mockEvent = {
+    id: "1387",
     title: "Magic Tournament",
+    organizer: {
+      id: "1883"
+    },
     date: new Date("2024-03-17"),
     status: { scrape: ScrapeStatus.COMPLETED_ENDED }
   }

@@ -3,7 +3,7 @@ import { vi, beforeEach, it, expect } from "vitest"
 import * as fetcher from "~/resources/ui/providers/fetcher"
 import * as eventProvider from "~/resources/ui/providers/event"
 import React from "react"
-import FetchStatus from "~/resources/ui/components/fetch/status"
+import FetchStatus from "~/resources/ui/components/status/fetch"
 
 describe("FetchStatus", () => {
   const mockFetchEvent = vi.fn()
