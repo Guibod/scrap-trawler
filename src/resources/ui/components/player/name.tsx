@@ -6,7 +6,9 @@ import { pairingModeDescription } from "~/resources/domain/dbos/mapping.dbo"
 import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 
 interface PlayerNameProps {
-  player: PlayerProfile
+  player: PlayerProfile,
+  noIcons?: boolean,
+  className?: string
 }
 
 const deckStatusMap: Record<DeckStatus, {icon: React.ReactNode, description: string}> = {
@@ -28,14 +30,14 @@ const deckStatusMap: Record<DeckStatus, {icon: React.ReactNode, description: str
   }
 }
 
-const PlayerName = ({ player }: PlayerNameProps) => {
+const PlayerName = ({ player, className, noIcons = false }: PlayerNameProps) => {
   // Render Override Tooltip if player is patched
   const renderMappedIcon = () => {
     if (!player.mapMode) return null; // Hide if not patched
 
     return (
       <Tooltip content={
-        <div className="text-xs text-gray-800">
+        <div className={"text-xs text-gray-800"}>
           <p>
             This player was mapped from the spreadsheet using <strong>{pairingModeDescription(player.mapMode)}</strong>.
 
@@ -48,7 +50,7 @@ const PlayerName = ({ player }: PlayerNameProps) => {
           </p>
         </div>
       }>
-        {deckStatusMap[player.deck?.status]?.icon && deckStatusMap[player.deck?.status]?.icon}
+        <span>{deckStatusMap[player.deck?.status]?.icon && deckStatusMap[player.deck?.status]?.icon}</span>
       </Tooltip>
     );
   };
@@ -92,8 +94,8 @@ const PlayerName = ({ player }: PlayerNameProps) => {
 
   return (
     <div className="flex items-center space-x-2" aria-label={`player-name-${player.id}`}>
-      {renderMappedIcon() || renderPatchedIcon() || renderAnonymizedIcon()}
-      <span>
+      {noIcons || renderMappedIcon() || renderPatchedIcon() || renderAnonymizedIcon()}
+      <span className={className}>
         { player.firstName }
         {" "}
         { player.lastName }

@@ -13,7 +13,7 @@ import { EventBus } from "~/resources/utils/event-bus"
 const logger = getLogger("event-provider")
 
 // Define context type
-class EventContextType {
+export class EventContextType {
   event: EventModel | null;
   showSetupByDefault: boolean;
   updatePlayerOverride: (playerId: string, overrideData: Partial<OverrideDbo>) => Promise<EventModel>;
@@ -150,8 +150,15 @@ export function EventProvider({ service = EventService.getInstance(), children }
   }}>{children}</EventContext.Provider>;
 }
 
-export function usePlayer(playerId: string): PlayerProfile {
+export function usePlayer(explicitPlayerId?: string): PlayerProfile {
+  const { playerId: routePlayerId } = useParams<{ playerId: string }>()
   const { event } = useEvent()
+
+  const playerId = explicitPlayerId ?? routePlayerId
+
+  if (!playerId) {
+    throw new Error("usePlayer must be called with a playerId or exist in the route with playerId param")
+  }
 
   if (!event) {
     throw new Error("usePlayer called before event is loaded")

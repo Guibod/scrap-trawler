@@ -1,7 +1,6 @@
 import CardEntity, {
   CardAtomic,
   type CardFaceEntity, CardLanguage,
-  type LocalizedNames
 } from "~/resources/storage/entities/card.entity"
 import type { CardDbo, CardIndexRecord } from "~/resources/domain/dbos/card.dbo"
 
