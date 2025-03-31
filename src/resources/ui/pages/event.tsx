@@ -1,11 +1,11 @@
 import React from "react"
 import { EventProvider } from "~/resources/ui/providers/event"
-import EventContainer from "~/resources/ui/components/event/container"
+import EventLayout from "~/resources/ui/components/event/layout"
 
 const EventPage = () => {
   return (
     <EventProvider>
-      <EventContainer />
+      <EventLayout />
     </EventProvider>
   );
 };
