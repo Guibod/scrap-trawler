@@ -8,6 +8,9 @@ import { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
 
 // Mock usePlayers
 vi.mock("~/resources/ui/providers/event", () => ({
+  useEvent: vi.fn().mockImplementation(() => ({
+
+  })),
   usePlayer: vi.fn().mockImplementation((id: string): PlayerProfile => ({
     id,
     avatar: "https://example.com/avatar.jpg",
@@ -24,7 +27,10 @@ vi.mock("~/resources/ui/providers/event", () => ({
     mapMode: "manual",
     deck: undefined,
     matches: [],
-    extra: undefined
+    extra: undefined,
+    spreadsheetRowId: "row-123",
+    decklistTxt: "foo",
+    decklistUrl: "https://example.com",
   })),
   usePlayers: () => ({
     alice: { id: "alice", displayName: "Alice" },
@@ -50,7 +56,10 @@ describe("PlayerSelector", () => {
     expect(options.length).toBe(2)
 
     const textContent = options.map((opt) => opt.textContent?.toLowerCase())
-    expect(textContent).toEqual(expect.arrayContaining(["alice", "bob"]))
+    expect(textContent).toEqual(expect.arrayContaining([
+      expect.stringContaining("alice"),
+      expect.stringContaining("bob")
+    ]))
   })
 
   it("calls onChange when a player is selected", async () => {

@@ -4,6 +4,7 @@ export enum MTG_COLORS {
   BLACK = 'B',
   RED = 'R',
   GREEN = 'G',
+  COLORLESS = 'C',
 }
 
 const WUBRG_ORDER: MTG_COLORS[] = [

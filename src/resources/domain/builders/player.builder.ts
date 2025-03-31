@@ -125,6 +125,8 @@ export default class PlayerBuilder {
       firstName: this.identity.firstName,
       lastName: this.identity.lastName,
       archetype: faker.word.words(2),
+      decklistUrl: null,
+      decklistTxt: null,
     };
   }
 

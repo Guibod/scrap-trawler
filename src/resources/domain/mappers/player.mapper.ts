@@ -1,4 +1,4 @@
-import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
+import type { SpreadsheetRow, SpreadsheetRowId } from "~/resources/domain/dbos/spreadsheet.dbo"
 import type { EventModel } from "~/resources/domain/models/event.model"
 import type { WotcId } from "~/resources/domain/dbos/identifiers.dbo"
 import type { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
@@ -21,6 +21,9 @@ export type PlayerProfile = {
   status: PlayerStatusDbo
   tableNumber: number | null // assigned table number
   mapMode: PairingMode
+  spreadsheetRowId: SpreadsheetRowId
+  decklistUrl: string | null
+  decklistTxt: string | null
   deck: DeckDbo | null
   matches: PlayerMatch[]
   extra: Record<string, string>
@@ -45,7 +48,7 @@ export class PlayerMapper {
     const rowId = event.mapping?.[playerId]?.rowId
     const row : SpreadsheetRow | null = event.spreadsheet?.data?.find((row) => row.id == rowId) ?? null
 
-    const deck = Object.values(event.decks ?? {}).find(
+    const deck = Object.values(event.decks ?? {}).findLast(
       (deck) => deck.spreadsheetRowId === rowId
     )
 
@@ -60,11 +63,14 @@ export class PlayerMapper {
     return {
       ...player,
       avatar,
+      spreadsheetRowId: rowId,
       isOverride: player.overrides !== null,
       displayName: player.overrides?.displayName ?? player.displayName,
       firstName: player.overrides?.firstName ?? row?.firstName ?? player.firstName,
       lastName: player.overrides?.lastName ?? row?.lastName ?? player.lastName,
       archetype: player.overrides?.archetype ?? deck?.archetype ?? row?.archetype ?? player.archetype,
+      decklistUrl: player.overrides?.decklistUrl ?? row?.decklistUrl,
+      decklistTxt: player.overrides?.decklistTxt ?? row?.decklistTxt,
       mapMode: event.mapping?.[playerId]?.mode ?? null,
       extra: row?.player ?? null,
       deck: deck ?? null,

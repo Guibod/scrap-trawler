@@ -1,6 +1,9 @@
-import type CardService from "~/resources/domain/services/card.service"
+import CardService from "~/resources/domain/services/card.service"
 import type { DeckBoardsDbo, DeckCardDbo, DeckDbo } from "~/resources/domain/dbos/deck.dbo"
 import type { CardDbo } from "~/resources/domain/dbos/card.dbo"
+import { getLogger } from "~/resources/logging/logger"
+
+const logger = getLogger("DeckMapper")
 
 export interface ResolvedDeckCard {
   quantity: number
@@ -20,7 +23,7 @@ export type ResolvedDeckDbo = Omit<DeckDbo, "boards"> & {
 }
 
 export class DeckMapper {
-  constructor(private readonly cardService: CardService) {}
+  constructor(private readonly cardService: CardService = CardService.getInstance()) {}
 
   async toResolvedDeck(deck: DeckDbo): Promise<ResolvedDeckDbo> {
     return {
@@ -31,7 +34,21 @@ export class DeckMapper {
 
   private async toResolvedBoards(boards: DeckBoardsDbo): Promise<ResolvedDeckBoards> {
     const resolveBoard = async (cards?: DeckCardDbo[]) =>
-      cards ? Promise.all(cards.map(c => this.resolveCard(c))) : undefined
+      cards
+        ? (
+          await Promise.all(
+            cards.map(async (c) => {
+              try {
+                const card = await this.resolveCard(c)
+                return card
+              } catch (e) {
+                logger.warn(`Failed to resolve card: ${c.name}`, e)
+                return null
+              }
+            })
+          )
+        ).filter((c): c is ResolvedDeckCard => c !== null)
+        : undefined
 
     return {
       mainboard: await resolveBoard(boards.mainboard),

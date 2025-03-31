@@ -125,6 +125,7 @@ export default class CardEntity implements Omit<CardAtomic, ExcludedFields> {
   }
 }
 
+
 export function isCardEntity(obj: any): obj is CardEntity {
   return (
     isCardAtomic(obj) &&
