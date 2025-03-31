@@ -13,7 +13,6 @@ interface Props {
 
 export function PlayerSelector({ value, onChange, className }: Props) {
   const players = usePlayers()
-  const keys = Object.keys(players)
   const [internalValue, setInternalValue] = useState<Selection>(new Set([value]));
 
   return (
@@ -25,10 +24,11 @@ export function PlayerSelector({ value, onChange, className }: Props) {
         onChange(value.currentKey)
       }}
       placeholder="Select a player"
+      itemHeight={50}
     >
-      {keys.map((key) => (
-        <SelectItem key={key} aria-label={`player picker option ${key}`}>
-          <Player playerId={key} aria-label={`Player ${key}`}/>
+      {Object.entries(players).map(([key, player]) => (
+        <SelectItem key={key} aria-label={`${player.firstName} ${player.lastName}`}>
+          <Player playerId={key} aria-label={`Player ${key}`} link={false}/>
         </SelectItem>
       ))}
     </Select>

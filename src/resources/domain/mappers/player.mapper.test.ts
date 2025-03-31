@@ -14,7 +14,7 @@ describe("EventModel null safety", () => {
       .withDecks(10)
       .player()
       .partial({ id: "abc", firstName: "Adam", lastName: "Savage" })
-      .withOverrides({ firstName: "Alan", displayName: null, lastName: null, archetype: null})
+      .withOverrides({ firstName: "Alan", displayName: null, lastName: null, archetype: null, decklistUrl: null, decklistTxt: null })
       .end()
       .deck()
       .withRowId("abc-row")

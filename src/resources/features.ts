@@ -25,6 +25,11 @@ export const features: Feature[] = [
       {title: "Recovery from MTG-JSON", status: 'done'},
       {title: "Searchable", status: 'done'},
     ]},
+  { title: "Player details (for the event)",  status: 'partial', items: [
+      {title: "Human-readable decklist", status: 'done'},
+      {title: "Deck statistics", status: 'partial'},
+      {title: "Player match history", status: 'done'},
+    ]},
   { title: "Recover player decklists",  status: 'partial', items: [
       {title: "Raw Text", status: 'done'},
       {title: "Moxfield", status: 'done'},

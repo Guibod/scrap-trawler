@@ -31,3 +31,9 @@ vi.stubGlobal("matchMedia", () => ({
   removeEventListener: vi.fn(),
   dispatchEvent: vi.fn(),
 }));
+
+global.ResizeObserver = class {
+  observe = vi.fn()
+  unobserve = vi.fn()
+  disconnect = vi.fn()
+}
