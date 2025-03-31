@@ -3,8 +3,6 @@ import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from 
 import React, { useState } from "react"
 import type { EventModel } from "~/resources/domain/models/event.model"
 import { Select, SelectItem } from "@heroui/react"
-import MatchResult from "~/resources/ui/components/match/result"
-import Team from "~/resources/ui/components/team"
 import RoundPairings from "~/resources/ui/components/round/pairings"
 import RoundStandings from "~/resources/ui/components/round/standings"
 import { useEvent } from "~/resources/ui/providers/event"
