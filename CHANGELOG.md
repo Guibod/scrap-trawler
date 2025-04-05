@@ -2,6 +2,29 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.15.0 - 2025-04-05
+#### Bug Fixes
+- alternative layout cards (meld, mdfc, dfc, flip) are now properly imported - (6e89705) - Guillaume Boddaert
+#### Continuous Integration
+- a coverage regression will not block the release process - (8726f2f) - Guillaume Boddaert
+#### Features
+- player page - (c3b6a0d) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(deps)** bump framer-motion from 12.5.0 to 12.6.2 - (9a40547) - dependabot[bot]
+- **(release)** sync package.json version - (d6403e8) - Cog Bot
+- **(release)** update changelog.json - (4f48e2e) - Cog Bot
+- added manaCost to available data in the CardDbo - (8f17a73) - Guillaume Boddaert
+- refactored routing for event pages - (2c5806f) - Guillaume Boddaert
+- added resolved deck mapper - (782d976) - Guillaume Boddaert
+- added clsx cn helper - (ff4a4ec) - Guillaume Boddaert
+- added PlayerSelector component - (18fb070) - Guillaume Boddaert
+- PlayerProfile now also provides matches - (7583408) - Guillaume Boddaert
+- deck source is now a property of the deck dbo and entity - (17611f6) - Guillaume Boddaert
+#### Tests
+- silenced an error in test - (0d92b0f) - Guillaume Boddaert
+
+- - -
+
 ## 0.14.0 - 2025-03-30
 #### Continuous Integration
 - disabled lint-staged on commit - (469b1a1) - Guillaume Boddaert
