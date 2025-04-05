@@ -57,7 +57,7 @@ describe('MtgJsonService', () => {
       );
 
       expect(out).toMatchObject({
-        count: expect.toSatisfy((count) => count > 1000),
+        count: expect.toSatisfy((count) => count === 1000),
         version: "5.2.2+20250309"
       });
 

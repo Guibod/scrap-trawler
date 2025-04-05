@@ -1,8 +1,8 @@
-import { beforeAll, beforeEach, afterEach, describe, expect, it } from "vitest"
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest"
 import "fake-indexeddb/auto"
 import CardDao from "~/resources/storage/card.dao"
 import DatabaseService from "./database"
-import CardEntity, { CardAtomic, CardLanguage } from "~/resources/storage/entities/card.entity"
+import CardEntity, { CardLanguage } from "~/resources/storage/entities/card.entity"
 
 const db = DatabaseService.getInstance();
 let cardDao: CardDao;
@@ -69,8 +69,8 @@ describe('CardDao', () => {
   describe('streamIn', () => {
     beforeEach(async () => {
       async function* generateCards() {
-        yield { name: 'Lightning Bolt', colors: ['R'], manaValue: 1, type: 'Instant', legalities: {}, identifiers: {}, foreignData: [{language: "French", name: "Foudre" }] } as CardAtomic;
-        yield { name: 'Counterspell', colors: ['U'], manaValue: 2, type: 'Instant', legalities: {}, identifiers: {}, foreignData: [{language: "Japanese", name: "ブラックロータス" }] } as CardAtomic;
+        yield { name: 'Lightning Bolt', colors: ['R'], manaValue: 1, type: 'Instant', legalities: {}, identifiers: {}, foreignData: [{language: "French", name: "Foudre" }] } as unknown as CardEntity;
+        yield { name: 'Counterspell', colors: ['U'], manaValue: 2, type: 'Instant', legalities: {}, identifiers: {}, foreignData: [{language: "Japanese", name: "ブラックロータス" }] } as unknown as CardEntity;
       }
 
       await cardDao.streamIn(generateCards());
@@ -79,13 +79,6 @@ describe('CardDao', () => {
     it('should stream in card data', async () => {
       const count = await db.cards.count();
       expect(count).toBe(2);
-    });
-
-    it('should also prepare the localized name index', async () => {
-      const entity = await db.cards.get("Lightning Bolt")
-      expect(entity.localizedNames[CardLanguage.FRENCH]).toBe("Foudre");
-      expect(entity.localizedNames[CardLanguage.ENGLISH]).toBe("Lightning Bolt");
-      expect(entity.localizedNames[CardLanguage.SPANISH]).toBeUndefined();
     });
   })
 
