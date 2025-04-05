@@ -6,6 +6,8 @@ export interface OverrideDbo {
   firstName: string | null
   lastName: string | null
   archetype: string | null
+  decklistUrl: string | null
+  decklistTxt: string | null
 }
 
 export interface PlayerDbo {

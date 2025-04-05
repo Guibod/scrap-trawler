@@ -1,6 +1,6 @@
 import { getLogger } from "~/resources/logging/logger"
 import CardDao from "~/resources/storage/card.dao"
-import { CardAtomic, isCardAtomic } from "~/resources/storage/entities/card.entity"
+import CardEntity, { CardAtomic, isCardAtomic, isCardAtomicArray } from "~/resources/storage/entities/card.entity"
 import {
   MtgJsonNotFoundException,
   MtgJsonVersionException,
@@ -13,6 +13,7 @@ import {
 } from "json-stream-es"
 import { ExtractVersionTransform } from "~/resources/integrations/mtg-json/stream/extract.version"
 import SettingsService from "~/resources/domain/services/settings.service"
+import { CardMapper } from "~/resources/domain/mappers/card.mapper"
 
 export type MtgJsonImportCompletion = { version: string, count: number } | null
 
@@ -127,12 +128,13 @@ export default class MtgJsonService {
     try {
       const parsedStream = dataStream
         .pipeThrough(new TextDecoderStream())
-        .pipeThrough(parseJsonStreamWithPaths(["data", undefined]))
-        .pipeThrough(new TransformStream<JsonValueAndPath, CardAtomic>({
+        .pipeThrough(parseJsonStreamWithPaths(["data"]))
+        .pipeThrough(new TransformStream<JsonValueAndPath, CardEntity>({
           async transform(chunk, controller) {
-            if (isCardAtomic(chunk.value)) {
-              await reportAndRespite()
-              controller.enqueue(chunk.value)
+            if (isCardAtomicArray(chunk.value)) {
+              await reportAndRespite();
+              const entity = CardMapper.fromAtomicArray(chunk.value);
+              controller.enqueue(entity);
             }
           }
         }, {
@@ -141,7 +143,7 @@ export default class MtgJsonService {
           signal: this.abortController.signal
         })
 
-      const iterable = streamToIterable<CardAtomic>(parsedStream)
+      const iterable = streamToIterable<CardEntity>(parsedStream)
 
       await this.cardDao.streamIn(iterable, 500)
     } catch (error) {

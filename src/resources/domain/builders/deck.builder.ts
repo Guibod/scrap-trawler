@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker"
-import type { DeckCardDbo, DeckDbo } from "~/resources/domain/dbos/deck.dbo"
-import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
+import { type DeckCardDbo, type DeckDbo, DeckSource, DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import type EventModelBuilder from "~/resources/domain/builders/event.builder"
 import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
@@ -94,6 +93,11 @@ export default class DeckBuilder {
     return this
   }
 
+  withSource(source: DeckSource) {
+    this.deck.source = source
+    return this
+  }
+
   withArchetype(archetype: string) {
     this.deck.archetype = archetype
     return this
@@ -110,6 +114,7 @@ export default class DeckBuilder {
     this.deck.face ??= null
     this.deck.status ??= DeckStatus.FETCHED
     this.deck.legal ??= true
+    this.deck.source ??= DeckSource.UNKNOWN
     this.deck.format ??= MTG_FORMATS.COMMANDER
     this.deck.colors ??= [MTG_COLORS.GREEN]
     this.deck.archetype ??= faker.word.words(2)

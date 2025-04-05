@@ -2,7 +2,7 @@ import EventService from "~/resources/domain/services/event.service"
 import SettingsService from "~/resources/domain/services/settings.service"
 import CardService from "~/resources/domain/services/card.service"
 import { type DeckFetchRequest, DeckFetchResponse } from "~/resources/integrations/decks/request"
-import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
+import { DeckSource, DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 import DeckFetcherResolver from "~/resources/integrations/decks/resolver"
 import AbstractDeckFetcher from "~/resources/integrations/decks/fetchers/abstract.fetcher"
 import type { DeckDescription } from "~/resources/storage/entities/event.entity"
@@ -152,6 +152,7 @@ export default class DeckFetchService {
       colors: [],
       face: null,
       format: null,
+      source: DeckSource.UNKNOWN,
       lastUpdated: null,
       legal: false,
       name: null,

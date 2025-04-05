@@ -6,7 +6,7 @@ import type { StandingDbo } from "~/resources/domain/dbos/standing.dbo"
 import type { DropDbo } from "~/resources/domain/dbos/drop.dbo"
 import type { SpreadsheetRawRow, SpreadsheetMetadata } from "~/resources/domain/dbos/spreadsheet.dbo"
 import type { MappingDbo } from "~/resources/domain/dbos/mapping.dbo"
-import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
+import { DeckSource, DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 import type { WotcExtractedEvent } from "~/resources/integrations/eventlink/types"
@@ -26,6 +26,7 @@ export type DeckDescription = {
   id: string,
   archetype: string | null,
   name: string,
+  source: DeckSource,
   url: string | null,
   face: CardName | null,
   boards: DeckBoards | null,

@@ -1,7 +1,7 @@
 import type CardEntity from "~/resources/storage/entities/card.entity"
 
 
-export interface CardDbo extends Pick<CardEntity, "name" | "localizedNames" | "colors" | "colorIdentity" | "supertypes" | "types" | "subtypes" | "manaValue" | "legalities" | "leadershipSkills"> {
+export interface CardDbo extends Pick<CardEntity, "name" | "localizedNames" | "colors" | "colorIdentity" | "supertypes" | "types" | "subtypes" | "manaValue" | "manaCost" | "legalities" | "leadershipSkills" | "text"> {
   imageCrop?: string;
   imageLarge?: string;
   imageMedium?: string;

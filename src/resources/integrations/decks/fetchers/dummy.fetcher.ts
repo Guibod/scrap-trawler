@@ -7,6 +7,7 @@ import type { DeckDescription } from "~/resources/storage/entities/event.entity"
 import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
+import { DeckSource } from "~/resources/domain/dbos/deck.dbo"
 
 export const DUMMY_RAW_DATA = { dummy: true}
 
@@ -34,6 +35,7 @@ export class InstantDummyFetcher extends AbstractDeckFetcher {
       archetype: 'TestArchetype',
       url: 'https://example.com',
       face: 'Forest',
+      source: DeckSource.UNKNOWN,
       lastUpdated: new Date().toISOString(),
       boards: {
         mainboard: [{ quantity: 1, name: 'Forest' }],
