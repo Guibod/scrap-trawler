@@ -1,5 +1,13 @@
 [
   {
+    "version": "0.15.0",
+    "timestamp": 1743897336,
+    "changes": [
+      "Fix — alternative layout cards (meld, mdfc, dfc, flip) are now properly imported",
+      "Feature — player page"
+    ]
+  },
+  {
     "version": "0.14.0",
     "timestamp": 1743333516,
     "changes": [
