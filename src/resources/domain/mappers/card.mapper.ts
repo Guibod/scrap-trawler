@@ -19,6 +19,8 @@ export class CardMapper {
       colorIdentity: entity.colorIdentity,
       supertypes: entity.supertypes,
       types: entity.types,
+      text: entity.text,
+      manaCost: entity.manaCost,
       subtypes: entity.subtypes,
       manaValue: entity.manaValue,
       legalities: entity.legalities,
