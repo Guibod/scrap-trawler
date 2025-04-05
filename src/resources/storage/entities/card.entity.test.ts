@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isCardAtomic, CardAtomic } from './card.entity';
+import { isCardAtomic, CardAtomic, isCardAtomicArray } from "./card.entity"
 
 const validCard: CardAtomic = {
   name: 'Lightning Bolt',
@@ -39,5 +39,33 @@ describe('isCardAtomic Type Guard', () => {
     const missingFields = { ...validCard };
     delete missingFields.name; // Remove required field
     expect(isCardAtomic(missingFields)).toBe(false);
+  });
+});
+
+describe('isCardAtomicArray Type Guard', () => {
+  it('should return true for a valid CardAtomic object', () => {
+    expect(isCardAtomicArray([validCard])).toBe(true);
+  });
+
+  it('should return false for an invalid CardAtomic object', () => {
+    expect(isCardAtomicArray([invalidCard])).toBe(false);
+  });
+
+  it('should return false for both valid and invalid CardAtomic object', () => {
+    expect(isCardAtomicArray([validCard, invalidCard])).toBe(false);
+  });
+
+  it('should return false for null', () => {
+    expect(isCardAtomicArray(null)).toBe(false);
+  });
+
+  it('should return false for an empty object', () => {
+    expect(isCardAtomicArray([{}])).toBe(false);
+  });
+
+  it('should return false if a required field is missing', () => {
+    const missingFields = { ...validCard };
+    delete missingFields.name; // Remove required field
+    expect(isCardAtomicArray([missingFields])).toBe(false);
   });
 });

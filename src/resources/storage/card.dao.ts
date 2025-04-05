@@ -1,22 +1,7 @@
 import { getLogger } from "~/resources/logging/logger"
-import CardEntity, { CardAtomic, CardLanguage, type LocalizedNames } from "~/resources/storage/entities/card.entity"
+import CardEntity, { CardLanguage } from "~/resources/storage/entities/card.entity"
 import type { EntityTable } from "dexie"
 import DatabaseService from "~/resources/storage/database"
-
-const LANGUAGE_MAP: Record<Exclude<CardLanguage, CardLanguage.ENGLISH>, string> = {
-  [CardLanguage.ANCIENT_GREEK] : "Ancient Greek",
-  [CardLanguage.CHINESE_SIMPLIFIED]: "Chinese Simplified",
-  [CardLanguage.CHINESE_TRADITIONAL]: "Chinese Traditional",
-  [CardLanguage.FRENCH]: "French",
-  [CardLanguage.GERMAN]: "German",
-  [CardLanguage.ITALIAN]: "Italian",
-  [CardLanguage.JAPANESE]: "Japanese",
-  [CardLanguage.KOREAN]: "Korean",
-  [CardLanguage.PHYREXIAN]: "Phyrexian", // Custom code for Phyrexian
-  [CardLanguage.PORTUGUESE]: "Portuguese (Brazil)",
-  [CardLanguage.RUSSIAN]: "Russian",
-  [CardLanguage.SPANISH]: "Spanish"
-};
 
 export default class CardDao {
   private static instance: CardDao;
@@ -43,15 +28,12 @@ export default class CardDao {
   }
 
   /** Streams in card data efficiently. */
-  async streamIn(cards: AsyncIterable<CardAtomic>, bufferSize = 500): Promise<void> {
+  async streamIn(cards: AsyncIterable<CardEntity>, bufferSize = 500): Promise<void> {
     this.logger.info("Streaming in card data");
     const bulkInsert: CardEntity[] = [];
 
     for await (const card of cards) {
-      bulkInsert.push({
-        ...card,
-        localizedNames: CardDao.buildLocalizedNames(card),
-      });
+      bulkInsert.push(card);
 
       if (bulkInsert.length >= bufferSize) {
         await this.table.bulkPut(bulkInsert); // Efficient bulk insert
@@ -101,24 +83,5 @@ export default class CardDao {
 
   async getExactName(name: string): Promise<CardEntity | undefined> {
     return this.table.get(name);
-  }
-
-  static buildLocalizedNames(card: CardAtomic): LocalizedNames {
-    const localizedNames: Record<string, string> = {};
-
-    for (const lang of Object.values(CardLanguage)) {
-      let localizedName: string | undefined;
-      if (lang === CardLanguage.ENGLISH) {
-        localizedName = card.name
-      } else {
-        localizedName = card.foreignData?.find(fd => fd.language === LANGUAGE_MAP[lang])?.name;
-      }
-
-      if (localizedName) {
-        localizedNames[lang] = localizedName;
-      }
-    }
-
-    return localizedNames
   }
 }

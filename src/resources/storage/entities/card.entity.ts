@@ -62,6 +62,17 @@ export class CardAtomic {
   types: string[];
 };
 
+export interface CardFaceEntity {
+  name: string;
+  manaValue?: number;
+  type: string;
+  types: string[];
+  text?: string;
+  colors?: string[];
+  colorIdentity?: string[];
+  side?: "a" | "b";
+}
+
 type ExcludedFields = "foreignData" | "relatedCards" | "rulings" | "purchaseUrls";
 
 export default class CardEntity implements Omit<CardAtomic, ExcludedFields> {
@@ -104,11 +115,13 @@ export default class CardEntity implements Omit<CardAtomic, ExcludedFields> {
   types: string[];
 
   // ✅ Add the new property
+  faces?: CardFaceEntity[];
   localizedNames: LocalizedNames;
 
-  constructor(card: Omit<CardAtomic, ExcludedFields> & { localizedNames: LocalizedNames }) {
+  constructor(card: Omit<CardAtomic, ExcludedFields> & { localizedNames: LocalizedNames, faces?: CardFaceEntity[] }) {
     Object.assign(this, card); // ✅ Copy only the required properties
     this.localizedNames = card.localizedNames; // ✅ Ensure localizedNames is properly set
+    this.faces = card.faces;
   }
 }
 
@@ -119,6 +132,10 @@ export function isCardEntity(obj: any): obj is CardEntity {
     typeof (obj as any).localizedNames === 'object' &&
     typeof (obj as any).images === 'object'
   );
+}
+
+export function isCardAtomicArray(arr: unknown): arr is CardAtomic[] {
+  return Array.isArray(arr) && arr.every(isCardAtomic);
 }
 
 export function isCardAtomic(obj: any): obj is CardAtomic {
