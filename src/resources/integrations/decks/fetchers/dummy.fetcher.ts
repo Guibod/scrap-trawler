@@ -11,7 +11,7 @@ import { DeckSource } from "~/resources/domain/dbos/deck.dbo"
 
 export const DUMMY_RAW_DATA = { dummy: true}
 
-export class InstantDummyFetcher extends AbstractDeckFetcher {
+export class InstantDummyFetcher extends AbstractDeckFetcher<null> {
   constructor(
     settingsService: SettingsService,
     cardService: CardService,
@@ -30,6 +30,8 @@ export class InstantDummyFetcher extends AbstractDeckFetcher {
     }
   }
   async parse(raw: any): Promise<DeckDescription> {
+    this.parseSetup(null)
+
     return {
       id: `remote-id-for-${raw}`,
       archetype: 'TestArchetype',

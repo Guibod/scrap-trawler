@@ -15,6 +15,10 @@ const sourceStyles: Record<DeckSource, { color: string; label: string }> = {
     color: "bg-gray-500 text-white",
     label: "Text Import",
   },
+  [DeckSource.MAGIC_VILLE]: {
+    color: "bg-[##ffffcc] text-black",
+    label: "Magic Ville",
+  },
   [DeckSource.UNKNOWN]: {
     color: "bg-yellow-600 text-white",
     label: "Unknown",

@@ -1,0 +1,86 @@
+// www.magic-ville.com deck file<br />
+// NAME : EDH KELLAN<br />
+// CREATOR : Globotpus (magic-ville.com)<br />
+// FORMAT : Commander<br />
+1 Wheel of Fortune<br />
+1 Bloodthirsty Adversary<br />
+1 Loyal Apprentice<br />
+1 Exquisite Firecraft<br />
+1 Arena of Glory<br />
+1 Flame Slash<br />
+1 Wild Slash<br />
+1 Broadside Bombardiers<br />
+1 Searing Blaze<br />
+1 Barbarian Ring<br />
+1 Chain Lightning<br />
+1 Castle Embereth<br />
+1 Fiery Confluence<br />
+1 Wooded Foothills<br />
+1 Fugitive Codebreaker<br />
+1 Emberheart Challenger<br />
+1 Skullcrack<br />
+1 Wrenn's Resolve<br />
+1 Eidolon of the Great Revel<br />
+1 Skewer the Critics<br />
+1 Feldon, Ronom Excavator<br />
+1 Tarfire<br />
+1 Slaying Fire<br />
+1 Fire Ambush<br />
+1 Flare of Duplication<br />
+1 Incendiary Flow<br />
+1 Bloodstained Mire<br />
+1 Force of Rage<br />
+1 Lightning Bolt<br />
+1 Lightning Strike<br />
+1 Fury<br />
+1 Gornog, the Red Reaper<br />
+1 Ardoz, Cobbler of War<br />
+1 Char<br />
+1 Bonecrusher Giant<br />
+1 Headliner Scarlett<br />
+1 Reckless Impulse<br />
+1 Incinerate<br />
+1 Fiery Inscription<br />
+1 Kari Zev, Skyship Raider<br />
+1 Earthshaker Khenra<br />
+1 Scalding Tarn<br />
+1 Laelia, the Blade Reforged<br />
+1 Searing Spear<br />
+1 The Rollercrusher Ride<br />
+1 Blood Moon<br />
+1 Volcanic Hammer<br />
+1 Arid Mesa<br />
+20 Snow-Covered Mountain<br />
+1 Mutavault<br />
+1 Screaming Nemesis<br />
+1 Detective's Phoenix<br />
+1 Pillar of Flame<br />
+1 Slickshot Show-Off<br />
+1 Pyrogoyf<br />
+1 Pyrokinesis<br />
+1 Reckless Pyrosurfer<br />
+1 Flame Rift<br />
+1 Ramunap Ruins<br />
+1 Play with Fire<br />
+1 War Room<br />
+1 Fireblast<br />
+1 Galvanic Blast<br />
+1 Skullscorch<br />
+1 Squee, Dubious Monarch<br />
+1 Sokenzan, Crucible of Defiance<br />
+1 Den of the Bugbear<br />
+1 Wild Wasteland<br />
+1 Arc Trail<br />
+1 Ghostfire Slice<br />
+1 Razorkin Needlehead<br />
+1 Mishra's Factory<br />
+1 Robber of the Rich<br />
+1 Roiling Vortex<br />
+1 Prismatic Vista<br />
+1 Ash Zealot<br />
+1 Rift Bolt<br />
+1 Burst Lightning<br />
+1 Light Up the Stage<br />
+1 Roil Eruption<br />
+SB:  1 Kellan, Planar Trailblazer<br />
+<br><br><br><a href=?ref=1077286&f=Commander&file=EDH_KELLAN_par_Globotpus&mt8=0&save=1>Sauvegarder</a>

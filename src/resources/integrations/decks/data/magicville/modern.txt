@@ -1,0 +1,32 @@
+
+// www.magic-ville.com deck file<br />
+// NAME : Burn<br />
+// CREATOR : AlexASM (magic-ville.com)<br />
+// FORMAT : Modern<br />
+4 Searing Blaze<br />
+4 Sunbaked Canyon<br />
+4 Lightning Bolt<br />
+4 Bloodstained Mire<br />
+2 Sacred Foundry<br />
+4 Skewer the Critics<br />
+2 Skullcrack<br />
+4 Boros Charm<br />
+1 Barbarian Ring<br />
+4 Goblin Guide<br />
+2 Lightning Helix<br />
+2 Wooded Foothills<br />
+4 Lava Spike<br />
+4 Inspiring Vantage<br />
+4 Boltwave<br />
+3 Mountain<br />
+4 Eidolon of the Great Revel<br />
+4 Monastery Swiftspear<br />
+SB:  2 Magebane Lizard<br />
+SB:  2 Smash to Smithereens<br />
+SB:  2 Path to Exile<br />
+SB:  2 Rest in Peace<br />
+SB:  2 Searing Blood<br />
+SB:  2 Roiling Vortex<br />
+SB:  1 Wear / Tear<br />
+SB:  2 Tunnel Ignus<br />
+<br><br><br><a href=?ref=1081471&f=Modern&file=Burn_par_AlexASM&mt8=0&save=1>Sauvegarder</a>

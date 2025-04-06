@@ -4,6 +4,7 @@ import type { CardName } from "~/resources/storage/entities/event.entity"
 
 export enum DeckSource {
   MOXFIELD = "Moxfield",
+  MAGIC_VILLE = "Magic Ville",
   TEXT = "Text",
   UNKNOWN = "Unknown"
 }

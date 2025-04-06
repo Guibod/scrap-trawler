@@ -7,7 +7,7 @@ import type EventService from "~/resources/domain/services/event.service"
 import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { UnresolvedFetcherError } from "~/resources/integrations/decks/exceptions"
 
-export class NothingFetcher extends AbstractDeckFetcher {
+export class NothingFetcher extends AbstractDeckFetcher<null> {
   constructor(
     settingsService: SettingsService,
     cardService: CardService,
