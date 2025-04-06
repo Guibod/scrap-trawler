@@ -17,10 +17,7 @@ type PlayerDeckProps = {
 
 const PlayerDeck: React.FC<PlayerDeckProps> = ({className}) => {
   const { event } = useEvent()
-  const player = usePlayer()
   const { deck, hoveredCard, onHoveredCard } = useDeck()
-  const { fetchDeckRows, } = useFetchService()
-  const { isFetching } = useEventFetchStatus(event.id)
 
   if (!deck) {
     return (
@@ -37,16 +34,6 @@ const PlayerDeck: React.FC<PlayerDeckProps> = ({className}) => {
         <DeckLegality />
         <DeckLastUpdate />
         <DeckSourceBadge />
-
-        <Button className="ml-auto" onPress={() => fetchDeckRows(event.id, [{
-          id: player.spreadsheetRowId,
-          player: {},
-          archetype: player.archetype,
-          decklistUrl: player.decklistUrl,
-          decklistTxt: player.decklistTxt,
-          firstName: player.firstName,
-          lastName: player.lastName,
-        }])} size="md" color="primary" disabled={isFetching}>Fetch Deck</Button>
       </h3>
 
       <Card className="col-span-3 aspect-[3/4] flex items-center justify-center sticky top-20 self-start">
