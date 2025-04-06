@@ -27,6 +27,7 @@ vi.mock("~/resources/ui/providers/event", () => ({
     mapMode: "manual",
     deck: undefined,
     matches: [],
+    standings: {  },
     extra: undefined,
     spreadsheetRowId: "row-123",
     decklistTxt: "foo",
