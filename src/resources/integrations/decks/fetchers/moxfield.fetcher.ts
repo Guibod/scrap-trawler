@@ -1,5 +1,5 @@
-import AbstractDeckFetcher from "~/resources/integrations/decks/fetchers/abstract.fetcher"
-import type { CardNameAndQuantity, DeckDescription } from "~/resources/storage/entities/event.entity"
+import AbstractDeckFetcher, { type CardDboBoard } from "~/resources/integrations/decks/fetchers/abstract.fetcher"
+import type { CardNameAndQuantity, DeckBoards, DeckDescription } from "~/resources/storage/entities/event.entity"
 import type SettingsService from "~/resources/domain/services/settings.service"
 import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import type { DeckFetchRequest, DeckFetchResponse } from "~/resources/integrations/decks/request"
@@ -9,11 +9,11 @@ import { getLogger } from "~/resources/logging/logger"
 import { MtgJsonFormats } from "~/resources/integrations/mtg-json/types"
 import type CardService from "~/resources/domain/services/card.service"
 import type EventService from "~/resources/domain/services/event.service"
-import { checkLegality, type LegalityBoard } from "~/resources/integrations/mtg-json/legality"
-import { resolveEnumValue } from "~/resources/utils/enum"
-import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
+import { type LegalityBoard, type LegalityBoards } from "~/resources/integrations/mtg-json/legality"
 import { sendToBackground } from "@plasmohq/messaging"
 import { DeckSource } from "~/resources/domain/dbos/deck.dbo"
+import { resolveEnumValue } from "~/resources/utils/enum"
+import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 
 const logger = getLogger("fetcher-moxfield")
 
@@ -30,6 +30,22 @@ const MoxfieldFormats : Record<string, MTG_FORMATS> = {
   "oathbreaker": MTG_FORMATS.OATHBREAKER,
 }
 
+type RawBoard = {
+  count: number
+  cards: Record<string, MoxfieldCard>
+}
+
+type RawBoards = Record<keyof CardDboBoard, RawBoard>
+
+type RawPayload = {
+  publicId: string
+  name: string
+  lastUpdatedAtUtc: string
+  colorIdentity: string[]
+  format: string
+  boards: RawBoards
+}
+
 type MoxfieldCard = {
   quantity: number
   card: {
@@ -40,7 +56,7 @@ type MoxfieldCard = {
 }
 
 // noinspection ExceptionCaughtLocallyJS
-export class MoxfieldFetcher extends AbstractDeckFetcher {
+export class MoxfieldFetcher extends AbstractDeckFetcher<RawPayload> {
   public static readonly API_URL = "https://scrap-trawler-proxy.guibod12.workers.dev/moxfield";
   public static readonly DELAY = 3000
 
@@ -98,7 +114,10 @@ export class MoxfieldFetcher extends AbstractDeckFetcher {
       }
     }
   }
+
   async parse(raw: any, request: DeckFetchRequest, format: MTG_FORMATS = null, archetypeHint: string = null): Promise<DeckDescription> {
+    this.parseSetup(raw)
+
     const faceCard = raw.main?.name || null;
     let archetype = archetypeHint ?? null;
 
@@ -111,22 +130,19 @@ export class MoxfieldFetcher extends AbstractDeckFetcher {
       archetype = Object.values(archetypeCards).map((card: MoxfieldCard) => card.card.name).sort().join(" / ")
     }
 
-    return {
+    this.boards = this.toDeckBoards(raw.boards)
+
+    return this.describe({
       id: raw.publicId,
-      archetype,
       name: raw.name,
-      url: raw.publicUrl,
       source: DeckSource.MOXFIELD,
       lastUpdated: raw.lastUpdatedAtUtc ?? null,
-      boards: this.buildBoards(raw.boards, this.extractCardNamesAndQuantities),
+      url: raw.publicUrl,
       face: faceCard,
-      legal: checkLegality(
-        this.buildBoards(raw.boards, this.extractLegalityCardAndQuantities),
-        format
-      ),
-      format: format,
-      colors: raw.colorIdentity?.map(c => resolveEnumValue(MTG_COLORS, c)) ?? [],
-    };
+      colors: raw.colorIdentity.map(c => resolveEnumValue(MTG_COLORS, c)),
+      archetype,
+      format
+    })
   }
 
   private static extractDeckId(url: string): string {
@@ -135,29 +151,14 @@ export class MoxfieldFetcher extends AbstractDeckFetcher {
     return match[1];
   }
 
-  private buildBoards<T>(boards: any, callback: (cardMap: Record<string, MoxfieldCard>) => T):
-    Record<'mainboard' | 'sideboard' | 'commanders' | 'companions' | 'signatureSpells', T> {
-
-    return {
-      mainboard: callback(boards.mainboard?.cards ?? {}),
-      sideboard: callback(boards.sideboard?.cards ?? {}),
-      commanders: callback(boards.commanders?.cards ?? {}),
-      companions: callback(boards.companions?.cards ?? {}),
-      signatureSpells: callback(boards.signatureSpells?.cards ?? {}),
-    }
-  }
-
-  private extractCardNamesAndQuantities(obj: Record<string, MoxfieldCard>): CardNameAndQuantity[] {
-    return Object.values(obj).map(card => ({
-      name: card.card.name,
-      quantity: card.quantity
-    }));
-  }
-
-  private extractLegalityCardAndQuantities(obj: Record<string, MoxfieldCard>): LegalityBoard {
-    return {
-      count: Object.values(obj).reduce((acc, card) => acc + card.quantity, 0),
-      cards: Object.values(obj).map(card => ({
+  /**
+   * Moxfield provides everything required to check the deck validity without the need of the database
+   * @protected
+   */
+  protected async buildLegalityBoards(): Promise<LegalityBoards> {
+    const mapToLegalityBoard = (board: RawBoard): LegalityBoard => ({
+      count: board?.count,
+      cards: Object.values(board?.cards ?? []).map(card => ({
         quantity: card.quantity,
         card: {
           name: card.card.name,
@@ -165,6 +166,27 @@ export class MoxfieldFetcher extends AbstractDeckFetcher {
           colorIdentity: card.card.color_identity
         }
       }))
+    })
+
+    return {
+      mainboard: mapToLegalityBoard(this.raw.boards?.mainboard),
+      sideboard: mapToLegalityBoard(this.raw.boards?.sideboard),
+      commanders: mapToLegalityBoard(this.raw.boards?.commanders),
+      companions: mapToLegalityBoard(this.raw.boards?.companions),
+      signatureSpells: mapToLegalityBoard(this.raw.boards?.signatureSpells),
+    }
+  }
+
+  protected toDeckBoards(raw: RawBoards): DeckBoards {
+    const transform = (board: RawBoard): CardNameAndQuantity[] =>
+      Object.values(board.cards).map(({ quantity, card }) => ({ quantity, name: card.name }))
+
+    return {
+      mainboard: transform(raw.mainboard),
+      sideboard: transform(raw.sideboard),
+      commanders: transform(raw.commanders),
+      companions: transform(raw.companions),
+      signatureSpells: transform(raw.signatureSpells),
     }
   }
 }

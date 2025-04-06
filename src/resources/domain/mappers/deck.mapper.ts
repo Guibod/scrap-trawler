@@ -32,20 +32,17 @@ export class DeckMapper {
     }
   }
 
-  private async toResolvedBoards(boards: DeckBoardsDbo): Promise<ResolvedDeckBoards> {
+  public async toResolvedBoards(boards: DeckBoardsDbo): Promise<ResolvedDeckBoards> {
     const resolveBoard = async (cards?: DeckCardDbo[]) =>
       cards
         ? (
           await Promise.all(
-            cards.map(async (c) => {
-              try {
-                const card = await this.resolveCard(c)
-                return card
-              } catch (e) {
+            cards.map(async (c) =>
+              this.resolveCard(c).catch(e => {
                 logger.warn(`Failed to resolve card: ${c.name}`, e)
                 return null
-              }
-            })
+              })
+            )
           )
         ).filter((c): c is ResolvedDeckCard => c !== null)
         : undefined

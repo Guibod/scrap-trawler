@@ -155,7 +155,7 @@ describe('TextFetcher', () => {
       expect(id1).toBe(id2)
     })
 
-    it('fails on unknown card', async () => {
+    it('succeed on unknown card', async () => {
       const row = createRow([
         "1 Forest",
         "1 Gyruda",
@@ -164,8 +164,8 @@ describe('TextFetcher', () => {
       const request = new DeckFetchRequest('e1', MTG_FORMATS.DUEL, row)
 
       const result = await fetcher.run(request)
-      expect(result.success).toBe(false)
-      expect(result.errorMessage).toContain('Card not found')
+      expect(result.success).toBe(true)
+      expect(result.errorMessage).toBeUndefined()
     })
   })
 

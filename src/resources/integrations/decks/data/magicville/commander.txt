@@ -1,0 +1,106 @@
+
+// www.magic-ville.com deck file<br />
+// NAME : Juri, Master of the Revue<br />
+// CREATOR : Billyjackkorbak (magic-ville.com)<br />
+// FORMAT : Commander<br />
+1 Claim / Fame<br />
+1 Marionette Apprentice<br />
+1 Stitcher's Supplier<br />
+1 Flame Slash<br />
+1 Goblin Bombardment<br />
+1 Broadside Bombardiers<br />
+1 Carrion Feeder<br />
+1 Graven Cairns<br />
+1 Dragon's Rage Channeler<br />
+1 Lazotep Quarry<br />
+1 Verdant Catacombs<br />
+1 Chthonian Nightmare<br />
+1 Vault of Whispers<br />
+1 Barbarian Ring<br />
+1 Grief<br />
+1 Bloodsoaked Champion<br />
+1 Boggart Trawler<br />
+1 Mana Confluence<br />
+1 Cult Conscript<br />
+1 Demonic Consultation<br />
+1 Wooded Foothills<br />
+1 Haunted Ridge<br />
+1 Smuggler's Copter<br />
+1 Blood Crypt<br />
+1 Cultist of the Absolute<br />
+1 Snuff Out<br />
+1 Badlands<br />
+1 Emperor of Bones<br />
+1 Callous Sell-Sword<br />
+1 Hive of the Eye Tyrant<br />
+1 Polluted Delta<br />
+1 Bloodghast<br />
+1 Fable of the Mirror-Breaker<br />
+1 Blackcleave Cliffs<br />
+1 Flare of Malice<br />
+1 Bloodstained Mire<br />
+1 Spawning Pit<br />
+1 Lightning Bolt<br />
+1 Fury<br />
+1 Great Furnace<br />
+1 Greater Gargadon<br />
+1 Nethergoyf<br />
+1 Jadar, Ghoulcaller of Nephalia<br />
+1 Scalding Tarn<br />
+1 Swamp<br />
+1 Snow-Covered Swamp<br />
+1 Accursed Marauder<br />
+1 Warren Soultrader<br />
+1 Dauthi Voidwalker<br />
+1 Orcish Bowmasters<br />
+1 Arid Mesa<br />
+1 Bomat Courier<br />
+1 Dark Ritual<br />
+1 Forsaken Miner<br />
+1 Bloodtithe Harvester<br />
+1 Mountain<br />
+1 Mount Doom<br />
+1 Snow-Covered Mountain<br />
+1 Dark Confidant<br />
+1 Zuran Orb<br />
+1 Blazemire Verge<br />
+1 Tainted Pact<br />
+1 Blightstep Pathway<br />
+1 Fear of Missing Out<br />
+1 Detective's Phoenix<br />
+1 Skullclamp<br />
+1 Stalactite Stalker<br />
+1 Marsh Flats<br />
+1 Fatal Push<br />
+1 Harmonic Prodigy<br />
+1 Demonic Tutor<br />
+1 Skittering Precursor<br />
+1 Pyrokinesis<br />
+1 Gravecrawler<br />
+1 Malakir Rebirth<br />
+1 Rotten Reunion<br />
+1 Gamble<br />
+1 Thoughtseize<br />
+1 Spymaster's Vault<br />
+1 Seal of Fire<br />
+1 Shinka, the Bloodsoaked Keep<br />
+1 Shizo, Death's Storehouse<br />
+1 Sokenzan, Crucible of Defiance<br />
+1 Unearth<br />
+1 Sulfurous Springs<br />
+1 Overlord of the Balemurk<br />
+1 Takenuma, Abandoned Mire<br />
+1 Den of the Bugbear<br />
+1 Raucous Theater<br />
+1 Command Tower<br />
+1 Phyrexian Tower<br />
+1 Barrowgoyf<br />
+1 Urborg, Tomb of Yawgmoth<br />
+1 Viscera Seer<br />
+1 Prismatic Vista<br />
+1 Gas Guzzler<br />
+1 Voldaren Epicure<br />
+1 Urza's Saga<br />
+1 Sundering Eruption<br />
+SB:  1 Juri, Master of the Revue<br />
+<br><br><br><a href=?ref=1086164&f=Commander&file=Juri,_Master_of_the_Revue_par_Billyjackkorbak&mt8=0&save=1>Sauvegarder</a>
