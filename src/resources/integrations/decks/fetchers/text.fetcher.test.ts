@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeAll, beforeEach } from "vitest"
-import type { SpreadsheetRow } from '~/resources/domain/dbos/spreadsheet.dbo'
-import type SettingsService from '~/resources/domain/services/settings.service'
-import { MTG_FORMATS } from '~/resources/domain/enums/mtg/formats.dbo'
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest"
+import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
+import type SettingsService from "~/resources/domain/services/settings.service"
+import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import { TextFetcher } from "~/resources/integrations/decks/fetchers/text.fetcher"
 import { createMock } from "@golevelup/ts-vitest"
 import type CardService from "~/resources/domain/services/card.service"
@@ -10,8 +10,6 @@ import { DeckFetchRequest } from "~/resources/integrations/decks/request"
 import type { LeadershipSkills, Legalities } from "~/resources/storage/entities/card.entity"
 import { readFileSync } from "node:fs"
 import path from "node:path"
-
-
 
 
 const mockEventService = createMock<EventService>({
@@ -96,7 +94,7 @@ describe('TextFetcher', () => {
     })
 
     it('parses a valid commander decklist (using MTGO way)', async () => {
-      const request = new DeckFetchRequest('e1', createRow([
+      const request = new DeckFetchRequest('e1', MTG_FORMATS.COMMANDER, createRow([
         "97 Forest",
         "1 Glissa Sunslayer",
         "1 Gyruda, Doom of Depths",
@@ -124,7 +122,7 @@ describe('TextFetcher', () => {
     })
 
     it('parses a valid commander decklist (using Moxfield way)', async () => {
-      const request = new DeckFetchRequest('e1', createRow([
+      const request = new DeckFetchRequest('e1', MTG_FORMATS.COMMANDER, createRow([
         "1 Muldrotha, the Gravetide",
         "97 Forest",
         "1 Glissa Sunslayer",
@@ -163,7 +161,7 @@ describe('TextFetcher', () => {
         "1 Gyruda",
         "1 SomeFakeCardName"
       ].join("\n"))
-      const request = new DeckFetchRequest('e1', row)
+      const request = new DeckFetchRequest('e1', MTG_FORMATS.DUEL, row)
 
       const result = await fetcher.run(request)
       expect(result.success).toBe(false)
@@ -190,7 +188,7 @@ describe('TextFetcher', () => {
       it("à la Moxfield", async () => {
         const decklist = readFileSync(path.join(__dirname, '../data/text/commander.2partners.moxfield.txt'), 'utf-8');
         const row = createRow(decklist)
-        const request = new DeckFetchRequest('e1', row)
+        const request = new DeckFetchRequest('e1', MTG_FORMATS.DUEL, row)
         vi.mocked(mockEventService.get).mockResolvedValue({ format: MTG_FORMATS.COMMANDER })
 
         const response = await fetcher.run(request)
@@ -211,7 +209,7 @@ describe('TextFetcher', () => {
       it("à la MTGO", async () => {
         const decklist = readFileSync(path.join(__dirname, '../data/text/commander.2partners.mtgo.txt'), 'utf-8');
         const row = createRow(decklist)
-        const request = new DeckFetchRequest('e1', row)
+        const request = new DeckFetchRequest('e1', MTG_FORMATS.DUEL, row)
 
         const response = await fetcher.run(request)
 
@@ -233,7 +231,7 @@ describe('TextFetcher', () => {
       it("à la Moxfield", async () => {
         const decklist = readFileSync(path.join(__dirname, '../data/text/standard.moxfield.txt'), 'utf-8');
         const row = createRow(decklist)
-        const request = new DeckFetchRequest('e1', row)
+        const request = new DeckFetchRequest('e1', MTG_FORMATS.STANDARD, row)
         vi.mocked(mockEventService.get).mockResolvedValue({ format: MTG_FORMATS.STANDARD })
 
         const response = await fetcher.run(request)
@@ -256,7 +254,7 @@ describe('TextFetcher', () => {
         const decklist = readFileSync(path.join(__dirname, '../data/text/standard.mtgo.txt'), 'utf-8');
         const row = createRow(decklist)
         vi.mocked(mockEventService.get).mockResolvedValue({ format: MTG_FORMATS.STANDARD })
-        const request = new DeckFetchRequest('e1', row)
+        const request = new DeckFetchRequest('e1', MTG_FORMATS.STANDARD, row)
 
         const response = await fetcher.run(request)
 
@@ -278,7 +276,7 @@ describe('TextFetcher', () => {
         const decklist = readFileSync(path.join(__dirname, '../data/text/standard.mtga.txt'), 'utf-8');
         const row = createRow(decklist)
         vi.mocked(mockEventService.get).mockResolvedValue({ format: MTG_FORMATS.STANDARD })
-        const request = new DeckFetchRequest('e1', row)
+        const request = new DeckFetchRequest('e1', MTG_FORMATS.STANDARD, row)
 
         const response = await fetcher.run(request)
 
@@ -301,7 +299,7 @@ describe('TextFetcher', () => {
       it("à la Moxfield", async () => {
         const decklist = readFileSync(path.join(__dirname, '../data/text/oathbreaker.moxfield.txt'), 'utf-8');
         const row = createRow(decklist)
-        const request = new DeckFetchRequest('e1', row)
+        const request = new DeckFetchRequest('e1', MTG_FORMATS.OATHBREAKER, row)
         vi.mocked(mockEventService.get).mockResolvedValue({ format: MTG_FORMATS.OATHBREAKER })
 
         const response = await fetcher.run(request)
@@ -325,7 +323,7 @@ describe('TextFetcher', () => {
         const decklist = readFileSync(path.join(__dirname, '../data/text/oathbreaker.mtgo.txt'), 'utf-8');
         const row = createRow(decklist)
         vi.mocked(mockEventService.get).mockResolvedValue({ format: MTG_FORMATS.OATHBREAKER })
-        const request = new DeckFetchRequest('e1', row)
+        const request = new DeckFetchRequest('e1', MTG_FORMATS.OATHBREAKER, row)
 
         const response = await fetcher.run(request)
 

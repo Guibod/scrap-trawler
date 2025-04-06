@@ -36,10 +36,9 @@ export class TextFetcher extends AbstractDeckFetcher {
 
   public async run(request: DeckFetchRequest): Promise<DeckFetchResponse> {
     const raw = request.row.decklistTxt
-    const format = (await this.eventService.get(request.eventId))?.format
 
     try {
-      const deck = await this.parse(raw, format, request.row.archetype)
+      const deck = await this.parse(raw, request)
       return {
         request,
         deck,
@@ -59,9 +58,9 @@ export class TextFetcher extends AbstractDeckFetcher {
 
 
   private colorIdentity = new Set<MTG_COLORS>()
-  public async parse(raw: string, format: MTG_FORMATS, archetypeHint?: string): Promise<DeckDescription> {
-    let archetype: string | null = archetypeHint ?? null
-    let name: string | null = archetypeHint ?? null
+  public async parse(raw: string, request: DeckFetchRequest): Promise<DeckDescription> {
+    let archetype: string | null = request.row.archetype ?? null
+    let name: string | null = request.row.archetype ?? null
     let commanderColors: MTG_COLORS[] = null
     this.colorIdentity.clear()
 
@@ -122,7 +121,7 @@ export class TextFetcher extends AbstractDeckFetcher {
     }
 
     // Commander shenanigans
-    if ([MTG_FORMATS.COMMANDER, MTG_FORMATS.DUEL, MTG_FORMATS.OATHBREAKER].includes(format)) {
+    if ([MTG_FORMATS.COMMANDER, MTG_FORMATS.DUEL, MTG_FORMATS.OATHBREAKER].includes(request.format)) {
       if (hasCommanderSeparator){ // mtgo way
         if (lineSinceSeparator <= 2) {
           const candidates = currentTarget.splice(currentTarget.length - lineSinceSeparator, lineSinceSeparator);
@@ -135,7 +134,7 @@ export class TextFetcher extends AbstractDeckFetcher {
         boards.commanders.push(...candidates)
       }
 
-      if (format === MTG_FORMATS.OATHBREAKER) {
+      if (request.format === MTG_FORMATS.OATHBREAKER) {
         boards.signatureSpells.push(boards.commanders.pop())
       }
 
@@ -158,8 +157,8 @@ export class TextFetcher extends AbstractDeckFetcher {
       lastUpdated: null,
       name,
       boards: this.buildBoards(boards, this.extractCardNamesAndQuantities),
-      format,
-      legal: checkLegality(this.buildBoards(boards, this.extractLegalityCardAndQuantities), format),
+      format: request.format,
+      legal: checkLegality(this.buildBoards(boards, this.extractLegalityCardAndQuantities), request.format),
       colors: commanderColors ?? [...this.colorIdentity]
     }
   }

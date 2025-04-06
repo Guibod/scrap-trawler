@@ -4,6 +4,7 @@ import type { DeckFetcher } from "~/resources/integrations/decks/fetchers/abstra
 import type { DeckDescription } from "~/resources/storage/entities/event.entity"
 import DeckFetcherResolver from "~/resources/integrations/decks/resolver"
 import type { EventModel } from "~/resources/domain/models/event.model"
+import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 
 export class DeckFetchRequest {
   public readonly id: string;
@@ -11,9 +12,11 @@ export class DeckFetchRequest {
 
   constructor(
     public readonly eventId: string,
+    public readonly format: MTG_FORMATS,
     public readonly row: SpreadsheetRow
   ) {
     this.id = crypto.randomUUID();
+
     const fetcherType = DeckFetcherResolver.resolveFetcherType(row);
 
     if (!fetcherType) {
@@ -32,14 +35,14 @@ export class DeckFetchRequest {
       .map(entry => {
         const row = event.spreadsheet.data.find(row => row.id === entry.rowId)
         if (!row) return null
-        return new DeckFetchRequest(event.id, row)
+        return new DeckFetchRequest(event.id, event.format, row)
       })
       .filter(request => !!request)
   }
 
-  static fromRows(eventId: string, rows: SpreadsheetRow[]) {
+  static fromRows(event: EventModel, rows: SpreadsheetRow[]) {
     return rows
-      .map(row => new DeckFetchRequest(eventId, row))
+      .map(row => new DeckFetchRequest(event.id, event.format, row))
   }
 }
 

@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach, vi, type Mocked } from "vitest"
-import { createMock } from '@golevelup/ts-vitest'
-import type { SpreadsheetRow } from '~/resources/domain/dbos/spreadsheet.dbo'
-import mockResponse from '~/resources/integrations/decks/data/moxfield/sample.duel.json'
+import { beforeEach, describe, expect, it, type Mocked, vi } from "vitest"
+import { createMock } from "@golevelup/ts-vitest"
+import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
+import mockResponse from "~/resources/integrations/decks/data/moxfield/sample.duel.json"
 import { MoxfieldFetcher } from "~/resources/integrations/decks/fetchers/moxfield.fetcher"
 import type SettingsService from "~/resources/domain/services/settings.service"
 import { DeckFetchRequest } from "~/resources/integrations/decks/request"
@@ -42,7 +42,7 @@ describe('MoxfieldFetcher', () => {
     const row = createRow('https://www.moxfield.com/decks/uhT3ukey6kqMXDc1g-_HYg')
     fetcher = new MoxfieldFetcher(mockSettings, mockCardService, mockEventService)
 
-    const request = new DeckFetchRequest("123", row)
+    const request = new DeckFetchRequest("123", MTG_FORMATS.DUEL, row)
     const response = await fetcher.run(request)
     const deck = response.deck
 
@@ -77,7 +77,7 @@ describe('MoxfieldFetcher', () => {
   it('throws on invalid url in extractDeckId()', async () => {
     const row = createRow('https://not.moxfield.com/badurl')
     fetcher = new MoxfieldFetcher(mockSettings, mockCardService, mockEventService)
-    const request = new DeckFetchRequest("123", row)
+    const request = new DeckFetchRequest("123", MTG_FORMATS.DUEL, row)
 
     await expect(fetcher.run(request)).rejects.toThrow('Invalid Moxfield deck URL')
   })
@@ -87,7 +87,7 @@ describe('MoxfieldFetcher', () => {
       const payload = await import('~/resources/integrations/decks/data/moxfield/sample.duel.json')
 
       fetcher = new MoxfieldFetcher(mockSettings, mockCardService, mockEventService)
-      const deck = await fetcher.parse(payload)
+      const deck = await fetcher.parse(payload, null)
 
       expect(deck.format).toBe(MTG_FORMATS.DUEL)
       expect(deck.id).toEqual('uhT3ukey6kqMXDc1g-_HYg')
@@ -137,7 +137,7 @@ describe('MoxfieldFetcher', () => {
       const payload = await import('~/resources/integrations/decks/data/moxfield/sample.commanderPrecon.json')
 
       fetcher = new MoxfieldFetcher(mockSettings, mockCardService, mockEventService)
-      const deck = await fetcher.parse(payload)
+      const deck = await fetcher.parse(payload, null)
 
       expect(deck.format).toBe(MTG_FORMATS.COMMANDER)
       expect(deck.id).toEqual('90IaIz_OaUyg1oE7a2OQsw')
@@ -187,7 +187,7 @@ describe('MoxfieldFetcher', () => {
       const payload = await import('~/resources/integrations/decks/data/moxfield/sample.commander.json')
 
       fetcher = new MoxfieldFetcher(mockSettings, mockCardService, mockEventService)
-      const deck = await fetcher.parse(payload)
+      const deck = await fetcher.parse(payload, null)
 
       expect(deck.format).toBe(MTG_FORMATS.COMMANDER)
       expect(deck.id).toEqual('Z7Dp0wbuQkujW7Ggg5Lotw')
@@ -238,7 +238,7 @@ describe('MoxfieldFetcher', () => {
     const payload = await import('~/resources/integrations/decks/data/moxfield/sample.vintage.json')
 
     fetcher = new MoxfieldFetcher(mockSettings, mockCardService, mockEventService)
-    const deck = await fetcher.parse(payload)
+    const deck = await fetcher.parse(payload, null)
 
     expect(deck.format).toBe(MTG_FORMATS.VINTAGE)
     expect(deck.id).toEqual('dzbbTBxBO0eztDWTZpUHQw')
@@ -292,7 +292,7 @@ describe('MoxfieldFetcher', () => {
     const payload = await import('~/resources/integrations/decks/data/moxfield/sample.modern.companion.json')
 
     fetcher = new MoxfieldFetcher(mockSettings, mockCardService, mockEventService)
-    const deck = await fetcher.parse(payload)
+    const deck = await fetcher.parse(payload, null)
 
     expect(deck.format).toBe(MTG_FORMATS.MODERN)
     expect(deck.id).toEqual('J5POnqpW6EujghVgbIZMWw')
@@ -342,7 +342,7 @@ describe('MoxfieldFetcher', () => {
     const payload = await import('~/resources/integrations/decks/data/moxfield/sample.oathbreaker.json')
 
     fetcher = new MoxfieldFetcher(mockSettings, mockCardService, mockEventService)
-    const deck = await fetcher.parse(payload)
+    const deck = await fetcher.parse(payload, null)
 
     expect(deck.format).toBe(MTG_FORMATS.OATHBREAKER)
     expect(deck.id).toEqual('Blne9sZXzUakIy7oeVaXJA')
@@ -396,7 +396,7 @@ describe('MoxfieldFetcher', () => {
     const payload = await import('~/resources/integrations/decks/data/moxfield/sample.invalid.json')
 
     fetcher = new MoxfieldFetcher(mockSettings, mockCardService, mockEventService)
-    const deck = await fetcher.parse(payload)
+    const deck = await fetcher.parse(payload, null)
 
     expect(deck.format).toBe(MTG_FORMATS.COMMANDER)
     expect(deck.legal).toBe(false)

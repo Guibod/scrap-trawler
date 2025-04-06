@@ -9,6 +9,7 @@ import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 import { InstantDummyFetcher, SlowDummyFetcher } from "~/resources/integrations/decks/fetchers/dummy.fetcher"
 import DeckFetcherResolver from "~/resources/integrations/decks/resolver"
 import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
+import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 
 vi.mock("~/resources/integrations/decks/resolver", () => ({
   default: {
@@ -51,7 +52,7 @@ describe('DeckFetchService', () => {
   })
 
   it('schedules and executes fetch requests', async () => {
-    await service.schedule([new DeckFetchRequest('e1', makeRow())])
+    await service.schedule([new DeckFetchRequest('e1', MTG_FORMATS.DUEL, makeRow())])
     await new Promise(r => setTimeout(r, 10)) // let async queue flush
 
     expect(mockEventService.addDeckToEvent).toHaveBeenCalled()
@@ -61,7 +62,7 @@ describe('DeckFetchService', () => {
   })
 
   it('ignores duplicate requests', async () => {
-    const req = new DeckFetchRequest('e1', makeRow())
+    const req = new DeckFetchRequest('e1', MTG_FORMATS.DUEL, makeRow())
     await service.schedule([req, req])
     await new Promise(r => setTimeout(r, 10))
 
@@ -88,7 +89,7 @@ describe('DeckFetchService', () => {
   })
 
   it('handles cancelRequest properly', async () => {
-    const req = new DeckFetchRequest('e1', makeRow('will-cancel'))
+    const req = new DeckFetchRequest('e1', MTG_FORMATS.DUEL, makeRow('will-cancel'))
     await service.schedule([req])
     await service.cancelRequest(req.id)
 
@@ -99,8 +100,8 @@ describe('DeckFetchService', () => {
 
   it('handles cancelAll', async () => {
     await service.schedule([
-      new DeckFetchRequest('e1', makeRow()),
-      new DeckFetchRequest('e2', makeRow()),
+      new DeckFetchRequest('e1', MTG_FORMATS.DUEL, makeRow()),
+      new DeckFetchRequest('e2', MTG_FORMATS.DUEL, makeRow()),
     ])
     await service.cancelAll()
 
@@ -132,8 +133,8 @@ describe('DeckFetchService', () => {
     })
 
     await service.schedule([
-      new DeckFetchRequest('e1', makeRow('fast-1')),
-      new DeckFetchRequest('e2', makeRow('slow-1')),
+      new DeckFetchRequest('e1', MTG_FORMATS.DUEL, makeRow('fast-1')),
+      new DeckFetchRequest('e2', MTG_FORMATS.DUEL, makeRow('slow-1')),
     ])
 
     await new Promise(r => setTimeout(r, 100))
