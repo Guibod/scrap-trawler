@@ -23,7 +23,7 @@ const PlayerStandings: React.FC<PlayerStandingsProps> = ({playerId}) => {
       </TableHeader>
       <TableBody emptyContent={"No standings."} items={Object.entries(player.standings).map(([key, value]) => ({...value, round: key}))}>
         {(standing) => (
-          <TableRow>
+          <TableRow key={standing.round}>
             <TableCell>{standing.round}</TableCell>
             <TableCell>{standing.rank}</TableCell>
             <TableCell>
