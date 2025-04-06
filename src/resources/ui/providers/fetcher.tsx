@@ -142,7 +142,7 @@ export const FetchServiceProvider = ({ children, service }: FetchServiceProvider
         await cancelEvent(eventId)
       }
       fetchService.eventService.get(eventId).then((event) => {
-        const requests = DeckFetchRequest.fromRows(event.id, rows)
+        const requests = DeckFetchRequest.fromRows(event, rows)
         setFetching(eventId, true, requests.length)
         fetchService.schedule(requests)
       })

@@ -16,7 +16,7 @@ const mockServices = {
 }
 
 const row = { id: "123", decklistUrl: "dummy-url" } as SpreadsheetRow
-const request = new DeckFetchRequest('event1', row)
+const request = new DeckFetchRequest('event1', MTG_FORMATS.DUEL, row)
 
 describe("InstantDummyFetcher", () => {
   const fetcher = new InstantDummyFetcher(

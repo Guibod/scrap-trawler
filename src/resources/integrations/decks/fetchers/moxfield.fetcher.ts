@@ -82,7 +82,7 @@ export class MoxfieldFetcher extends AbstractDeckFetcher {
 
       return {
         request,
-        deck: await this.parse(response.data),
+        deck: await this.parse(response.data, request),
         rawData: response.data,
         success: true
       };
@@ -98,7 +98,7 @@ export class MoxfieldFetcher extends AbstractDeckFetcher {
       }
     }
   }
-  async parse(raw: any, format: MTG_FORMATS = null, archetypeHint: string = null): Promise<DeckDescription> {
+  async parse(raw: any, request: DeckFetchRequest, format: MTG_FORMATS = null, archetypeHint: string = null): Promise<DeckDescription> {
     const faceCard = raw.main?.name || null;
     let archetype = archetypeHint ?? null;
 

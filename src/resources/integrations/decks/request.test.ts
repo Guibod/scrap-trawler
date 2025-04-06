@@ -1,6 +1,7 @@
-import { describe, it, expect, vi } from 'vitest'
-import { UnresolvedFetcherError } from '~/resources/integrations/decks/exceptions'
+import { describe, expect, it, vi } from "vitest"
+import { UnresolvedFetcherError } from "~/resources/integrations/decks/exceptions"
 import { DeckFetchRequest } from "~/resources/integrations/decks/request"
+import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 
 vi.mock('~/resources/integrations/decks/resolver', () => ({
   default: {
@@ -25,7 +26,7 @@ describe('DeckFetchRequest', () => {
   }
 
   it('creates a valid request with fetcher type', () => {
-    const req = new DeckFetchRequest('event-1', validRow)
+    const req = new DeckFetchRequest('event-1', MTG_FORMATS.DUEL, validRow)
     expect(req.id).toMatch(/[a-f0-9\-]{36}/)
     expect(req.eventId).toBe('event-1')
     expect(req.row).toBe(validRow)
@@ -33,6 +34,6 @@ describe('DeckFetchRequest', () => {
   })
 
   it('throws UnresolvedFetcherError if fetcher cannot be resolved', () => {
-    expect(() => new DeckFetchRequest('event-2', invalidRow)).toThrow(UnresolvedFetcherError)
+    expect(() => new DeckFetchRequest('event-2', MTG_FORMATS.DUEL, invalidRow)).toThrow(UnresolvedFetcherError)
   })
 })

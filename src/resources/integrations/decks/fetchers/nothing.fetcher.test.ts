@@ -1,8 +1,9 @@
-import { describe, it, expect } from "vitest"
+import { describe, expect, it } from "vitest"
 import { UnresolvedFetcherError } from "~/resources/integrations/decks/exceptions"
 import { NothingFetcher } from "~/resources/integrations/decks/fetchers/nothing.fetcher"
 import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { DeckFetchRequest } from "~/resources/integrations/decks/request"
+import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 
 const mockSettingsService = {} as any
 const mockCardService = {} as any
@@ -15,7 +16,7 @@ describe("NothingFetcher", () => {
     decklistUrl: "https://example.com/nothing"
   } as SpreadsheetRow
 
-  const request = new DeckFetchRequest('e1', row)
+  const request = new DeckFetchRequest('e1', MTG_FORMATS.DUEL, row)
 
   it("should return a failed DeckFetchResponse", async () => {
     const result = await fetcher.run(request)
