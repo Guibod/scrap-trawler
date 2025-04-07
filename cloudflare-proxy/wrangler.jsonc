@@ -29,7 +29,7 @@
 	 */
 	"vars": {
 		"MOXFIELD_SECRET": "dummy-for-dev"
-	}
+	},
 
 	/**
 	 * Note: Use secrets to store sensitive data.
@@ -47,4 +47,14 @@
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
 	 */
 	// "services": [{ "binding": "MY_SERVICE", "service": "my-service" }]
+
+	// ✅ Add this block:
+	"env": {
+		"staging": {
+			"name": "scrap-trawler-proxy-staging",
+			"vars": {
+				// optional: add staging secrets here
+			}
+		}
+	}
 }
