@@ -1,6 +1,9 @@
 import type { CardDbo } from "~/resources/domain/dbos/card.dbo"
 import { ViewMode } from "~/resources/ui/components/deck/enum"
 import { cn } from "@heroui/theme"
+import { useEvent } from "~/resources/ui/providers/event"
+import { useEffect, useState } from "react"
+import { LegalitiesEnum } from "~/resources/domain/enums/legalities.dbo"
 
 interface Props {
   card: CardDbo
@@ -19,7 +22,23 @@ const classNameByViewMode: Record<ViewMode, string> = {
 }
 
 function DeckListCard({ card, quantity, onHover, viewMode }: Props) {
+  const { event } = useEvent()
+  const [isLegal, setIsLegal] = useState(true)
   const isTextual = [ViewMode.TABLE, ViewMode.TABLE_CONDENSED].includes(viewMode)
+
+  useEffect(() => {
+    const legality = card.legalities[event.format]
+    if (!legality) return
+
+    if (legality === LegalitiesEnum.RESTRICTED && quantity > 1) {
+      setIsLegal(false)
+      return
+    }
+    if ([LegalitiesEnum.BANNED, LegalitiesEnum.NOT_LEGAL].includes(legality)) {
+      setIsLegal(false)
+      return
+    }
+  }, [card, quantity, event])
 
   return (
     <li
@@ -34,14 +53,14 @@ function DeckListCard({ card, quantity, onHover, viewMode }: Props) {
         (
           <>
             <span className="text-muted-foreground">{quantity}</span>
-            <span className="ml-2 truncate">{card.name}</span>
+            <span className={cn("ml-2 truncate", !isLegal ? "text-red-500" : "")}>{card.name}</span>
           </>
         ) :
         (
           <img
             src={card.imageMedium}
             alt={card.name}
-            className="w-full h-full mx-auto object-cover rounded-xl"
+            className={cn("w-full h-full mx-auto object-cover rounded-xl", !isLegal ? "border-1 border-red-500" : "")}
           />
         )}
     </li>

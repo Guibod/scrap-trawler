@@ -7,6 +7,10 @@ import { MagicVilleFetcher } from "~/resources/integrations/decks/fetchers/magic
 
 export default class DeckFetcherResolver {
   static resolveFetcherType(row: SpreadsheetRow): DeckFetcher {
+    if (!row) {
+      return NothingFetcher;
+    }
+
     if (row.decklistUrl?.includes("moxfield.com")) {
       return MoxfieldFetcher;
     }
