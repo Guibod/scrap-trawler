@@ -28,14 +28,14 @@ const PlayerDeck: React.FC<PlayerDeckProps> = ({className}) => {
     )
   }
 
-  if (!deck.boards.mainboard) {
+  if (!deck.boards?.mainboard) {
     const player = usePlayer()
     const fetcherClass = DeckFetcherResolver.resolveFetcherType(player.spreadsheetRow)
 
     if (fetcherClass === NothingFetcher) {
       return (
         <Alert color="warning" title={`Missing support for this external source`}>
-          <p>This deck was published on an unsupported website, using this url: <a href={player.spreadsheetRow?.decklistUrl} target="_blank">{player.spreadsheetRow.decklistUrl}</a></p>
+          <p>This deck was published on an unsupported website, using this url: <a href={player.spreadsheetRow?.decklistUrl} target="_blank">{player.spreadsheetRow?.decklistUrl}</a></p>
           <p>Scrap Trawler will likely support this source in a near future, but right now it’s not supported.</p>
         </Alert>
       )

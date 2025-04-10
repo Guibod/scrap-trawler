@@ -1,3 +1,5 @@
+import type { LegalitiesEnum } from "~/resources/domain/enums/legalities.dbo";
+
 export const CARD_ENTITY_VERSION = 1;
 
 export enum CardLanguage {
@@ -197,29 +199,29 @@ export type LeadershipSkills = {
 };
 
 export type Legalities = {
-  alchemy?: string;
-  brawl?: string;
-  commander?: string;
-  duel?: string;
-  explorer?: string;
-  future?: string;
-  gladiator?: string;
-  historic?: string;
-  historicbrawl?: string;
-  legacy?: string;
-  modern?: string;
-  oathbreaker?: string;
-  oldschool?: string;
-  pauper?: string;
-  paupercommander?: string;
-  penny?: string;
-  pioneer?: string;
-  predh?: string;
-  premodern?: string;
-  standard?: string;
-  standardbrawl?: string;
-  timeless?: string;
-  vintage?: string;
+  alchemy?: LegalitiesEnum;
+  brawl?: LegalitiesEnum;
+  commander?: LegalitiesEnum;
+  duel?: LegalitiesEnum;
+  explorer?: LegalitiesEnum;
+  future?: LegalitiesEnum;
+  gladiator?: LegalitiesEnum;
+  historic?: LegalitiesEnum;
+  historicbrawl?: LegalitiesEnum;
+  legacy?: LegalitiesEnum;
+  modern?: LegalitiesEnum;
+  oathbreaker?: LegalitiesEnum;
+  oldschool?: LegalitiesEnum;
+  pauper?: LegalitiesEnum;
+  paupercommander?: LegalitiesEnum;
+  penny?: LegalitiesEnum;
+  pioneer?: LegalitiesEnum;
+  predh?: LegalitiesEnum;
+  premodern?: LegalitiesEnum;
+  standard?: LegalitiesEnum;
+  standardbrawl?: LegalitiesEnum;
+  timeless?: LegalitiesEnum;
+  vintage?: LegalitiesEnum;
 };
 
 export type PurchaseUrls = {
