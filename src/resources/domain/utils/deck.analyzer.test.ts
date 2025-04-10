@@ -32,6 +32,7 @@ const basicDeck: ResolvedDeckDbo = {
     ],
   },
   status: DeckStatus.FETCHED,
+  errors: [],
   legal: true,
   format: MTG_FORMATS.MODERN,
   colors: [MTG_COLORS.GREEN, MTG_COLORS.RED]
@@ -57,6 +58,7 @@ describe("DeckAnalyzer", () => {
     archetype: null,
     face: null,
     status: DeckStatus.FETCHED,
+    errors: [],
     legal: true,
     format: MTG_FORMATS.MODERN,
     colors: [MTG_COLORS.GREEN, MTG_COLORS.RED],

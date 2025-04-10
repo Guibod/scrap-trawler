@@ -7,23 +7,60 @@ import { cn } from "@heroui/theme"
 import { useDeck } from "~/resources/ui/components/deck/provider"
 import { Card, CardBody } from "@heroui/card"
 import DeckLastUpdate from "~/resources/ui/components/deck/last.update"
-import { useEventFetchStatus, useFetchService } from "~/resources/ui/providers/fetcher"
-import { Button } from "@heroui/button"
-import { useEvent, usePlayer } from "~/resources/ui/providers/event"
+import { usePlayer } from "~/resources/ui/providers/event"
+import DeckFetcherResolver from "~/resources/integrations/decks/resolver"
+import { NothingFetcher } from "~/resources/integrations/decks/fetchers/nothing.fetcher"
+import { Alert } from "@heroui/alert"
+import { DeckStatus } from "~/resources/domain/dbos/deck.dbo"
 
 type PlayerDeckProps = {
   className?: string
 }
 
 const PlayerDeck: React.FC<PlayerDeckProps> = ({className}) => {
-  const { event } = useEvent()
   const { deck, hoveredCard, onHoveredCard } = useDeck()
 
   if (!deck) {
     return (
-      <div className="col-span-9 space-y-6 mt-4">
-        <p>No deck defined for this user, did you fetch the decks ?</p>
-      </div>
+      <Alert color="danger" title={`No Deck data`}>
+        <p>This is a rather strange behavior, you should not view this. Please file a bug report.</p>
+      </Alert>
+    )
+  }
+
+  if (!deck.boards.mainboard) {
+    const player = usePlayer()
+    const fetcherClass = DeckFetcherResolver.resolveFetcherType(player.spreadsheetRow)
+
+    if (fetcherClass === NothingFetcher) {
+      return (
+        <Alert color="warning" title={`Missing support for this external source`}>
+          <p>This deck was published on an unsupported website, using this url: <a href={player.spreadsheetRow?.decklistUrl} target="_blank">{player.spreadsheetRow.decklistUrl}</a></p>
+          <p>Scrap Trawler will likely support this source in a near future, but right now it’s not supported.</p>
+        </Alert>
+      )
+    }
+
+    if (deck.status === DeckStatus.FAILED) {
+      return (
+        <Alert color="danger" title={`Failed to recover the deck`}>
+          <p>The deck was not fetched successfully. It’s likely that the deck is not published anymore.</p>
+          <p>This deck is <a href={player.spreadsheetRow?.decklistUrl} target="_blank">{player.spreadsheetRow?.decklistUrl}</a></p>
+          <p>The logged error(s) were:</p>
+          <ul className="list-disc pl-5">
+            {deck.errors?.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
+        </Alert>
+      )
+    }
+
+    return (
+      <Alert color="primary" title={`No deck found`}>
+        <p>No deck defined for this user, did you recover a card database and fetched the decks ?</p>
+        <p>This deck is <a href={player.spreadsheetRow?.decklistUrl} target="_blank">{player.spreadsheetRow?.decklistUrl}</a></p>
+      </Alert>
     )
   }
 
@@ -47,8 +84,6 @@ const PlayerDeck: React.FC<PlayerDeckProps> = ({className}) => {
       </Card>
 
       <div className="col-span-9 space-y-6 mt-4">
-
-
         <DeckList className="space-y-4" onHoveredCard={onHoveredCard}/>
 
         <DeckStatistics onHoveredCard={onHoveredCard} />

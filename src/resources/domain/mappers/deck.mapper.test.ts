@@ -36,6 +36,7 @@ describe("DeckMapper", () => {
       source: DeckSource.UNKNOWN,
       spreadsheetRowId: "B23",
       status: DeckStatus.FETCHED,
+      errors: [],
       boards: {
         mainboard: [{ name: "Snapcaster Mage", quantity: 2 }],
         sideboard: [{ name: "Negate", quantity: 1 }],
@@ -69,6 +70,7 @@ describe("DeckMapper", () => {
       source: DeckSource.UNKNOWN,
       spreadsheetRowId: "B23",
       status: DeckStatus.FETCHED,
+      errors: [],
       boards: {
         mainboard: [{ name: "Fake Card", quantity: 1 }],
       }
@@ -76,5 +78,28 @@ describe("DeckMapper", () => {
 
     expect(mapped.archetype).toBe("Gruul Aggro")
     expect(mapped.boards.mainboard).toEqual([])
+  })
+
+  it("Will return a failed deck object if boards are missing", async () => {
+    mockCardService.searchCard.mockResolvedValue(null)
+
+    const mapper = new DeckMapper(mockCardService)
+    const mapped = await mapper.toResolvedDeck({
+      archetype: "Gruul Aggro",
+      colors: [MTG_COLORS.GREEN, MTG_COLORS.RED],
+      face: "Foo Bar, of the Baz",
+      format: MTG_FORMATS.MODERN,
+      id: "foo",
+      lastUpdated: undefined,
+      legal: true,
+      source: DeckSource.UNKNOWN,
+      spreadsheetRowId: "B23",
+      status: DeckStatus.FETCHED,
+      errors: [],
+      boards: null
+    })
+
+    expect(mapped.archetype).toBe("Gruul Aggro")
+    expect(mapped.boards.mainboard).toBeUndefined()
   })
 })
