@@ -10,8 +10,8 @@ describe("EventModel null safety", () => {
 
   beforeEach(() => {
     event = EventBuilder.anEvent
-      .withPlayers(10)
-      .withDecks(10)
+      .withPlayers(11)
+      .withDecks(11)
       .player()
       .partial({ id: "abc", firstName: "Adam", lastName: "Savage" })
       .withOverrides({ firstName: "Alan", displayName: null, lastName: null, archetype: null, decklistUrl: null, decklistTxt: null })
