@@ -32,6 +32,7 @@ export type DeckDbo = {
   archetype: string | null,
   face: CardName | null,
   status: DeckStatus;
+  errors: string[] | null
   legal: boolean;
   format: MTG_FORMATS;
   colors: MTG_COLORS[]

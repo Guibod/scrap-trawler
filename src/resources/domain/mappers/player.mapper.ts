@@ -23,6 +23,7 @@ export type PlayerProfile = {
   tableNumber: number | null // assigned table number
   mapMode: PairingMode
   spreadsheetRowId: SpreadsheetRowId
+  spreadsheetRow: SpreadsheetRow | null
   decklistUrl: string | null
   decklistTxt: string | null
   deck: DeckDbo | null
@@ -42,33 +43,19 @@ type PlayerMatch = {
 
 export class PlayerMapper {
   static toProfile(event: EventModel, playerId: WotcId): PlayerProfile {
-    const player = event.players[playerId]
-    if (!player) {
-      throw new Error(`Player ${playerId} not found in event`)
-    }
-
-    const rowId = event.mapping?.[playerId]?.rowId
-    const row : SpreadsheetRow | null = event.spreadsheet?.data?.find((row) => row.id == rowId) ?? null
-
-    const deck = Object.values(event.decks ?? {}).findLast(
-      (deck) => deck.spreadsheetRowId === rowId
-    )
-
-    let avatar = `https://api.dicebear.com/7.x/identicon/svg?seed=${playerId}`
-    if (deck?.face) {
-      const encodedName = encodeURIComponent(deck.face);
-      avatar = `https://api.scryfall.com/cards/named?exact=${encodedName}&format=image&version=art_crop`
-    }
-
+    const player = this.getPlayerOrThrow(event, playerId)
+    const rowId = event.mapping?.[playerId]?.rowId ?? null
+    const row = this.findSpreadsheetRow(event, rowId)
+    const deck = this.findPlayerDeck(event, rowId)
+    const avatar = this.resolveAvatar(deck?.face, playerId)
     const matches = PlayerMapper.getPlayerMatches(event, player)
-    const standings: Record<string, StandingDbo> = Object.fromEntries(Object.values(Object.entries(event.rounds).map(([roundId, round]) => {
-      return [roundId, round.standings[player.teamId] ?? null]
-    })))
+    const standings = this.buildStandings(event, player)
 
     return {
       ...player,
       avatar,
       spreadsheetRowId: rowId,
+      spreadsheetRow: row,
       isOverride: player.overrides !== null,
       displayName: player.overrides?.displayName ?? player.displayName,
       firstName: player.overrides?.firstName ?? row?.firstName ?? player.firstName,
@@ -78,7 +65,7 @@ export class PlayerMapper {
       decklistTxt: player.overrides?.decklistTxt ?? row?.decklistTxt,
       mapMode: event.mapping?.[playerId]?.mode ?? null,
       extra: row?.player ?? null,
-      deck: deck ?? null,
+      deck,
       matches: matches ?? [],
       standings,
     }
@@ -116,5 +103,34 @@ export class PlayerMapper {
     }
 
     return matches
+  }
+
+  private static getPlayerOrThrow(event: EventModel, playerId: WotcId): PlayerDbo {
+    const player = event.players[playerId]
+    if (!player) throw new Error(`Player ${playerId} not found in event`)
+    return player
+  }
+
+  private static findSpreadsheetRow(event: EventModel, rowId?: string | null): SpreadsheetRow | null {
+    return rowId ? event.spreadsheet?.data?.find(row => row.id === rowId) ?? null : null
+  }
+
+  private static findPlayerDeck(event: EventModel, rowId?: string | null): DeckDbo | null {
+    return rowId ? Object.values(event.decks ?? {}).findLast(deck => deck.spreadsheetRowId === rowId) ?? null : null
+  }
+
+  private static resolveAvatar(face: string | undefined, playerId: WotcId): string {
+    return face
+      ? `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(face)}&format=image&version=art_crop`
+      : `https://api.dicebear.com/7.x/identicon/svg?seed=${playerId}`
+  }
+
+  private static buildStandings(event: EventModel, player: PlayerDbo): Record<string, StandingDbo> {
+    return Object.fromEntries(
+      Object.entries(event.rounds).map(([roundId, round]) => [
+        roundId,
+        round.standings[player.teamId] ?? null,
+      ])
+    )
   }
 }

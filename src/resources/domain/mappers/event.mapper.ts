@@ -43,6 +43,7 @@ export default class EventMapper {
       mapping: entity.mapping,
       decks: Object.fromEntries((entity.decks || []).map(deck => [deck.id, {
         ...deck,
+        errors: deck.errors ?? null,
         lastUpdated: entity.lastUpdated ? new Date(deck.lastUpdated) : null,
       }])),
       spreadsheet: entity.spreadsheet ? {

@@ -48,11 +48,11 @@ export class DeckMapper {
         : undefined
 
     return {
-      mainboard: await resolveBoard(boards.mainboard),
-      sideboard: await resolveBoard(boards.sideboard),
-      commanders: await resolveBoard(boards.commanders),
-      companions: await resolveBoard(boards.companions),
-      signatureSpells: await resolveBoard(boards.signatureSpells),
+      mainboard: await resolveBoard(boards?.mainboard),
+      sideboard: await resolveBoard(boards?.sideboard),
+      commanders: await resolveBoard(boards?.commanders),
+      companions: await resolveBoard(boards?.companions),
+      signatureSpells: await resolveBoard(boards?.signatureSpells),
     }
   }
 

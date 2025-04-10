@@ -182,13 +182,15 @@ export default class DeckFetchService {
         taskQueueItem.hasFailure = true
         status = DeckStatus.FAILED
       }
+
       await this.eventService.addDeckToEvent(
         request.eventId,
         {
           ...response.deck,
           id,
           spreadsheetRowId: request.row.id,
-          status
+          status,
+          errors: response.errorMessage ? [response.errorMessage] : [],
         },
         response.rawData
       );
