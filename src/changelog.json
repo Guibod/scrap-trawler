@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.16.0",
+    "timestamp": 1744355810,
+    "changes": [
+      "Feature — Added magicville fetcher support",
+      "Fix — moved the fetch button for deck outside of the hidden section in player page",
+      "Feature — added proxy capability to support magic-ville",
+      "Feature — a deck that failed to be fetch has a small description of the issue",
+      "Feature — illegal cards should be highlighted in red for eventlink supported formats (not DUEL)"
+    ]
+  },
+  {
     "version": "0.15.0",
     "timestamp": 1743897336,
     "changes": [
