@@ -41,7 +41,8 @@ describe("SpreadsheetDataFactory", () => {
       }
     ],
     filters: [],
-    duplicateStrategy: DUPLICATE_STRATEGY.NONE
+    duplicateStrategy: DUPLICATE_STRATEGY.NONE,
+    format: null
   }
 
   const rawData: SpreadsheetRawData = [

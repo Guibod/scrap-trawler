@@ -7,6 +7,7 @@ import type {
 import { COLUMN_TYPE, COLUMN_TYPE_META, FILTER_OPERATOR } from "~/resources/domain/enums/spreadsheet.dbo"
 import { DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo";
 import { hashStringSHA1 } from "~/resources/utils/crypto"
+import { capitalize } from "~/resources/utils/text"
 
 export class SpreadsheetDataFactory {
   constructor(
@@ -107,18 +108,10 @@ export class SpreadsheetDataFactory {
     let normalized = input.trim().replace(/\s+/g, ' ');
 
     if (normalizeCase) {
-      normalized = SpreadsheetDataFactory.capitalizeFirstLetters(normalized);
+      normalized = capitalize(normalized);
     }
 
     return normalized;
   };
 
-  static capitalizeFirstLetters (input: string): string {
-    if (!input) return '';
-
-    return input
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  };
 }

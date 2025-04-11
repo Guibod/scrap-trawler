@@ -5,6 +5,7 @@ import type {
   SpreadsheetMetadata, SpreadsheetRow
 } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { COLUMN_TYPE, DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo"
+import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 
 export default class SpreadsheetBuilder {
   private metadata: Partial<SpreadsheetMetadata> = {};
@@ -34,6 +35,11 @@ export default class SpreadsheetBuilder {
 
   withDuplicateStrategy(strategy: DUPLICATE_STRATEGY) {
     this.metadata.duplicateStrategy = strategy;
+    return this;
+  }
+
+  withFormat(format: MTG_FORMATS) {
+    this.metadata.format = format;
     return this;
   }
 
@@ -86,6 +92,7 @@ export default class SpreadsheetBuilder {
         columns: this.metadata.columns ?? this.generateFakeColumns(this.dimensions.x),
         filters: this.metadata.filters ?? [],
         duplicateStrategy: this.metadata.duplicateStrategy ?? DUPLICATE_STRATEGY.NONE,
+        format: this.metadata.format ?? null,
         finalized: this.metadata.finalized ?? false,
       },
       data: this.data.length ? this.data : this.generateFakeRows(this.dimensions.y),

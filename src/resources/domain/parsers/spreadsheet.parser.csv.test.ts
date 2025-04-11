@@ -10,6 +10,7 @@ describe("CsvSpreadsheetParser", () => {
       columns: [],
       filters: [],
       finalized: false,
+      format: null,
       duplicateStrategy: DUPLICATE_STRATEGY.NONE
     },
     new Set(["Alice", "Bob", "Charles", "Didier"]),
