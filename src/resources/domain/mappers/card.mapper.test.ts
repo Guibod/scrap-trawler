@@ -18,7 +18,7 @@ describe("CardMapper.fromAtomicArray", () => {
         subtypes: ["Elf", "Shaman"],
         legalities: { commander: "Legal", modern: "Banned", vintage: "Legal" },
         identifiers: { scryfallOracleId: "abc123" },
-      } as CardAtomic,
+      } as unknown as CardAtomic,
     ]
 
     const result = CardMapper.fromAtomicArray(input)
@@ -57,7 +57,7 @@ describe("CardMapper.fromAtomicArray", () => {
         legalities: { commander: "Legal" },
         identifiers: { scryfallOracleId: "dfc-test-id" },
       },
-    ] as CardAtomic[]
+    ] as unknown as CardAtomic[]
 
     const result = CardMapper.fromAtomicArray(input)
     expect(result.name).toBe("Sundering Eruption // Volcanic Fissure")
@@ -101,7 +101,7 @@ describe("CardMapper.fromAtomicArray", () => {
         legalities: { commander: "Legal" },
         identifiers: { scryfallOracleId: "split-test-id" },
       },
-    ] as CardAtomic[]
+    ] as unknown as CardAtomic[]
 
     const result = CardMapper.fromAtomicArray(input);
 
@@ -148,7 +148,7 @@ describe("CardMapper.fromAtomicArray", () => {
         legalities: { commander: "Legal" },
         identifiers: { scryfallOracleId: "flip-test-id" },
       },
-    ] as CardAtomic[];
+    ] as unknown as CardAtomic[];
 
     const result = CardMapper.fromAtomicArray(input);
 
@@ -195,7 +195,7 @@ describe("CardMapper.fromAtomicArray", () => {
         legalities: { commander: "Legal" },
         identifiers: { scryfallOracleId: "transform-test-id" },
       },
-    ] as CardAtomic[];
+    ] as unknown as CardAtomic[];
 
     const result = CardMapper.fromAtomicArray(input);
 
@@ -224,7 +224,7 @@ describe("CardMapper.fromAtomicArray", () => {
         legalities: { commander: "Legal" },
         identifiers: { scryfallOracleId: "meld-test-id" },
       }
-    ] as CardAtomic[];
+    ] as unknown as CardAtomic[];
 
     const result = CardMapper.fromAtomicArray(input);
 
