@@ -1,7 +1,7 @@
 {
   "name": "scrap-trawler",
   "displayName": "Scrap Trawler",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "A browser extension for extracting event data from EventLink tournaments.",
   "author": "Guillaume Boddaert",
   "license": "MIT",
