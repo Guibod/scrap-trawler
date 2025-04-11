@@ -2,6 +2,28 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.16.0 - 2025-04-11
+#### Bug Fixes
+- moved the fetch button for deck outside of the hidden section in player page - (2fcf82f) - Guillaume Boddaert
+#### Features
+- illegal cards should be highlighted in red for eventlink supported formats (not DUEL) - (8286099) - Guillaume Boddaert
+- a deck that failed to be fetch has a small description of the issue - (53656ea) - Guillaume Boddaert
+- added proxy capability to support magic-ville - (a79a881) - Guillaume Boddaert
+- Added magicville fetcher support - (7bc8dbd) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(release)** sync package.json version - (1802f6a) - Cog Bot
+- **(release)** update changelog.json - (149f082) - Cog Bot
+- resolved some minor typing issue - (0842856) - Guillaume Boddaert
+- centered player match items properly if name is too large - (24f10e3) - Guillaume Boddaert
+- silenced improper key for player standings item in react - (09d0d62) - Guillaume Boddaert
+#### Refactoring
+- fetch request now defines the requested format - (8d44c6d) - Guillaume Boddaert
+#### Tests
+- fix a erratic test where bye is causing trouble - (18e55c1) - Guillaume Boddaert
+- corrected a typing issue in player selector test - (90482ea) - Guillaume Boddaert
+
+- - -
+
 ## 0.15.0 - 2025-04-05
 #### Bug Fixes
 - alternative layout cards (meld, mdfc, dfc, flip) are now properly imported - (6e89705) - Guillaume Boddaert
