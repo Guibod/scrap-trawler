@@ -5,6 +5,7 @@ import PlayerSelector from "~/resources/ui/components/player/selector"
 import userEvent from "@testing-library/user-event"
 import type { PlayerProfile } from "~/resources/domain/mappers/player.mapper"
 import { PlayerStatusDbo } from "~/resources/domain/enums/player.status.dbo"
+import type { SpreadsheetRow } from "~/resources/domain/dbos/spreadsheet.dbo"
 
 // Mock usePlayers
 vi.mock("~/resources/ui/providers/event", () => ({
@@ -30,6 +31,7 @@ vi.mock("~/resources/ui/providers/event", () => ({
     standings: {  },
     extra: undefined,
     spreadsheetRowId: "row-123",
+    spreadsheetRow: {} as SpreadsheetRow,
     decklistTxt: "foo",
     decklistUrl: "https://example.com",
   })),
