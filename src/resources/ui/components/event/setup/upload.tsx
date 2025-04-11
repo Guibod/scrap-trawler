@@ -23,7 +23,7 @@ const SetupUpload = ({...props}: SetupUploadProps) => {
         <div className="grid-cols-2 grid w-10/12 gap-5 mx-auto">
           <div>
             <h3 className="text-medium mt-3">Event Setup Guide</h3>
-            <p className="mt-1">Welcome to the Scrap-Trawler Setup Wizard! This process will help you prepare your tournament data by importing player lists, decklists, and other necessary information. Follow the steps to upload your spreadsheet, map columns, handle duplicates, and finalize the setup before proceeding to pair players with their decklists.</p>
+            <p className="text-medium mt-1">Welcome to the Scrap-Trawler Setup Wizard! This process will help you prepare your tournament data by importing player lists, decklists, and other necessary information. Follow the steps to upload your spreadsheet, map columns, handle duplicates, and finalize the setup before proceeding to pair players with their decklists.</p>
           </div>
 
           <div>

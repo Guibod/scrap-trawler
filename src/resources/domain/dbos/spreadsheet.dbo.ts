@@ -1,4 +1,5 @@
 import { type COLUMN_TYPE, DUPLICATE_STRATEGY, FILTER_OPERATOR } from "~/resources/domain/enums/spreadsheet.dbo"
+import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 
 export interface SpreadsheetColumnMetaData {
   name: string
@@ -19,6 +20,7 @@ export interface SpreadsheetMetadata {
   columns: SpreadsheetColumnMetaData[];
   filters: SpreadsheetFilter[];
   duplicateStrategy: DUPLICATE_STRATEGY;
+  format: MTG_FORMATS | null
   finalized: boolean
 }
 

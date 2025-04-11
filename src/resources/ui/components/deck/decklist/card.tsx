@@ -27,7 +27,7 @@ function DeckListCard({ card, quantity, onHover, viewMode }: Props) {
   const isTextual = [ViewMode.TABLE, ViewMode.TABLE_CONDENSED].includes(viewMode)
 
   useEffect(() => {
-    const legality = card.legalities[event.format]
+    const legality = card.legalities[event.spreadsheet?.meta?.format ?? event.format]
     if (!legality) return
 
     if (legality === LegalitiesEnum.RESTRICTED && quantity > 1) {

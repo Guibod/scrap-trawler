@@ -3,14 +3,11 @@ import type { EventModel } from "~/resources/domain/models/event.model";
 import { Spinner } from "@heroui/react"
 import lostImage from "data-base64:~/../assets/lost.png"
 import { PairStatus, ScrapeStatus } from "~/resources/domain/enums/status.dbo"
-import { getLogger } from "~/resources/logging/logger"
 import type { OverrideDbo } from "~/resources/domain/dbos/player.dbo"
 import { useParams } from "react-router-dom"
 import EventService from "~/resources/domain/services/event.service"
 import { PlayerMapper, type PlayerProfile } from "~/resources/domain/mappers/player.mapper"
 import { EventBus } from "~/resources/utils/event-bus"
-
-const logger = getLogger("event-provider")
 
 // Define context type
 export class EventContextType {
