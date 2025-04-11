@@ -18,7 +18,7 @@ describe("SetupUpload", () => {
   });
 
   it("renders upload UI", () => {
-    (useEventSetup as any).mockReturnValue({ handleFileUpload, status: { hasData: false } });
+    (useEventSetup as any).mockReturnValue({ handleFileUpload, status: { hasData: false }, event: { spreadsheet: null }});
 
     render(<SetupUpload />);
 
@@ -28,7 +28,7 @@ describe("SetupUpload", () => {
   });
 
   it("calls handleFileUpload on valid form submit, without auto-detection", async () => {
-    (useEventSetup as any).mockReturnValue({ handleFileUpload, status: { hasData: false } });
+    (useEventSetup as any).mockReturnValue({ handleFileUpload, status: { hasData: false },  event: { spreadsheet: null } });
 
     render(<SetupUpload />);
 
@@ -60,7 +60,7 @@ describe("SetupUpload", () => {
 
 
   it("calls handleFileUpload on valid form submit, with auto-detection", async () => {
-    (useEventSetup as any).mockReturnValue({ handleFileUpload, status: { hasData: false } });
+    (useEventSetup as any).mockReturnValue({ handleFileUpload, status: { hasData: false },  event: { spreadsheet: null } });
 
     render(<SetupUpload />);
 
@@ -82,7 +82,7 @@ describe("SetupUpload", () => {
   });
 
   it("shows success alert when status.hasData is true", () => {
-    (useEventSetup as any).mockReturnValue({ handleFileUpload, status: { hasData: true } });
+    (useEventSetup as any).mockReturnValue({ handleFileUpload, status: { hasData: true },  event: { spreadsheet: null } });
 
     render(<SetupUpload />);
 
