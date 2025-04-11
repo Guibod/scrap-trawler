@@ -14,6 +14,7 @@ describe("SetupStatus", () => {
       filters: [],
       duplicateStrategy: DUPLICATE_STRATEGY.NONE,
       finalized: false,
+      format: null,
       columns: [
         { type: COLUMN_TYPE.UNIQUE_ID, index: 0, name: "ID", originalName: "id but longer" },
         { type: COLUMN_TYPE.FIRST_NAME, index: 1, name: "Name", originalName: "Name but longer" },

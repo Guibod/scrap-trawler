@@ -35,14 +35,14 @@ export class DeckFetchRequest {
       .map(entry => {
         const row = event.spreadsheet.data.find(row => row.id === entry.rowId)
         if (!row) return null
-        return new DeckFetchRequest(event.id, event.format, row)
+        return new DeckFetchRequest(event.id, event.spreadsheet?.meta?.format ?? event.format, row)
       })
       .filter(request => !!request)
   }
 
   static fromRows(event: EventModel, rows: SpreadsheetRow[]) {
     return rows
-      .map(row => new DeckFetchRequest(event.id, event.format, row))
+      .map(row => new DeckFetchRequest(event.id, event.spreadsheet?.meta?.format ?? event.format, row))
   }
 }
 
