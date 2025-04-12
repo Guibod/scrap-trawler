@@ -156,7 +156,10 @@ export const EventSetupProvider = ({ children, onQuitHandler }: { children: Reac
       if (!evt.target?.result) return;
 
       const updatedMeta = { ...spreadsheetMeta, source: file.name };
-      const parser = SpreadsheetParserFactory.create(updatedMeta, event.players, autodetect);
+      const parser = SpreadsheetParserFactory.create(updatedMeta)
+      if (autodetect) {
+        parser.enableAutoDetectColumns(event)
+      }
 
       try {
         const { columns, rows } = await parser.parse(evt.target.result);

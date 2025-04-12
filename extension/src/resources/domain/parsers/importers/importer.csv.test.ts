@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest"
-import { CSVParser } from "~/resources/domain/parsers/spreadsheet.parser.csv"
 import { DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo"
+import type { EventModel } from "~/resources/domain/models/event.model"
+import { ImporterCsv } from "~/resources/domain/parsers/importers/importer.csv"
 
 describe("CsvSpreadsheetParser", () => {
-  const parser = new CSVParser(
+  const parser = new ImporterCsv(
     {
       source: 'foo.csv',
       tabName: null,
@@ -12,11 +13,16 @@ describe("CsvSpreadsheetParser", () => {
       finalized: false,
       format: null,
       duplicateStrategy: DUPLICATE_STRATEGY.NONE
-    },
-    new Set(["Alice", "Bob", "Charles", "Didier"]),
-    new Set(["Smith", "Jones"]),
-    true
+    }
   );
+  parser.enableAutoDetectColumns({
+    players: {
+      a: {firstName: "Alice", lastName: "Smith"},
+      b: {firstName: "Bob", lastName: "Smith"},
+      c: {firstName: "Charles", lastName: "Jones"},
+      d: {firstName: "Didier", lastName: "Smith"},
+    }
+  } as unknown as EventModel)
 
   it("parses a simple CSV with headers", async () => {
     const csvContent = `f-i-r-s-t-n-a-m-e,deck
