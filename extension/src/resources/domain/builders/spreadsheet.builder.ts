@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import type {
   SpreadsheetColumnMetaData,
   SpreadsheetData,
-  SpreadsheetMetadata, SpreadsheetRow
+  SpreadsheetMetadata, SpreadsheetRow, SpreadsheetSourceType
 } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { COLUMN_TYPE, DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo"
 import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
@@ -15,6 +15,11 @@ export default class SpreadsheetBuilder {
 
   withSource(source: string) {
     this.metadata.source = source;
+    return this;
+  }
+
+  withSourceType(sourceType: SpreadsheetSourceType) {
+    this.metadata.sourceType = sourceType;
     return this;
   }
 
@@ -88,6 +93,7 @@ export default class SpreadsheetBuilder {
     return {
       meta: {
         source: this.metadata.source ?? "Unknown",
+        sourceType: this.metadata.sourceType ?? "file",
         tabName: this.metadata.tabName ?? null,
         columns: this.metadata.columns ?? this.generateFakeColumns(this.dimensions.x),
         filters: this.metadata.filters ?? [],

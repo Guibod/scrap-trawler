@@ -2,11 +2,13 @@ import { describe, expect, it } from "vitest"
 import { DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo"
 import type { EventModel } from "~/resources/domain/models/event.model"
 import { ImporterCsv } from "~/resources/domain/parsers/importers/importer.csv"
+import type { SpreadsheetSourceType } from "~/resources/domain/dbos/spreadsheet.dbo"
 
 describe("CsvSpreadsheetParser", () => {
   const parser = new ImporterCsv(
     {
       source: 'foo.csv',
+      sourceType: 'file',
       tabName: null,
       columns: [],
       filters: [],

@@ -14,7 +14,10 @@ export type SpreadsheetFilter = {
   values: string[];
 };
 
+export type SpreadsheetSourceType = "file" | "url"
+
 export interface SpreadsheetMetadata {
+  sourceType: SpreadsheetSourceType
   source: string;
   tabName: string | null;
   columns: SpreadsheetColumnMetaData[];

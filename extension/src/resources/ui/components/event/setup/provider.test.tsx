@@ -51,7 +51,7 @@ vi.mock("~/resources/ui/components/event/setup/status", () => ({
 
 vi.mock("~/resources/domain/parsers/spreadsheet.parser.factory", () => ({
   SpreadsheetParserFactory: {
-    create: vi.fn(() => ({
+    getImporterFor: vi.fn(() => ({
       parse: vi.fn(() => Promise.resolve({
         columns: [{ index: 0, type: "PLAYER_NAME" }],
         rows: [{ 0: "Alice" }, { 0: "Bob" }]
@@ -97,7 +97,7 @@ describe("EventSetupProvider", () => {
   })
 
   it("handles file upload and updates data", async () => {
-    let contextValue
+    let contextValue: EventSetupContextType
     const Consumer = () => {
       contextValue = useEventSetup()
       return <span>upload test</span>
@@ -105,11 +105,13 @@ describe("EventSetupProvider", () => {
     renderWithProvider(<Consumer />)
     await screen.findByText("upload test")
 
-    const file = new File(["sample data"], "sample.csv", { type: "text/csv" })
-    contextValue.handleFileUpload(file, true)
+    const file = new File(["sample column\nAlice\nBob"], "sample.csv", { type: "text/csv" })
+    await act(async () => {
+      await contextValue.handleSpreadsheetImport(file, true)
+    })
 
     await waitFor(() => {
-      expect(contextValue.spreadsheetData).toEqual([{ 0: "Alice" }, { 0: "Bob" }])
+      expect(contextValue.spreadsheetData).toEqual([["Alice"] ,  ["Bob"]])
     })
   })
 

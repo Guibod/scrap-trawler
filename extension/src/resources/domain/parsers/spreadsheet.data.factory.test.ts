@@ -6,6 +6,7 @@ import { SpreadsheetDataFactory } from "~/resources/domain/parsers/spreadsheet.d
 describe("SpreadsheetDataFactory", () => {
   const baseMeta: SpreadsheetMetadata = {
     source: "test",
+    sourceType: "file",
     tabName: "test",
     finalized: false,
     columns: [

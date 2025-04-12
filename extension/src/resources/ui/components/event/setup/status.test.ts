@@ -10,6 +10,7 @@ describe("SetupStatus", () => {
   beforeEach(() => {
     meta = {
       source: "Google Sheets",
+      sourceType: "url",
       tabName: "Sheet1",
       filters: [],
       duplicateStrategy: DUPLICATE_STRATEGY.NONE,

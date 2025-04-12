@@ -1,18 +1,17 @@
 import { Card, CardBody } from "@heroui/card"
-import { Input } from "@heroui/input"
 import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
 import React, { useState } from "react"
-import { Checkbox, Form, Select, SelectItem } from "@heroui/react"
-import { Button } from "@heroui/button"
+import { Select, SelectItem } from "@heroui/react"
 import { Alert } from "@heroui/alert"
 import type { UseCardProps } from "@heroui/card/dist/use-card"
 import { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
 import { capitalize } from "~/resources/utils/text"
+import { SpreadsheetImportForm } from "~/resources/ui/components/event/setup/import"
 
 interface SetupUploadProps extends UseCardProps {}
 const OTHER = 'other'
 const SetupUpload = ({...props}: SetupUploadProps) => {
-  const { event, handleFileUpload, handleFormat, status } = useEventSetup();
+  const { event, handleFormat, status } = useEventSetup();
   const [format, setFormat] = useState(event.spreadsheet?.meta?.format ?? event.format ?? OTHER);
   const formatOptions: {key: string, label: string}[] = Object.entries(MTG_FORMATS).map(([key, value]) => ({
     key: value,
@@ -66,24 +65,7 @@ const SetupUpload = ({...props}: SetupUploadProps) => {
             <p className="mt-1">Make sure your file contains clearly labeled columns for player names, decklists, and any other required data. The system will guide you through mapping your columns to ensure proper integration.</p>
           </div>
 
-          <Form className="flex gap-4 w-full flex-col" aria-label="upload-form" onSubmit={(e) => {
-            e.preventDefault();
-            const formData = new FormData(e.currentTarget);
-            const file = formData.get("file");
-
-            if (file instanceof File) {
-              const autodetect = formData.get("autodetect") === "1"; // Ensure boolean conversion
-              handleFileUpload(file, autodetect);
-            } else {
-              console.error("Invalid file input");
-            }
-          }}>
-            <Input aria-label="file-upload" name="file" isRequired type="file" className="w-full" />
-            <Checkbox aria-label="auto-detect" name="autodetect" size="sm" value="1" defaultSelected>Auto-detect columns on upload</Checkbox>
-            <Button type="submit" color={"primary"} className={"mt-4 w-full"} >
-              Submit
-            </Button>
-          </Form>
+          <SpreadsheetImportForm className="w-full" />
         </div>
       </CardBody>
     </Card>

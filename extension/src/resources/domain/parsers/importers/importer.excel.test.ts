@@ -50,7 +50,7 @@ describe("ImporterExcel", () => {
       ["Guibod", "999", "", "", "", ""],
       ["", "", "", "", "", ""],
     ]))
-    expect(result.columns.map(c => c.name)).toEqual(["Name", "Age", "", "Extra"])
+    expect(result.columns.map(c => c.name)).toEqual(["Name", "Age", "Ignored #3", "Extra"])
     expect(result.rows).toEqual([
       ["", "", "", ""],
       ["Guibod", "999", "", ""]

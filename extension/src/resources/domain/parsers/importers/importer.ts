@@ -8,6 +8,18 @@ import { SpreadsheetColumnDetector } from "~/resources/domain/parsers/column.det
 import { getLogger } from "~/resources/logging/logger"
 import type { EventModel } from "~/resources/domain/models/event.model"
 
+const fallbackColumnName: Record<COLUMN_TYPE, (index: number) => string> = {
+  archetype: () => "Archetype",
+  decklistTxt: () => "Decklist as Text",
+  decklistUrl: () => "Decklist URL",
+  filter: (index) => `Filter #${index + 1}`,
+  firstName: () => "First Name",
+  ignored: (index) => `Ignored #${index + 1}`,
+  lastName: () => "Last Name",
+  player: (index) => `Player data #${index + 1}`,
+  uniqueId: () => "Unique ID",
+}
+
 export type ImportedData = { columns: SpreadsheetColumnMetaData[]; rows: SpreadsheetRawData }
 
 export interface SyncableImporter {
@@ -65,12 +77,13 @@ export abstract class Importer {
 
     return columns.map((name, index) => {
       const prevValues = this.metadata.columns.find((column) => column.originalName === name);
+      const type = columnTypes.get(index) || COLUMN_TYPE.IGNORED_DATA
 
       return {
-        name: prevValues?.name || name,
+        name: prevValues?.name || name.trim() || fallbackColumnName[type](index),
         originalName: name,
         index,
-        type: columnTypes.get(index) || COLUMN_TYPE.IGNORED_DATA,
+        type,
       };
     });
   }
@@ -84,7 +97,12 @@ export abstract class Importer {
     let lastNonEmptyIndex = -1
 
     for (let i = 0; i < rows.length; i++) {
-      if (rows[i].some(cell => cell.trim() !== "")) {
+      if (rows[i].some(cell => {
+        if (typeof cell === "string") {
+          return cell.trim() !== ""
+        }
+        return cell !== null && cell !== undefined
+      })) {
         lastNonEmptyIndex = i
       }
     }
