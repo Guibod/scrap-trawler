@@ -1,5 +1,12 @@
 [
   {
+    "version": "0.17.0",
+    "timestamp": 1744493886,
+    "changes": [
+      "Feature — setup upload screen allow to override the event format"
+    ]
+  },
+  {
     "version": "0.16.0",
     "timestamp": 1744355810,
     "changes": [
