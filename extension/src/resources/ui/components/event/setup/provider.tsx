@@ -6,7 +6,6 @@ import React, {
   useCallback
 } from "react"
 import { useEvent } from "~/resources/ui/providers/event"
-import { SpreadsheetParserFactory } from "~/resources/domain/parsers/spreadsheet.parser.factory"
 import type {
   SpreadsheetColumnMetaData,
   SpreadsheetFilter,
@@ -21,13 +20,15 @@ import type { EventModel } from "~/resources/domain/models/event.model"
 import type { MappingDbo } from "~/resources/domain/dbos/mapping.dbo"
 import { useFetchService } from "~/resources/ui/providers/fetcher"
 import type { MTG_FORMATS } from "~/resources/domain/enums/mtg/formats.dbo"
+import { ImporterFactory } from "~/resources/domain/parsers/importers/importer.factory"
+import type { ImportedData } from "~/resources/domain/parsers/importers/importer"
 
 export interface EventSetupContextType {
   event: EventModel | null;
   spreadsheetMeta: SpreadsheetMetadata;
   spreadsheetData: SpreadsheetRawData | null;
   handleColumnMapping: (column: SpreadsheetColumnMetaData) => void;
-  handleFileUpload: (file: File, autodetect: boolean) => void;
+  handleSpreadsheetImport: (source, autodetect: boolean) => Promise<void>;
   handleStrategy: (strategy: DUPLICATE_STRATEGY) => void;
   handleFormat: (format: MTG_FORMATS) => void;
   handleFilters: (filters: SpreadsheetFilter[]) => void;
@@ -38,6 +39,7 @@ export interface EventSetupContextType {
 
 const EMPTY_SPREADSHEET_META: SpreadsheetMetadata = {
   source: "",
+  sourceType: null,
   tabName: null,
   columns: [],
   filters: [],
@@ -147,55 +149,69 @@ export const EventSetupProvider = ({ children, onQuitHandler }: { children: Reac
       .then(() => onQuitHandler());
   }, [event, fetchEvent, onQuitHandler, spreadsheetMeta, status, updateEvent]);
 
-  const handleFileUpload = useCallback((file: File, autodetect: boolean) => {
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = async (evt) => {
-      if (!evt.target?.result) return;
-
-      const updatedMeta = { ...spreadsheetMeta, source: file.name };
-      const parser = SpreadsheetParserFactory.create(updatedMeta)
-      if (autodetect) {
-        parser.enableAutoDetectColumns(event)
-      }
-
-      try {
-        const { columns, rows } = await parser.parse(evt.target.result);
-
-        await updateEvent({
-          spreadsheet: { ...event.spreadsheet, meta: { ...updatedMeta, columns } },
-          raw_data: { ...event.raw_data, spreadsheet: rows },
-        });
-
-        setSpreadsheetMeta(prev => ({ ...prev, columns }));
-        setSpreadsheetData(rows);
-
-        addToast({
-          title: "File Uploaded",
-          icon: <CheckIcon className="fill-green-400 border-green-800" />,
-          description: `The file ${file.name} was successfully uploaded.`,
-          severity: "success",
-          timeout: 3000
-        });
-      } catch (error) {
-        console.error("Error processing file:", error);
-        addToast({
-          title: "File Upload Error",
-          description: `An error occurred while processing the file ${file.name}.`,
-          severity: "danger",
-          timeout: 3000
-        });
-      }
-    };
-
-    if (file.name.endsWith(".csv")) {
-      reader.readAsText(file);
-    } else {
-      reader.readAsArrayBuffer(file);
+  const handleSpreadsheetImport = useCallback(async (
+    source: File | string,
+    autodetect = true
+  ) => {
+    const meta: SpreadsheetMetadata = {
+      ...spreadsheetMeta,
+      source: typeof source === "string" ? source : source.name,
+      sourceType: typeof source === "string" ? "url" : "file"
     }
-  }, [event, spreadsheetMeta, updateEvent]);
+
+    const parser = ImporterFactory.getImporterFor(meta)
+
+    if (autodetect) {
+      parser.enableAutoDetectColumns?.(event)
+    }
+
+    let result: ImportedData
+
+    try {
+      if (typeof source === "string") {
+        result = await parser.parse(source)
+      } else {
+        const reader = new FileReader()
+        result = await new Promise((resolve, reject) => {
+          reader.onload = async (evt) => {
+            if (!evt.target?.result) return reject("No data loaded")
+            resolve(await parser.parse(evt.target.result))
+          }
+          if (source.name.endsWith(".csv")) {
+            reader.readAsText(source)
+          } else {
+            reader.readAsArrayBuffer(source)
+          }
+        })
+      }
+
+      const { columns, rows } = result
+
+      await updateEvent({
+        spreadsheet: { ...event.spreadsheet, meta: { ...meta, columns } },
+        raw_data: { ...event.raw_data, spreadsheet: rows }
+      })
+
+      setSpreadsheetMeta(prev => ({ ...prev, columns }))
+      setSpreadsheetData(rows)
+
+      addToast({
+        title: "Spreadsheet Imported",
+        icon: <CheckIcon className="fill-green-400 border-green-800" />,
+        description: `Successfully loaded spreadsheet.`,
+        severity: "success",
+        timeout: 3000
+      })
+    } catch (error) {
+      console.error("Spreadsheet import error:", error)
+      addToast({
+        title: "Import Failed",
+        description: `Failed to load spreadsheet.`,
+        severity: "danger",
+        timeout: 3000
+      })
+    }
+  }, [event, spreadsheetMeta, updateEvent])
 
   if (!status) {
     return (
@@ -212,7 +228,7 @@ export const EventSetupProvider = ({ children, onQuitHandler }: { children: Reac
         spreadsheetMeta,
         spreadsheetData,
         handleColumnMapping,
-        handleFileUpload,
+        handleSpreadsheetImport,
         handleStrategy,
         handleFormat,
         handleFilters,

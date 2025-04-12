@@ -1,6 +1,9 @@
 import { vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 
+globalThis.fetch = vi.fn()
+vi.mocked(globalThis.fetch).mockResolvedValue(new Response("{}", { status: 200 }))
+
 // ✅ Mock the global `chrome` object
 global.chrome = {
   storage: {
@@ -12,6 +15,7 @@ global.chrome = {
   },
   runtime: {
     getURL: vi.fn(),
+    lastError: null,
     sendMessage: vi.fn(),
     onMessage: {
       addListener: vi.fn(),
@@ -20,7 +24,10 @@ global.chrome = {
   },
   tabs: {
     create: vi.fn()
-  }
+  },
+  identity: {
+    getAuthToken: vi.fn()
+  },
 } as unknown as typeof chrome;
 
 vi.stubGlobal("matchMedia", () => ({
