@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.17.0 - 2025-04-12
+#### Features
+- setup upload screen allow to override the event format - (065378b) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(deps)** bump @types/node from 22.13.9 to 22.14.0 - (c8b3d44) - dependabot[bot]
+- **(deps)** bump @types/chrome from 0.0.304 to 0.0.313 - (1bc4a7e) - dependabot[bot]
+- **(deps)** bump motion from 12.5.0 to 12.6.3 - (0c57be1) - dependabot[bot]
+- **(release)** sync package.json version - (30a6a06) - Cog Bot
+- **(release)** update changelog.json - (2d84c0c) - Cog Bot
+- spreadsheet stores a specific format for the event that overrides eventlink value - (5b57719) - Guillaume Boddaert
+
+- - -
+
 ## 0.16.0 - 2025-04-11
 #### Bug Fixes
 - moved the fetch button for deck outside of the hidden section in player page - (2fcf82f) - Guillaume Boddaert
