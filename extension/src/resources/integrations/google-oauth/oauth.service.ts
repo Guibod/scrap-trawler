@@ -57,4 +57,28 @@ export class OauthService {
     this.fetchedAt = Date.now()
     return token
   }
+
+  public async revokeAccessToken(): Promise<void> {
+    const token = await this.getGoogleApiToken()
+    await fetch(`https://accounts.google.com/o/oauth2/revoke?token=${token}`)
+    this.logger.info("OAuth token revoked.")
+    this.token = null
+    this.fetchedAt = null
+  }
+
+  public async getUserInfo(): Promise<{ email: string }> {
+    const token = await this.getGoogleApiToken()
+    const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch user info")
+    }
+
+    const json = await res.json()
+    return { email: json.email }
+  }
 }

@@ -5,6 +5,7 @@ import { SettingsProvider } from "~/resources/ui/providers/settings"
 import { CardProvider } from "~/resources/ui/providers/card"
 import { MtgJsonProvider } from "~/resources/ui/providers/mtgjson"
 import { FetchServiceProvider } from "~/resources/ui/providers/fetcher"
+import { OAuthProvider } from "~/resources/ui/components/oauth/provider"
 
 export const RoutedProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate()
@@ -21,7 +22,9 @@ export const RoutedProvider = ({ children }: { children: React.ReactNode }) => {
         <FetchServiceProvider>
           <MtgJsonProvider>
             <CardProvider>
-              {children}
+              <OAuthProvider>
+                {children}
+              </OAuthProvider>
             </CardProvider>
           </MtgJsonProvider>
         </FetchServiceProvider>

@@ -5,6 +5,7 @@ import type { SettingsModel } from "~/resources/domain/models/settings.model"
 import ImportExportCard from "~/resources/ui/components/import.export.card"
 import CardDatabaseSettings from "~/resources/ui/components/card/db.settings"
 import CardIndexSettings from "~/resources/ui/components/card/index.settings"
+import GoogleIntegrationSettings from "~/resources/ui/components/oauth/settings"
 
 const SettingsPage = () => {
   const { settings, setMany } = useSettings();
@@ -55,6 +56,8 @@ const SettingsPage = () => {
           </CardBody>
         </Form>
       </Card>
+
+      <GoogleIntegrationSettings className="max-w-lg" />
 
       <ImportExportCard aria-label="settings-import-export"/>
 

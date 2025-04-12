@@ -125,7 +125,8 @@
     "oauth2": {
       "client_id": "933041103309-312keqir0ejl8d74oqbd5r6jgtccnql5.apps.googleusercontent.com",
       "scopes": [
-        "https://www.googleapis.com/auth/spreadsheets.readonly"
+        "https://www.googleapis.com/auth/spreadsheets.readonly",
+        "https://www.googleapis.com/auth/userinfo.email"
       ]
     }
   }
