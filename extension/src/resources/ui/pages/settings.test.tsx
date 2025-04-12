@@ -25,6 +25,9 @@ vi.mock("~/resources/ui/components/card/db.settings", () => ({
 vi.mock("~/resources/ui/components/card/index.settings", () => ({
   default: () => <div data-testid="index-settings-card" />,
 }));
+vi.mock("~/resources/ui/components/oauth/settings", () => ({
+  default: () => <div data-testid="oauth-settings-card" />,
+}));
 
 describe("SettingsPage", () => {
   beforeEach(() => {
@@ -59,5 +62,6 @@ describe("SettingsPage", () => {
     expect(screen.getByTestId("import-export-card")).toBeInTheDocument();
     expect(screen.getByTestId("db-settings-card")).toBeInTheDocument();
     expect(screen.getByTestId("index-settings-card")).toBeInTheDocument();
+    expect(screen.getByTestId("oauth-settings-card")).toBeInTheDocument();
   });
 });
