@@ -69,6 +69,9 @@ importers:
       '@faker-js/faker':
         specifier: ^9.6.0
         version: 9.6.0
+      '@googleworkspace/drive-picker-element':
+        specifier: ^0.4.1
+        version: 0.4.1
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@18.2.0)
@@ -190,6 +193,15 @@ importers:
       '@types/chrome':
         specifier: 0.0.313
         version: 0.0.313
+      '@types/gapi':
+        specifier: ^0.0.47
+        version: 0.0.47
+      '@types/gapi.auth2':
+        specifier: ^0.0.61
+        version: 0.0.61
+      '@types/gapi.client':
+        specifier: ^1.0.8
+        version: 1.0.8
       '@types/geojson':
         specifier: ^7946.0.16
         version: 7946.0.16
@@ -1175,6 +1187,9 @@ packages:
 
   '@golevelup/ts-vitest@0.5.2':
     resolution: {integrity: sha512-kxL12/4lBeYcdpfabvqWGgIagt8ycD6vUNlVyNUjGjxuqo8wPRB1Ohfnn4LNWQG8X8/xf74S2qYnOGqJ7IvWFA==}
+
+  '@googleworkspace/drive-picker-element@0.4.1':
+    resolution: {integrity: sha512-5UgtM39nzGsrOzu0+/DFGKuHpqCRMbb6/MNR/nmUC3EREre/AyBjbYl8TmdcZfUoaUYJAzPoh/tMhBXrwVijBQ==}
 
   '@graphql-typed-document-node/core@3.2.0':
     resolution: {integrity: sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==}
@@ -4027,6 +4042,15 @@ packages:
 
   '@types/filewriter@0.0.33':
     resolution: {integrity: sha512-xFU8ZXTw4gd358lb2jw25nxY9QAgqn2+bKKjKOYfNCzN4DKCFetK7sPtrlpg66Ywe3vWY9FNxprZawAh9wfJ3g==}
+
+  '@types/gapi.auth2@0.0.61':
+    resolution: {integrity: sha512-cn+omiRoE/LTxZncnVl1QhcLggOT0sJ8Yz9RXIsw5R2zLyRf+0o6kaZzJ/Gr3Sxz6i7J/+PbXAF8yeZipCaiWw==}
+
+  '@types/gapi.client@1.0.8':
+    resolution: {integrity: sha512-qJQUmmumbYym3Amax0S8CVzuSngcXsC1fJdwRS2zeW5lM63zXkw4wJFP+bG0jzgi0R6EsJKoHnGNVTDbOyG1ng==}
+
+  '@types/gapi@0.0.47':
+    resolution: {integrity: sha512-/ZsLuq6BffMgbKMtZyDZ8vwQvTyKhKQ1G2K6VyWCgtHHhfSSXbk4+4JwImZiTjWNXfI2q1ZStAwFFHSkNoTkHA==}
 
   '@types/geojson@7946.0.16':
     resolution: {integrity: sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==}
@@ -8682,6 +8706,8 @@ snapshots:
 
   '@golevelup/ts-vitest@0.5.2': {}
 
+  '@googleworkspace/drive-picker-element@0.4.1': {}
+
   '@graphql-typed-document-node/core@3.2.0(graphql@15.10.1)':
     dependencies:
       graphql: 15.10.1
@@ -12978,6 +13004,14 @@ snapshots:
       '@types/filewriter': 0.0.33
 
   '@types/filewriter@0.0.33': {}
+
+  '@types/gapi.auth2@0.0.61':
+    dependencies:
+      '@types/gapi': 0.0.47
+
+  '@types/gapi.client@1.0.8': {}
+
+  '@types/gapi@0.0.47': {}
 
   '@types/geojson@7946.0.16': {}
 
