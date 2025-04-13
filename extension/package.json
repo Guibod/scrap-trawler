@@ -25,15 +25,15 @@
     "tournament"
   ],
   "scripts": {
-    "type-check": "tsc --noEmit -p tsconfig.json",
+    "type-check": "tsc --noEmit",
     "dev": "plasmo dev",
-    "dev:build": "cross-env PARCEL_WORKER_BACKEND=process plasmo build --target=chromium-mv3",
-    "build": "cross-env PARCEL_WORKER_BACKEND=process plasmo build",
+    "build": "plasmo build",
     "package": "plasmo package",
     "format": "biome format --write",
     "lint": "biome check",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
+    "prepare": "husky",
     "sync-version": "tsx src/resources/sync-version.ts"
   },
   "dependencies": {
@@ -41,6 +41,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@faker-js/faker": "^9.6.0",
+    "@googleworkspace/drive-picker-element": "^0.4.1",
     "@heroicons/react": "^2.2.0",
     "@heroui/button": "^2.2.10",
     "@heroui/card": "^2.2.10",
@@ -83,6 +84,9 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/chrome": "0.0.313",
+    "@types/gapi": "^0.0.47",
+    "@types/gapi.auth2": "^0.0.61",
+    "@types/gapi.client": "^1.0.8",
     "@types/geojson": "^7946.0.16",
     "@types/node": "22.14.0",
     "@types/react": "18.2.48",
@@ -93,12 +97,13 @@
     "autoprefixer": "^10.4.20",
     "biome": "^0.3.3",
     "blob-polyfill": "^9.0.20240710",
-    "cross-env": "^7.0.3",
     "eslint": "^9.23.0",
     "eslint-config-biome": "^1.9.4",
     "eslint-plugin-biome": "^0.9.19",
     "fake-indexeddb": "^6.0.0",
+    "husky": "^9.1.7",
     "jsdom": "^26.0.0",
+    "lint-staged": "^15.4.3",
     "postcss": "^8.5.2",
     "svgo": "^3.0.2",
     "tailwindcss": "^3.4.17",
@@ -125,8 +130,8 @@
     "oauth2": {
       "client_id": "933041103309-312keqir0ejl8d74oqbd5r6jgtccnql5.apps.googleusercontent.com",
       "scopes": [
-        "https://www.googleapis.com/auth/spreadsheets.readonly",
-        "https://www.googleapis.com/auth/userinfo.email"
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/drive.file"
       ]
     }
   }
