@@ -1,6 +1,6 @@
 import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
 import { SETUP_STEPS } from "~/resources/ui/components/event/setup/config"
-import React, { useState } from "react"
+import React from "react"
 import { Tab, Tabs } from "@heroui/tabs"
 
 const SetupSteps = () => {

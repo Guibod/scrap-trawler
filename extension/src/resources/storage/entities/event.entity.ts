@@ -71,6 +71,10 @@ export interface RoundEntity{
   drops: DropDbo[]
 }
 
+export type SpreadsheetMetadataEntity = Omit<SpreadsheetMetadata, 'importedAt'> & {
+  importedAt: string | null
+}
+
 export default class EventEntity {
   id!: string;
   title!: string;
@@ -81,7 +85,7 @@ export default class EventEntity {
   teams!: TeamDbo[]
   rounds!: RoundEntity[]
   mapping!: MappingDbo | null
-  spreadsheet!: SpreadsheetMetadata | null // We only keep the metadata, the rest is computed from raw_data.spreadsheet
+  spreadsheet!: SpreadsheetMetadataEntity | null // We only keep the metadata, the rest is computed from raw_data.spreadsheet
   decks!: DeckEntity[]
   raw_data: {
     wotc: WotcExtractedEvent

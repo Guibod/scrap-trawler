@@ -1,5 +1,6 @@
 {
   "name": "extension",
+  "manifest_version": 3,
   "displayName": "Scrap Trawler",
   "version": "0.17.0",
   "description": "A browser extension for extracting event data from EventLink tournaments.",
@@ -41,7 +42,6 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@faker-js/faker": "^9.6.0",
-    "@googleworkspace/drive-picker-element": "^0.4.1",
     "@heroicons/react": "^2.2.0",
     "@heroui/button": "^2.2.10",
     "@heroui/card": "^2.2.10",
@@ -51,6 +51,7 @@
     "@heroui/theme": "^2.4.6",
     "@heroui/tooltip": "^2.2.11",
     "@plasmohq/messaging": "^0.7.1",
+    "@react-stately/data": "^3.12.3",
     "@visx/axis": "^3.12.0",
     "@visx/group": "^3.12.0",
     "@visx/scale": "^3.12.0",
@@ -101,6 +102,7 @@
     "eslint-config-biome": "^1.9.4",
     "eslint-plugin-biome": "^0.9.19",
     "fake-indexeddb": "^6.0.0",
+    "fetch-blob": "^4.0.0",
     "husky": "^9.1.7",
     "jsdom": "^26.0.0",
     "lint-staged": "^15.4.3",
@@ -125,7 +127,10 @@
       "identity"
     ],
     "host_permissions": [
-      "https://eventlink.wizards.com/*"
+      "https://eventlink.wizards.com/*",
+      "https://www.googleapis.com/*",
+      "https://docs.google.com/*",
+      "https://apis.google.com/*"
     ],
     "oauth2": {
       "client_id": "933041103309-312keqir0ejl8d74oqbd5r6jgtccnql5.apps.googleusercontent.com",
@@ -133,6 +138,9 @@
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/drive.file"
       ]
+    },
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self';"
     }
   }
 }

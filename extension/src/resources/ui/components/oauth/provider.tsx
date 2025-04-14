@@ -4,10 +4,12 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 type OAuthContextType = {
   connected: boolean;
   connecting: boolean;
+  checking: boolean;
   identity: string | null
   token: string | null
   login: () => Promise<void>;
   logout: () => Promise<void>;
+  revoke: () => Promise<void>;
 }
 
 type OAuthProviderProps = {
@@ -22,9 +24,11 @@ export const OAuthProvider: React.FC<OAuthProviderProps> = ({ children, oauthSer
   const [token, setToken] = useState<string | null>(null)
   const [connected, setConnected] = useState(false)
   const [connecting, setConnecting] = useState(false)
+  const [checking, setChecking] = useState(false)
   const [identity, setIdentity] = useState<string | null>(null)
 
   const checkConnection = useCallback(async () => {
+    setChecking(true)
     console.log("checkConnection, start")
     try {
       setToken(await oauthService.getGoogleApiToken({ interactive: false }))
@@ -38,6 +42,8 @@ export const OAuthProvider: React.FC<OAuthProviderProps> = ({ children, oauthSer
       setConnected(false)
       setToken(null)
       setIdentity(null)
+    } finally {
+      setChecking(false)
     }
   }, [])
 
@@ -61,6 +67,13 @@ export const OAuthProvider: React.FC<OAuthProviderProps> = ({ children, oauthSer
   }, [])
 
   const logout = useCallback(async () => {
+    await oauthService.clearCachedToken()
+    setConnected(false)
+    setToken(null)
+    setIdentity(null)
+  }, [])
+
+  const revoke = useCallback(async () => {
     await oauthService.revokeAccessToken()
     setConnected(false)
     setToken(null)
@@ -68,7 +81,7 @@ export const OAuthProvider: React.FC<OAuthProviderProps> = ({ children, oauthSer
   }, [])
 
   return (
-    <OAuthContext.Provider value={{ connected, connecting, identity, login, logout, token }}>
+    <OAuthContext.Provider value={{ connected, connecting, checking, identity, login, logout, revoke, token }}>
       {children}
     </OAuthContext.Provider>
   )

@@ -10,11 +10,14 @@ describe("SetupStatus", () => {
   beforeEach(() => {
     meta = {
       source: "Google Sheets",
-      sourceType: "url",
+      sourceType: "drive",
+      name: "My Spreadsheet",
       autodetect: false,
-      sheet: "Sheet1",
+      sheetName: "Sheet1",
+      sheetId: "sheet_123",
       filters: [],
       duplicateStrategy: DUPLICATE_STRATEGY.NONE,
+      importedAt: null,
       finalized: false,
       format: null,
       columns: [

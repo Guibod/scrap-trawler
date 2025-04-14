@@ -28,8 +28,23 @@ export default class SpreadsheetBuilder {
     return this;
   }
 
-  withSheet(sheet: string | null) {
-    this.metadata.sheet = sheet;
+  withImportedAt(date: Date | null) {
+    this.metadata.importedAt = date;
+    return this;
+  }
+
+  withSheetId(id: string | null) {
+    this.metadata.sheetId = id;
+    return this;
+  }
+
+  withSheetName(name: string | null) {
+    this.metadata.sheetName = name;
+    return this;
+  }
+
+  withName(name: string | null) {
+    this.metadata.name = name;
     return this;
   }
 
@@ -100,7 +115,10 @@ export default class SpreadsheetBuilder {
         source: this.metadata.source ?? "Unknown",
         autodetect: this.metadata.autodetect ?? false,
         sourceType: this.metadata.sourceType ?? "file",
-        sheet: this.metadata.sheet ?? null,
+        name: this.metadata.name ?? null,
+        sheetName: this.metadata.sheetName ?? null,
+        sheetId: this.metadata.sheetId ?? null,
+        importedAt: this.metadata.importedAt ?? null,
         columns: this.metadata.columns ?? this.generateFakeColumns(this.dimensions.x),
         filters: this.metadata.filters ?? [],
         duplicateStrategy: this.metadata.duplicateStrategy ?? DUPLICATE_STRATEGY.NONE,

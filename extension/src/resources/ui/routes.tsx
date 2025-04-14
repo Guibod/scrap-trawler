@@ -7,9 +7,9 @@ import MainLayout from "~/resources/ui/layouts/main"
 import WelcomePage from "~/resources/ui/pages/welcome"
 import ChangelogPage from "~/resources/ui/pages/changelog"
 import EventView from "~/resources/ui/components/event/view"
-import EventSetup from "~/resources/ui/components/event/setup"
 import EventIndexRedirect from "~/resources/ui/components/event"
 import EventPlayerPage from "~/resources/ui/pages/player"
+import SetupSteps from "~/resources/ui/components/event/setup/steps"
 
 const AppRoutes = () => (
   <Routes>
@@ -21,7 +21,7 @@ const AppRoutes = () => (
       <Route path="/event/:eventId" element={<EventPage />} >
         <Route index element={<EventIndexRedirect />} />
         <Route path="view" element={<EventView />} />
-        <Route path="setup" element={<EventSetup />} />
+        <Route path="setup" element={<SetupSteps />} />
         <Route path="player/:playerId" element={<EventPlayerPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" />} />

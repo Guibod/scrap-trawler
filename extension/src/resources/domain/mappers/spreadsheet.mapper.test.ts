@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest"
 import { COLUMN_TYPE } from "~/resources/domain/enums/spreadsheet.dbo"
-import type { SpreadsheetMetadata } from "~/resources/domain/dbos/spreadsheet.dbo"
-import { mapSpreadsheetData } from "~/resources/domain/mappers/spreadsheet.mapper"
+import { mapSpreadsheet } from "~/resources/domain/mappers/spreadsheet.mapper"
+import type { SpreadsheetMetadataEntity } from "~/resources/storage/entities/event.entity"
 
 describe("mapSpreadsheetData", () => {
-  const metadata: SpreadsheetMetadata = {
+  const metadata: SpreadsheetMetadataEntity = {
     filters: [],
     columns: [
       {
@@ -38,7 +38,7 @@ describe("mapSpreadsheetData", () => {
         type: COLUMN_TYPE.DECKLIST_URL
       }
     ]
-  } as SpreadsheetMetadata
+  } as SpreadsheetMetadataEntity
 
   it("should map spreadsheet rows to structured data", async () => {
     const rawData = [
@@ -46,16 +46,16 @@ describe("mapSpreadsheetData", () => {
       ["Bob", "Jones", "Control", "ignore-me", "https://moxfield.com/deck2"],
     ]
 
-    const result = await mapSpreadsheetData(rawData, metadata)
+    const result = await mapSpreadsheet(metadata, rawData)
 
-    expect(result).toHaveLength(2)
-    expect(result[0]).toMatchObject({
+    expect(result.data).toHaveLength(2)
+    expect(result.data[0]).toMatchObject({
       firstName: "Alice",
       lastName: "Smith",
       archetype: "Burn",
       decklistUrl: "https://moxfield.com/deck1",
     })
-    expect(result[1]).toMatchObject({
+    expect(result.data[1]).toMatchObject({
       firstName: "Bob",
       lastName: "Jones",
       archetype: "Control",
@@ -64,10 +64,11 @@ describe("mapSpreadsheetData", () => {
   })
 
   it("should return empty array for invalid input", async () => {
-    expect(await mapSpreadsheetData([], metadata)).toEqual([])
+    const empty = await mapSpreadsheet(metadata, [])
+    expect(empty.data).toEqual([])
 
-    const poor = await mapSpreadsheetData([["Nuk Nuk Nuk"]], metadata)
-    expect(poor).toHaveLength(1)
-    expect(poor[0].firstName).toEqual("Nuk Nuk Nuk")
+    const poor = await mapSpreadsheet( metadata, [["Nuk Nuk Nuk"]])
+    expect(poor.data).toHaveLength(1)
+    expect(poor.data[0].firstName).toEqual("Nuk Nuk Nuk")
   })
 })

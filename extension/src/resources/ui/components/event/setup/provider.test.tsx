@@ -8,6 +8,8 @@ import {
   EventSetupProvider,
   useEventSetup
 } from "~/resources/ui/components/event/setup/provider"
+import { File } from "fetch-blob/file"
+import { MemoryRouter } from "react-router-dom"
 
 vi.mock("~/resources/ui/providers/event", () => ({
   useEvent: () => ({
@@ -62,9 +64,11 @@ vi.mock("~/resources/domain/parsers/spreadsheet.parser.factory", () => ({
 
 const renderWithProvider = (ui: React.ReactNode) => {
   return render(
-    <EventSetupProvider onQuitHandler={vi.fn()}>
-      {ui}
-    </EventSetupProvider>
+    <MemoryRouter>
+      <EventSetupProvider>
+        {ui}
+      </EventSetupProvider>
+    </MemoryRouter>
   )
 }
 
@@ -109,9 +113,7 @@ describe("EventSetupProvider", () => {
     await act(async () => {
       await contextValue.handleImport({
         metadata: {
-          autodetect: true,
-          sourceType: "file",
-          source: "sample.csv",
+          autodetect: true
         },
         file
       })
@@ -139,20 +141,20 @@ describe("EventSetupProvider", () => {
 
   it("finalizes setup with valid data", async () => {
     let contextValue
-    const mockQuit = vi.fn(() => Promise.resolve())
     const Consumer = () => {
       contextValue = useEventSetup()
       return <span>finalize test</span>
     }
     render(
-      <EventSetupProvider onQuitHandler={mockQuit}>
-        <Consumer />
-      </EventSetupProvider>
+      <MemoryRouter>
+        <EventSetupProvider>
+          <Consumer />
+        </EventSetupProvider>
+      </MemoryRouter>
     )
     await screen.findByText("finalize test")
     await waitFor(() => expect(contextValue.status).not.toBeNull())
     contextValue.handleFinalization()
-    await waitFor(() => expect(mockQuit).toHaveBeenCalled())
   })
 
   it("updates column mapping and resets duplicates", async () => {
