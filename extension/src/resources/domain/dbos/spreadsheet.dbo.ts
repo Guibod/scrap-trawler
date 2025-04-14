@@ -18,8 +18,9 @@ export type SpreadsheetSourceType = "file" | "url"
 
 export interface SpreadsheetMetadata {
   sourceType: SpreadsheetSourceType
+  autodetect: boolean
   source: string;
-  tabName: string | null;
+  sheet: string | null;
   columns: SpreadsheetColumnMetaData[];
   filters: SpreadsheetFilter[];
   duplicateStrategy: DUPLICATE_STRATEGY;

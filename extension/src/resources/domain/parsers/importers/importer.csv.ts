@@ -11,9 +11,10 @@ export class ImporterCsv extends Importer {
     return meta.source.toLowerCase().endsWith(".csv");
   }
 
-  async parse(data: string): Promise<{ columns: SpreadsheetColumnMetaData[], rows: SpreadsheetRawData }> {
+  async parse(data: ArrayBufferLike): Promise<{ columns: SpreadsheetColumnMetaData[], rows: SpreadsheetRawData }> {
+    const string = new TextDecoder().decode(new Uint8Array(data))
     return new Promise((resolve, reject) => {
-      Papa.parse(data, {
+      Papa.parse(string, {
         skipEmptyLines: true,
         complete: (result) => {
           const [columns, ...rows] = this.normalizeRows(result.data as SpreadsheetRawData);

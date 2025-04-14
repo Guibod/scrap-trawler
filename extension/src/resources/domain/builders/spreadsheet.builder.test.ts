@@ -8,7 +8,7 @@ describe("SpreadsheetBuilder", () => {
     const spreadsheet = new SpreadsheetBuilder().build();
 
     expect(spreadsheet.meta.source).toBe("Unknown");
-    expect(spreadsheet.meta.tabName).toBeNull();
+    expect(spreadsheet.meta.sheet).toBeNull();
     expect(spreadsheet.meta.columns).toEqual([]);
     expect(spreadsheet.meta.filters).toEqual([]);
     expect(spreadsheet.meta.duplicateStrategy).toBe(DUPLICATE_STRATEGY.NONE);
@@ -19,13 +19,13 @@ describe("SpreadsheetBuilder", () => {
   it("should set metadata values correctly", () => {
     const spreadsheet = new SpreadsheetBuilder()
       .withSource("Google Sheets")
-      .withTabName("Decklists")
+      .withSheet("Decklists")
       .withDuplicateStrategy(DUPLICATE_STRATEGY.KEEP_FIRST)
       .finalized(true)
       .build();
 
     expect(spreadsheet.meta.source).toBe("Google Sheets");
-    expect(spreadsheet.meta.tabName).toBe("Decklists");
+    expect(spreadsheet.meta.sheet).toBe("Decklists");
     expect(spreadsheet.meta.duplicateStrategy).toBe(DUPLICATE_STRATEGY.KEEP_FIRST);
     expect(spreadsheet.meta.finalized).toBe(true);
   });
