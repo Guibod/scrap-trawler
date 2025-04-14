@@ -16,13 +16,13 @@ export const SpreadsheetImportForm: React.FC<SpreadsheetImportFormProps> = ({ cl
   const { spreadsheetMeta, handleImport } = useEventSetup()
   const [useUrl, setUseUrl] = useState(!(spreadsheetMeta.source && !isValidHttpUrl(spreadsheetMeta.source)))
   const [importing, setImporting] = useState(false)
+  const [autodetect, setAutodetect] = useState(true)
   const [sheetUrl, setSheetUrl] = useState(spreadsheetMeta.source)
   const [errors, setErrors] = useState({})
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setImporting(true)
-    const data = Object.fromEntries(new FormData(e.currentTarget))
     setErrors({}) // reset
 
     try {
@@ -39,7 +39,7 @@ export const SpreadsheetImportForm: React.FC<SpreadsheetImportFormProps> = ({ cl
           metadata: {
             source: sheetUrl,
             sourceType: "url",
-            autodetect: !!data.autodetect,
+            autodetect,
           },
         })
       } else {
@@ -53,7 +53,7 @@ export const SpreadsheetImportForm: React.FC<SpreadsheetImportFormProps> = ({ cl
           metadata: {
             source: file.name,
             sourceType: "file",
-            autodetect: !!data.autodetect,
+            autodetect,
           },
           file
         })
@@ -73,6 +73,18 @@ export const SpreadsheetImportForm: React.FC<SpreadsheetImportFormProps> = ({ cl
       <Switch isSelected={useUrl} onValueChange={setUseUrl}>
         Import from Google Sheets URL
       </Switch>
+
+      <Checkbox
+        aria-label="auto-detect"
+        name="autodetect"
+        checked={autodetect}
+        onValueChange={setAutodetect}
+        size="sm"
+        value="1"
+        defaultSelected
+      >
+        Auto-detect columns
+      </Checkbox>
 
       {useUrl ? (
         <Input
@@ -98,16 +110,6 @@ export const SpreadsheetImportForm: React.FC<SpreadsheetImportFormProps> = ({ cl
           label="Spreadsheet file"
         />
       )}
-
-      <Checkbox
-        aria-label="auto-detect"
-        name="autodetect"
-        size="sm"
-        value="1"
-        defaultSelected
-      >
-        Auto-detect columns
-      </Checkbox>
 
       <Button type="submit" color="primary" className="mt-4 w-full" isLoading={importing} isDisabled={importing} >
         Import Spreadsheet
