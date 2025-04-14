@@ -45,13 +45,12 @@ jobs:
           git-user: 'Cog Bot'
           git-user-email: 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Run Tests (Vitest)
-        run: pnpm test
-
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
-          files: ./coverage/lcov.info
+          files: |
+            extension/coverage/lcov.info
+            cloudflare-proxy/coverage/lcov.info
           fail_ci_if_error: false
           verbose: true
           token: ${{ secrets.CODECOV_TOKEN }}
