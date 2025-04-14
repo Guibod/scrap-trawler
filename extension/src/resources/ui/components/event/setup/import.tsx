@@ -13,7 +13,7 @@ type SpreadsheetImportFormProps = {
 }
 
 export const SpreadsheetImportForm: React.FC<SpreadsheetImportFormProps> = ({ className }) => {
-  const { spreadsheetMeta, handleSpreadsheetImport } = useEventSetup()
+  const { spreadsheetMeta, handleImport } = useEventSetup()
   const [useUrl, setUseUrl] = useState(!(spreadsheetMeta.source && !isValidHttpUrl(spreadsheetMeta.source)))
   const [importing, setImporting] = useState(false)
   const [sheetUrl, setSheetUrl] = useState(spreadsheetMeta.source)
@@ -35,7 +35,13 @@ export const SpreadsheetImportForm: React.FC<SpreadsheetImportFormProps> = ({ cl
           setErrors({ url: "This doesn't look like a valid Google Sheets link" })
           return
         }
-        await handleSpreadsheetImport(sheetUrl, !!data.autodetect)
+        await handleImport({
+          metadata: {
+            source: sheetUrl,
+            sourceType: "url",
+            autodetect: !!data.autodetect,
+          },
+        })
       } else {
         const fileInput = (e.currentTarget.elements.namedItem("file") as HTMLInputElement)
         const file = fileInput?.files?.[0]
@@ -43,7 +49,14 @@ export const SpreadsheetImportForm: React.FC<SpreadsheetImportFormProps> = ({ cl
           setErrors({ file: "Please select a spreadsheet file to upload" })
           return
         }
-        await handleSpreadsheetImport(file, !!data.autodetect)
+        await handleImport({
+          metadata: {
+            source: file.name,
+            sourceType: "file",
+            autodetect: !!data.autodetect,
+          },
+          file
+        })
       }
     } finally {
       setImporting(false)

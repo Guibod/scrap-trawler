@@ -22,9 +22,19 @@ const fallbackColumnName: Record<COLUMN_TYPE, (index: number) => string> = {
 
 export type ImportedData = { columns: SpreadsheetColumnMetaData[]; rows: SpreadsheetRawData }
 
-export interface SyncableImporter {
+export interface SyncableImporter{
   supportsSync?: boolean
   sync(meta: SpreadsheetMetadata): Promise<ImportedData>;
+  enableAutoDetectColumns(event: EventModel): this
+}
+
+export function isSyncableImporter(obj: any): obj is SyncableImporter {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    obj.supportsSync === true &&
+    typeof obj.sync === "function"
+  )
 }
 
 export abstract class Importer {
@@ -42,7 +52,7 @@ export abstract class Importer {
     return false;
   }
 
-  enableAutoDetectColumns(event: EventModel) {
+  enableAutoDetectColumns(event: EventModel): this {
     this.autoDetectColumns = true
     this.knownFirstNames = new Set<string>();
     this.knownLastNames = new Set<string>();
@@ -55,10 +65,11 @@ export abstract class Importer {
         this.knownLastNames.add(player.lastName.trim());
       }
     });
+    return this;
   }
 
   abstract parse(
-    data: ArrayBuffer | string
+    data: ArrayBufferLike
   ): Promise<ImportedData>;
 
   protected computeColumns(columns: string[] | undefined, rows: SpreadsheetRawData): SpreadsheetColumnMetaData[] {

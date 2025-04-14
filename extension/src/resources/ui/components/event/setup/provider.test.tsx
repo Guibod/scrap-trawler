@@ -107,7 +107,14 @@ describe("EventSetupProvider", () => {
 
     const file = new File(["sample column\nAlice\nBob"], "sample.csv", { type: "text/csv" })
     await act(async () => {
-      await contextValue.handleSpreadsheetImport(file, true)
+      await contextValue.handleImport({
+        metadata: {
+          autodetect: true,
+          sourceType: "file",
+          source: "sample.csv",
+        },
+        file
+      })
     })
 
     await waitFor(() => {

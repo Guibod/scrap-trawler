@@ -9,7 +9,8 @@ describe("CsvSpreadsheetParser", () => {
     {
       source: 'foo.csv',
       sourceType: 'file',
-      tabName: null,
+      autodetect: false,
+      sheet: null,
       columns: [],
       filters: [],
       finalized: false,
@@ -27,12 +28,12 @@ describe("CsvSpreadsheetParser", () => {
   } as unknown as EventModel)
 
   it("parses a simple CSV with headers", async () => {
-    const csvContent = `f-i-r-s-t-n-a-m-e,deck
+    const csvContent = new TextEncoder().encode(`f-i-r-s-t-n-a-m-e,deck
 Alice,Gruul Aggro
 Bob,Dimir Control
 Charles,Dimir Control
 Didier,Boros Burn
-`;
+`).buffer;
     const result = await parser.parse(csvContent);
 
     expect(result.columns).toEqual([
@@ -55,17 +56,17 @@ Didier,Boros Burn
   });
 
   it("returns empty rows for empty CSV", async () => {
-    const result = await parser.parse("");
+    const result = await parser.parse(new ArrayBuffer(0));
 
     expect(result.columns).toEqual([]);
     expect(result.rows).toEqual([]);
   });
 
   it("handles extra columns gracefully", async () => {
-    const csvContent = `name,deck,email
+    const csvContent = new TextEncoder().encode(`name,deck,email
 Charlie,Mono Green,charlie@example.com
 Dana,Boros Burn,dana@example.com
-`;
+`).buffer;
     const result = await parser.parse(csvContent);
 
     expect(result.columns).toEqual([

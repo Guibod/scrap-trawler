@@ -11,7 +11,8 @@ describe("SetupStatus", () => {
     meta = {
       source: "Google Sheets",
       sourceType: "url",
-      tabName: "Sheet1",
+      autodetect: false,
+      sheet: "Sheet1",
       filters: [],
       duplicateStrategy: DUPLICATE_STRATEGY.NONE,
       finalized: false,

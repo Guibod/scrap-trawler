@@ -23,8 +23,13 @@ export default class SpreadsheetBuilder {
     return this;
   }
 
-  withTabName(tabName: string | null) {
-    this.metadata.tabName = tabName;
+  withAutoDetect(autodetect: boolean) {
+    this.metadata.autodetect = autodetect;
+    return this;
+  }
+
+  withSheet(sheet: string | null) {
+    this.metadata.sheet = sheet;
     return this;
   }
 
@@ -93,8 +98,9 @@ export default class SpreadsheetBuilder {
     return {
       meta: {
         source: this.metadata.source ?? "Unknown",
+        autodetect: this.metadata.autodetect ?? false,
         sourceType: this.metadata.sourceType ?? "file",
-        tabName: this.metadata.tabName ?? null,
+        sheet: this.metadata.sheet ?? null,
         columns: this.metadata.columns ?? this.generateFakeColumns(this.dimensions.x),
         filters: this.metadata.filters ?? [],
         duplicateStrategy: this.metadata.duplicateStrategy ?? DUPLICATE_STRATEGY.NONE,

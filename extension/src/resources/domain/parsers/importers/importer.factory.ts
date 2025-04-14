@@ -1,22 +1,15 @@
 import type { SpreadsheetMetadata } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { ImporterCsv } from "~/resources/domain/parsers/importers/importer.csv"
 import { ImporterExcel } from "~/resources/domain/parsers/importers/importer.excel"
-import { ImporterGoogle } from "~/resources/domain/parsers/importers/importer.google"
+import { ImporterGoogleUrl } from "~/resources/domain/parsers/importers/importer.google.url"
 import type { Importer, SyncableImporter } from "~/resources/domain/parsers/importers/importer"
 import type { EventModel } from "~/resources/domain/models/event.model"
-
-type SyncableImporterClass = {
-  new (meta: SpreadsheetMetadata): SyncableImporter;
-  supportsSync: true;
-  enableAutoDetectColumns: (event: EventModel) => void;
-  canHandle(meta: SpreadsheetMetadata): boolean;
-}
 
 export class ImporterFactory {
   private static readonly registeredParsers = [
     ImporterCsv,
     ImporterExcel,
-    ImporterGoogle
+    ImporterGoogleUrl
   ];
 
   static getImporterFor(meta: SpreadsheetMetadata): Importer {
