@@ -6,10 +6,7 @@ settings:
 
 importers:
 
-<<<<<<< HEAD
   .:
-<<<<<<< HEAD
-=======
     devDependencies:
       husky:
         specifier: ^8.0.0
@@ -17,9 +14,6 @@ importers:
       lint-staged:
         specifier: ^15.4.3
         version: 15.5.0
-=======
-  .: {}
->>>>>>> 22ce509 (chore: extension project is now a subproject)
 
   cloudflare-proxy:
     dependencies:
@@ -37,6 +31,7 @@ importers:
         specifier: ^4.20250321.0
         version: 4.20250414.0
 <<<<<<< HEAD
+<<<<<<< HEAD
       '@vitest/coverage-istanbul':
         specifier: ^3.1.1
         version: 3.1.1(vitest@3.0.9(@types/node@22.14.0)(jiti@1.21.7)(jsdom@26.0.0)(less@4.2.2)(lightningcss@1.29.3)(sass@1.86.0)(tsx@4.19.3)(yaml@2.7.0))
@@ -48,6 +43,11 @@ importers:
 =======
 >>>>>>> 22ce509 (chore: extension project is now a subproject)
 >>>>>>> e8b2ed9 (chore: extension project is now a subproject)
+=======
+      '@vitest/coverage-v8':
+        specifier: ^3.0.8
+        version: 3.0.9(vitest@3.0.9(@types/node@22.14.0)(jiti@1.21.7)(jsdom@26.0.0)(less@4.2.2)(lightningcss@1.29.3)(sass@1.86.0)(tsx@4.19.3)(yaml@2.7.0))
+>>>>>>> 3a03a2d (ci: moved husky/lint-staged to root project)
       typescript:
         specifier: ^5.5.2
         version: 5.7.3
@@ -59,10 +59,6 @@ importers:
         version: 4.10.0(@cloudflare/workers-types@4.20250414.0)
 
   extension:
-<<<<<<< HEAD
->>>>>>> 41d517c (fixup! chore: proxy project is wrapped under monorepository)
-=======
->>>>>>> 22ce509 (chore: extension project is now a subproject)
     dependencies:
       '@dnd-kit/core':
         specifier: ^6.3.1
@@ -239,15 +235,9 @@ importers:
       fake-indexeddb:
         specifier: ^6.0.0
         version: 6.0.0
-      husky:
-        specifier: ^9.1.7
-        version: 9.1.7
       jsdom:
         specifier: ^26.0.0
         version: 26.0.0
-      lint-staged:
-        specifier: ^15.4.3
-        version: 15.5.0
       postcss:
         specifier: ^8.5.2
         version: 8.5.3
@@ -5388,9 +5378,9 @@ packages:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
 
-  husky@9.1.7:
-    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
-    engines: {node: '>=18'}
+  husky@8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
     hasBin: true
 
   iconv-lite@0.4.24:
@@ -13818,7 +13808,7 @@ snapshots:
 
   human-signals@5.0.0: {}
 
-  husky@9.1.7: {}
+  husky@8.0.3: {}
 
   iconv-lite@0.4.24:
     dependencies:
