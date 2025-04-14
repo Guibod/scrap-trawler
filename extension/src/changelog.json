@@ -1,5 +1,10 @@
 [
   {
+    "version": "0.17.1",
+    "timestamp": 1744663765,
+    "changes": []
+  },
+  {
     "version": "0.17.0",
     "timestamp": 1744493886,
     "changes": [
