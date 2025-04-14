@@ -1,0 +1,234 @@
+---
+import Layout from '../layouts/layout.astro'
+---
+
+<Layout title="Scrap Trawler">
+<div class="relative flex flex-row-reverse gap-10">
+  <!-- TOC (right side) -->
+  <aside class="hidden lg:block w-64 sticky top-20 self-start text-sm text-gray-700">
+    <div class="border-l-4 border-blue-300 pl-4">
+      <h3 class="font-semibold mb-2 text-blue-800">Quick Navigation</h3>
+      <nav class="space-y-2 leading-relaxed">
+        <a href="#scrape" class="block hover:text-blue-600">1. Scrape</a>
+        <a href="#pair" class="block hover:text-green-600">2. Pair</a>
+        <a href="#fetch" class="block hover:text-purple-600">3. Fetch</a>
+        <a href="#eternal" class="block">Access Eternally</a>
+        <a href="#multilang" class="block">Decklists & Languages</a>
+        <a href="#stats" class="block">Deck Stats</a>
+        <a href="#community" class="block">Forever Free</a>
+        <a href="#not" class="block">What It Isn't</a>
+        <a href="#compare" class="block">Comparison</a>
+        <a href="#cta" class="block">Install</a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="flex-1">
+
+  <div class="flex justify-center mb-8">
+    <img src="/logo.png" alt="Scrap Trawler" class="h-48 w-auto" />
+  </div>
+
+  <div class="bg-blue-100 border border-blue-300 rounded-xl p-4 mb-6 text-center">
+    <p class="text-blue-900 text-lg font-semibold mb-2">
+      🧩 Get Scrap Trawler from the Chrome Web Store
+    </p>
+    <a
+      href="https://chromewebstore.google.com/detail/bibaandedejifgojmndgbpoicofbopea"
+      class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      ➕ Install Extension
+    </a>
+  </div>
+
+  <h1 class="text-4xl font-bold mb-4">What is Scrap Trawler?</h1>
+  <p class="text-lg mb-6">
+    Scrap Trawler is a browser extension for Magic: The Gathering tournament organizers and judges.
+    It simplifies data extraction, deck pairing, and result reporting from EventLink.
+  </p>
+
+  <div class="mt-12 space-y-8">
+    <div class="flex items-start">
+      <div class="text-4xl font-bold text-blue-600 mr-4 rounded-full bg-gray-200 px-4">1.</div>
+      <div>
+        <h2 id="scrape" class="text-3xl font-bold text-blue-800 mb-2">Scrape</h2>
+        <p class="text-lg text-gray-700 leading-relaxed">
+          Automatically extract player registration, standings, pairings, and penalties from EventLink in one click.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-start">
+      <div class="text-4xl font-bold text-green-600 mr-4 rounded-full bg-gray-200 px-4">2.</div>
+      <div>
+        <h2 id="pair" class="text-3xl font-bold text-green-800 mb-2">Pair</h2>
+        <p class="text-lg text-gray-700 leading-relaxed">
+          Link players with their decklists using Google Sheets, XSLX or CSVs — automatically detect players first and last names, archetypes, format, and judge annotations.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-start">
+      <div class="text-4xl font-bold text-purple-600 mr-4 rounded-full bg-gray-200 px-4">3.</div>
+      <div>
+        <h2 id="fetch" class="text-3xl font-bold text-purple-800 mb-2">Fetch</h2>
+        <p class="text-lg text-gray-700 leading-relaxed">
+          Load complete deck contents from platforms like Moxfield, MagicVille, and more — all locally, no login needed.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-12 border-t-2 border-gray-200" />
+
+  <section class="mt-16">
+    <h2 id="eternal" class="text-3xl font-bold text-gray-900 mb-4">Scrape Once, Access Eternally</h2>
+    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+      Wizards of the Coast does <strong>not guarantee long-term access</strong> to EventLink event data. After an event ends, it may be locked or disappear entirely — making it difficult for TOs, judges, or players to recover pairings, results, or registration lists.
+    </p>
+    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+      <strong>Scrap Trawler preserves your events</strong> by extracting all critical information at once and storing it safely in your browser. You’ll always have access — even after the event closes.
+    </p>
+    <p class="text-lg text-gray-700 leading-relaxed">
+      Your data is yours. You can <strong>export events</strong> to share with co-judges, or <strong>import backups</strong> when reviewing old tournaments. It’s your own portable archive of every pairing, standing, drop, and decklist.
+    </p>
+  </section>
+
+  <hr class="my-12 border-t-2 border-gray-200" />
+
+  <section class="mt-16">
+    <h2 id="multilang" class="text-3xl font-bold text-gray-900 mb-4">Understand Decklists, in Any Language</h2>
+    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+      Scrap Trawler includes a <strong>full local database of Magic cards</strong>, kept up to date using <a href="https://mtgjson.com" class="text-blue-600 underline" target="_blank" rel="noopener noreferrer">MTGJSON</a>.
+    </p>
+    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+      That means you can <strong>parse free-text decklists</strong> from your google form — even if they're in French, German, Spanish, or Japanese. No internet required, no external API calls.
+    </p>
+    <p class="text-lg text-gray-700 leading-relaxed">
+      Cards are <strong>indexed locally in your browser</strong>, allowing fast and fuzzy searches to match misspelled names, alt formats, or translated cards. It just works — instantly.
+    </p>
+  </section>
+
+  <hr class="my-12 border-t-2 border-gray-200" />
+
+  <section class="mt-16">
+    <h2 id="stats" class="text-3xl font-bold text-gray-900 mb-4">Deck Analysis at Your Fingertips</h2>
+    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+      Once a decklist is parsed, Scrap Trawler dives deeper — offering <strong>automatic stats and breakdowns</strong> inspired by tools like Moxfield.
+    </p>
+    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+      You’ll see <strong>mana value histograms, color identity summaries, mana production estimates</strong>, and type-based card groups. For Commander decks, you can even highlight your commander’s curve and impact.
+    </p>
+    <p class="text-lg text-gray-700 leading-relaxed">
+      This is just the beginning. Since Scrap Trawler runs with a full card database and structured deck input, <strong>the sky is the limit</strong> — from tutor chain visualization to archetype tagging and color balance warnings. Stats evolve as the project grows.
+    </p>
+  </section>
+
+  <hr class="my-12 border-t-2 border-gray-200" />
+
+  <section class="mt-16">
+    <h2 id="community" class="text-3xl font-bold text-gray-900 mb-4">Built for the Community. Forever Free.</h2>
+    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+      Scrap Trawler is a project born from the floor of real events — by judges, for judges and TOs. It’s <strong>100% free</strong>, open-source, and fiercely committed to respecting your data.
+    </p>
+    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+      We don’t collect analytics. We don’t sync your events to a cloud. We don’t ask for accounts. And we will <strong>never</strong> lock core features behind a paywall.
+    </p>
+    <p class="text-lg text-gray-700 leading-relaxed">
+      We believe that easing the life of the <strong>soul and blood of the MTG community</strong> — the judges and organizers — is the best way to help the game we all love continue to grow and thrive.
+    </p>
+  </section>
+
+  <hr class="my-12 border-t-2 border-gray-200" />
+
+  <section class="mt-16">
+    <h2 id="not" class="text-3xl font-bold text-gray-900 mb-4">What Scrap Trawler Isn’t (and Why That’s Okay)</h2>
+
+    <div class="space-y-6">
+      <div>
+        <h3 class="text-xl font-semibold text-gray-800 mb-1">🚫 Not a tournament runner</h3>
+        <p class="text-gray-700 text-lg">
+          Scrap Trawler doesn’t replace EventLink — it works with it. Most TOs don’t get to choose their platform, and we embrace that reality. Instead of fighting it, we make EventLink smoother to use <strong>before, during, and after the tournament</strong>.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold text-gray-800 mb-1">🚫 Not a standalone website</h3>
+        <p class="text-gray-700 text-lg">
+          Scrap Trawler is a browser extension — a <strong>power tool that lives inside your browser</strong>. It doesn’t rely on external services or centralized dashboards. Your events stay with you, in your environment.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="my-12 border-t-2 border-gray-200" />
+
+    <section class="mt-20">
+      <h2 id="compare" class="text-3xl font-bold text-gray-900 mb-6 text-center">How Scrap Trawler Compares</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border border-gray-300 text-left text-gray-800 text-sm">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-4 py-2 font-semibold">Feature</th>
+              <th class="px-4 py-2 font-semibold">Scrap Trawler</th>
+              <th class="px-4 py-2 font-semibold">EventLink</th>
+              <th class="px-4 py-2 font-semibold">Melee.gg</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t">
+              <td class="px-4 py-2">Tournament Engine</td>
+              <td class="px-4 py-2 text-gray-500 italic">Relies on EventLink</td>
+              <td class="px-4 py-2">✅ Yes</td>
+              <td class="px-4 py-2">✅ Yes</td>
+            </tr>
+            <tr class="border-t">
+              <td class="px-4 py-2">Decklist Integration</td>
+              <td class="px-4 py-2">✅ Sheets, Moxfield, MagicVille</td>
+              <td class="px-4 py-2">❌ Manual</td>
+              <td class="px-4 py-2">✅ Native</td>
+            </tr>
+            <tr class="border-t">
+              <td class="px-4 py-2">Standalone Usage</td>
+              <td class="px-4 py-2">✅ Browser extension</td>
+              <td class="px-4 py-2">❌</td>
+              <td class="px-4 py-2">❌ Web-only</td>
+            </tr>
+            <tr class="border-t">
+              <td class="px-4 py-2">Data Ownership</td>
+              <td class="px-4 py-2">✅ 100% Local</td>
+              <td class="px-4 py-2">❌ Cloud only</td>
+              <td class="px-4 py-2">❌ Cloud only</td>
+            </tr>
+            <tr class="border-t">
+              <td class="px-4 py-2">Deck Analysis & Stats</td>
+              <td class="px-4 py-2">✅ Inspired by Moxfield</td>
+              <td class="px-4 py-2">❌</td>
+              <td class="px-4 py-2">✅ Built-in</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-gray-500 text-center mt-4">Scrap Trawler is designed to enhance — not replace — your EventLink workflow.</p>
+    </section>
+  <hr class="my-12 border-t-2 border-gray-200" />
+
+  <section class="mt-20 text-center">
+    <h2 id="cta" class="text-4xl font-bold text-gray-900 mb-4">Ready to run smoother tournaments?</h2>
+    <p class="text-lg text-gray-700 mb-6">
+      Scrap Trawler gives you the tools to capture, analyze, and archive your events with ease — fully local, judge-friendly, and growing fast.
+    </p>
+    <a
+      href="https://chromewebstore.google.com/detail/bibaandedejifgojmndgbpoicofbopea"
+      class="inline-block bg-blue-600 text-white text-lg font-semibold px-6 py-3 rounded hover:bg-blue-700 transition"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      ➕ Install from the Chrome Web Store
+    </a>
+  </section>
+
+</Layout>
