@@ -7,7 +7,7 @@ if ! command -v git-cliff &> /dev/null; then
 fi
 
 # Define output path (relative to script location)
-OUTPUT_PATH="$(dirname "$0")/../src/changelog.json"
+OUTPUT_PATH="$(dirname "$0")/../extension/src/changelog.json"
 
 # Run git-cliff and process with jq
 git-cliff --context | jq '
