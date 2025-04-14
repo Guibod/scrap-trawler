@@ -58,7 +58,7 @@ export default class MatchBuilder {
     const [team1, team2] = this.match.teamIds;
 
     let wins = faker.number.int({ min: 0, max: 2 });
-    let losses = 2 - wins;
+    const losses = 2 - wins;
     if (isPlayoff && wins == losses) {
       wins++
     }

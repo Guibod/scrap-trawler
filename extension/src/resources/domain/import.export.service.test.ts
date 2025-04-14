@@ -13,7 +13,7 @@ import EventMapper from "~/resources/domain/mappers/event.mapper"
 import EventEntity, { EVENT_ENTITY_VERSION } from "~/resources/storage/entities/event.entity"
 import { sampleEvent, sampleGameState, sampleOrganizer } from "~/resources/integrations/eventlink/data/sample.event"
 
-let dao: EventDao = EventDao.getInstance();
+const dao: EventDao = EventDao.getInstance();
 let service: ImportExportService
 let events: EventEntity[]
 const progressMock: ReturnType<typeof vi.fn> = vi.fn()
@@ -152,7 +152,7 @@ describe("ImportExportService", () => {
   })
 
   describe("EXPORT", () => {
-    let ids = []
+    const ids = []
     beforeEach(async () => {
       await Promise.all(events.map(async (event) => {
         ids.push(event.id)
@@ -266,7 +266,7 @@ const streamFromData = (data: string | Uint8Array) => {
 }
 
 function createMockWritableStream(): { stream: WritableStream; getOutput: () => Promise<Uint8Array> } {
-  let chunks: Uint8Array[] = [];
+  const chunks: Uint8Array[] = [];
   const stream = new WritableStream({
     write(chunk) {
       chunks.push(chunk);
