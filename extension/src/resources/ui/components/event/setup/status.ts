@@ -129,7 +129,12 @@ import type { MappingDbo, PairingMode } from "~/resources/domain/dbos/mapping.db
     }
 
     get uniqueColumnIndex() {
-      return this.meta.columns.find(({ type }) => type === COLUMN_TYPE.UNIQUE_ID)?.index;
+      try {
+        return this.meta.columns.find(({ type }) => type === COLUMN_TYPE.UNIQUE_ID)?.index;
+      } catch (error) {
+        console.error("Error getting unique column index:", error);
+        return undefined;
+      }
     }
 
     private regroupRawDuplicates(): Record<string, SpreadsheetRawRow[]> {

@@ -1,8 +1,9 @@
 import { vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 
-globalThis.fetch = vi.fn()
-vi.mocked(globalThis.fetch).mockResolvedValue(new Response("{}", { status: 200 }))
+vi.stubGlobal("fetch", vi.fn(() =>
+  Promise.resolve(new Response("{}", { status: 200 }))
+))
 
 // ✅ Mock the global `chrome` object
 global.chrome = {
@@ -26,7 +27,8 @@ global.chrome = {
     create: vi.fn()
   },
   identity: {
-    getAuthToken: vi.fn()
+    getAuthToken: vi.fn(),
+    removeCachedAuthToken: vi.fn()
   },
 } as unknown as typeof chrome;
 

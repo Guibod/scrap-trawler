@@ -1,95 +1,161 @@
 import { describe, expect, it } from "vitest"
-import { DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo"
 import type { EventModel } from "~/resources/domain/models/event.model"
 import { ImporterCsv } from "~/resources/domain/parsers/importers/importer.csv"
-import type { SpreadsheetSourceType } from "~/resources/domain/dbos/spreadsheet.dbo"
+import { File } from "fetch-blob/file"
 
-describe("CsvSpreadsheetParser", () => {
-  const parser = new ImporterCsv(
-    {
-      source: 'foo.csv',
-      sourceType: 'file',
-      autodetect: false,
-      sheet: null,
-      columns: [],
-      filters: [],
-      finalized: false,
-      format: null,
-      duplicateStrategy: DUPLICATE_STRATEGY.NONE
-    }
-  );
-  parser.enableAutoDetectColumns({
-    players: {
-      a: {firstName: "Alice", lastName: "Smith"},
-      b: {firstName: "Bob", lastName: "Smith"},
-      c: {firstName: "Charles", lastName: "Jones"},
-      d: {firstName: "Didier", lastName: "Smith"},
-    }
-  } as unknown as EventModel)
+const sampleEvent = {
+  players: {
+    a: {firstName: "Alice", lastName: "Smith"},
+    b: {firstName: "Bob", lastName: "Smith"},
+    c: {firstName: "Charles", lastName: "Jones"},
+    d: {firstName: "Didier", lastName: "Smith"},
+  }
+} as unknown as EventModel
 
-  it("parses a simple CSV with headers", async () => {
-    const csvContent = new TextEncoder().encode(`f-i-r-s-t-n-a-m-e,deck
-Alice,Gruul Aggro
-Bob,Dimir Control
-Charles,Dimir Control
-Didier,Boros Burn
-`).buffer;
-    const result = await parser.parse(csvContent);
+describe("ImporterCsv", () => {
+  describe("canHandle", () => {
+    it("returns true for .csv files", () => {
+      expect(ImporterCsv.canHandle(
+        {
+          metadata: {},
+          file: new File([], 'foo.csv', { type: "text/csv" }),
+        }
+      )).toBe(true);
+    })
 
-    expect(result.columns).toEqual([
-      {
-        "index": 0,
-        "name": "f-i-r-s-t-n-a-m-e",
-        "originalName": "f-i-r-s-t-n-a-m-e",
-        "type": 'firstName',
-      },
-      {
-        "index": 1,
-        "name": "deck",
-        "originalName": "deck",
-        "type": expect.anything(),
-      },
-    ]);
-    expect(result.rows[0]).toEqual(
-      ["Alice", "Gruul Aggro"],
-    );
-  });
+    it("returns false for non-.csv files", () => {
+      expect(ImporterCsv.canHandle(
+        {
+          metadata: {},
+          file: new File([], 'foo.txt', { type: "text/plain" }),
+        }
+      )).toBe(false);
+    })
 
-  it("returns empty rows for empty CSV", async () => {
-    const result = await parser.parse(new ArrayBuffer(0));
+    it("returns false for source .csv, we only trust the file", () => {
+      expect(ImporterCsv.canHandle(
+        {
+          metadata: {
+            source: "foo.csv"
+          },
+          file: new File([], 'foo.txt', { type: "text/plain" }),
+        }
+      )).toBe(false);
+    })
+  })
 
-    expect(result.columns).toEqual([]);
-    expect(result.rows).toEqual([]);
-  });
+  describe("parse", () => {
+    it("parses a simple CSV with headers", async () => {
+      const parser = new ImporterCsv(
+        {
+          metadata: {
+            sourceType: 'file',
+            autodetect: true
+          },
+          file: new File([
+            "f-i-r-s-t-n-a-m-e,deck\n",
+            "Alice,Gruul Aggro\n",
+            "Bob,Dimir Control\n",
+            "Charles,Dimir Control\n",
+            "Didier,Boros Burn\n"
+            ], 'foo.csv', { type: "text/csv" }),
+          event: sampleEvent
+        }
+      );
+      const result = await parser.parse();
 
-  it("handles extra columns gracefully", async () => {
-    const csvContent = new TextEncoder().encode(`name,deck,email
-Charlie,Mono Green,charlie@example.com
-Dana,Boros Burn,dana@example.com
-`).buffer;
-    const result = await parser.parse(csvContent);
+      expect(result.columns).toEqual([
+        {
+          "index": 0,
+          "name": "f-i-r-s-t-n-a-m-e",
+          "originalName": "f-i-r-s-t-n-a-m-e",
+          "type": 'firstName',
+        },
+        {
+          "index": 1,
+          "name": "deck",
+          "originalName": "deck",
+          "type": expect.anything(),
+        },
+      ]);
+      expect(result.rows[0]).toEqual(
+        ["Alice", "Gruul Aggro"],
+      );
+    });
 
-    expect(result.columns).toEqual([
-      {
-        "index": 0,
-        "name": "name",
-        "originalName": "name",
-        "type": expect.anything(),
-      },
-      {
-        "index": 1,
-        "name": "deck",
-        "originalName": "deck",
-        "type": expect.anything(),
-      },
-      {
-        "index": 2,
-        "name": "email",
-        "originalName": "email",
-        "type": "uniqueId",
-      },
-    ]);
-    expect(result.rows[0][0]).toBe("Charlie");
-    expect(result.rows[0][2]).toBe("charlie@example.com");
-  });
+    it("returns empty rows for empty CSV", async () => {
+      const parser = new ImporterCsv(
+        {
+          metadata: {
+            sourceType: 'file',
+            autodetect: false
+          },
+          file: new File([], 'foo.csv', { type: "text/csv" }),
+          event: sampleEvent
+        }
+      );
+
+      const result = await parser.parse()
+
+      expect(result.columns).toEqual([]);
+      expect(result.rows).toEqual([]);
+    });
+
+    it("No file", async () => {
+      const parser = new ImporterCsv(
+        {
+          metadata: {
+            source: 'foo.csv',
+            sourceType: 'file',
+            autodetect: false
+          },
+          event: sampleEvent
+        }
+      );
+
+      await expect(parser.parse()).rejects.toThrow("No file provided");
+    });
+
+    it("handles extra columns gracefully", async () => {
+      const parser = new ImporterCsv(
+        {
+          metadata: {
+            sourceType: 'file',
+            autodetect: true
+          },
+          file: new File([
+            "name,deck,email\n",
+            "Charlie,Mono Green,charlie@example.com\n",
+            "Dana,Boros Burn,dana@example.com\n"
+          ], 'foo.csv', {type: "text/csv"}),
+          event: sampleEvent
+        }
+      );
+
+      const result = await parser.parse();
+      expect(result.columns).toEqual([
+        {
+          "index": 0,
+          "name": "name",
+          "originalName": "name",
+          "type": expect.anything(),
+        },
+        {
+          "index": 1,
+          "name": "deck",
+          "originalName": "deck",
+          "type": expect.anything(),
+        },
+        {
+          "index": 2,
+          "name": "email",
+          "originalName": "email",
+          "type": "uniqueId",
+        },
+      ]);
+      expect(result.rows[0][0]).toBe("Charlie");
+      expect(result.rows[0][2]).toBe("charlie@example.com");
+    });
+  })
 });
+

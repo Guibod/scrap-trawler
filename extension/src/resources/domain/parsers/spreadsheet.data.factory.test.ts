@@ -7,9 +7,12 @@ describe("SpreadsheetDataFactory", () => {
   const baseMeta: SpreadsheetMetadata = {
     source: "test",
     sourceType: "file",
+    name: 'test.csv' ,
     autodetect: false,
-    sheet: "test",
+    sheetId: "test",
+    sheetName: "test",
     finalized: false,
+    importedAt: null,
     columns: [
       {
         name: "First Name",

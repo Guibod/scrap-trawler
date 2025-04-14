@@ -52,7 +52,7 @@ describe("OauthService", () => {
     mockAuthToken((_details, cb) => cb(TOKEN))
 
     await service.getGoogleApiToken()
-    service.clearCachedToken()
+    await service.clearCachedToken()
 
     await service.getGoogleApiToken()
     expect(chrome.identity.getAuthToken).toHaveBeenCalledTimes(2)

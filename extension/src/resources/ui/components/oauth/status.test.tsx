@@ -11,6 +11,7 @@ vi.mock("~/resources/ui/components/oauth/provider", () => ({
 describe("OauthStatus", () => {
   const login = vi.fn()
   const logout = vi.fn()
+  const revoke = vi.fn()
 
   beforeEach(() => {
     vi.clearAllMocks()
@@ -22,7 +23,8 @@ describe("OauthStatus", () => {
       connected: false,
       identity: null,
       login,
-      logout
+      logout,
+      revoke
     })
 
     render(<OauthStatus />)
@@ -35,7 +37,8 @@ describe("OauthStatus", () => {
       connected: false,
       identity: null,
       login,
-      logout
+      logout,
+      revoke
     })
 
     render(<OauthStatus />)
@@ -52,7 +55,8 @@ describe("OauthStatus", () => {
       connected: true,
       identity: "you@example.com",
       login,
-      logout
+      logout,
+      revoke
     })
 
     render(<OauthStatus />)
@@ -61,6 +65,7 @@ describe("OauthStatus", () => {
 
     const disconnectBtn = screen.getByRole("button", { name: /disconnect/i })
     fireEvent.click(disconnectBtn)
-    expect(logout).toHaveBeenCalled()
+    expect(logout).not.toHaveBeenCalled()
+    expect(revoke).toHaveBeenCalled()
   })
 })

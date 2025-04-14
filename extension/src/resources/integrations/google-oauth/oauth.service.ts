@@ -21,15 +21,15 @@ export class OauthService {
     return !!this.token && !!this.fetchedAt && (Date.now() - this.fetchedAt < this.maxAgeMs)
   }
 
-  public clearCachedToken(): void {
+  public async clearCachedToken(): Promise<void> {
     this.logger.debug("Manually clearing cached token")
+    await chrome.identity.removeCachedAuthToken({ token: this.token })
     this.token = null
     this.fetchedAt = null
   }
 
   public async getGoogleApiToken(options: Partial<chrome.identity.TokenDetails> = {}): Promise<string> {
     if (this.isTokenFresh()) {
-      this.logger.debug("Returning cached token")
       return this.token!
     }
 
@@ -38,30 +38,39 @@ export class OauthService {
       ...options
     }
 
-    const token = await new Promise<string>((resolve, reject) => {
-      chrome.identity.getAuthToken(finalOptions, (token) => {
-        if (chrome.runtime.lastError) {
-          this.logger.error(`Failed to get token: ${chrome.runtime.lastError.message}`)
-          reject(chrome.runtime.lastError.message)
-        } else if (!token) {
-          this.logger.error("No token returned")
-          reject("No token returned")
-        } else {
-          this.logger.debug(`Fetched new Google API token: ${token}`)
-          resolve(token as string)
+    return new Promise((resolve, reject) => {
+      chrome.identity.getAuthToken(finalOptions, async (token) => {
+        if (chrome.runtime.lastError || !token) {
+          const message = chrome.runtime.lastError?.message ?? "No token returned"
+          this.logger.error(`Failed to get token: ${message}`)
+          reject(message)
         }
+
+        // 👇 Immediately test token to ensure validity
+        const test = await fetch("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=" + token)
+        if (test.status === 401) {
+          this.logger.error(`Token invalid, removing from cache`)
+          chrome.identity.removeCachedAuthToken({ token: this.token }, () => {
+            // Try again after removal
+            this.getGoogleApiToken(options).then(resolve).catch(reject)
+          })
+          return
+        }
+
+        this.token = token as string
+        this.fetchedAt = Date.now()
+        resolve(this.token)
       })
     })
-
-    this.token = token
-    this.fetchedAt = Date.now()
-    return token
   }
 
   public async revokeAccessToken(): Promise<void> {
     const token = await this.getGoogleApiToken()
     await fetch(`https://accounts.google.com/o/oauth2/revoke?token=${token}`)
     this.logger.info("OAuth token revoked.")
+    chrome.identity.removeCachedAuthToken({ token: this.token }).catch((err) => {
+      console.log("Failed to remove cached auth", err)
+    })
     this.token = null
     this.fetchedAt = null
   }

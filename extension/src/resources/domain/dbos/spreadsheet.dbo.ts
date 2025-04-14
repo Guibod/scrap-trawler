@@ -14,17 +14,20 @@ export type SpreadsheetFilter = {
   values: string[];
 };
 
-export type SpreadsheetSourceType = "file" | "url"
+export type SpreadsheetSourceType = "file" | "drive"
 
-export interface SpreadsheetMetadata {
+export type SpreadsheetMetadata = {
   sourceType: SpreadsheetSourceType
   autodetect: boolean
-  source: string;
-  sheet: string | null;
+  source: string
+  name: string
+  sheetId: string | null
+  sheetName: string | null
   columns: SpreadsheetColumnMetaData[];
   filters: SpreadsheetFilter[];
   duplicateStrategy: DUPLICATE_STRATEGY;
   format: MTG_FORMATS | null
+  importedAt: Date | null
   finalized: boolean
 }
 

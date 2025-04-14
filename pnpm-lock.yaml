@@ -20,6 +20,9 @@ importers:
       lint-staged:
         specifier: ^15.4.3
         version: 15.5.0
+      process:
+        specifier: ^0.11.10
+        version: 0.11.10
       tsx:
         specifier: ^3.12.7
         version: 3.14.0
@@ -69,9 +72,6 @@ importers:
       '@faker-js/faker':
         specifier: ^9.6.0
         version: 9.6.0
-      '@googleworkspace/drive-picker-element':
-        specifier: ^0.4.1
-        version: 0.4.1
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@18.2.0)
@@ -99,6 +99,9 @@ importers:
       '@plasmohq/messaging':
         specifier: ^0.7.1
         version: 0.7.1(react@18.2.0)
+      '@react-stately/data':
+        specifier: ^3.12.3
+        version: 3.12.3(react@18.2.0)
       '@visx/axis':
         specifier: ^3.12.0
         version: 3.12.0(react@18.2.0)
@@ -232,9 +235,6 @@ importers:
       blob-polyfill:
         specifier: ^9.0.20240710
         version: 9.0.20240710
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
       eslint:
         specifier: ^9.23.0
         version: 9.23.0(jiti@1.21.7)
@@ -247,9 +247,18 @@ importers:
       fake-indexeddb:
         specifier: ^6.0.0
         version: 6.0.0
+      fetch-blob:
+        specifier: ^4.0.0
+        version: 4.0.0
+      husky:
+        specifier: ^9.1.7
+        version: 9.1.7
       jsdom:
         specifier: ^26.0.0
         version: 26.0.0
+      lint-staged:
+        specifier: ^15.4.3
+        version: 15.5.0
       postcss:
         specifier: ^8.5.2
         version: 8.5.3
@@ -1187,9 +1196,6 @@ packages:
 
   '@golevelup/ts-vitest@0.5.2':
     resolution: {integrity: sha512-kxL12/4lBeYcdpfabvqWGgIagt8ycD6vUNlVyNUjGjxuqo8wPRB1Ohfnn4LNWQG8X8/xf74S2qYnOGqJ7IvWFA==}
-
-  '@googleworkspace/drive-picker-element@0.4.1':
-    resolution: {integrity: sha512-5UgtM39nzGsrOzu0+/DFGKuHpqCRMbb6/MNR/nmUC3EREre/AyBjbYl8TmdcZfUoaUYJAzPoh/tMhBXrwVijBQ==}
 
   '@graphql-typed-document-node/core@3.2.0':
     resolution: {integrity: sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==}
@@ -3327,6 +3333,11 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
+  '@react-stately/data@3.12.3':
+    resolution: {integrity: sha512-JYPNV1gd9OZm8xPay0exx5okFNgiwESNvdBHsfDC+f8BifRyFLdrvoaUGF0enKIeSQMB1oReFAxTAXtDZd27rA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
   '@react-stately/datepicker@3.13.0':
     resolution: {integrity: sha512-I0Y/aQraQyRLMWnh5tBZMiZ0xlmvPjFErXnQaeD7SdOYUHNtQS4BAQsMByQrMfg8uhOqUTKlIh7xEZusuqYWOA==}
     peerDependencies:
@@ -3553,6 +3564,11 @@ packages:
 
   '@react-types/shared@3.28.0':
     resolution: {integrity: sha512-9oMEYIDc3sk0G5rysnYvdNrkSg7B04yTKl50HHSZVbokeHpnU0yRmsDaWb9B/5RprcKj8XszEk5guBO8Sa/Q+Q==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  '@react-types/shared@3.29.0':
+    resolution: {integrity: sha512-IDQYu/AHgZimObzCFdNl1LpZvQW/xcfLt3v20sorl5qRucDVj4S9os98sVTZ4IRIBjmS+MkjqpR5E70xan7ooA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
@@ -4759,11 +4775,6 @@ packages:
     engines: {node: '>=0.8'}
     hasBin: true
 
-  cross-env@7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
-    hasBin: true
-
   cross-fetch@3.2.0:
     resolution: {integrity: sha512-Q+xVJLoGOeIMXZmbUK4HYk+69cQH6LudR0Vu/pRm2YlU/hDV9CiS0gKUMaWY5f2NeUH9C1nV3bsTlCo0FsTV1Q==}
 
@@ -5276,6 +5287,10 @@ packages:
       picomatch:
         optional: true
 
+  fetch-blob@4.0.0:
+    resolution: {integrity: sha512-nPmnhRmpNMjYWnp9EBMGs6z5lq9RXed5W1vuZcECrsDVQInM8AMQSooVb3X183Aole60adzjWbH9qlRFWzDDTA==}
+    engines: {node: '>=16.7'}
+
   fflate@0.8.1:
     resolution: {integrity: sha512-/exOvEuc+/iaUm105QIiOt4LpBdMTWsXxqR0HDF35vx3fmaKzw7354gTilCh5rkzEt8WYyG//ku3h3nRmd7CHQ==}
 
@@ -5642,6 +5657,11 @@ packages:
   husky@8.0.3:
     resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
     engines: {node: '>=14'}
+    hasBin: true
+
+  husky@9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
+    engines: {node: '>=18'}
     hasBin: true
 
   iconv-lite@0.4.24:
@@ -6484,6 +6504,10 @@ packages:
 
   node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
+
+  node-domexception@1.0.0:
+    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
+    engines: {node: '>=10.5.0'}
 
   node-fetch-native@1.6.6:
     resolution: {integrity: sha512-8Mc2HhqPdlIfedsuZoc3yioPuzp6b+L5jRCRY1QzuWZh2EGJVQrGppC6V6cF0bLdbW0+O2YpqCA25aF/1lvipQ==}
@@ -8705,8 +8729,6 @@ snapshots:
       tslib: 2.8.1
 
   '@golevelup/ts-vitest@0.5.2': {}
-
-  '@googleworkspace/drive-picker-element@0.4.1': {}
 
   '@graphql-typed-document-node/core@3.2.0(graphql@15.10.1)':
     dependencies:
@@ -12281,6 +12303,12 @@ snapshots:
       '@swc/helpers': 0.5.15
       react: 18.2.0
 
+  '@react-stately/data@3.12.3(react@18.2.0)':
+    dependencies:
+      '@react-types/shared': 3.29.0(react@18.2.0)
+      '@swc/helpers': 0.5.15
+      react: 18.2.0
+
   '@react-stately/datepicker@3.13.0(react@18.2.0)':
     dependencies:
       '@internationalized/date': 3.7.0
@@ -12586,6 +12614,10 @@ snapshots:
       react: 18.2.0
 
   '@react-types/shared@3.28.0(react@18.2.0)':
+    dependencies:
+      react: 18.2.0
+
+  '@react-types/shared@3.29.0(react@18.2.0)':
     dependencies:
       react: 18.2.0
 
@@ -13889,10 +13921,6 @@ snapshots:
 
   crc-32@1.2.2: {}
 
-  cross-env@7.0.3:
-    dependencies:
-      cross-spawn: 7.0.6
-
   cross-fetch@3.2.0:
     dependencies:
       node-fetch: 2.7.0
@@ -14487,6 +14515,10 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
+  fetch-blob@4.0.0:
+    dependencies:
+      node-domexception: 1.0.0
+
   fflate@0.8.1: {}
 
   fflate@0.8.2: {}
@@ -14923,6 +14955,8 @@ snapshots:
   human-signals@5.0.0: {}
 
   husky@8.0.3: {}
+
+  husky@9.1.7: {}
 
   iconv-lite@0.4.24:
     dependencies:
@@ -15934,6 +15968,8 @@ snapshots:
   node-addon-api@4.3.0: {}
 
   node-addon-api@7.1.1: {}
+
+  node-domexception@1.0.0: {}
 
   node-fetch-native@1.6.6: {}
 

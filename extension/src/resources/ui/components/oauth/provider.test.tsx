@@ -19,7 +19,8 @@ describe("OAuthProvider", () => {
   const mockService = {
     getGoogleApiToken: vi.fn(),
     getUserInfo: vi.fn(),
-    revokeAccessToken: vi.fn()
+    revokeAccessToken: vi.fn(),
+    clearCachedToken: vi.fn()
   }
 
   beforeEach(() => {
@@ -69,7 +70,7 @@ describe("OAuthProvider", () => {
       await result.current.logout()
     })
 
-    expect(mockService.revokeAccessToken).toHaveBeenCalled()
+    expect(mockService.clearCachedToken).toHaveBeenCalled()
     expect(result.current.connected).toBe(false)
     expect(result.current.identity).toBe(null)
     expect(result.current.token).toBe(null)

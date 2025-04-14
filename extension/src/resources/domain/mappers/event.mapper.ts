@@ -4,7 +4,7 @@ import type { EventSummarizedDbo } from "~/resources/domain/dbos/event.summarize
 import type { EventWriteDbo } from "~/resources/domain/dbos/event.write.dbo"
 import { getLogger } from "~/resources/logging/logger"
 import type { RoundDbo } from "~/resources/domain/dbos/round.dbo"
-import { mapSpreadsheetData } from "~/resources/domain/mappers/spreadsheet.mapper"
+import { mapSpreadsheet } from "~/resources/domain/mappers/spreadsheet.mapper"
 import EventHydrator from "~/resources/storage/hydrators/event.hydrator"
 
 const logger = getLogger("event-mapper")
@@ -46,10 +46,7 @@ export default class EventMapper {
         errors: deck.errors ?? null,
         lastUpdated: entity.lastUpdated ? new Date(deck.lastUpdated) : null,
       }])),
-      spreadsheet: entity.spreadsheet ? {
-        meta: entity.spreadsheet,
-        data: await mapSpreadsheetData(entity.raw_data.spreadsheet, entity.spreadsheet)
-      } : null
+      spreadsheet: await mapSpreadsheet(entity.spreadsheet, entity.raw_data.spreadsheet),
     };
   }
 
