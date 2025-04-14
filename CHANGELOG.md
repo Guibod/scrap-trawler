@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.17.1 - 2025-04-14
+#### Continuous Integration
+- reviewed cocogitto and release strategy - (4e7c4ad) - Guillaume Boddaert
+- updated ci workflow to support new monorepository format - (e0817cd) - Guillaume Boddaert
+- moved husky/lint-staged to root project - (2a322c4) - Guillaume Boddaert
+- added a template for pull requests - (6190cb0) - Guillaume Boddaert
+#### Miscellaneous Chores
+- **(release)** sync package.json version - (22073d9) - Cog Bot
+- **(release)** update changelog.json - (e175c5e) - Cog Bot
+- extension project is now a subproject - (257940e) - Guillaume Boddaert
+- proxy project is wrapped under monorepository - (17ee9ac) - Guillaume Boddaert
+
+- - -
+
 ## 0.17.0 - 2025-04-12
 #### Features
 - setup upload screen allow to override the event format - (065378b) - Guillaume Boddaert
