@@ -58,6 +58,11 @@ jobs:
       - name: Test proxy
         run: pnpm --filter cloudflare-proxy test
 
+      - name: Type-check & Build Site
+        run: |
+          pnpm --filter site run type-check
+          pnpm --filter site run build
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:

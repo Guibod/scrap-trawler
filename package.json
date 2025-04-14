@@ -10,6 +10,7 @@
     "build:extension": "pnpm --filter extension build",
     "build:proxy": "pnpm --filter cloudflare-proxy build",
     "deploy:proxy": "pnpm --filter cloudflare-proxy deploy",
+    "build": "pnpm -r build",
     "test": "pnpm -r --parallel test",
     "lint": "pnpm -r --parallel lint",
     "dev:build": "pnpm -r --parallel dev:build"
