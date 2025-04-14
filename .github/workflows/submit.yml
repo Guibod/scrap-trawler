@@ -23,12 +23,16 @@ jobs:
         with:
           node-version: 18.x
           cache: "pnpm"
-      - name: Build the extension
+      - name: Build extension
         run: pnpm build
-      - name: Package the ext ension into a zip artifact
+        working-directory: extension
+
+      - name: Package extension
         run: pnpm package
-      - name: Browser Platform Publish
+        working-directory: extension
+
+      - name: Publish to Stores
         uses: PlasmoHQ/bpp@v3
         with:
           keys: ${{ secrets.SUBMIT_KEYS }}
-          artifact: build/chrome-mv3-prod.zip
+          artifact: extension/build/chrome-mv3-prod.zip
