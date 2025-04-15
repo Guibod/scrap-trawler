@@ -7,7 +7,7 @@ pre_bump_hooks = [
 
 post_bump_hooks = [
   "scripts/changelog.json.sh",
-  "tsx scripts/sync-version.ts",
+  "pnpm exec tsx scripts/sync-version.ts",
   "git add extension/package.json cloudflare-proxy/package.json extension/src/changelog.json CHANGELOG.md",
   "git commit --amend --no-edit"
 ]
