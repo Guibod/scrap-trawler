@@ -68,7 +68,7 @@ describe("DeckAnalyzer", () => {
     const analyzer = new DeckAnalyzer(mockDeck)
     const grouped = analyzer.groupBy({ grouping: GroupBy.TYPE, selector: ["mainboard"] })
 
-    expect(grouped.keys().toArray()).toEqual(expect.arrayContaining(["Creature", "Instant", "Land"]))
+    expect(Array.from(grouped.keys())).toEqual(expect.arrayContaining(["Creature", "Instant", "Land"]))
     expect(grouped.get(CardTypes.CREATURE)).toHaveLength(1)
     expect(grouped.get(CardTypes.LAND)).toHaveLength(1)
     expect(grouped.get(CardTypes.BATTLE)).toBeUndefined()

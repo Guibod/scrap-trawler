@@ -213,7 +213,7 @@ export default class DeckFetchService {
       this.onProgress?.(request.eventId, taskQueueItem.processed, taskQueueItem.count, taskQueueItem.hasError, taskQueueItem.hasFailure);
 
       this.requests.delete(request.id);
-      const remaining = taskQueueItem.tasks.values().reduce((acc, val) => acc + val.length, 0)
+      const remaining = Array.from(taskQueueItem.tasks.values()).reduce((acc, val) => acc + val.length, 0)
       if (!remaining) {
         let status = EventFetchStatus.SUCCESS
         if (taskQueueItem.hasFailure) {
