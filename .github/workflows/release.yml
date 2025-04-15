@@ -34,6 +34,9 @@ jobs:
       - name: Install git-cliff
         run: cargo install git-cliff
 
+      - name: Install deps including tsx
+        run: pnpm install --frozen-lockfile
+
       # Pre-bump: build to prepare plasmo
       - name: Dev build (extension)
         run: pnpm --filter extension run dev:build
