@@ -17,7 +17,8 @@
   },
   "devDependencies": {
     "husky": "^8.0.0",
-    "lint-staged": "^15.4.3"
+    "lint-staged": "^15.4.3",
+    "tsx": "^3.12.7"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,json,md}": "biome format --write",

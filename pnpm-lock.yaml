@@ -14,6 +14,9 @@ importers:
       lint-staged:
         specifier: ^15.4.3
         version: 15.5.0
+      tsx:
+        specifier: ^3.12.7
+        version: 3.14.0
 
   cloudflare-proxy:
     dependencies:
@@ -243,7 +246,7 @@ importers:
         version: 5.7.3
       vite-tsconfig-paths:
         specifier: ^5.1.4
-        version: 5.1.4(typescript@5.7.3)(vite@6.2.3(@types/node@22.14.0)(jiti@1.21.7)(less@4.2.2)(lightningcss@1.29.3)(sass@1.86.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 5.1.4(typescript@5.7.3)(vite@6.2.6(@types/node@22.14.0)(jiti@1.21.7)(less@4.2.2)(lightningcss@1.29.3)(sass@1.86.0)(tsx@4.19.3)(yaml@2.7.0))
       vitest:
         specifier: ^3.0.5
         version: 3.0.9(@types/debug@4.1.12)(@types/node@22.14.0)(jiti@1.21.7)(jsdom@26.0.0)(less@4.2.2)(lightningcss@1.29.3)(sass@1.86.0)(tsx@4.19.3)(yaml@2.7.0)
@@ -4452,6 +4455,9 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
+  buffer-from@1.1.2:
+    resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
+
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
@@ -7164,6 +7170,9 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
+  source-map-support@0.5.21:
+    resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}
+
   source-map@0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
@@ -7451,6 +7460,10 @@ packages:
         optional: true
       typescript:
         optional: true
+
+  tsx@3.14.0:
+    resolution: {integrity: sha512-xHtFaKtHxM9LOklMmJdI3BEnQq/D5F73Of2E1GDrITi9sgoVkvIsrQUTY1G8FlmGtA+awCI4EBlTRRYxkL2sRg==}
+    hasBin: true
 
   tsx@4.19.3:
     resolution: {integrity: sha512-4H8vUNGNjQ4V2EOoGw005+c+dGuPSnhpPBPHBtsZdGZBk/iJb4kguGlPWaZTZ3q5nMtFOEsY0nRDlh9PJyd6SQ==}
@@ -13651,6 +13664,8 @@ snapshots:
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.24.4)
 
+  buffer-from@1.1.2: {}
+
   buffer@6.0.3:
     dependencies:
       base64-js: 1.5.1
@@ -16822,6 +16837,11 @@ snapshots:
 
   source-map-js@1.2.1: {}
 
+  source-map-support@0.5.21:
+    dependencies:
+      buffer-from: 1.1.2
+      source-map: 0.6.1
+
   source-map@0.6.1: {}
 
   source-map@0.8.0-beta.0:
@@ -17125,6 +17145,14 @@ snapshots:
       - supports-color
       - ts-node
 
+  tsx@3.14.0:
+    dependencies:
+      esbuild: 0.18.20
+      get-tsconfig: 4.10.0
+      source-map-support: 0.5.21
+    optionalDependencies:
+      fsevents: 2.3.3
+
   tsx@4.19.3:
     dependencies:
       esbuild: 0.25.1
@@ -17350,13 +17378,13 @@ snapshots:
       - tsx
       - yaml
 
-  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@6.2.3(@types/node@22.14.0)(jiti@1.21.7)(less@4.2.2)(lightningcss@1.29.3)(sass@1.86.0)(tsx@4.19.3)(yaml@2.7.0)):
+  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@6.2.6(@types/node@22.14.0)(jiti@1.21.7)(less@4.2.2)(lightningcss@1.29.3)(sass@1.86.0)(tsx@4.19.3)(yaml@2.7.0)):
     dependencies:
       debug: 4.4.0
       globrex: 0.1.2
       tsconfck: 3.1.5(typescript@5.7.3)
     optionalDependencies:
-      vite: 6.2.3(@types/node@22.14.0)(jiti@1.21.7)(less@4.2.2)(lightningcss@1.29.3)(sass@1.86.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite: 6.2.6(@types/node@22.14.0)(jiti@1.21.7)(less@4.2.2)(lightningcss@1.29.3)(sass@1.86.0)(tsx@4.19.3)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
