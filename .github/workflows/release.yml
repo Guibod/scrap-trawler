@@ -36,7 +36,7 @@ jobs:
 
       # Pre-bump: build to prepare plasmo
       - name: Dev build (plasmo virtual modules etc)
-        run: pnpm -r run dev:build --no-sandbox
+        run: pnpm --filter extension run dev:build --no-sandbox
 
       # 🔥 Perform the version bump (triggers hooks)
       - name: Semver release
