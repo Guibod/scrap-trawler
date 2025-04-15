@@ -28,7 +28,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
           cache: 'pnpm'
 
       - name: Install git-cliff
@@ -36,7 +36,7 @@ jobs:
 
       # Pre-bump: build to prepare plasmo
       - name: Dev build (plasmo virtual modules etc)
-        run: pnpm -r run dev:build
+        run: pnpm -r run dev:build --no-sandbox
 
       # 🔥 Perform the version bump (triggers hooks)
       - name: Semver release
