@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, act, waitFor } from "@testing-library/react";
 import React from "react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom"
@@ -66,9 +66,9 @@ describe("WelcomePage", () => {
     // ✅ Wait for the actual page content to appear
     await screen.findByText("Welcome to Scrap Trawler!");
 
-    await act(async () => {
-      expect(settingsServiceMock.setOne).toHaveBeenCalledWith("showWelcome", false);
-    });
+    await waitFor(() => {
+      expect(settingsServiceMock.setOne).toHaveBeenCalledWith("showWelcome", false)
+    })
   });
 
   it("navigates away when 'Get Started' is clicked", async () => {
