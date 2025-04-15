@@ -25,7 +25,7 @@
     "tournament"
   ],
   "scripts": {
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --noEmit -p tsconfig.json",
     "dev": "plasmo dev",
     "dev:build": "cross-env PARCEL_WORKER_BACKEND=process plasmo build --target=chromium-mv3",
     "build": "cross-env PARCEL_WORKER_BACKEND=process plasmo build",
