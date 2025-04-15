@@ -1,5 +1,5 @@
 {
-  "name": "scrap-trawler",
+  "name": "extension",
   "displayName": "Scrap Trawler",
   "version": "0.17.0",
   "description": "A browser extension for extracting event data from EventLink tournaments.",
