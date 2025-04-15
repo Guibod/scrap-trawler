@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+  const CLIENT_ID = "933041103309-312keqir0ejl8d74oqbd5r6jgtccnql5.apps.googleusercontent.com";
+  const API_KEY = "AIzaSyBMB4AJ95i-gAGdvDdTP1pmr5gRxGPZnXA";
+  const SCOPE = "https://www.googleapis.com/auth/drive.readonly";
+
+  let accessToken = null;
+  let pickerInited = false;
+  let gisInited = false;
+  let tokenClient = null;
+  let picker = null;
+  let parent = null;
+  let msgOrigin = null;
+
+  function onApiLoad() {
+    gapi.load("picker", onPickerApiLoad);
+  }
+
+  function onPickerApiLoad() {
+    pickerInited = true;
+    console.log("Google Picker API loaded");
+  }
+
+  function showPicker() {
+    const view = new google.picker.DocsView().setIncludeFolders(true);
+    picker = new google.picker.PickerBuilder()
+      .addView(view)
+      .setOAuthToken(accessToken)
+      .setOrigin(msgOrigin)
+      .setCallback(pickerCallback)
+      .setAppId(CLIENT_ID)
+      .build();
+    picker.setVisible(true);
+    console.log("Picker shown");
+  }
+
+  function gisLoaded() {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: CLIENT_ID,
+      scope: SCOPE,
+      callback: (response) => {
+        if (response.error !== undefined) {
+          console.error("Token error", response);
+          parent?.postMessage({ m: "pickerResult", url: null }, "*");
+          return;
+        }
+        accessToken = response.access_token;
+        console.log("Token received", accessToken);
+        showPicker();
+      },
+      error_callback: (err) => {
+        console.error("OAuth error", err);
+        parent?.postMessage({ m: "pickerResult", url: null }, "*");
+      },
+    });
+    gisInited = true;
+    console.log("GIS client initialized");
+  }
+
+  function launch() {
+    if (!accessToken) {
+      tokenClient.requestAccessToken({ prompt: "consent" });
+    } else {
+      tokenClient.requestAccessToken({ prompt: "" });
+    }
+  }
+
+  function pickerCallback(data) {
+    console.log("Picker callback", data);
+    if (data[google.picker.Response.ACTION] === google.picker.Action.PICKED) {
+      const doc = data[google.picker.Response.DOCUMENTS][0];
+      const url = doc[google.picker.Document.URL];
+      parent?.postMessage({ m: "pickerResult", url }, msgOrigin);
+    } else {
+      parent?.postMessage({ m: "pickerResult", url: null }, msgOrigin);
+    }
+  }
+
+  window.addEventListener("message", (event) => {
+    const allowedPrefixes = ["chrome-extension://", "moz-extension://"];
+    const isFromExtension = allowedPrefixes.some((prefix) => event.origin.startsWith(prefix));
+    if (pickerInited && gisInited && isFromExtension && event.data.m === "showPicker") {
+      console.log("Message received from extension", event);
+      parent = event.source;
+      msgOrigin = event.origin;
+      launch();
+    }
+  });
+</script>
+
+<script async defer src="https://apis.google.com/js/api.js" onload="onApiLoad()"></script>
+<script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+</body>
+</html>
