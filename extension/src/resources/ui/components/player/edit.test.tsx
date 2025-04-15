@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import React from "react"
-import { vi, expect, beforeEach } from "vitest"
+import { vi, expect, beforeEach, it } from "vitest"
 import { EventContextType, useEvent } from "~/resources/ui/providers/event"
 import PlayerEdit from "~/resources/ui/components/player/edit"
 import type { PlayerDbo } from "~/resources/domain/dbos/player.dbo"

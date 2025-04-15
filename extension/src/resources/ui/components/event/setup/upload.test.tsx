@@ -1,4 +1,4 @@
-import { vi, describe, expect, beforeEach } from "vitest";
+import { vi, describe, expect, beforeEach, it } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SetupUpload from "~/resources/ui/components/event/setup/upload";
 import React from "react";

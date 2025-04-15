@@ -1,7 +1,7 @@
 import React from "react"
 import { render, screen, within } from "@testing-library/react"
 import PlayerStandings from "./standings"
-import { vi, expect, describe } from "vitest"
+import { vi, expect, describe, it } from "vitest"
 
 vi.mock("~/resources/ui/providers/event", () => ({
   usePlayer: vi.fn(() => ({

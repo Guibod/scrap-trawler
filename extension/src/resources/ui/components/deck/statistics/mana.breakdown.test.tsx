@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import React from "react"
 import { ManaColorBreakdown } from "./mana.breakdown"
-import { vi, expect, beforeEach } from "vitest"
+import { vi, expect, beforeEach, it } from "vitest"
 import { useDeck } from "~/resources/ui/components/deck/provider"
 import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 import { GroupBy } from "~/resources/domain/utils/deck.analyzer"

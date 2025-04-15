@@ -1,7 +1,7 @@
 import React from "react"
 import { render, screen, fireEvent, within } from "@testing-library/react"
 import EventDeckStatistics from "./statistics"
-import { vi, expect, beforeEach } from "vitest"
+import { vi, expect, beforeEach, it } from "vitest"
 import { useDeck } from "~/resources/ui/components/deck/provider"
 import { GroupBy } from "~/resources/domain/utils/deck.analyzer"
 

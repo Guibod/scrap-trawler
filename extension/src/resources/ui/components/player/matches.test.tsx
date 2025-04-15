@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import { vi, expect, it } from "vitest"
+import { vi, expect, it, beforeEach } from "vitest"
 import { useEvent, usePlayer, usePlayers } from "~/resources/ui/providers/event"
 import { MemoryRouter } from "react-router-dom"
 import { PlayerMatches } from "~/resources/ui/components/player/matches"

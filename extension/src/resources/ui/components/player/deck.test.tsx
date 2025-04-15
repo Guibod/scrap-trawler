@@ -1,4 +1,4 @@
-import { vi, describe, expect, beforeEach } from "vitest"
+import { vi, describe, expect, beforeEach, it } from "vitest"
 import { render, screen } from "@testing-library/react"
 import PlayerDeck from "~/resources/ui/components/player/deck"
 import React from "react"
