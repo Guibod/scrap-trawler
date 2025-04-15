@@ -1,4 +1,5 @@
 ---
+import "../styles/global.css"
 export interface Props {
   title: string
 }
@@ -12,7 +13,6 @@ const { title } = Astro.props
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Scrap Trawler is a browser extension for Magic: The Gathering judges and TOs. It scrapes EventLink data, links to decklists, and builds event archives." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col relative">
     <header class="bg-white shadow px-6 py-4">
