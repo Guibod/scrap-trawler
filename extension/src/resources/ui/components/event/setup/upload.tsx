@@ -21,7 +21,7 @@ const SetupUpload = ({ ...props }: SetupUploadProps) => {
     key: value,
     label: capitalize(key),
   }))
-    // @ts-ignore
+    // @ts-expect-error
     .concat({ key: OTHER, label: "Other" })
 
   return (

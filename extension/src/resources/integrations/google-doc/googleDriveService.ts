@@ -1,4 +1,4 @@
-import { OauthService } from "~/resources/integrations/google-oauth/oauth.service"
+import { OAuthService } from "~/resources/integrations/google-oauth/oauth.service"
 
 const DRIVE_API = "https://www.googleapis.com/drive/v3/files"
 
@@ -11,9 +11,9 @@ export interface DriveFile {
 export class GoogleDriveService {
   private static instance: GoogleDriveService
 
-  private constructor(private oauthService: OauthService) {}
+  private constructor(private oauthService: OAuthService) {}
 
-  static getInstance(oauth = OauthService.getInstance()): GoogleDriveService {
+  static getInstance(oauth = OAuthService.getInstance()): GoogleDriveService {
     if (!this.instance) {
       this.instance = new GoogleDriveService(oauth)
     }
@@ -56,7 +56,7 @@ export class GoogleDriveService {
       const json = await res.json()
 
       allFiles.push(
-        ...json.files.map((item: any) => ({
+        ...json.files.map((item: { modifiedTime: string }) => ({
           ...item,
           modifiedTime: item.modifiedTime ? new Date(item.modifiedTime) : undefined
         }))

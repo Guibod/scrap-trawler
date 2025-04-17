@@ -50,10 +50,12 @@ describe("OauthStatus", () => {
   })
 
   it("shows identity and disconnect button when connected", () => {
-    (useOAuth as any).mockReturnValue({
+    vi.mocked(useOAuth).mockReturnValue({
       connecting: false,
       connected: true,
       identity: "you@example.com",
+      checking: false,
+      token: "foo",
       login,
       logout,
       revoke

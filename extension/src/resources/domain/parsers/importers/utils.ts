@@ -52,7 +52,7 @@ export class ImporterUtils {
       const type = columnTypes.get(index) ?? COLUMN_TYPE.IGNORED_DATA
 
       // Compute final name (fallback or previous or generated)
-      let baseName = previous?.name || name || fallbackColumnName[type](index)
+      const baseName = previous?.name || name || fallbackColumnName[type](index)
 
       // Ensure uniqueness
       const count = seen.get(baseName) ?? 0

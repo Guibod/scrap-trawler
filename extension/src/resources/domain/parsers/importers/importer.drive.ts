@@ -2,7 +2,7 @@ import type { SpreadsheetMetadata } from "~/resources/domain/dbos/spreadsheet.db
 import type { Importer } from "~/resources/domain/parsers/importers/importer"
 import type { ImportedData, SpreadsheetImportRequest } from "~/resources/domain/parsers/importers/types"
 import { ImporterUtils } from "~/resources/domain/parsers/importers/utils"
-import { OauthService } from "~/resources/integrations/google-oauth/oauth.service"
+import { OAuthService } from "~/resources/integrations/google-oauth/oauth.service"
 import { ImporterExcel } from "~/resources/domain/parsers/importers/importer.excel"
 
 const DRIVE_API = "https://www.googleapis.com/drive/v3/files"
@@ -33,7 +33,7 @@ export class ImporterGoogleDrive implements Importer {
       }
     }
 
-    const token = await OauthService.getInstance().getGoogleApiToken()
+    const token = await OAuthService.getInstance().getGoogleApiToken()
     const xslxImport = await this.toPseudoXslxImportRequest(token)
     const sheet = await ImporterExcel.pickSheet(xslxImport)
 
@@ -45,7 +45,7 @@ export class ImporterGoogleDrive implements Importer {
   }
 
   async parse(): Promise<ImportedData> {
-    const token = await OauthService.getInstance().getGoogleApiToken()
+    const token = await OAuthService.getInstance().getGoogleApiToken()
 
     const xslxImport = await this.toPseudoXslxImportRequest(token)
     const [columns, ...dataRows] = await ImporterExcel.extractSheet(xslxImport)

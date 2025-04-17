@@ -4,7 +4,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@herou
 import { useDisclosure } from "@heroui/react"
 import { cn } from "@heroui/theme"
 import type { UseButtonProps } from "@heroui/button/dist/use-button"
-import { OauthService } from "~/resources/integrations/google-oauth/oauth.service"
+import { OAuthService } from "~/resources/integrations/google-oauth/oauth.service"
 import type { SpreadsheetMetadata } from "~/resources/domain/dbos/spreadsheet.dbo"
 import { useEventSetup } from "~/resources/ui/components/event/setup/provider"
 import { GoogleDriveService } from "~/resources/integrations/google-doc/googleDriveService"
@@ -23,7 +23,7 @@ export const DriveSpreadsheetPickerButton: React.FC<DrivePickerButtonProps> = ({
   const handleClick = async () => {
     setLoading(true)
     try {
-      await OauthService.getInstance().getGoogleApiToken({ interactive: true })
+      await OAuthService.getInstance().getGoogleApiToken({ interactive: true })
       onOpen()
     } catch (e) {
       console.error("Drive picker auth failed", e)
