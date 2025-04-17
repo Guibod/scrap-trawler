@@ -1,5 +1,5 @@
 import { describe, it, beforeEach, vi, expect } from "vitest"
-import { OauthService } from "~/resources/integrations/google-oauth/oauth.service"
+import { OAuthService } from "~/resources/integrations/google-oauth/oauth.service"
 
 // Mock logger
 vi.mock("~/resources/logging/logger", () => ({
@@ -15,11 +15,11 @@ function mockAuthToken(fn: (details: chrome.identity.TokenDetails, cb: (token?: 
 
 describe("OauthService", () => {
   const TOKEN = "fake-token"
-  let service: OauthService
+  let service: OAuthService
 
   beforeEach(() => {
     vi.useFakeTimers()
-    service = OauthService.getInstance()
+    service = OAuthService.getInstance()
     service.clearCachedToken()
     vi.resetAllMocks()
     chrome.runtime.lastError = null

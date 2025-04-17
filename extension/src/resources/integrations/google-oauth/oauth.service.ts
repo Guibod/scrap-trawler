@@ -1,7 +1,7 @@
 import { getLogger } from "~/resources/logging/logger"
 
-export class OauthService {
-  private static instance: OauthService
+export class OAuthService {
+  private static instance: OAuthService
   private logger = getLogger("OauthService")
 
   private token: string | null = null
@@ -10,11 +10,11 @@ export class OauthService {
 
   private constructor() {}
 
-  static getInstance(): OauthService {
-    if (!OauthService.instance) {
-      OauthService.instance = new OauthService()
+  static getInstance(): OAuthService {
+    if (!OAuthService.instance) {
+      OAuthService.instance = new OAuthService()
     }
-    return OauthService.instance
+    return OAuthService.instance
   }
 
   private isTokenFresh(): boolean {

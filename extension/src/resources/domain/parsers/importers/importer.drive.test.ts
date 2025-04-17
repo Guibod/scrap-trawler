@@ -3,6 +3,7 @@ import { ImporterGoogleDrive } from "~/resources/domain/parsers/importers/import
 import type { SpreadsheetImportRequest, SheetTab } from "~/resources/domain/parsers/importers/types"
 import { ImporterExcel } from "~/resources/domain/parsers/importers/importer.excel"
 import { DUPLICATE_STRATEGY } from "~/resources/domain/enums/spreadsheet.dbo"
+import { OAuthService } from "~/resources/integrations/google-oauth/oauth.service"
 
 vi.mock("~/resources/domain/parsers/importers/importer.excel", () => ({
   ImporterExcel: {
@@ -13,7 +14,7 @@ vi.mock("~/resources/domain/parsers/importers/importer.excel", () => ({
 
 vi.mock("~/resources/integrations/google-oauth/oauth.service", () => {
   return {
-    OauthService: {
+    OAuthService: {
       getInstance: vi.fn(() => ({
         getGoogleApiToken: vi.fn().mockResolvedValue("token-xyz"),
         clearCachedToken: vi.fn()

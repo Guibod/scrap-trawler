@@ -2,7 +2,7 @@ import { vi, describe, expect, beforeEach, it } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SetupUpload from "~/resources/ui/components/event/setup/upload";
 import React from "react";
-import { useEventSetup } from "~/resources/ui/components/event/setup/provider";
+import { type EventSetupContextType, useEventSetup } from "~/resources/ui/components/event/setup/provider"
 import userEvent from "@testing-library/user-event"
 
 vi.mock("~/resources/ui/components/event/setup/provider", () => ({
@@ -18,14 +18,14 @@ describe("SetupUpload", () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-    ;(useEventSetup as any).mockReturnValue({
+    vi.mocked(useEventSetup).mockReturnValue({
       event: {
         format: null,
         spreadsheet: { meta: { source: "" } }
       },
       status: { hasData: false },
       handleFormat: vi.fn(),
-    })
+    } as unknown as EventSetupContextType)
   })
 
   it("renders the event setup guide and import form", () => {
@@ -36,14 +36,14 @@ describe("SetupUpload", () => {
   })
 
   it("shows success alert if status.hasData is true", () => {
-    (useEventSetup as any).mockReturnValue({
+    vi.mocked(useEventSetup).mockReturnValue({
       event: {
         format: null,
         spreadsheet: { meta: { source: "" } }
       },
       status: { hasData: true },
       handleFormat: vi.fn(),
-    })
+    } as unknown as EventSetupContextType)
 
     render(<SetupUpload />)
     expect(screen.getByText("The spreadsheet was recovered successfully")).toBeInTheDocument()

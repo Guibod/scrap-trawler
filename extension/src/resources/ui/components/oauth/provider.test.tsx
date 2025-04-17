@@ -2,34 +2,21 @@ import { describe, it, beforeEach, vi, expect } from "vitest"
 import React from "react"
 import { renderHook, act } from "@testing-library/react"
 import { OAuthProvider, useOAuth } from "~/resources/ui/components/oauth/provider"
-import { OauthService } from "~/resources/integrations/google-oauth/oauth.service"
-
-vi.mock("~/resources/integrations/google-oauth/oauth.service", () => {
-  return {
-    OauthService: {
-      getInstance: vi.fn()
-    }
-  }
-})
+import { OAuthService } from "~/resources/integrations/google-oauth/oauth.service"
+import { createMock } from "@golevelup/ts-vitest"
 
 describe("OAuthProvider", () => {
   const mockToken = "mock-token"
   const mockEmail = "user@example.com"
 
-  const mockService = {
-    getGoogleApiToken: vi.fn(),
-    getUserInfo: vi.fn(),
-    revokeAccessToken: vi.fn(),
-    clearCachedToken: vi.fn()
-  }
+  const mockService = createMock<OAuthService>()
 
   beforeEach(() => {
     vi.clearAllMocks()
-    ;(OauthService.getInstance as any).mockReturnValue(mockService)
   })
 
   const wrapper = ({ children }: { children: React.ReactNode }) => (
-    <OAuthProvider oauthService={mockService as any}>{children}</OAuthProvider>
+    <OAuthProvider oauthService={mockService}>{children}</OAuthProvider>
   )
 
   it("provides default disconnected state", () => {

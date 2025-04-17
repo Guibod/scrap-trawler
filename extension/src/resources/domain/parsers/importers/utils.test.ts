@@ -1,18 +1,20 @@
 import { describe, expect, it, vi } from "vitest"
 import { ImporterUtils } from "~/resources/domain/parsers/importers/utils"
 import { COLUMN_TYPE } from "~/resources/domain/enums/spreadsheet.dbo"
+import type { SpreadsheetMetadata } from "~/resources/domain/dbos/spreadsheet.dbo"
+import type { EventModel } from "~/resources/domain/models/event.model"
 
 describe("ImporterUtils", () => {
   describe("createDefaultMetadata", () => {
     it("should throw if no file and no sourceType", () => {
       expect(() =>
-        ImporterUtils.createDefaultMetadata({ metadata: {} as any })
+        ImporterUtils.createDefaultMetadata({ metadata: {} as SpreadsheetMetadata })
       ).toThrow("No source type or file provided")
     })
 
     it("should not prefer file over metadata source", () => {
       const result = ImporterUtils.createDefaultMetadata({
-        metadata: { sourceType: "drive" } as any,
+        metadata: { sourceType: "drive" } as SpreadsheetMetadata,
         file: new File(["test"], "myfile.csv")
       })
       expect(result.sourceType).toBe("drive")
@@ -21,16 +23,16 @@ describe("ImporterUtils", () => {
 
     it("should use metadata values if file is missing", () => {
       const result = ImporterUtils.createDefaultMetadata({
-        metadata: { sourceType: "url", source: "abc" } as any
+        metadata: { sourceType: "file", source: "abc" }
       })
-      expect(result.sourceType).toBe("url")
+      expect(result.sourceType).toBe("file")
       expect(result.source).toBe("abc")
     })
   })
 
   describe("extractKnownNames", () => {
     it("should return empty sets if event is null", () => {
-      const result = ImporterUtils.extractKnownNames(null as any)
+      const result = ImporterUtils.extractKnownNames(null as EventModel)
       expect(result.firstNames.size).toBe(0)
       expect(result.lastNames.size).toBe(0)
     })
@@ -41,8 +43,8 @@ describe("ImporterUtils", () => {
           p1: { firstName: " Alice ", lastName: " Smith " },
           p2: { firstName: "Bob", lastName: "Smith" }
         }
-      }
-      const result = ImporterUtils.extractKnownNames(event as any)
+      } as unknown as EventModel
+      const result = ImporterUtils.extractKnownNames(event)
       expect(result.firstNames).toEqual(new Set(["Alice", "Bob"]))
       expect(result.lastNames).toEqual(new Set(["Smith"]))
     })
@@ -53,8 +55,8 @@ describe("ImporterUtils", () => {
           p1: { firstName: 123, lastName: null },
           p2: {}
         }
-      }
-      const result = ImporterUtils.extractKnownNames(event as any)
+      } as unknown as EventModel
+      const result = ImporterUtils.extractKnownNames(event)
       expect(result.firstNames.size).toBe(0)
       expect(result.lastNames.size).toBe(0)
     })

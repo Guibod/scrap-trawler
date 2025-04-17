@@ -1,4 +1,4 @@
-import { OauthService } from "~/resources/integrations/google-oauth/oauth.service"
+import { OAuthService } from "~/resources/integrations/google-oauth/oauth.service"
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react"
 
 type OAuthContextType = {
@@ -14,13 +14,13 @@ type OAuthContextType = {
 
 type OAuthProviderProps = {
   children: React.ReactNode,
-  oauthService?: OauthService
+  oauthService?: OAuthService
 }
 
 const CHECK_INTERVAL = 1000 * 60 * 5 // 5 minutes
 const OAuthContext = createContext<OAuthContextType | null>(null)
 
-export const OAuthProvider: React.FC<OAuthProviderProps> = ({ children, oauthService = OauthService.getInstance() }) => {
+export const OAuthProvider: React.FC<OAuthProviderProps> = ({ children, oauthService = OAuthService.getInstance() }) => {
   const [token, setToken] = useState<string | null>(null)
   const [connected, setConnected] = useState(false)
   const [connecting, setConnecting] = useState(false)
