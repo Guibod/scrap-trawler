@@ -3,7 +3,6 @@
 <body>
 <script>
   const CLIENT_ID = "933041103309-81osc0p7joh9m3m9ufbr1lglfc1u3or9.apps.googleusercontent.com";
-  const API_KEY = "AIzaSyBMB4AJ95i-gAGdvDdTP1pmr5gRxGPZnXA";
   const SCOPE = "https://www.googleapis.com/auth/drive.readonly";
 
   let accessToken = null;
@@ -24,13 +23,17 @@
   }
 
   function showPicker() {
-    const view = new google.picker.DocsView().setIncludeFolders(true);
+    const view = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+      .setIncludeFolders(false)
+      .setMimeTypes("application/vnd.google-apps.spreadsheet");
+
     picker = new google.picker.PickerBuilder()
       .addView(view)
       .setOAuthToken(accessToken)
       .setOrigin(msgOrigin)
       .setCallback(pickerCallback)
       .setAppId(CLIENT_ID)
+      .setDisableFeature(google.picker.Feature.THUMBNAILS)
       .build();
     picker.setVisible(true);
     console.log("Picker shown");
@@ -60,11 +63,12 @@
   }
 
   function launch() {
-    if (!accessToken) {
-      tokenClient.requestAccessToken({ prompt: "consent" });
-    } else {
-      tokenClient.requestAccessToken({ prompt: "" });
-    }
+    // if (!accessToken) {
+    //   tokenClient.requestAccessToken({ prompt: "consent" });
+    // } else {
+    //   tokenClient.requestAccessToken({ prompt: "" });
+    // }
+    tokenClient.requestAccessToken({ prompt: "" });
   }
 
   function pickerCallback(data) {
