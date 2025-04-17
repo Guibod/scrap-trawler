@@ -23,17 +23,18 @@
   }
 
   function showPicker() {
+    console.log("Picker show request");
     const view = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
       .setIncludeFolders(false)
       .setMimeTypes("application/vnd.google-apps.spreadsheet");
 
+    console.log("View is setup");
     picker = new google.picker.PickerBuilder()
       .addView(view)
       .setOAuthToken(accessToken)
       .setOrigin(msgOrigin)
       .setCallback(pickerCallback)
       .setAppId(CLIENT_ID)
-      .setMode(DocsViewMode.LIST)
       .build();
     picker.setVisible(true);
     console.log("Picker shown");
