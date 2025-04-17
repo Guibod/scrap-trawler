@@ -33,7 +33,7 @@
       .setOrigin(msgOrigin)
       .setCallback(pickerCallback)
       .setAppId(CLIENT_ID)
-      .setDisableFeature(google.picker.Feature.THUMBNAILS)
+      .setMode(DocsViewMode.LIST)
       .build();
     picker.setVisible(true);
     console.log("Picker shown");
