@@ -10,6 +10,7 @@ import type { CardDbo } from "~/resources/domain/dbos/card.dbo"
 import { DeckSource } from "~/resources/domain/dbos/deck.dbo"
 import { MTG_COLORS } from "~/resources/domain/enums/mtg/colors.dbo"
 import { DeckMapper } from "~/resources/domain/mappers/deck.mapper"
+import { sortByEnumOrder } from "~/resources/utils/enum"
 
 export type CardDboAndQuantity = {
   quantity: number,
@@ -124,7 +125,7 @@ export default abstract class AbstractDeckFetcher<T> {
       lastUpdated: null,
       boards: this.boards,
       legal: checkLegality(await this.buildLegalityBoards(), description.format),
-      colors: [...this.colorIdentity],
+      colors: sortByEnumOrder([...this.colorIdentity], MTG_COLORS),
       ...description
     }
   }

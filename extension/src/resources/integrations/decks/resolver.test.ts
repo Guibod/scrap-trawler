@@ -4,6 +4,7 @@ import { TextFetcher } from '~/resources/integrations/decks/fetchers/text.fetche
 import DeckFetcherResolver from "~/resources/integrations/decks/resolver"
 import { NothingFetcher } from "~/resources/integrations/decks/fetchers/nothing.fetcher"
 import { MagicVilleFetcher } from "~/resources/integrations/decks/fetchers/magic-ville.fetcher"
+import { ArchidektFetcher } from "~/resources/integrations/decks/fetchers/archidekt.fetcher"
 
 const baseRow = {
   id: 'row-1',
@@ -20,10 +21,16 @@ describe('DeckFetcherResolver', () => {
     expect(fetcher).toBe(MoxfieldFetcher)
   })
 
-  it('resolves to MagicVilleFetcher when moxfield.com URL is present', () => {
+  it('resolves to MagicVilleFetcher when magic-ville.com URL is present', () => {
     const row = { ...baseRow, decklistUrl: 'https://magic-ville.com/toto/tutu', decklistTxt: '' }
     const fetcher = DeckFetcherResolver.resolveFetcherType(row)
     expect(fetcher).toBe(MagicVilleFetcher)
+  })
+
+  it('resolves to ArchidektFetcher when archidekt.com URL is present', () => {
+    const row = { ...baseRow, decklistUrl: 'https://archidekt.com/toto/tutu', decklistTxt: '' }
+    const fetcher = DeckFetcherResolver.resolveFetcherType(row)
+    expect(fetcher).toBe(ArchidektFetcher)
   })
 
   it('resolves to TextFetcher when decklistTxt is provided and no URL', () => {

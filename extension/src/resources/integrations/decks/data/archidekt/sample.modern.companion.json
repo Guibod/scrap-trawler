@@ -1,0 +1,2658 @@
+{
+  "id": 9650653,
+  "name": "Burninator Obosh",
+  "createdAt": "2024-10-15T01:46:51.540890Z",
+  "updatedAt": "2025-02-21T18:14:23.547721Z",
+  "deckFormat": 2,
+  "edhBracket": null,
+  "game": 1,
+  "description": "{\"ops\":[]}",
+  "viewCount": 188,
+  "featured": "https://storage.googleapis.com/archidekt-card-images/mh3/24d4f26e-7f96-4b38-867e-4fac819b2679_art_crop.jpg",
+  "customFeatured": "https://storage.googleapis.com/archidekt-card-images/mul/d0673109-41f6-4474-8874-b8a3bb5efde7_art_crop.jpg",
+  "private": false,
+  "unlisted": false,
+  "theorycrafted": false,
+  "points": 0,
+  "userInput": 0,
+  "owner": {
+    "id": 516458,
+    "username": "StevonMTG",
+    "avatar": "https://storage.googleapis.com/topdekt-user/avatars/default/avatar_colorless.svg",
+    "frame": null,
+    "ckAffiliate": "",
+    "tcgAffiliate": "",
+    "referrerEnum": null
+  },
+  "commentRoot": 9668068,
+  "editors": null,
+  "parentFolder": 724397,
+  "bookmarked": false,
+  "categories": [
+    {
+      "id": 107275881,
+      "name": "Artifact",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 105968645,
+      "name": "Enchantment",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 105968592,
+      "name": "Instant",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 105968472,
+      "name": "Sorcery",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 105968457,
+      "name": "Spell",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 105597190,
+      "name": "Theft",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 102080705,
+      "name": "Evasion",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 102015547,
+      "name": "Recursion",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 100372654,
+      "name": "Planeswalker",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 100369659,
+      "name": "Creature",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 100364253,
+      "name": "Copy",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 100358627,
+      "name": "Draw",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 100356841,
+      "name": "Maybeboard",
+      "isPremier": false,
+      "includedInDeck": false,
+      "includedInPrice": false
+    },
+    {
+      "id": 100354775,
+      "name": "Ramp",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 100352487,
+      "name": "Land",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 100352394,
+      "name": "Removal",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 100352255,
+      "name": "Sideboard",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    },
+    {
+      "id": 100352192,
+      "name": "Burn",
+      "isPremier": false,
+      "includedInDeck": true,
+      "includedInPrice": true
+    }
+  ],
+  "deckTags": [],
+  "playgroupDeckUrl": null,
+  "cardPackage": null,
+  "cards": [
+    {
+      "id": 1887681505,
+      "categories": [
+        "Creature"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 4,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-24T18:07:12.439813Z",
+      "updatedAt": "2024-10-25T20:05:08.421382Z",
+      "deletedAt": null,
+      "card": {
+        "id": 39133,
+        "artist": "John Stanko",
+        "tcgProductId": 120555,
+        "ckFoilId": 207894,
+        "ckNormalId": 207648,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-EMN-149-ENN",
+        "scgFoilSku": "SGL-MTG-EMN-149-ENF",
+        "collectorNumber": "149",
+        "multiverseid": 414450,
+        "mtgoFoilId": 61205,
+        "mtgoNormalId": 61204,
+        "uid": "ba1e6885-dca0-4a4b-abb8-0f32680f618d",
+        "displayName": null,
+        "edition": {
+          "editioncode": "emn",
+          "editionname": "Eldritch Moon",
+          "editiondate": "2016-07-22",
+          "editiontype": "expansion",
+          "mtgoCode": "emn"
+        },
+        "flavor": "\"Lightning in a bottle? That's not where I need it.\"",
+        "games": [],
+        "options": [
+          "Normal",
+          "Foil"
+        ],
+        "scryfallImageHash": "1576384728",
+        "oracleCard": {
+          "id": 18678,
+          "cmc": 3,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 17719,
+          "faces": [],
+          "layout": "normal",
+          "uid": "28274c39-19e2-4b4c-bd53-d31d6063c2ba",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "legal",
+            "brawl": "not_legal",
+            "penny": "not_legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{2}{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "Weaver of Lightning",
+          "power": "1",
+          "salt": 0,
+          "subTypes": [
+            "Human",
+            "Shaman"
+          ],
+          "superTypes": [],
+          "text": "Reach (This creature can block creatures with flying.)\nWhenever you cast an instant or sorcery spell, this creature deals 1 damage to target creature an opponent controls.",
+          "tokens": [],
+          "toughness": "4",
+          "types": [
+            "Creature"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Removal",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0.35,
+          "ckfoil": 0.49,
+          "cm": 0.1,
+          "cmfoil": 0.1,
+          "mtgo": 0.03,
+          "mtgofoil": 0.44,
+          "tcg": 0.07,
+          "tcgfoil": 0.42,
+          "scg": 0.29,
+          "scgfoil": 0.59,
+          "mp": 0.15,
+          "mpfoil": 0.45,
+          "tcgLand": 10,
+          "tcgLandFoil": 0
+        },
+        "rarity": "uncommon",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1887682940,
+      "categories": [
+        "Creature",
+        "Land"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 4,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-24T18:08:18.273368Z",
+      "updatedAt": "2024-11-15T05:34:58.131173Z",
+      "deletedAt": null,
+      "card": {
+        "id": 132822,
+        "artist": "Jason A. Engle",
+        "tcgProductId": 553299,
+        "ckFoilId": 297198,
+        "ckNormalId": 296699,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-MH3-246-ENN",
+        "scgFoilSku": "SGL-MTG-MH3-246-ENF",
+        "collectorNumber": "246",
+        "multiverseid": 661771,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 126529,
+        "uid": "24d4f26e-7f96-4b38-867e-4fac819b2679",
+        "displayName": null,
+        "edition": {
+          "editioncode": "mh3",
+          "editionname": "Modern Horizons 3",
+          "editiondate": "2024-06-14",
+          "editiontype": "draft_innovation",
+          "mtgoCode": "mh3"
+        },
+        "flavor": "",
+        "games": [],
+        "options": [
+          "Normal",
+          "Foil"
+        ],
+        "scryfallImageHash": null,
+        "oracleCard": {
+          "id": 40796,
+          "cmc": 5,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 1188,
+          "faces": [
+            {
+              "colors": [
+                "Red"
+              ],
+              "flavor": "Narset brought the Jeskai djinn ancient wisdom and the promise to challenge the status quo.",
+              "manaCost": "{3}{R}{R}",
+              "name": "Pinnacle Monk",
+              "power": "2",
+              "subTypes": [
+                "Djinn",
+                "Monk"
+              ],
+              "superTypes": [],
+              "text": "Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)\nWhen this creature enters, return target instant or sorcery card from your graveyard to your hand.",
+              "toughness": "2",
+              "types": [
+                "Creature"
+              ],
+              "loyalty": null
+            },
+            {
+              "colors": [],
+              "flavor": "\"Fear not the fall. Fear never reaching the pinnacle.\"\n—Narset",
+              "manaCost": "",
+              "name": "Mystic Peak",
+              "power": "",
+              "subTypes": [],
+              "superTypes": [],
+              "text": "As this land enters, you may pay 3 life. If you don't, it enters tapped.\n{T}: Add {R}.",
+              "toughness": "",
+              "types": [
+                "Land"
+              ],
+              "loyalty": null
+            }
+          ],
+          "layout": "modal_dfc",
+          "uid": "f3d48efa-910a-4872-a5b1-a353c5dbce99",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "not_legal",
+            "brawl": "not_legal",
+            "penny": "not_legal",
+            "pioneer": "not_legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": 1,
+            "G": null,
+            "C": null
+          },
+          "name": "Pinnacle Monk // Mystic Peak",
+          "power": "",
+          "salt": 0.21,
+          "subTypes": [
+            "Djinn",
+            "Monk"
+          ],
+          "superTypes": [],
+          "text": "",
+          "tokens": [],
+          "toughness": "",
+          "types": [
+            "Creature"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Recursion",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [
+            "38905"
+          ],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 1.79,
+          "ckfoil": 2.49,
+          "cm": 0.4,
+          "cmfoil": 0.82,
+          "mtgo": 0.03,
+          "mtgofoil": 0,
+          "tcg": 0.77,
+          "tcgfoil": 4.21,
+          "scg": 0.99,
+          "scgfoil": 2.49,
+          "mp": 0.51,
+          "mpfoil": 1.23,
+          "tcgLand": 39,
+          "tcgLandFoil": 0
+        },
+        "rarity": "uncommon",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875298300,
+      "categories": [
+        "Land"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 20,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T01:48:54.388631Z",
+      "updatedAt": "2024-10-24T18:10:01.839335Z",
+      "deletedAt": null,
+      "card": {
+        "id": 137024,
+        "artist": "Ralph Horsley",
+        "tcgProductId": 576524,
+        "ckFoilId": 302297,
+        "ckNormalId": 300767,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-DSK-283-ENN",
+        "scgFoilSku": "SGL-MTG-DSK-283-ENF",
+        "collectorNumber": "283",
+        "multiverseid": 672920,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 130687,
+        "uid": "accb56f0-3903-4894-86f0-3965162064d4",
+        "displayName": null,
+        "edition": {
+          "editioncode": "dsk",
+          "editionname": "Duskmourn: House of Horror",
+          "editiondate": "2024-09-27",
+          "editiontype": "expansion",
+          "mtgoCode": "dsk"
+        },
+        "flavor": "",
+        "games": [],
+        "options": [
+          "Normal",
+          "Foil"
+        ],
+        "scryfallImageHash": "1726286930",
+        "oracleCard": {
+          "id": 10764,
+          "cmc": 0,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [],
+          "edhrecRank": null,
+          "faces": [],
+          "layout": "normal",
+          "uid": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+          "legalities": {
+            "alchemy": "legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "legal",
+            "gladiator": "legal",
+            "explorer": "legal",
+            "brawl": "legal",
+            "penny": "legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "legal",
+            "standard": "legal",
+            "future": "legal",
+            "predh": "legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": 1,
+            "G": null,
+            "C": null
+          },
+          "name": "Mountain",
+          "power": "",
+          "salt": 0.51,
+          "subTypes": [
+            "Mountain"
+          ],
+          "superTypes": [
+            "Basic"
+          ],
+          "text": "({T}: Add {R}.)",
+          "tokens": [],
+          "toughness": "",
+          "types": [
+            "Land"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": null,
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0.35,
+          "ckfoil": 0.49,
+          "cm": 0,
+          "cmfoil": 0,
+          "mtgo": 0.03,
+          "mtgofoil": 0,
+          "tcg": 0.07,
+          "tcgfoil": 0.19,
+          "scg": 0.29,
+          "scgfoil": 0.49,
+          "mp": 0.15,
+          "mpfoil": 0.15,
+          "tcgLand": 10,
+          "tcgLandFoil": 52
+        },
+        "rarity": "common",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875297499,
+      "categories": [
+        "Spell",
+        "Burn",
+        "Instant"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 4,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T01:48:15.761058Z",
+      "updatedAt": "2024-11-15T05:33:01.336812Z",
+      "deletedAt": null,
+      "card": {
+        "id": 111673,
+        "artist": "Christopher Moeller",
+        "tcgProductId": 448525,
+        "ckFoilId": 233842,
+        "ckNormalId": 267808,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-GN3-083-ENN",
+        "scgFoilSku": null,
+        "collectorNumber": "83",
+        "multiverseid": 582693,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 0,
+        "uid": "a6de74d2-0668-49c6-a385-bf706bfed8f7",
+        "displayName": null,
+        "edition": {
+          "editioncode": "gn3",
+          "editionname": "Game Night: Free-for-All",
+          "editiondate": "2022-10-14",
+          "editiontype": "box",
+          "mtgoCode": null
+        },
+        "flavor": "The sparkmage shrieked, calling on the rage of the storms of his youth. To his surprise, the sky responded with a fierce energy he'd never thought to see again.",
+        "games": [],
+        "options": [
+          "Normal"
+        ],
+        "scryfallImageHash": "1673301944",
+        "oracleCard": {
+          "id": 9459,
+          "cmc": 1,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 178,
+          "faces": [],
+          "layout": "normal",
+          "uid": "4457ed35-7c10-48c8-9776-456485fdf070",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "legal",
+            "historic": "banned",
+            "commander": "legal",
+            "paupercommander": "legal",
+            "gladiator": "legal",
+            "explorer": "not_legal",
+            "brawl": "not_legal",
+            "penny": "not_legal",
+            "pioneer": "not_legal",
+            "duel": "legal",
+            "pauper": "legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "Lightning Bolt",
+          "power": "",
+          "salt": 0.22,
+          "subTypes": [],
+          "superTypes": [],
+          "text": "Lightning Bolt deals 3 damage to any target.",
+          "tokens": [],
+          "toughness": "",
+          "types": [
+            "Instant"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Removal",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 2.29,
+          "ckfoil": 0,
+          "cm": 0,
+          "cmfoil": 0,
+          "mtgo": 0,
+          "mtgofoil": 0,
+          "tcg": 1.16,
+          "tcgfoil": 0,
+          "scg": 1.49,
+          "scgfoil": 0,
+          "mp": 0,
+          "mpfoil": 0,
+          "tcgLand": 41,
+          "tcgLandFoil": 0
+        },
+        "rarity": "uncommon",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875306409,
+      "categories": [
+        "Creature",
+        "Instant",
+        "Spell"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 4,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T01:57:21.979482Z",
+      "updatedAt": "2024-11-15T05:34:34.281445Z",
+      "deletedAt": null,
+      "card": {
+        "id": 104643,
+        "artist": "Victor Adame Minguez",
+        "tcgProductId": 273681,
+        "ckFoilId": 0,
+        "ckNormalId": 262043,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-CLB-781-ENN",
+        "scgFoilSku": null,
+        "collectorNumber": "781",
+        "multiverseid": 567598,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 101104,
+        "uid": "b5b71cd2-de35-451f-b16e-2e3936169407",
+        "displayName": null,
+        "edition": {
+          "editioncode": "clb",
+          "editionname": "Commander Legends: Battle for Baldur's Gate",
+          "editiondate": "2022-06-10",
+          "editiontype": "draft_innovation",
+          "mtgoCode": null
+        },
+        "flavor": "Not every tale ends in glory.",
+        "games": [],
+        "options": [
+          "Normal"
+        ],
+        "scryfallImageHash": "1674141884",
+        "oracleCard": {
+          "id": 20378,
+          "cmc": 3,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 4215,
+          "faces": [
+            {
+              "colors": [],
+              "flavor": "Not every tale ends in glory.",
+              "manaCost": "{2}{R}",
+              "name": "Bonecrusher Giant",
+              "power": "4",
+              "subTypes": [
+                "Giant"
+              ],
+              "superTypes": [],
+              "text": "Whenever this creature becomes the target of a spell, this creature deals 2 damage to that spell's controller.",
+              "toughness": "3",
+              "types": [
+                "Creature"
+              ],
+              "loyalty": null
+            },
+            {
+              "colors": [],
+              "flavor": "",
+              "manaCost": "{1}{R}",
+              "name": "Stomp",
+              "power": "",
+              "subTypes": [
+                "Adventure"
+              ],
+              "superTypes": [],
+              "text": "Damage can't be prevented this turn. Stomp deals 2 damage to any target.",
+              "toughness": "",
+              "types": [
+                "Instant"
+              ],
+              "loyalty": null
+            }
+          ],
+          "layout": "adventure",
+          "uid": "d6d72f5f-8f5d-4180-b514-f22ff5482902",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "legal",
+            "brawl": "not_legal",
+            "penny": "not_legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{2}{R} // {1}{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "Bonecrusher Giant // Stomp",
+          "power": "4",
+          "salt": 0.18,
+          "subTypes": [
+            "Giant"
+          ],
+          "superTypes": [],
+          "text": "",
+          "tokens": [
+            "20229"
+          ],
+          "toughness": "3",
+          "types": [
+            "Creature"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Removal",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0.59,
+          "ckfoil": 0,
+          "cm": 0.29,
+          "cmfoil": 0,
+          "mtgo": 0.67,
+          "mtgofoil": 0,
+          "tcg": 0.26,
+          "tcgfoil": 0,
+          "scg": 0.49,
+          "scgfoil": 0,
+          "mp": 0.36,
+          "mpfoil": 0,
+          "tcgLand": 18,
+          "tcgLandFoil": 0
+        },
+        "rarity": "rare",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875313498,
+      "categories": [
+        "Planeswalker"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 1,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T02:04:13.405159Z",
+      "updatedAt": "2024-10-15T04:13:46.361062Z",
+      "deletedAt": null,
+      "card": {
+        "id": 99652,
+        "artist": "Viktor Titov",
+        "tcgProductId": 252918,
+        "ckFoilId": 252916,
+        "ckNormalId": 252466,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-VOW-149-ENN",
+        "scgFoilSku": "SGL-MTG-VOW-149-ENF",
+        "collectorNumber": "149",
+        "multiverseid": 541004,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 94636,
+        "uid": "681f7c73-92c6-47ba-af56-3ff032ac12da",
+        "displayName": null,
+        "edition": {
+          "editioncode": "vow",
+          "editionname": "Innistrad: Crimson Vow",
+          "editiondate": "2021-11-19",
+          "editiontype": "expansion",
+          "mtgoCode": "vow"
+        },
+        "flavor": "",
+        "games": [],
+        "options": [
+          "Normal",
+          "Foil"
+        ],
+        "scryfallImageHash": "1643596175",
+        "oracleCard": {
+          "id": 25262,
+          "cmc": 3,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 5499,
+          "faces": [],
+          "layout": "normal",
+          "uid": "4686f776-2055-470c-bd99-7c4bb32902c0",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "legal",
+            "brawl": "not_legal",
+            "penny": "not_legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{1}{R}{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": 1,
+            "G": null,
+            "C": null
+          },
+          "name": "Chandra, Dressed to Kill",
+          "power": "",
+          "salt": 0.17,
+          "subTypes": [
+            "Chandra"
+          ],
+          "superTypes": [
+            "Legendary"
+          ],
+          "text": "+1: Add {R}. Chandra deals 1 damage to up to one target player or planeswalker.\n+1: Exile the top card of your library. If it's red, you may cast it this turn.\n−7: Exile the top five cards of your library. You may cast red spells from among them this turn. You get an emblem with \"Whenever you cast a red spell, this emblem deals X damage to any target, where X is the amount of mana spent to cast that spell.\"",
+          "tokens": [
+            "25475"
+          ],
+          "toughness": "",
+          "types": [
+            "Planeswalker"
+          ],
+          "loyalty": "3",
+          "canlanderPoints": null,
+          "defaultCategory": "Ramp",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 2.49,
+          "ckfoil": 3.49,
+          "cm": 3.38,
+          "cmfoil": 3.31,
+          "mtgo": 0.23,
+          "mtgofoil": 0,
+          "tcg": 1.68,
+          "tcgfoil": 2.97,
+          "scg": 2.49,
+          "scgfoil": 3.49,
+          "mp": 1.94,
+          "mpfoil": 3.21,
+          "tcgLand": 63,
+          "tcgLandFoil": 0
+        },
+        "rarity": "mythic",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875327742,
+      "categories": [
+        "Enchantment",
+        "Burn"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Foil",
+      "quantity": 1,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T02:17:16.808399Z",
+      "updatedAt": "2024-11-22T07:08:22.139540Z",
+      "deletedAt": null,
+      "card": {
+        "id": 136910,
+        "artist": "Deruchenko Alexander",
+        "tcgProductId": 578076,
+        "ckFoilId": 302412,
+        "ckNormalId": 301573,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-DSK-298-ENN",
+        "scgFoilSku": "SGL-MTG-DSK-298-ENF",
+        "collectorNumber": "298",
+        "multiverseid": 673327,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 129963,
+        "uid": "bb57a981-e70b-4298-b620-577914d67cb7",
+        "displayName": null,
+        "edition": {
+          "editioncode": "dsk",
+          "editionname": "Duskmourn: House of Horror",
+          "editiondate": "2024-09-27",
+          "editiontype": "expansion",
+          "mtgoCode": "dsk"
+        },
+        "flavor": "",
+        "games": [],
+        "options": [
+          "Normal",
+          "Foil"
+        ],
+        "scryfallImageHash": "1726286989",
+        "oracleCard": {
+          "id": 42644,
+          "cmc": 3,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 7409,
+          "faces": [],
+          "layout": "normal",
+          "uid": "aed1f0cd-8df8-415f-afd6-ccfd12234334",
+          "legalities": {
+            "alchemy": "legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "legal",
+            "brawl": "legal",
+            "penny": "legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "legal",
+            "future": "legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{X}{2}{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "The Rollercrusher Ride",
+          "power": "",
+          "salt": null,
+          "subTypes": [],
+          "superTypes": [
+            "Legendary"
+          ],
+          "text": "Delirium — If a source you control would deal noncombat damage to a permanent or player while there are four or more card types among cards in your graveyard, it deals double that damage instead.\nWhen The Rollercrusher Ride enters, it deals X damage to each of up to X target creatures.",
+          "tokens": [],
+          "toughness": "",
+          "types": [
+            "Enchantment"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Removal",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0.99,
+          "ckfoil": 0.99,
+          "cm": 0,
+          "cmfoil": 0,
+          "mtgo": 0.02,
+          "mtgofoil": 0,
+          "tcg": 0.69,
+          "tcgfoil": 0.87,
+          "scg": 1.49,
+          "scgfoil": 1.99,
+          "mp": 0.72,
+          "mpfoil": 0.78,
+          "tcgLand": 32,
+          "tcgLandFoil": 69
+        },
+        "rarity": "mythic",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875338537,
+      "categories": [
+        "Spell",
+        "Burn",
+        "Sorcery"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 2,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T02:26:33.246000Z",
+      "updatedAt": "2024-11-15T05:32:11.264174Z",
+      "deletedAt": null,
+      "card": {
+        "id": 79593,
+        "artist": "Austin Hsu",
+        "tcgProductId": 196583,
+        "ckFoilId": 0,
+        "ckNormalId": 227070,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-C19-138-ENN",
+        "scgFoilSku": null,
+        "collectorNumber": "138",
+        "multiverseid": 470684,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 77390,
+        "uid": "d46473a7-69f5-492b-845d-c8862a1fec85",
+        "displayName": null,
+        "edition": {
+          "editioncode": "c19",
+          "editionname": "Commander 2019",
+          "editiondate": "2019-08-23",
+          "editiontype": "commander",
+          "mtgoCode": "c19"
+        },
+        "flavor": "A devil's hands are never idle.",
+        "games": [],
+        "options": [
+          "Normal"
+        ],
+        "scryfallImageHash": "1568004367",
+        "oracleCard": {
+          "id": 4077,
+          "cmc": 1,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 8038,
+          "faces": [],
+          "layout": "normal",
+          "uid": "ee9f0b29-8a54-4cb8-8e2c-7bd67c2184ba",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "not_legal",
+            "brawl": "not_legal",
+            "penny": "legal",
+            "pioneer": "not_legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{X}{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "Devil's Play",
+          "power": "",
+          "salt": 0,
+          "subTypes": [],
+          "superTypes": [],
+          "text": "Devil's Play deals X damage to any target.\nFlashback {X}{R}{R}{R} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",
+          "tokens": [],
+          "toughness": "",
+          "types": [
+            "Sorcery"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Removal",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0.59,
+          "ckfoil": 0,
+          "cm": 0.23,
+          "cmfoil": 0,
+          "mtgo": 0,
+          "mtgofoil": 0,
+          "tcg": 0.19,
+          "tcgfoil": 0,
+          "scg": 0.49,
+          "scgfoil": 0,
+          "mp": 0.17,
+          "mpfoil": 0,
+          "tcgLand": 12,
+          "tcgLandFoil": 0
+        },
+        "rarity": "rare",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875342964,
+      "categories": [
+        "Spell",
+        "Draw",
+        "Sorcery"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 4,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T02:30:38.174120Z",
+      "updatedAt": "2024-11-15T05:33:43.962193Z",
+      "deletedAt": null,
+      "card": {
+        "id": 137426,
+        "artist": "Dmitry Burmak",
+        "tcgProductId": 578980,
+        "ckFoilId": 0,
+        "ckNormalId": 302185,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-DSC-166-ENN",
+        "scgFoilSku": null,
+        "collectorNumber": "166",
+        "multiverseid": 676039,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 130955,
+        "uid": "912b94c9-7200-452d-940f-df0a7cceb377",
+        "displayName": null,
+        "edition": {
+          "editioncode": "dsc",
+          "editionname": "Duskmourn: House of Horror Commander",
+          "editiondate": "2024-09-27",
+          "editiontype": "commander",
+          "mtgoCode": null
+        },
+        "flavor": "\"Places, everyone!\"\n—Judith",
+        "games": [],
+        "options": [
+          "Normal"
+        ],
+        "scryfallImageHash": "1726284958",
+        "oracleCard": {
+          "id": 9490,
+          "cmc": 3,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 1220,
+          "faces": [],
+          "layout": "normal",
+          "uid": "8d286376-f386-43ab-a9bd-8478fb9e2497",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "legal",
+            "brawl": "not_legal",
+            "penny": "not_legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{2}{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "Light Up the Stage",
+          "power": "",
+          "salt": 0.19,
+          "subTypes": [],
+          "superTypes": [],
+          "text": "Spectacle {R} (You may cast this spell for its spectacle cost rather than its mana cost if an opponent lost life this turn.)\nExile the top two cards of your library. Until the end of your next turn, you may play those cards.",
+          "tokens": [],
+          "toughness": "",
+          "types": [
+            "Sorcery"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Draw",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0.35,
+          "ckfoil": 0,
+          "cm": 0.19,
+          "cmfoil": 0,
+          "mtgo": 0.33,
+          "mtgofoil": 0,
+          "tcg": 0.17,
+          "tcgfoil": 0,
+          "scg": 0.29,
+          "scgfoil": 0,
+          "mp": 0.19,
+          "mpfoil": 0,
+          "tcgLand": 11,
+          "tcgLandFoil": 0
+        },
+        "rarity": "uncommon",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875348561,
+      "categories": [
+        "Creature"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 4,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T02:36:41.118460Z",
+      "updatedAt": "2024-10-28T23:47:42.735421Z",
+      "deletedAt": null,
+      "card": {
+        "id": 94521,
+        "artist": "Martina Fačková",
+        "tcgProductId": 240055,
+        "ckFoilId": 246933,
+        "ckNormalId": 246319,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-MH2-121-ENN",
+        "scgFoilSku": "SGL-MTG-MH2-121-ENF",
+        "collectorNumber": "121",
+        "multiverseid": 522197,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 90615,
+        "uid": "4ced112a-e775-4f97-97b3-74877e9dce12",
+        "displayName": null,
+        "edition": {
+          "editioncode": "mh2",
+          "editionname": "Modern Horizons 2",
+          "editiondate": "2021-06-18",
+          "editiontype": "draft_innovation",
+          "mtgoCode": "mh2"
+        },
+        "flavor": "",
+        "games": [],
+        "options": [
+          "Normal",
+          "Foil"
+        ],
+        "scryfallImageHash": "1626096503",
+        "oracleCard": {
+          "id": 23538,
+          "cmc": 1,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 1965,
+          "faces": [],
+          "layout": "normal",
+          "uid": "0c016ccc-a341-4b76-87ba-69c639d2746d",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "not_legal",
+            "premodern": "not_legal",
+            "historic": "not_legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "not_legal",
+            "brawl": "not_legal",
+            "penny": "not_legal",
+            "pioneer": "not_legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "Dragon's Rage Channeler",
+          "power": "1",
+          "salt": 0.27,
+          "subTypes": [
+            "Human",
+            "Shaman"
+          ],
+          "superTypes": [],
+          "text": "Whenever you cast a noncreature spell, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)\nDelirium — As long as there are four or more card types among cards in your graveyard, this creature gets +2/+2, has flying, and attacks each combat if able.",
+          "tokens": [],
+          "toughness": "1",
+          "types": [
+            "Creature"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Draw",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0.79,
+          "ckfoil": 1.99,
+          "cm": 1.01,
+          "cmfoil": 2.41,
+          "mtgo": 1.75,
+          "mtgofoil": 0,
+          "tcg": 1.14,
+          "tcgfoil": 1.55,
+          "scg": 1.49,
+          "scgfoil": 2.49,
+          "mp": 1.14,
+          "mpfoil": 1.71,
+          "tcgLand": 68,
+          "tcgLandFoil": 0
+        },
+        "rarity": "uncommon",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875370423,
+      "categories": [
+        "Creature"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Etched",
+      "quantity": 1,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T02:58:17.334174Z",
+      "updatedAt": "2024-10-28T23:47:29.153202Z",
+      "deletedAt": null,
+      "card": {
+        "id": 122112,
+        "artist": "Chris Rahn",
+        "tcgProductId": 504177,
+        "ckFoilId": 279784,
+        "ckNormalId": 279753,
+        "cmEd": "",
+        "scgSku": null,
+        "scgFoilSku": null,
+        "collectorNumber": "545",
+        "multiverseid": 626400,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 113435,
+        "uid": "cb971063-5415-49d5-87c2-9ff4e88c71e1",
+        "displayName": null,
+        "edition": {
+          "editioncode": "cmm",
+          "editionname": "Commander Masters",
+          "editiondate": "2023-08-04",
+          "editiontype": "masters",
+          "mtgoCode": "cmm"
+        },
+        "flavor": "\"This is what glory looks like.\"\n—Nicol Bolas",
+        "games": [],
+        "options": [
+          "Etched"
+        ],
+        "scryfallImageHash": "1690001157",
+        "oracleCard": {
+          "id": 11089,
+          "cmc": 5,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 1216,
+          "faces": [],
+          "layout": "normal",
+          "uid": "b0d3fd57-1420-4dd1-8410-9d659655287f",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "legal",
+            "brawl": "not_legal",
+            "penny": "legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{3}{R}{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": 1,
+            "G": null,
+            "C": null
+          },
+          "name": "Neheb, the Eternal",
+          "power": "4",
+          "salt": 0.62,
+          "subTypes": [
+            "Warrior",
+            "Minotaur",
+            "Zombie"
+          ],
+          "superTypes": [
+            "Legendary"
+          ],
+          "text": "Afflict 3 (Whenever this creature becomes blocked, defending player loses 3 life.)\nAt the beginning of each of your postcombat main phases, add {R} for each 1 life your opponents have lost this turn.",
+          "tokens": [],
+          "toughness": "6",
+          "types": [
+            "Creature"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Ramp",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": [
+            "237"
+          ]
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0,
+          "ckfoil": 5.99,
+          "cm": 0,
+          "cmfoil": 6.27,
+          "mtgo": 0.31,
+          "mtgofoil": 0,
+          "tcg": 0,
+          "tcgfoil": 5.28,
+          "scg": 0,
+          "scgfoil": 0,
+          "mp": 0,
+          "mpfoil": 5.61,
+          "tcgLand": 0,
+          "tcgLandFoil": 192
+        },
+        "rarity": "mythic",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875382309,
+      "categories": [
+        "Spell",
+        "Copy",
+        "Instant"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 4,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T03:10:25.978170Z",
+      "updatedAt": "2024-11-15T05:33:31.014029Z",
+      "deletedAt": null,
+      "card": {
+        "id": 132488,
+        "artist": "Olivier Bernard",
+        "tcgProductId": 552312,
+        "ckFoilId": 297006,
+        "ckNormalId": 296124,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-MH3-119-ENN",
+        "scgFoilSku": "SGL-MTG-MH3-119-ENF",
+        "collectorNumber": "119",
+        "multiverseid": 662271,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 126255,
+        "uid": "497a10c6-131b-464e-95e4-e47708a24d48",
+        "displayName": null,
+        "edition": {
+          "editioncode": "mh3",
+          "editionname": "Modern Horizons 3",
+          "editiondate": "2024-06-14",
+          "editiontype": "draft_innovation",
+          "mtgoCode": "mh3"
+        },
+        "flavor": "\"Decent. But let me show you what mastery looks like.\"",
+        "games": [],
+        "options": [
+          "Normal",
+          "Foil"
+        ],
+        "scryfallImageHash": "1717470466",
+        "oracleCard": {
+          "id": 40616,
+          "cmc": 3,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 2017,
+          "faces": [],
+          "layout": "normal",
+          "uid": "f586ecb8-310c-4f40-a766-6a7ca46a254d",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "banned",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "not_legal",
+            "brawl": "not_legal",
+            "penny": "legal",
+            "pioneer": "not_legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{1}{R}{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "Flare of Duplication",
+          "power": "",
+          "salt": 0.54,
+          "subTypes": [],
+          "superTypes": [],
+          "text": "You may sacrifice a nontoken red creature rather than pay this spell's mana cost.\nCopy target instant or sorcery spell. You may choose new targets for the copy.",
+          "tokens": [],
+          "toughness": "",
+          "types": [
+            "Instant"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Copy",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": [
+            "41579",
+            "45862"
+          ]
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 1.99,
+          "ckfoil": 2.99,
+          "cm": 0.97,
+          "cmfoil": 1.54,
+          "mtgo": 0.02,
+          "mtgofoil": 0,
+          "tcg": 1.4,
+          "tcgfoil": 1.5,
+          "scg": 2.49,
+          "scgfoil": 2.49,
+          "mp": 1.09,
+          "mpfoil": 1.56,
+          "tcgLand": 59,
+          "tcgLandFoil": 98
+        },
+        "rarity": "rare",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875404181,
+      "categories": [
+        "Planeswalker"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 1,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T03:33:25.874966Z",
+      "updatedAt": "2024-10-15T04:13:59.807622Z",
+      "deletedAt": null,
+      "card": {
+        "id": 93450,
+        "artist": "Magali Villeneuve",
+        "tcgProductId": 236171,
+        "ckFoilId": 0,
+        "ckNormalId": 245091,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-C21-175-ENN",
+        "scgFoilSku": null,
+        "collectorNumber": "175",
+        "multiverseid": 519210,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 89451,
+        "uid": "85169934-1033-49d7-8d42-45e982077a23",
+        "displayName": null,
+        "edition": {
+          "editioncode": "c21",
+          "editionname": "Commander 2021",
+          "editiondate": "2021-04-23",
+          "editiontype": "commander",
+          "mtgoCode": "c21"
+        },
+        "flavor": "",
+        "games": [],
+        "options": [
+          "Normal"
+        ],
+        "scryfallImageHash": "1625193945",
+        "oracleCard": {
+          "id": 8498,
+          "cmc": 5,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 6470,
+          "faces": [],
+          "layout": "normal",
+          "uid": "a56c5ca5-70eb-4d5f-8116-2acbe5f5a3cb",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "legal",
+            "brawl": "not_legal",
+            "penny": "legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{2}{R}{R}{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": 3,
+            "G": null,
+            "C": null
+          },
+          "name": "Jaya Ballard",
+          "power": "",
+          "salt": 0,
+          "subTypes": [
+            "Jaya"
+          ],
+          "superTypes": [
+            "Legendary"
+          ],
+          "text": "+1: Add {R}{R}{R}. Spend this mana only to cast instant or sorcery spells.\n+1: Discard up to three cards, then draw that many cards.\n−8: You get an emblem with \"You may cast instant and sorcery spells from your graveyard. If a spell cast this way would be put into your graveyard, exile it instead.\"",
+          "tokens": [
+            "8500"
+          ],
+          "toughness": "",
+          "types": [
+            "Planeswalker"
+          ],
+          "loyalty": "5",
+          "canlanderPoints": null,
+          "defaultCategory": "Ramp",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0.99,
+          "ckfoil": 0,
+          "cm": 0.41,
+          "cmfoil": 0,
+          "mtgo": 0.03,
+          "mtgofoil": 0,
+          "tcg": 0.43,
+          "tcgfoil": 0,
+          "scg": 0.99,
+          "scgfoil": 0,
+          "mp": 0.45,
+          "mpfoil": 0,
+          "tcgLand": 28,
+          "tcgLandFoil": 0
+        },
+        "rarity": "mythic",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875417358,
+      "categories": [
+        "Spell",
+        "Instant",
+        "Burn"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 4,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T03:44:44.845328Z",
+      "updatedAt": "2024-11-18T00:02:52.341696Z",
+      "deletedAt": null,
+      "card": {
+        "id": 78487,
+        "artist": "Tyler Walpole",
+        "tcgProductId": 190635,
+        "ckFoilId": 225178,
+        "ckNormalId": 224873,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-MH1-134-ENN",
+        "scgFoilSku": "SGL-MTG-MH1-134-ENF",
+        "collectorNumber": "134",
+        "multiverseid": 464083,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 72640,
+        "uid": "b16dd041-451d-4914-8c46-aa315a90d802",
+        "displayName": null,
+        "edition": {
+          "editioncode": "mh1",
+          "editionname": "Modern Horizons",
+          "editiondate": "2019-06-14",
+          "editiontype": "draft_innovation",
+          "mtgoCode": "mh1"
+        },
+        "flavor": "\"Small outbursts are healthy.\"\n—Koth of the Hammer",
+        "games": [],
+        "options": [
+          "Normal",
+          "Foil"
+        ],
+        "scryfallImageHash": "1562201890",
+        "oracleCard": {
+          "id": 9276,
+          "cmc": 1,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 6060,
+          "faces": [],
+          "layout": "normal",
+          "uid": "e48891e3-30a2-4fc8-a858-cec33c6e4ab5",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "not_legal",
+            "premodern": "legal",
+            "historic": "not_legal",
+            "commander": "legal",
+            "paupercommander": "legal",
+            "gladiator": "not_legal",
+            "explorer": "not_legal",
+            "brawl": "not_legal",
+            "penny": "not_legal",
+            "pioneer": "not_legal",
+            "duel": "legal",
+            "pauper": "legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "legal",
+            "timeless": "not_legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "Lava Dart",
+          "power": "",
+          "salt": 0,
+          "subTypes": [],
+          "superTypes": [],
+          "text": "Lava Dart deals 1 damage to any target.\nFlashback—Sacrifice a Mountain. (You may cast this card from your graveyard for its flashback cost. Then exile it.)",
+          "tokens": [],
+          "toughness": "",
+          "types": [
+            "Instant"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Burn",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0.49,
+          "ckfoil": 8.99,
+          "cm": 0.25,
+          "cmfoil": 5.62,
+          "mtgo": 0.98,
+          "mtgofoil": 0,
+          "tcg": 0.19,
+          "tcgfoil": 6.87,
+          "scg": 0.49,
+          "scgfoil": 4.99,
+          "mp": 0.19,
+          "mpfoil": 5.72,
+          "tcgLand": 11,
+          "tcgLandFoil": 0
+        },
+        "rarity": "common",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1875296115,
+      "categories": [
+        "Sideboard",
+        "Burn"
+      ],
+      "companion": true,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Foil",
+      "quantity": 1,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-10-15T01:47:13.677180Z",
+      "updatedAt": "2024-10-28T00:01:32.080477Z",
+      "deletedAt": null,
+      "card": {
+        "id": 118954,
+        "artist": "Denis Medri",
+        "tcgProductId": 491955,
+        "ckFoilId": 276310,
+        "ckNormalId": 275507,
+        "cmEd": "",
+        "scgSku": null,
+        "scgFoilSku": "SGL-MTG-MUL2-184-ENF",
+        "collectorNumber": "184",
+        "multiverseid": 0,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 0,
+        "uid": "d0673109-41f6-4474-8874-b8a3bb5efde7",
+        "displayName": null,
+        "edition": {
+          "editioncode": "mul",
+          "editionname": "Multiverse Legends",
+          "editiondate": "2023-04-21",
+          "editiontype": "masterpiece",
+          "mtgoCode": null
+        },
+        "flavor": "",
+        "games": [],
+        "options": [
+          "Foil"
+        ],
+        "scryfallImageHash": "1682347873",
+        "oracleCard": {
+          "id": 21172,
+          "cmc": 5,
+          "colorIdentity": [
+            "Black",
+            "Red"
+          ],
+          "colors": [
+            "Red",
+            "Black"
+          ],
+          "edhrecRank": 8066,
+          "faces": [],
+          "layout": "normal",
+          "uid": "6985c8a9-9299-461b-8bef-bd2b2c739c11",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "legal",
+            "brawl": "not_legal",
+            "penny": "legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{3}{B/R}{B/R}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "Obosh, the Preypiercer",
+          "power": "3",
+          "salt": 0.73,
+          "subTypes": [
+            "Horror",
+            "Hellion"
+          ],
+          "superTypes": [
+            "Legendary"
+          ],
+          "text": "Companion — Your starting deck contains only cards with odd mana values and land cards. (If this card is your chosen companion, you may put it into your hand from outside the game for {3} as a sorcery.)\nIf a source you control with an odd mana value would deal damage to a permanent or player, it deals double that damage to that permanent or player instead.",
+          "tokens": [],
+          "toughness": "5",
+          "types": [
+            "Creature"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Burn",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 0,
+          "ckfoil": 4.49,
+          "cm": 0,
+          "cmfoil": 0,
+          "mtgo": 0,
+          "mtgofoil": 0,
+          "tcg": 0,
+          "tcgfoil": 6.7,
+          "scg": 0,
+          "scgfoil": 5.99,
+          "mp": 0,
+          "mpfoil": 0,
+          "tcgLand": 0,
+          "tcgLandFoil": 324
+        },
+        "rarity": "rare",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 1924093819,
+      "categories": [
+        "Artifact",
+        "Ramp",
+        "Copy"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 1,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2024-11-22T07:08:34.663351Z",
+      "updatedAt": "2024-11-22T07:08:53.618188Z",
+      "deletedAt": null,
+      "card": {
+        "id": 138310,
+        "artist": "Kevin Sidharta",
+        "tcgProductId": 589361,
+        "ckFoilId": 0,
+        "ckNormalId": 305063,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-FDN-677-ENN",
+        "scgFoilSku": null,
+        "collectorNumber": "677",
+        "multiverseid": 680816,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 0,
+        "uid": "f340d8a4-196a-4433-807c-b7124e96e44f",
+        "displayName": null,
+        "edition": {
+          "editioncode": "fdn",
+          "editionname": "Foundations",
+          "editiondate": "2024-11-15",
+          "editiontype": "core",
+          "mtgoCode": "fdn"
+        },
+        "flavor": "Chandra treasures her mentor's goggles, not for their magical properties, but for the memory of the woman who taught her to truly harness the power of fire.",
+        "games": [],
+        "options": [
+          "Normal"
+        ],
+        "scryfallImageHash": "1736305795",
+        "oracleCard": {
+          "id": 12689,
+          "cmc": 5,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [],
+          "edhrecRank": 2449,
+          "faces": [],
+          "layout": "normal",
+          "uid": "f76bcbfe-483f-4e63-8425-76feca1abf3e",
+          "legalities": {
+            "alchemy": "legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "legal",
+            "premodern": "not_legal",
+            "historic": "legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "legal",
+            "explorer": "legal",
+            "brawl": "legal",
+            "penny": "legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "legal",
+            "future": "legal",
+            "predh": "not_legal",
+            "timeless": "legal",
+            "canlander": "legal"
+          },
+          "manaCost": "{5}",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": 1,
+            "G": null,
+            "C": null
+          },
+          "name": "Pyromancer's Goggles",
+          "power": "",
+          "salt": 0.43,
+          "subTypes": [],
+          "superTypes": [
+            "Legendary"
+          ],
+          "text": "{T}: Add {R}. When that mana is spent to cast a red instant or sorcery spell, copy that spell and you may choose new targets for the copy.",
+          "tokens": [],
+          "toughness": "",
+          "types": [
+            "Artifact"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Ramp",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 2.29,
+          "ckfoil": 0,
+          "cm": 0,
+          "cmfoil": 0,
+          "mtgo": 0,
+          "mtgofoil": 0,
+          "tcg": 1.04,
+          "tcgfoil": 0,
+          "scg": 2.49,
+          "scgfoil": 0,
+          "mp": 1.06,
+          "mpfoil": 0,
+          "tcgLand": 41,
+          "tcgLandFoil": 0
+        },
+        "rarity": "mythic",
+        "globalCategories": []
+      }
+    },
+    {
+      "id": 2047718363,
+      "categories": [
+        "Creature",
+        "Burn",
+        "Planeswalker"
+      ],
+      "companion": false,
+      "flippedDefault": false,
+      "label": ",#656565",
+      "modifier": "Normal",
+      "quantity": 1,
+      "customCmc": null,
+      "removedCategories": null,
+      "createdAt": "2025-02-21T18:14:12.944287Z",
+      "updatedAt": "2025-02-21T18:14:23.502017Z",
+      "deletedAt": null,
+      "card": {
+        "id": 120392,
+        "artist": "Eric Deschamps",
+        "tcgProductId": 496161,
+        "ckFoilId": 0,
+        "ckNormalId": 277779,
+        "cmEd": "",
+        "scgSku": "SGL-MTG-PWSB-ORI_135-ENN",
+        "scgFoilSku": null,
+        "collectorNumber": "ORI-135",
+        "multiverseid": 0,
+        "mtgoFoilId": 0,
+        "mtgoNormalId": 0,
+        "uid": "b910c6a1-7701-45f1-9dc8-4a3e8a8f023e",
+        "displayName": null,
+        "edition": {
+          "editioncode": "plst",
+          "editionname": "The List",
+          "editiondate": "2020-09-26",
+          "editiontype": "masters",
+          "mtgoCode": null
+        },
+        "flavor": "",
+        "games": [],
+        "options": [
+          "Normal"
+        ],
+        "scryfallImageHash": null,
+        "oracleCard": {
+          "id": 2567,
+          "cmc": 3,
+          "colorIdentity": [
+            "Red"
+          ],
+          "colors": [
+            "Red"
+          ],
+          "edhrecRank": 7774,
+          "faces": [
+            {
+              "colors": [
+                "Red"
+              ],
+              "flavor": "",
+              "manaCost": "{1}{R}{R}",
+              "name": "Chandra, Fire of Kaladesh",
+              "power": "2",
+              "subTypes": [
+                "Human",
+                "Shaman"
+              ],
+              "superTypes": [
+                "Legendary"
+              ],
+              "text": "Whenever you cast a red spell, untap Chandra.\n{T}: Chandra deals 1 damage to target player or planeswalker. If Chandra has dealt 3 or more damage this turn, exile her, then return her to the battlefield transformed under her owner's control.",
+              "toughness": "2",
+              "types": [
+                "Creature"
+              ],
+              "loyalty": null
+            },
+            {
+              "colors": [
+                "Red"
+              ],
+              "flavor": "",
+              "manaCost": "",
+              "name": "Chandra, Roaring Flame",
+              "power": "",
+              "subTypes": [
+                "Chandra"
+              ],
+              "superTypes": [
+                "Legendary"
+              ],
+              "text": "+1: Chandra deals 2 damage to target player or planeswalker.\n−2: Chandra deals 2 damage to target creature.\n−7: Chandra deals 6 damage to each opponent. Each player dealt damage this way gets an emblem with \"At the beginning of your upkeep, this emblem deals 3 damage to you.\"",
+              "toughness": "",
+              "types": [
+                "Planeswalker"
+              ],
+              "loyalty": "4"
+            }
+          ],
+          "layout": "transform",
+          "uid": "6f6b8e14-c247-4dfd-8b39-38c7a5f2f354",
+          "legalities": {
+            "alchemy": "not_legal",
+            "legacy": "legal",
+            "oldschool": "not_legal",
+            "modern": "legal",
+            "vintage": "legal",
+            "oathbreaker": "legal",
+            "1v1": "legal",
+            "historicbrawl": "not_legal",
+            "premodern": "not_legal",
+            "historic": "not_legal",
+            "commander": "legal",
+            "paupercommander": "not_legal",
+            "gladiator": "not_legal",
+            "explorer": "not_legal",
+            "brawl": "not_legal",
+            "penny": "legal",
+            "pioneer": "legal",
+            "duel": "legal",
+            "pauper": "not_legal",
+            "standard": "not_legal",
+            "future": "not_legal",
+            "predh": "not_legal",
+            "timeless": "not_legal",
+            "canlander": "legal"
+          },
+          "manaCost": "",
+          "manaProduction": {
+            "W": null,
+            "U": null,
+            "B": null,
+            "R": null,
+            "G": null,
+            "C": null
+          },
+          "name": "Chandra, Fire of Kaladesh // Chandra, Roaring Flame",
+          "power": "",
+          "salt": 0.33,
+          "subTypes": [
+            "Human",
+            "Shaman"
+          ],
+          "superTypes": [
+            "Legendary"
+          ],
+          "text": "",
+          "tokens": [
+            "2573",
+            "9802"
+          ],
+          "toughness": "",
+          "types": [
+            "Creature"
+          ],
+          "loyalty": null,
+          "canlanderPoints": null,
+          "defaultCategory": "Burn",
+          "gameChanger": false,
+          "extraTurns": false,
+          "tutor": false,
+          "massLandDenial": false,
+          "twoCardComboSingelton": false,
+          "twoCardComboIds": [],
+          "atomicCombos": [],
+          "potentialCombos": []
+        },
+        "owned": 0,
+        "prices": {
+          "ck": 2.29,
+          "ckfoil": 0,
+          "cm": 0,
+          "cmfoil": 0,
+          "mtgo": 0,
+          "mtgofoil": 0,
+          "tcg": 2.51,
+          "tcgfoil": 0,
+          "scg": 2.49,
+          "scgfoil": 0,
+          "mp": 2.49,
+          "mpfoil": 0,
+          "tcgLand": 90,
+          "tcgLandFoil": 0
+        },
+        "rarity": "mythic",
+        "globalCategories": []
+      }
+    }
+  ]
+}

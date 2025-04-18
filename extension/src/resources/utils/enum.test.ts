@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { resolveEnumValue } from "~/resources/utils/enum"
+import { resolveEnumValue, sortByEnumOrder } from "~/resources/utils/enum"
+import { MTG_COLORS } from '../domain/enums/mtg/colors.dbo'
 
 enum SampleEnum {
   A = 'alpha',
@@ -18,5 +19,27 @@ describe('resolveEnumValue', () => {
     expect(resolveEnumValue(SampleEnum, 'delta')).toBeUndefined()
     expect(resolveEnumValue(SampleEnum, '')).toBeUndefined()
     expect(resolveEnumValue(SampleEnum, 'ALPHA')).toBeUndefined()
+  })
+})
+
+describe("sortByEnumOrder", () => {
+  it("should sort MTG_COLORS in enum declaration order", () => {
+    const unordered: MTG_COLORS[] = [
+      MTG_COLORS.RED,
+      MTG_COLORS.BLUE,
+      MTG_COLORS.GREEN,
+      MTG_COLORS.BLACK,
+      MTG_COLORS.WHITE
+    ]
+
+    const sorted = sortByEnumOrder(unordered, MTG_COLORS)
+
+    expect(sorted).toEqual([
+      MTG_COLORS.WHITE,
+      MTG_COLORS.BLUE,
+      MTG_COLORS.BLACK,
+      MTG_COLORS.RED,
+      MTG_COLORS.GREEN
+    ])
   })
 })
