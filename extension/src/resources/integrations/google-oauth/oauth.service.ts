@@ -84,6 +84,7 @@ export class OAuthService {
     })
 
     if (!res.ok) {
+      await this.clearCachedToken()
       throw new Error("Failed to fetch user info")
     }
 

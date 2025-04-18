@@ -17,21 +17,20 @@ export const DriveAccessSummary: React.FC<DriveAccessSummaryProps> = ({className
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (!isOpen) return
     setLoading(true)
     GoogleDriveService.getInstance()
       .listAllSpreadsheets()
-      .then(setDocuments)
+      .then((docs) => setDocuments(docs))
       .catch((e) => {
         console.error("Failed to fetch drive files", e)
       })
-      .finally(() => setLoading(false))
-  }, [isOpen])
+      .then(() => setLoading(false))
+  }, [])
 
   return (
     <>
-      <Button variant="ghost" className={cn(className)} onPress={onOpen}>
-        {documents.length} shared Google Sheets
+      <Button variant="ghost" className={cn(className)} onPress={onOpen} isLoading={loading}>
+        {loading ? "…" : `${documents.length} shared Google Sheets`}
       </Button>
       <Modal
         isDismissable={false}
