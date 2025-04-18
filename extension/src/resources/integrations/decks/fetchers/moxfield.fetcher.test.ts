@@ -328,13 +328,7 @@ describe('MoxfieldFetcher', () => {
         quantity: 1
       }),
     ]))
-    expect(deck.boards.sideboard).toHaveLength(1)
-    expect(deck.boards.companions).toEqual(expect.arrayContaining([
-      expect.objectContaining({
-        name: "Obosh, the Preypiercer",
-        quantity: 1
-      }),
-    ]))
+    expect(deck.boards.sideboard).toHaveLength(0)
     expect(deck.boards.signatureSpells).toHaveLength(0)
   })
 

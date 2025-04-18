@@ -6,7 +6,8 @@ export enum DeckSource {
   MOXFIELD = "Moxfield",
   MAGIC_VILLE = "Magic Ville",
   TEXT = "Text",
-  UNKNOWN = "Unknown"
+  ARCHIDEKT = "Archidekt",
+  UNKNOWN = "Unknown",
 }
 
 export type DeckCardDbo = {

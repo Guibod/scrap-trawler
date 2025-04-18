@@ -4,6 +4,7 @@ import { TextFetcher } from "~/resources/integrations/decks/fetchers/text.fetche
 import type { DeckFetcher } from "~/resources/integrations/decks/fetchers/abstract.fetcher"
 import { NothingFetcher } from "~/resources/integrations/decks/fetchers/nothing.fetcher"
 import { MagicVilleFetcher } from "~/resources/integrations/decks/fetchers/magic-ville.fetcher"
+import { ArchidektFetcher } from "~/resources/integrations/decks/fetchers/archidekt.fetcher"
 
 export default class DeckFetcherResolver {
   static resolveFetcherType(row: SpreadsheetRow): DeckFetcher {
@@ -16,6 +17,9 @@ export default class DeckFetcherResolver {
     }
     if (row.decklistUrl?.includes("magic-ville.com")) {
       return MagicVilleFetcher;
+    }
+    if (row.decklistUrl?.includes("archidekt.com")) {
+      return ArchidektFetcher;
     }
 
     if (row.decklistTxt) {
