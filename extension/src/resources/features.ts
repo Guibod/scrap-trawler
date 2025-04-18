@@ -13,7 +13,7 @@ export const features: Feature[] = [
   { title: "Extract data from your registration sheet",  status: 'partial', items: [
       { title: "Read a CSV spreadsheet",  status: 'done' },
       { title: "Read a XSLX spreadsheet",  status: 'done' },
-      { title: "Read a Google spreadsheet",  status: 'planned' },
+      { title: "Read a Google spreadsheet",  status: 'done' },
       { title: "Define column role", status: 'done' },
       { title: "Associate your players with eventlink players", status: 'done', items: [
           { title: "Manually", status: 'done' },
@@ -34,7 +34,7 @@ export const features: Feature[] = [
       {title: "Raw Text", status: 'done'},
       {title: "Moxfield", status: 'done'},
       {title: "Archidekt", status: 'planned'},
-      {title: "MagicVille 🇫🇷", status: 'planned'},
+      {title: "MagicVille 🇫🇷", status: 'done'},
       { title: "TappedOut", status: 'planned' },
       { title: "Deckbox", status: 'planned' },
       { title: "MTGGoldfish", status: 'planned' },
