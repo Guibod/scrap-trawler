@@ -91,7 +91,7 @@ describe("GzipUtils", () => {
   it("should decompress a WritableStream correctly", async () => {
     const compressedData = gzipSync(encoder.encode(text));
 
-    let decompressedChunks: Uint8Array[] = [];
+    const decompressedChunks: Uint8Array[] = [];
 
     const outputStream = new WritableStream({
       write(chunk) {
@@ -109,7 +109,7 @@ describe("GzipUtils", () => {
   });
 
   it("should maintain integrity after compression and decompression using WritableStreams", async () => {
-    let compressedChunks: Uint8Array[] = [];
+    const compressedChunks: Uint8Array[] = [];
 
     const compressedOutputStream = new WritableStream({
       write(chunk) {
@@ -122,7 +122,7 @@ describe("GzipUtils", () => {
     await gzipWriter.write(encoder.encode(text));
     await gzipWriter.close();
 
-    let decompressedChunks: Uint8Array[] = [];
+    const decompressedChunks: Uint8Array[] = [];
 
     const decompressedOutputStream = new WritableStream({
       write(chunk) {

@@ -82,7 +82,7 @@ export class MoxfieldFetcher extends AbstractDeckFetcher<RawPayload> {
 
   async run(request: DeckFetchRequest): Promise<DeckFetchResponse> {
     const id = MoxfieldFetcher.extractDeckId(request.row.decklistUrl);
-    let raw = undefined
+    const raw = undefined
 
     try {
       const response = await sendToBackground<FetchRequest, FetchResponse>({

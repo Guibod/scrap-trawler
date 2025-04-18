@@ -2,7 +2,7 @@ import SettingsService from "~/resources/domain/services/settings.service"
 import DatabaseService from "~/resources/storage/database"
 import { getLogger } from "~/resources/logging/logger"
 
-let activePorts = 0;
+const activePorts = 0;
 (async () => {
   const logger = getLogger("background")
   logger.start("Background script")

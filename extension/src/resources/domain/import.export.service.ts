@@ -114,7 +114,7 @@ export class ImportExportService {
       buffer += new TextDecoder().decode(value);
 
       if (format === formats.LDJSON) {
-        let lines = buffer.split(LDJSON_DELIMITER);
+        const lines = buffer.split(LDJSON_DELIMITER);
         buffer = lines.pop() || ""; // Keep incomplete part in buffer
 
         for (const line of lines) {
