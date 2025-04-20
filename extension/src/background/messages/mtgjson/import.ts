@@ -3,7 +3,7 @@ import MtgJsonService, { type MtgJsonImportCompletion } from "~/resources/integr
 import { getLogger } from "~/resources/logging/logger"
 
 const logger = getLogger("background")
-interface MtgJsonImportRequest {}
+export interface MtgJsonImportRequest {}
 
 export type MtgJsonImportProgressMessage = {
   type: 'mtgjson-import-progress',

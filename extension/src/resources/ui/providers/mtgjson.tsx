@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
-import MtgJsonService from "~/resources/integrations/mtg-json/service";
+import MtgJsonService, { type MtgJsonImportCompletion } from "~/resources/integrations/mtg-json/service"
 import { addToast } from "@heroui/react"
 import { sendToBackground } from "@plasmohq/messaging"
-import { isMtgJsonImportProgress } from "~/background/messages/mtgjson/import"
+import { isMtgJsonImportProgress, type MtgJsonImportRequest } from "~/background/messages/mtgjson/import"
 import CardService from "~/resources/domain/services/card.service"
+import type { MtgJsonAbortRequest } from "~/background/messages/mtgjson/abort";
 
 interface MtgJsonContextType {
   mtgJsonService: MtgJsonService | null;
@@ -53,7 +54,7 @@ export const MtgJsonProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const cancelImport = useCallback(async () => {
     if (!mtgJsonService) return;
 
-    await sendToBackground<any, boolean>({ name: "mtgjson/abort" })
+    await sendToBackground<MtgJsonAbortRequest, boolean>({ name: "mtgjson/abort" })
       .then(async (success) => {
         if (success) {
           addToast({
@@ -74,7 +75,7 @@ export const MtgJsonProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const startImport = useCallback(async () => {
     if (!mtgJsonService) return;
 
-    await sendToBackground({ name: "mtgjson/import" })
+    await sendToBackground<MtgJsonImportRequest, MtgJsonImportCompletion>({ name: "mtgjson/import" })
       .then(async (response) => {
         setLocalVersion(response.version)
         setTotal(response.count)

@@ -3,7 +3,7 @@ import MtgJsonService from "~/resources/integrations/mtg-json/service"
 import { getLogger } from "~/resources/logging/logger"
 
 const logger = getLogger("background")
-interface MtgJsonAbortRequest {}
+export interface MtgJsonAbortRequest {}
 
 const handler: PlasmoMessaging.MessageHandler<MtgJsonAbortRequest, boolean> = async (req, res) => {
   logger.debug("Received mtg-json/cancel message", req)
