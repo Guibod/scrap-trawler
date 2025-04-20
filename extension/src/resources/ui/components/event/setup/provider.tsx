@@ -107,8 +107,8 @@ export const EventSetupProvider: React.FC<{
   }, [event.spreadsheet, event.raw_data, updateEvent])
 
   useDriveFileWatcher(
-    event.spreadsheet.meta?.sourceType === "drive" ? event.spreadsheet.meta.source : null,
-    event.spreadsheet.meta?.importedAt,
+    event.spreadsheet?.meta?.sourceType === "drive" ? event.spreadsheet.meta.source : null,
+    event.spreadsheet?.meta?.importedAt,
     () => handleImport({ metadata: spreadsheetMeta, event })
   )
 
