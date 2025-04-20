@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import React from "react"
-import { describe, it, vi, expect } from "vitest"
+import { describe, it, vi, expect, beforeEach } from "vitest"
 import { useOAuth } from "~/resources/ui/components/oauth/provider"
 import OauthStatus from "~/resources/ui/components/oauth/status"
 
