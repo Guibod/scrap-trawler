@@ -1,10 +1,12 @@
 import { COLUMN_TYPE, COLUMN_TYPE_UNIQUE } from "~/resources/domain/enums/spreadsheet.dbo"
 import type { SpreadsheetRawRow } from "~/resources/domain/dbos/spreadsheet.dbo";
 import { SpreadsheetColumnScorer } from "~/resources/domain/parsers/column.scorer"
+import { getLogger } from "~/resources/logging/logger"
 
 export class SpreadsheetColumnDetector {
   private readonly knownFirstNames: Set<string>;
   private readonly knownLastNames: Set<string>;
+  private readonly logger = getLogger("SpreadsheetColumnDetector");
 
   constructor(knownFirstNames: Iterable<string>, knownLastNames: Iterable<string>) {
     this.knownFirstNames = new Set([...knownFirstNames].map(name => name.toLowerCase()));
@@ -14,7 +16,6 @@ export class SpreadsheetColumnDetector {
   detectColumns(rows: SpreadsheetRawRow[]): Map<number, COLUMN_TYPE> {
     const columnScores: Map<number, Map<COLUMN_TYPE, number>> = new Map();
 
-    // Transpose rows into columns
     const columnCount = rows[0]?.length || 0;
     const columns: string[][] = Array.from({ length: columnCount }, () => []);
 
@@ -24,13 +25,20 @@ export class SpreadsheetColumnDetector {
       });
     });
 
-    // Step 1: Assign initial type guesses with confidence scores
     columns.forEach((values, index) => {
-      columnScores.set(index, this.detectColumn(values));
+      const scores = this.detectColumn(values);
+      columnScores.set(index, scores);
+
+      const debugLines = Array.from(scores.entries())
+        .sort((a, b) => b[1] - a[1])
+        .map(([type, score]) => `    - ${type}: ${score.toFixed(2)}`)
+        .join("\n");
+      this.logger.debug(`Column ${index} score breakdown:\n${debugLines}`);
     });
 
-    // Step 2: Resolve conflicting column types (unique ones)
-    return this.resolveUniqueColumns(columnScores);
+    const resolved = this.resolveUniqueColumns(columnScores);
+    this.logger.info("Detected column types:", Object.fromEntries(resolved));
+    return resolved;
   }
 
   detectColumn(values: string[]): Map<COLUMN_TYPE, number> {
@@ -41,40 +49,42 @@ export class SpreadsheetColumnDetector {
     const assignedColumns: Map<number, COLUMN_TYPE> = new Map();
     const takenTypes = new Set<COLUMN_TYPE>();
 
-    // **🔹 Prioritized Order of Unique Columns**
     const priorityOrder = [
-      COLUMN_TYPE.IGNORED_DATA, // **Default category (can be multiple)**
-      COLUMN_TYPE.UNIQUE_ID,    // **Only one**
-      COLUMN_TYPE.FIRST_NAME,   // **Only one**
-      COLUMN_TYPE.LAST_NAME,    // **Only one**
-      COLUMN_TYPE.DECKLIST_URL, // **Only one**
-      COLUMN_TYPE.DECKLIST_TXT, // **Only one**
-      COLUMN_TYPE.ARCHETYPE,    // **Only one**
-      COLUMN_TYPE.PLAYER_DATA,  // **Multiple allowed**
-      COLUMN_TYPE.FILTER,       // **Multiple allowed**
+      COLUMN_TYPE.IGNORED_DATA,
+      COLUMN_TYPE.UNIQUE_ID,
+      COLUMN_TYPE.FIRST_NAME,
+      COLUMN_TYPE.LAST_NAME,
+      COLUMN_TYPE.DECKLIST_URL,
+      COLUMN_TYPE.DECKLIST_TXT,
+      COLUMN_TYPE.ARCHETYPE,
+      COLUMN_TYPE.PLAYER_DATA,
+      COLUMN_TYPE.FILTER,
     ];
 
-    // **Sort columns by highest confidence score**
-    // **Sort by highest confidence score and priority order**
     const sortedColumns = [...columnScores.entries()]
-      .map(([index, scores]) => ({ index, bestType: this.getBestType(scores) }))
+      .map(([index, scores]) => {
+        const bestType = this.getBestType(scores);
+        this.logger.debug(`Column ${index} best type guess: ${bestType.type} (score: ${bestType.score})`);
+        return { index, bestType };
+      })
       .sort((a, b) => {
-        // **Sort by predefined priority first**
         const priorityDiff = priorityOrder.indexOf(a.bestType.type) - priorityOrder.indexOf(b.bestType.type);
         if (priorityDiff !== 0) return priorityDiff;
-        // **If priority is the same, sort by score (higher first)**
         return b.bestType.score - a.bestType.score;
       });
 
     for (const { index, bestType } of sortedColumns) {
       if (COLUMN_TYPE_UNIQUE.includes(bestType.type)) {
         if (takenTypes.has(bestType.type)) {
-          assignedColumns.set(index, COLUMN_TYPE.IGNORED_DATA); // **Prevent duplicate unique columns**
+          this.logger.debug(`Column ${index} skipped: ${bestType.type} already assigned, defaulting to IGNORED_DATA.`);
+          assignedColumns.set(index, COLUMN_TYPE.IGNORED_DATA);
         } else {
+          this.logger.debug(`Column ${index} assigned as unique type: ${bestType.type}`);
           assignedColumns.set(index, bestType.type);
           takenTypes.add(bestType.type);
         }
       } else {
+        this.logger.debug(`Column ${index} assigned as: ${bestType.type}`);
         assignedColumns.set(index, bestType.type);
       }
     }
