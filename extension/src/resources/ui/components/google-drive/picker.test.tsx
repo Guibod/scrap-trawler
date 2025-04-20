@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react"
 import React from "react"
 import userEvent from "@testing-library/user-event"
 import GooglePicker from "./picker"
-import { vi, expect, beforeEach, describe } from "vitest"
+import { vi, expect, beforeEach, describe, it} from "vitest"
 
 describe("<GooglePicker />", () => {
   const mockUrl = "https://drive.google.com/file/d/123/view"
