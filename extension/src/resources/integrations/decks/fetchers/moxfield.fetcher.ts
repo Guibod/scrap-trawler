@@ -129,7 +129,6 @@ export class MoxfieldFetcher extends AbstractDeckFetcher<RawPayload> {
       const archetypeCards = { ...raw.boards.commanders.cards, ...raw.boards.signatureSpells.cards, ...raw.boards.companions.cards }
       archetype = Object.values(archetypeCards).map((card: MoxfieldCard) => card.card.name).sort().join(" / ")
     }
-
     this.boards = this.toDeckBoards(raw.boards)
 
     return this.describe({
@@ -168,25 +167,42 @@ export class MoxfieldFetcher extends AbstractDeckFetcher<RawPayload> {
       }))
     })
 
+    const fixed = this.removeDuplicateCompanions(this.raw.boards)
     return {
-      mainboard: mapToLegalityBoard(this.raw.boards?.mainboard),
-      sideboard: mapToLegalityBoard(this.raw.boards?.sideboard),
-      commanders: mapToLegalityBoard(this.raw.boards?.commanders),
-      companions: mapToLegalityBoard(this.raw.boards?.companions),
-      signatureSpells: mapToLegalityBoard(this.raw.boards?.signatureSpells),
+      mainboard: mapToLegalityBoard(fixed?.mainboard),
+      sideboard: mapToLegalityBoard(fixed?.sideboard),
+      commanders: mapToLegalityBoard(fixed?.commanders),
+      companions: mapToLegalityBoard(fixed?.companions),
+      signatureSpells: mapToLegalityBoard(fixed?.signatureSpells),
     }
   }
 
   protected toDeckBoards(raw: RawBoards): DeckBoards {
+    const fixed = this.removeDuplicateCompanions(raw)
     const transform = (board: RawBoard): CardNameAndQuantity[] =>
       Object.values(board.cards).map(({ quantity, card }) => ({ quantity, name: card.name }))
 
     return {
-      mainboard: transform(raw.mainboard),
-      sideboard: transform(raw.sideboard),
-      commanders: transform(raw.commanders),
-      companions: transform(raw.companions),
-      signatureSpells: transform(raw.signatureSpells),
+      mainboard: transform(fixed.mainboard),
+      sideboard: transform(fixed.sideboard),
+      commanders: transform(fixed.commanders),
+      companions: transform(fixed.companions),
+      signatureSpells: transform(fixed.signatureSpells),
     }
+  }
+
+  protected removeDuplicateCompanions(raw: RawBoards): RawBoards {
+    const copy: RawBoards = {
+      ...raw,
+      companions: raw.companions ? { ...raw.companions, cards: { ...raw.companions.cards } } : undefined,
+      sideboard: raw.sideboard ? { ...raw.sideboard, cards: { ...raw.sideboard.cards } } : undefined,
+    }
+
+    if (copy.companions && copy.sideboard) {
+      for (const name of Object.keys(copy.companions.cards)) {
+        delete copy.sideboard.cards[name]
+      }
+    }
+    return copy
   }
 }
