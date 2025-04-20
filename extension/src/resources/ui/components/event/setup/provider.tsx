@@ -109,7 +109,7 @@ export const EventSetupProvider: React.FC<{
   useDriveFileWatcher(
     event.spreadsheet.meta?.sourceType === "drive" ? event.spreadsheet.meta.source : null,
     event.spreadsheet.meta?.importedAt,
-    () => handleImport({ metadata: spreadsheetMeta })
+    () => handleImport({ metadata: spreadsheetMeta, event })
   )
 
   const updateStatus = useCallback(async () => {
