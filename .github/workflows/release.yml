@@ -37,10 +37,6 @@ jobs:
       - name: Install deps including tsx
         run: pnpm install --frozen-lockfile
 
-      # Pre-bump: build to prepare plasmo
-      - name: Dev build (extension)
-        run: pnpm --filter extension run dev:build
-
       # 🔥 Perform the version bump (triggers hooks)
       - name: Semver release
         uses: cocogitto/cocogitto-action@v3

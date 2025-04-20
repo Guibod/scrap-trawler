@@ -28,7 +28,7 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "dev": "plasmo dev",
-    "build": "plasmo build",
+    "build": "cross-env PARCEL_WORKER_BACKEND=process plasmo build",
     "package": "plasmo package",
     "format": "biome format --write",
     "lint": "biome check",
@@ -99,6 +99,7 @@
     "autoprefixer": "^10.4.20",
     "biome": "^0.3.3",
     "blob-polyfill": "^9.0.20240710",
+    "cross-env": "^7.0.3",
     "eslint": "^9.23.0",
     "eslint-config-biome": "^1.9.4",
     "eslint-plugin-biome": "^0.9.19",
