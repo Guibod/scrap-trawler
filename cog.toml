@@ -1,5 +1,5 @@
 pre_bump_hooks = [
-  "pnpm -r run dev:build",
+  "pnpm -r run build",
   "pnpm -r run type-check",
   "pnpm -r run test",
   "pnpm -r run lint"

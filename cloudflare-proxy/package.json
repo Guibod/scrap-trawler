@@ -9,7 +9,7 @@
 		"cf-typegen": "wrangler types",
 		"lint": "biome check",
 		"test": "vitest run --coverage",
-		"dev:build": "tsc --noEmit && wrangler types"
+		"build": "wrangler build"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "0.8.16",
