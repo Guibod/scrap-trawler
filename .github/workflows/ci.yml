@@ -52,6 +52,13 @@ jobs:
       - name: Run Linter (Biome)
         run: pnpm -r lint
 
+      # Pre-bump: build to prepare plasmo
+      - name: Dev build (extension)
+        run: pnpm --filter extension run dev:build
+
+      - name: Type-check extension
+        run: pnpm --filter extension run type-check
+
       - name: Test extension
         run: pnpm --filter extension test
 
