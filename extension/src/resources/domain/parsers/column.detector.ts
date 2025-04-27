@@ -16,12 +16,17 @@ export class SpreadsheetColumnDetector {
   detectColumns(rows: SpreadsheetRawRow[]): Map<number, COLUMN_TYPE> {
     const columnScores: Map<number, Map<COLUMN_TYPE, number>> = new Map();
 
-    const columnCount = rows[0]?.length || 0;
+    const columnCount = Math.max(...rows.map((r) => r.length), 0);
     const columns: string[][] = Array.from({ length: columnCount }, () => []);
 
     rows.forEach(row => {
       row.forEach((value, colIndex) => {
-        columns[colIndex].push(value);
+        try {
+          columns[colIndex].push(value);
+        } catch (error) {
+          this.logger.error(`Error processing column ${colIndex}: ${error} with value ${value}`);
+          throw error
+        }
       });
     });
 
