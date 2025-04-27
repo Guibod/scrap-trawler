@@ -95,7 +95,7 @@ type ArchidektBoards = {
 type CategoryMap = Record<string, {ignore: boolean, premier: boolean}>
 
 export class ArchidektFetcher extends AbstractDeckFetcher<ArchidektRaw> {
-  public static readonly API_URL = "https://archidekt.com/api/decks"
+  public static readonly API_URL = "https://scrap-trawler-proxy.guibod12.workers.dev/archidekt"
   private categoryMap: CategoryMap = {}
   private rawBoards: ArchidektBoards = {
     mainboard: [],
@@ -124,7 +124,7 @@ export class ArchidektFetcher extends AbstractDeckFetcher<ArchidektRaw> {
       const response = await sendToBackground<FetchRequest, FetchResponse>({
         name: "fetch/fetch",
         body: {
-          url: `${ArchidektFetcher.API_URL}/${id}/`
+          url: `${ArchidektFetcher.API_URL}/${id}`
         }
       })
 

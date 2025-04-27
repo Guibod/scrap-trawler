@@ -111,4 +111,33 @@ app.get("/magicville/:deckId", async (c) => {
 		return c.text("Internal error", 500)
 	}
 })
+
+app.get("/archidekt/:deckId", async (c) => {
+	const deckId = c.req.param("deckId")
+	const origin = c.req.header("origin")!
+
+	if (!origin || !isAllowed(origin)) {
+		return c.text("CORS forbidden", 403)
+	}
+
+	if (isThrottled(origin)) {
+		return c.text("Rate limit exceeded", 429)
+	}
+
+	const res = await fetch(`https://archidekt.com/api/decks/${deckId}/`, {
+		headers: {
+			Accept: "application/json"
+		}
+	})
+
+	const body = await res.text()
+	return new Response(body, {
+		status: res.status,
+		headers: {
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": origin
+		}
+	})
+})
+
 export default app

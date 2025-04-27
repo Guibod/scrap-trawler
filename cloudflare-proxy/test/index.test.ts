@@ -144,4 +144,48 @@ describe("Cloudflare Worker", () => {
 			expect(body).toMatch(/Mountain/)
 		})
 	})
+
+	describe("GET /archidekt/:deckId", () => {
+		let fetchMock: ReturnType<typeof vi.fn>
+
+		beforeEach(() => {
+			fetchMock = vi.fn()
+			vi.stubGlobal("fetch", fetchMock)
+		})
+
+		afterEach(() => {
+			vi.unstubAllGlobals()
+		})
+
+		it("should return 403 if origin is missing or invalid", async () => {
+			const resNoOrigin = await worker.fetch(createRequest("https://example.com/archidekt/12345"))
+			expect(resNoOrigin.status).toBe(403)
+
+			const resBadOrigin = await worker.fetch(createRequest("https://example.com/archidekt/12345", invalidOrigin))
+			expect(resBadOrigin.status).toBe(403)
+		})
+
+		it("should proxy archidekt deck json for valid origin", async () => {
+			fetchMock.mockResolvedValue({
+				status: 200,
+				text: () => Promise.resolve('{ "id": 12345, "name": "Test Deck" }'),
+				headers: new Headers({ "Content-Type": "application/json" })
+			} as Response)
+
+			const res = await worker.fetch(createRequest("https://example.com/archidekt/12345", validOrigin))
+			const body = await res.text()
+
+			expect(res.status).toBe(200)
+			expect(body).toContain("Test Deck")
+			expect(fetchMock).toHaveBeenCalledWith(
+				"https://archidekt.com/api/decks/12345/",
+				expect.objectContaining({
+					headers: expect.objectContaining({
+						Accept: "application/json"
+					})
+				})
+			)
+		})
+	})
+
 })
