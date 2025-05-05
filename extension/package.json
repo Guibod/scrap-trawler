@@ -46,7 +46,7 @@
     "@heroui/button": "^2.2.10",
     "@heroui/card": "^2.2.10",
     "@heroui/react": "^2.7.2",
-    "@heroui/system": "^2.4.7",
+    "@heroui/system": "^2.4.15",
     "@heroui/table": "^2.2.9",
     "@heroui/theme": "^2.4.6",
     "@heroui/tooltip": "^2.2.11",
