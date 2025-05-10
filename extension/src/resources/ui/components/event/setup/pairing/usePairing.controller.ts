@@ -100,7 +100,7 @@ console.log(modeFilter)
     const rowId: SpreadsheetRowId = active.id
     const wotcId: WotcId = over.id
 
-    let updatedMapping = { ...localMapping }
+    const updatedMapping = { ...localMapping }
     for (const id in updatedMapping) {
       if (updatedMapping[id].rowId === rowId) delete updatedMapping[id]
     }
